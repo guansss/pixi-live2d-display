@@ -1,0 +1,13 @@
+# Package files
+node_modules/
+# Build files
+dist/
+# Other files
+.vs/
+.idea/
+*.iml
+.DS_Store
+# Exclude some VSCode setting files.
+.vscode/*
+!/.vscode/extensions.json
+!/.vscode/tasks.json
