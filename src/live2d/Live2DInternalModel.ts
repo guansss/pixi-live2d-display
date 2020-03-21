@@ -20,7 +20,7 @@ const tempMatrixArray = new Float32Array([
     0, 0, 0, 1,
 ]);
 
-export default class Live2DModel {
+export default class Live2DInternalModel {
     tag = 'Live2DModel(uninitialized)';
 
     name: string;
@@ -75,7 +75,7 @@ export default class Live2DModel {
 
         const internalModel = await loadModel(modelSettings!.model);
 
-        return new Live2DModel(internalModel!, modelSettings!);
+        return new Live2DInternalModel(internalModel!, modelSettings!);
     }
 
     private constructor(readonly internalModel: Live2DModelWebGL, public modelSettings: ModelSettings) {
