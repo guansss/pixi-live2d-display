@@ -2,11 +2,13 @@
   "name": "pixi-live2d-plugin",
   "version": "0.1.0",
   "description": "Live2D plugin for PixiJS",
-  "main": "index.js",
+  "main": "lib/index.js",
   "repository": "git@github.com:guansss/pixi-live2d-plugin.git",
   "author": "guansss <821143943@qq.com>",
   "license": "MIT",
   "scripts": {
+    "pretest": "yarn build",
+    "test": "node node_modules/floss/bin/floss.js --path test -d",
     "build": "webpack --mode=production & tsc --emitDeclarationOnly"
   },
   "devDependencies": {

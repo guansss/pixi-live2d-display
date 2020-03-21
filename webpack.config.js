@@ -4,8 +4,10 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const config = {
     entry: './src/index.ts',
     output: {
-        filename: 'index.js',
         path: path.resolve(__dirname, 'lib'),
+        filename: 'index.js',
+        library: 'pixi-live2d-plugin',
+        libraryTarget: 'umd',
     },
     module: {
         rules: [
