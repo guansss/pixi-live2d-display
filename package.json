@@ -1,0 +1,9 @@
+{
+  "name": "pixi-live2d-plugin",
+  "version": "0.1.0",
+  "description": "Live2D plugin for PixiJS",
+  "main": "index.js",
+  "repository": "git@github.com:guansss/pixi-live2d-plugin.git",
+  "author": "guansss <821143943@qq.com>",
+  "license": "MIT"
+}
