@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "experimentalDecorators": true,
+    "declaration": true,
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo",
     "target": "ES5",
@@ -11,6 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "declarationDir": "lib",
     "types": [
       "node"
     ],

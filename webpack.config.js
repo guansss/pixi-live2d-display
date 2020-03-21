@@ -1,10 +1,8 @@
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
-module.exports = {
+const config = {
     entry: './src/index.ts',
-    devtool: process.env.NODE_ENV === 'production' ? 'eval-source-map' : undefined,
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, 'lib'),
@@ -22,7 +20,7 @@ module.exports = {
                     },
                 ],
                 exclude: /node_modules/,
-            }
+            },
         ],
     },
     resolve: {
@@ -32,7 +30,14 @@ module.exports = {
         extensions: ['.ts', '.js'],
     },
     plugins: [
-        new CleanWebpackPlugin(),
         new ForkTsCheckerWebpackPlugin(),
     ],
+};
+
+module.exports = (env, argv) => {
+    config.mode = argv.mode;
+
+    config.devtool = argv.mode === 'production' ? 'source-map' : 'inline-source-map';
+
+    return config;
 };

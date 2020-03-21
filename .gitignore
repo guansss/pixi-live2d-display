@@ -2,6 +2,9 @@
 node_modules
 /dist
 
+# TypeScript
+.tsbuildinfo
+
 # dot-env
 .env*
 
