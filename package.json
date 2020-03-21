@@ -5,5 +5,17 @@
   "main": "index.js",
   "repository": "git@github.com:guansss/pixi-live2d-plugin.git",
   "author": "guansss <821143943@qq.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "fork-ts-checker-webpack-plugin": "^4.1.0",
+    "pixi.js": "^5.2.1",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11"
+  }
 }
