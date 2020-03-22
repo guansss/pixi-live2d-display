@@ -1,25 +1,21 @@
 import Live2DExpression from '@/live2d/Live2DExpression';
-import { ExpressionDefinition } from '@/live2d/ModelSettings';
-import { error, log } from '@/core/utils/log';
-import { getJSON } from '@/core/utils/net';
+import { ExpressionDefinition } from '@/live2d/ModelSettingsJSON';
+import { Loader, LoaderResource } from '@pixi/loaders';
 import sample from 'lodash/sample';
 
 export default class ExpressionManager extends MotionQueueManager {
-    tag: string;
-
     readonly definitions: ExpressionDefinition[];
     readonly expressions: Live2DExpression[] = [];
 
     defaultExpression: Live2DExpression;
     currentExpression: Live2DExpression;
 
-    constructor(name: string, readonly internalModel: Live2DModelWebGL, definitions: ExpressionDefinition[]) {
+    constructor(readonly coreModel: Live2DModelWebGL, definitions: ExpressionDefinition[]) {
         super();
 
-        this.tag = `ExpressionManager\n(${name})`;
         this.definitions = definitions;
 
-        this.defaultExpression = new Live2DExpression(internalModel, {}, '(default)');
+        this.defaultExpression = new Live2DExpression(coreModel, {}, '(default)');
         this.currentExpression = this.defaultExpression;
 
         this.loadExpressions().then();
@@ -27,16 +23,23 @@ export default class ExpressionManager extends MotionQueueManager {
     }
 
     private async loadExpressions() {
-        for (const { name, file } of this.definitions) {
-            try {
-                const json = await getJSON(file);
-                this.expressions.push(new Live2DExpression(this.internalModel, json, name));
-            } catch (e) {
-                error(this.tag, `Failed to load expression [${name}]: ${file}`, e);
-            }
-        }
+        return new Promise(resolve => {
+            const loader = new Loader();
 
-        this.expressions.push(this.defaultExpression); // at least put a normal expression
+            this.definitions.forEach(({ name, file }) => loader.add(file, { name }));
+
+            loader
+                .on('load', (loader: Loader, resource: LoaderResource) => {
+                    if (resource.xhrType === LoaderResource.XHR_RESPONSE_TYPE.JSON) {
+                        this.expressions.push(new Live2DExpression(this.coreModel, resource.data, resource.name));
+                    }
+                })
+                .load(() => {
+                    this.expressions.push(this.defaultExpression); // at least put a normal expression
+
+                    resolve();
+                });
+        });
     }
 
     setRandomExpression() {
@@ -63,15 +66,13 @@ export default class ExpressionManager extends MotionQueueManager {
     }
 
     setExpression(expression: Live2DExpression) {
-        log(this.tag, 'Set expression:', expression.name);
-
         this.currentExpression = expression;
         this.startMotion(expression);
     }
 
     update() {
         if (!this.isFinished()) {
-            return this.updateParam(this.internalModel);
+            return this.updateParam(this.coreModel);
         }
     }
 }
