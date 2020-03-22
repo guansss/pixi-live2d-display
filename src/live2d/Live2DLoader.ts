@@ -37,6 +37,8 @@ export class Live2DLoader implements PIXI.ILoaderPlugin {
             return;
         }
 
+        live2DResource.modelSettings = settings;
+
         const baseLoaderOptions = {
             crossOrigin: live2DResource.crossOrigin,
             parentResource: live2DResource,
@@ -62,7 +64,7 @@ export class Live2DLoader implements PIXI.ILoaderPlugin {
 
                     live2DResource.model = modelRes.data;
 
-                    log(`Loaded model data (${live2DResource.model.byteLength}) :`, modelRes.name);
+                    log(TAG, `Loaded model data (${live2DResource.model.byteLength}):`, modelRes.name);
 
                     next();
                 },
@@ -80,13 +82,12 @@ export class Live2DLoader implements PIXI.ILoaderPlugin {
                 this.add(textureURL, baseLoaderOptions, (textureRes: LoaderResource) => {
                         if (textureRes.error) {
                             warn(TAG, `Failed to load texture from "${textureURL}"`, textureRes.error);
-                            next(textureRes.error);
                             return;
                         }
 
                     live2DResource.textures![index] = textureRes.texture;
 
-                    log(`Loaded texture (${textureRes.texture.width}x${textureRes.texture.height}) :`, textureRes.name);
+                    log(TAG, `Loaded texture (${textureRes.texture.width}x${textureRes.texture.height}):`, textureRes.name);
 
                         next();
                     },
@@ -103,13 +104,12 @@ export class Live2DLoader implements PIXI.ILoaderPlugin {
                 this.add(poseURL, baseLoaderOptions, (poseRes: LoaderResource) => {
                         if (poseRes.error) {
                             warn(TAG, `Failed to load pose data from "${poseURL}"`, poseRes.error);
-                            next(poseRes.error);
                             return;
                         }
 
                     live2DResource.pose = poseRes.data;
 
-                    log(`Loaded pose data :`, poseRes.name);
+                    log(TAG, `Loaded pose data:`, poseRes.name);
 
                         next();
                     },
@@ -126,13 +126,12 @@ export class Live2DLoader implements PIXI.ILoaderPlugin {
                 this.add(physicsURL, baseLoaderOptions, (physicsRes: LoaderResource) => {
                         if (physicsRes.error) {
                             warn(TAG, `Failed to load physics data from "${physicsURL}"`, physicsRes.error);
-                            next(physicsRes.error);
                             return;
                         }
 
                     live2DResource.physics = physicsRes.data;
 
-                    log(`Loaded physics data :`, physicsRes.name);
+                    log(TAG, `Loaded physics data:`, physicsRes.name);
 
                         next();
                     },

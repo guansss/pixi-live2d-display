@@ -1,12 +1,11 @@
 import FocusController from '@/live2d/FocusController';
 import Live2DEyeBlink from '@/live2d/Live2DEyeBlink';
-import { loadModel, loadModelSettings, loadPhysics, loadPose } from '@/live2d/Live2DLoader';
+import { Live2DResource } from '@/live2d/Live2DLoader';
 import Live2DPhysics from '@/live2d/Live2DPhysics';
 import Live2DPose from '@/live2d/Live2DPose';
 import ModelSettings from '@/live2d/ModelSettings';
 import MotionManager from '@/live2d/MotionManager';
-import { log } from '@/core/utils/log';
-import { randomID } from '@/core/utils/string';
+import { Loader, LoaderResource } from '@pixi/loaders';
 import { Matrix } from '@pixi/math';
 
 export const LOGICAL_WIDTH = 2;
@@ -20,10 +19,7 @@ const tempMatrixArray = new Float32Array([
     0, 0, 0, 1,
 ]);
 
-export default class Live2DInternalModel {
-    tag = 'Live2DModel(uninitialized)';
-
-    name: string;
+export class Live2DInternalModel {
     motionManager: MotionManager;
 
     eyeBlink: Live2DEyeBlink;
@@ -48,59 +44,49 @@ export default class Live2DInternalModel {
     bodyAngleXParamIndex: number;
     breathParamIndex: number;
 
-    static async create(file: string | string[]) {
-        let modelSettingsFile: string | undefined;
-        let modelSettings: ModelSettings | undefined;
+    static async fromModelSettings(url: string): Promise<Live2DInternalModel> {
+        return new Promise((resolve, reject) => {
+            new Loader()
+                .add(url)
+                .load((loader: Loader, resources: Partial<Record<string, LoaderResource>>) => {
+                    const resource = resources[url] as Live2DResource;
 
-        if (typeof file === 'string') {
-            modelSettingsFile = file;
-        } else if (Array.isArray(file)) {
-            // check if there is already a model settings file in folder
-            modelSettingsFile = file.find(f => f.endsWith('.model.json'));
-
-            if (!modelSettingsFile) {
-                modelSettings = ModelSettings.fromFolder(file);
-            }
-        } else {
-            throw 'Invalid source.';
-        }
-
-        if (modelSettingsFile) {
-            modelSettings = await loadModelSettings(modelSettingsFile);
-
-            if (!modelSettings) {
-                throw `Failed to load model settings from "${modelSettingsFile}"`;
-            }
-        }
-
-        const internalModel = await loadModel(modelSettings!.model);
-
-        return new Live2DInternalModel(internalModel!, modelSettings!);
+                    if (resource.model) {
+                        try {
+                            resolve(Live2DInternalModel.fromResource(resource));
+                        } catch (e) {
+                            reject(e);
+                        }
+                    } else {
+                        reject(new TypeError('Failed to load Live2D model.'));
+                    }
+                })
+                .on('error', e => reject(e));
+        });
     }
 
-    private constructor(readonly internalModel: Live2DModelWebGL, public modelSettings: ModelSettings) {
-        this.name = modelSettings.name || randomID();
-        this.tag = `Live2DModel\n(${this.name})`;
+    static fromResource(resource: Live2DResource): Live2DInternalModel {
+        const coreModel = Live2DModelWebGL.loadModel(resource.model);
 
-        this.motionManager = new MotionManager(
-            this.name,
-            internalModel,
-            modelSettings.motions,
-            modelSettings.expressions,
-        );
-        this.eyeBlink = new Live2DEyeBlink(internalModel);
+        const error = Live2D.getError();
+        if (error) throw error;
 
-        if (modelSettings.pose) {
-            loadPose(modelSettings.pose, internalModel)
-                .then(pose => (this.pose = pose))
-                .catch(e => log(this.tag, e));
+        const model = new Live2DInternalModel(coreModel, resource.modelSettings);
+
+        if (resource.pose) {
+            model.pose = new Live2DPose(coreModel, resource.pose);
         }
 
-        if (modelSettings.physics) {
-            loadPhysics(modelSettings.physics, internalModel)
-                .then(physics => (this.physics = physics))
-                .catch(e => log(this.tag, e));
+        if (resource.physics) {
+            model.physics = new Live2DPhysics(coreModel, resource.physics);
         }
+
+        return model;
+    }
+
+    private constructor(readonly coreModel: Live2DModelWebGL, readonly modelSettings: ModelSettings) {
+        this.motionManager = new MotionManager(coreModel, modelSettings);
+        this.eyeBlink = new Live2DEyeBlink(coreModel);
 
         const layout = Object.assign(
             {
@@ -110,8 +96,8 @@ export default class Live2DInternalModel {
             modelSettings.layout,
         );
 
-        this.originalWidth = internalModel.getCanvasWidth();
-        this.originalHeight = internalModel.getCanvasHeight();
+        this.originalWidth = coreModel.getCanvasWidth();
+        this.originalHeight = coreModel.getCanvasHeight();
 
         this.matrix.scale(layout.width / LOGICAL_WIDTH, layout.height / LOGICAL_HEIGHT);
 
@@ -135,25 +121,25 @@ export default class Live2DInternalModel {
         );
 
         if (modelSettings.initParams) {
-            modelSettings.initParams.forEach(({ id, value }) => internalModel.setParamFloat(id, value));
+            modelSettings.initParams.forEach(({ id, value }) => coreModel.setParamFloat(id, value));
         }
         if (modelSettings.initOpacities) {
-            modelSettings.initOpacities.forEach(({ id, value }) => internalModel.setPartsOpacity(id, value));
+            modelSettings.initOpacities.forEach(({ id, value }) => coreModel.setPartsOpacity(id, value));
         }
 
-        internalModel.saveParam();
+        coreModel.saveParam();
 
-        this.eyeballXParamIndex = internalModel.getParamIndex('PARAM_EYE_BALL_X');
-        this.eyeballYParamIndex = internalModel.getParamIndex('PARAM_EYE_BALL_Y');
-        this.angleXParamIndex = internalModel.getParamIndex('PARAM_ANGLE_X');
-        this.angleYParamIndex = internalModel.getParamIndex('PARAM_ANGLE_Y');
-        this.angleZParamIndex = internalModel.getParamIndex('PARAM_ANGLE_Z');
-        this.bodyAngleXParamIndex = internalModel.getParamIndex('PARAM_BODY_ANGLE_X');
-        this.breathParamIndex = internalModel.getParamIndex('PARAM_BREATH');
+        this.eyeballXParamIndex = coreModel.getParamIndex('PARAM_EYE_BALL_X');
+        this.eyeballYParamIndex = coreModel.getParamIndex('PARAM_EYE_BALL_Y');
+        this.angleXParamIndex = coreModel.getParamIndex('PARAM_ANGLE_X');
+        this.angleYParamIndex = coreModel.getParamIndex('PARAM_ANGLE_Y');
+        this.angleZParamIndex = coreModel.getParamIndex('PARAM_ANGLE_Z');
+        this.bodyAngleXParamIndex = coreModel.getParamIndex('PARAM_BODY_ANGLE_X');
+        this.breathParamIndex = coreModel.getParamIndex('PARAM_BREATH');
     }
 
     bindTexture(index: number, texture: WebGLTexture) {
-        this.internalModel.setTexture(index, texture);
+        this.coreModel.setTexture(index, texture);
     }
 
     /**
@@ -165,13 +151,13 @@ export default class Live2DInternalModel {
      * @returns The names of hit areas that have passed the test.
      */
     hitTest(x: number, y: number): string[] {
-        if (this.internalModel && this.modelSettings.hitAreas) {
+        if (this.coreModel && this.modelSettings.hitAreas) {
             return this.modelSettings.hitAreas
                 .filter(({ name, id }) => {
-                    const drawIndex = this.internalModel.getDrawDataIndex(id);
+                    const drawIndex = this.coreModel.getDrawDataIndex(id);
 
                     if (drawIndex >= 0) {
-                        const points = this.internalModel.getTransformedPoints(drawIndex);
+                        const points = this.coreModel.getTransformedPoints(drawIndex);
                         let left = this.originalWidth;
                         let right = 0;
                         let top = this.originalHeight;
@@ -197,7 +183,7 @@ export default class Live2DInternalModel {
     }
 
     update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp) {
-        const model = this.internalModel;
+        const model = this.coreModel;
 
         model.loadParam();
 
@@ -236,7 +222,7 @@ export default class Live2DInternalModel {
         tempMatrixArray[12] = matrix.tx;
         tempMatrixArray[13] = -matrix.ty;
 
-        this.internalModel.setMatrix(tempMatrixArray);
-        this.internalModel.draw();
+        this.coreModel.setMatrix(tempMatrixArray);
+        this.coreModel.draw();
     }
 }

@@ -1,12 +1,11 @@
-import { Loader } from '@pixi/loaders';
+import { Live2DInternalModel } from '@/live2d/Live2DInternalModel';
 
 export class Live2DModel {
 
-    static fromModelSettings(url: string) {
-        const loader = new Loader();
+    constructor(readonly internal: Live2DInternalModel) {
+    }
 
-        loader.add(url)
-            .load((loader, res) => console.log('result', res))
-            .on('error', e => console.warn(`Failed to load Live2D model from ${url}:`, e));
+    static async fromModelSettings(url: string) {
+        return new Live2DModel(await Live2DInternalModel.fromModelSettings(url));
     }
 }
