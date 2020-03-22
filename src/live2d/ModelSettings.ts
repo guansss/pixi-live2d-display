@@ -1,54 +1,9 @@
-import { cloneWithCamelCase } from '@/core/utils/misc';
-import { LIVE2D_DIRECTORY } from '@/defaults';
+import { ExpressionDefinition, Layout, ModelSettingsJSON, MotionDefinition } from '@/live2d/ModelSettingsJSON';
+import { cloneWithCamelCase } from '@/utils';
 import get from 'lodash/get';
 import set from 'lodash/set';
 import { basename, dirname } from 'path';
 import { resolve as urlResolve } from 'url';
-
-export interface Layout {
-    width?: number;
-    height?: number;
-    x?: number;
-    y?: number;
-    centerX?: number;
-    centerY?: number;
-    top?: number;
-    bottom?: number;
-    left?: number;
-    right?: number;
-}
-
-export interface MotionDefinition {
-    readonly name?: string;
-
-    /** `*.mtn` file. */
-    readonly file: string;
-
-    /** Sound file. */
-    readonly sound?: string;
-
-    /** Subtitle name. */
-    readonly subtitle?: string;
-
-    /** Motion fade-in timeout. */
-    readonly fadeIn?: number;
-
-    /** Motion fade-out timeout. */
-    readonly fadeOut?: number;
-
-    /** Start time in hours (for start-up motions only). */
-    readonly time?: number;
-
-    /** Used by greeting. */
-    readonly season?: string;
-}
-
-export interface ExpressionDefinition {
-    readonly name: string;
-
-    /** `*.json` file. */
-    readonly file: string;
-}
 
 export default class ModelSettings {
     readonly name?: string;
@@ -71,44 +26,32 @@ export default class ModelSettings {
     readonly expressions?: ExpressionDefinition[];
     readonly motions: { [group: string]: MotionDefinition[] } = {};
 
+    static isModelSettingsJSON(json: any): json is ModelSettingsJSON {
+        return json && json.model && json.textures;
+    }
+
     /**
-     * Creates a simple ModelSettings by files of a folder. This is useful for models that has no model settings file.
+     * Creates a simple model settings by files of a folder. This is useful for models without model settings file.
      */
     static fromFolder(files: string[]) {
         const mocFile = files.find(f => f.endsWith('.moc'));
 
         if (!mocFile) {
-            throw new TypeError('Cannot find moc file from files');
+            throw new TypeError('Cannot find moc file from files.');
         }
-
-        const fileName = basename(mocFile, '.moc');
-
-        // A Neptunia series model is named like "blanc_m_model_c007.moc", we can get its proper name, "blanc" in this case
-        const neptuniaModelName = fileName.substring(0, fileName.indexOf('_m_'));
-        const modelName = neptuniaModelName || fileName;
 
         return new ModelSettings(
             {
-                name: modelName,
+                name: basename(mocFile, '.moc'),
                 model: mocFile,
                 textures: files.filter(f => f.endsWith('.jpg') || f.endsWith('.png')),
                 physics: files.find(f => f.includes('physics')),
-                hit_areas: neptuniaModelName
-                    ? [
-                        // use the name trick to bind these parts with compatible hit events
-                        { name: 'body', id: 'D_REF.PT_HEAD' },
-                        { name: 'head', id: 'D_REF.PT_MOUTH' },
-                    ]
-                    : undefined,
-                expressions: files.filter(f => f.includes('exp/')).map(f => ({ name: f, file: f })),
+                expressions: files
+                    .filter(f => f.includes('exp/') || f.endsWith('exp.json'))
+                    .map(f => ({ name: f, file: f })),
                 motions: {
-                    idle: [
-                        { file: LIVE2D_DIRECTORY + '/general/mtn/idle_00.mtn', fade_in: 2000, fade_out: 2000 },
-                        { file: LIVE2D_DIRECTORY + '/general/mtn/idle_01.mtn', fade_in: 2000, fade_out: 2000 },
-                        { file: LIVE2D_DIRECTORY + '/general/mtn/idle_02.mtn', fade_in: 2000, fade_out: 2000 },
-                    ],
                     tap_body: files
-                        .filter(f => f.includes('mtn/'))
+                        .filter(f => f.endsWith('.mtn'))
                         .map(f => {
                             const name = basename(f, '.mtn');
                             const soundRegex = new RegExp(name + '\\.(ogg|mp3)$');
@@ -121,16 +64,14 @@ export default class ModelSettings {
                 },
             },
             dirname(mocFile),
-            false,
         );
     }
 
     /**
      * @param json - The model settings JSON
      * @param basePath - Base path of the model.
-     * @param convertPaths - True to convert each file from relative path to absolute path.
      */
-    constructor(readonly json: any, readonly basePath: string, convertPaths = true) {
+    constructor(readonly json: ModelSettingsJSON, readonly basePath: string) {
         if (!(json && typeof json === 'object')) {
             throw new TypeError('Invalid JSON.');
         }
@@ -140,8 +81,10 @@ export default class ModelSettings {
 
         this.copy(cloneWithCamelCase(json));
         this.adaptLegacy();
+    }
 
-        convertPaths && this.convertPaths(basePath);
+    resolvePath(path: string) {
+        return urlResolve(this.basePath, path);
     }
 
     /**
@@ -268,6 +211,7 @@ export default class ModelSettings {
 
     /**
      * Converts each file from relative path to absolute path.
+     * @deprecated
      */
     private convertPaths(basePath: string) {
         const convertProperty = (obj: object, propertyPath: string | number) => {
