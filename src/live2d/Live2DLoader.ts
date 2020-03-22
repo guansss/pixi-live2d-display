@@ -1,7 +1,7 @@
-import ModelSettings from '@/live2d/ModelSettings';
-import { log, warn } from '@/utils/log';
 import { Loader, LoaderResource } from '@pixi/loaders';
 import { parse as urlParse, resolve as urlResolve } from 'url';
+import { log, warn } from '../utils/log';
+import ModelSettings from './ModelSettings';
 
 export interface Live2DResource extends LoaderResource {
     modelSettings: ModelSettings;

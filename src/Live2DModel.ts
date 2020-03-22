@@ -1,4 +1,4 @@
-import { Live2DInternalModel } from '@/live2d/Live2DInternalModel';
+import { Live2DInternalModel } from './live2d/Live2DInternalModel';
 
 export class Live2DModel {
 

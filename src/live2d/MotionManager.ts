@@ -1,8 +1,8 @@
-import ExpressionManager from '@/live2d/ExpressionManager';
-import ModelSettings from '@/live2d/ModelSettings';
-import { MotionDefinition } from '@/live2d/ModelSettingsJSON';
-import { log, warn } from '@/utils/log';
 import { Loader, LoaderResource } from '@pixi/loaders';
+import { log, warn } from '../utils/log';
+import ExpressionManager from './ExpressionManager';
+import ModelSettings from './ModelSettings';
+import { MotionDefinition } from './ModelSettingsJSON';
 
 export enum Priority {
     None = 0,

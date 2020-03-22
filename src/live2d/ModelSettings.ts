@@ -1,9 +1,9 @@
-import { ExpressionDefinition, Layout, ModelSettingsJSON, MotionDefinition } from '@/live2d/ModelSettingsJSON';
-import { cloneWithCamelCase } from '@/utils';
 import get from 'lodash/get';
 import set from 'lodash/set';
 import { basename, dirname } from 'path';
 import { resolve as urlResolve } from 'url';
+import { cloneWithCamelCase } from '../utils';
+import { ExpressionDefinition, Layout, ModelSettingsJSON, MotionDefinition } from './ModelSettingsJSON';
 
 export default class ModelSettings {
     readonly name?: string;

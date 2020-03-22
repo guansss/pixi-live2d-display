@@ -1,12 +1,12 @@
-import FocusController from '@/live2d/FocusController';
-import Live2DEyeBlink from '@/live2d/Live2DEyeBlink';
-import { Live2DResource } from '@/live2d/Live2DLoader';
-import Live2DPhysics from '@/live2d/Live2DPhysics';
-import Live2DPose from '@/live2d/Live2DPose';
-import ModelSettings from '@/live2d/ModelSettings';
-import MotionManager from '@/live2d/MotionManager';
 import { Loader, LoaderResource } from '@pixi/loaders';
 import { Matrix } from '@pixi/math';
+import FocusController from './FocusController';
+import Live2DEyeBlink from './Live2DEyeBlink';
+import { Live2DResource } from './Live2DLoader';
+import Live2DPhysics from './Live2DPhysics';
+import Live2DPose from './Live2DPose';
+import ModelSettings from './ModelSettings';
+import MotionManager from './MotionManager';
 
 export const LOGICAL_WIDTH = 2;
 export const LOGICAL_HEIGHT = 2;

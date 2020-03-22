@@ -9,18 +9,24 @@
   "scripts": {
     "pretest": "yarn build",
     "test": "node node_modules/floss/bin/floss.js --path test -d",
-    "build": "webpack --mode=production & tsc --emitDeclarationOnly"
+    "build": "webpack --mode=production & yarn typing:tsc & yarn typing:dts",
+    "typing:tsc": "tsc --emitDeclarationOnly",
+    "typing:dts": "dts-bundle --name pixi-live2d-plugin --main build/index.d.ts --out ~/lib/index.d.ts"
+  },
+  "peerDependencies": {
+    "pixi.js": "^5.2.1",
+    "lodash": "latest"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.149",
+    "@types/node": "latest",
+    "dts-bundle": "^0.7.3",
+    "electron": "^8.1.1",
+    "floss": "^3.0.0",
     "fork-ts-checker-webpack-plugin": "^4.1.0",
-    "pixi.js": "^5.2.1",
     "ts-loader": "^6.2.1",
     "typescript": "^3.8.3",
     "webpack": "^4.42.0",
     "webpack-cli": "^3.3.11"
-  },
-  "dependencies": {
-    "electron": "^8.1.1",
-    "floss": "^3.0.0"
   }
 }

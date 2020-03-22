@@ -1,9 +1,10 @@
-import Live2DExpression from '@/live2d/Live2DExpression';
-import ModelSettings from '@/live2d/ModelSettings';
-import { ExpressionDefinition } from '@/live2d/ModelSettingsJSON';
-import { warn } from '@/utils/log';
+
 import { Loader, LoaderResource } from '@pixi/loaders';
 import sample from 'lodash/sample';
+import { warn } from '../utils/log';
+import Live2DExpression from './Live2DExpression';
+import ModelSettings from './ModelSettings';
+import { ExpressionDefinition } from './ModelSettingsJSON';
 
 export default class ExpressionManager extends MotionQueueManager {
     readonly definitions: ExpressionDefinition[];

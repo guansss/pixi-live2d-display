@@ -6,7 +6,7 @@ const config = {
     output: {
         path: path.resolve(__dirname, 'lib'),
         filename: 'index.js',
-        library: 'pixi-live2d-plugin',
+        library: JSON.stringify(process.env.npm_package_name),
         libraryTarget: 'umd',
     },
     module: {
@@ -34,6 +34,7 @@ const config = {
     plugins: [
         new ForkTsCheckerWebpackPlugin(),
     ],
+    externals: [/@pixi.*/, /lodash/],
 };
 
 module.exports = (env, argv) => {

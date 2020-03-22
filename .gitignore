@@ -1,8 +1,10 @@
-test/live2d.min.js
+live2d.min.js
+
+/build
+/lib
 
 .DS_Store
 node_modules
-/dist
 
 # TypeScript
 .tsbuildinfo

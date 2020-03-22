@@ -1,4 +1,4 @@
-import { cloneWithCamelCase } from '@/utils';
+import { cloneWithCamelCase } from '../utils';
 
 const enum ParamCalcType {
     Set = 'set',
