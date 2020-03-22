@@ -1,3 +1,5 @@
+test/live2d.min.js
+
 .DS_Store
 node_modules
 /dist

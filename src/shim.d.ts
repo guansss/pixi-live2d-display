@@ -25,7 +25,7 @@ declare module '@pixi/core' {
 }
 
 declare module '@pixi/loaders' {
-    export { Loader } from 'pixi.js';
+    export { Loader,LoaderResource } from 'pixi.js';
 }
 
 declare module '@pixi/utils' {
