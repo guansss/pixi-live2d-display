@@ -1,32 +1,46 @@
-import { ModelSettingsJSON } from '@/live2d/ModelSettingsJson';
+import ModelSettings from '@/live2d/ModelSettings';
+import { log, warn } from '@/utils/log';
 import { Loader, LoaderResource } from '@pixi/loaders';
 import { parse as urlParse, resolve as urlResolve } from 'url';
 
 export interface Live2DResource extends LoaderResource {
+    modelSettings: ModelSettings;
     model: ArrayBuffer;
     textures: PIXI.ITextureDictionary;
     pose?: any;
     physics?: any;
 }
 
-function isModelSettingsJSON(json: any) {
-    return json && json.model && json.textures;
-}
+const TAG = 'Live2DLoader';
 
 export class Live2DLoader implements PIXI.ILoaderPlugin {
-
     static use(this: Loader, resource: LoaderResource, next: (...args: any[]) => {}) {
         // skip if the resource is not a model.json
         if (!resource.data
             || resource.type !== LoaderResource.TYPE.JSON
-            || !isModelSettingsJSON(resource.data)
+            || !ModelSettings.isModelSettingsJSON(resource.data)
         ) {
             next();
             return;
         }
 
-        const settings = resource.data as ModelSettingsJSON;
-        const basePath = urlParse(resource.url).pathname || '';
+        const live2DResource = resource as Live2DResource;
+
+        const basePath = urlParse(live2DResource.url).pathname || '';
+
+        let settings;
+
+        try {
+            settings = new ModelSettings(resource.data, basePath);
+        } catch (e) {
+            next(e);
+            return;
+        }
+
+        const baseLoaderOptions = {
+            crossOrigin: live2DResource.crossOrigin,
+            parentResource: live2DResource,
+        };
 
         // load core model
 
@@ -35,20 +49,20 @@ export class Live2DLoader implements PIXI.ILoaderPlugin {
         if (!this.resources[modelURL]) {
             this.add(
                 modelURL,
-                {
-                    crossOrigin: resource.crossOrigin,
-                    xhrType: LoaderResource.XHR_RESPONSE_TYPE.BUFFER,
-                    parentResource: resource,
-                },
+                Object.assign(
+                    { xhrType: LoaderResource.XHR_RESPONSE_TYPE.BUFFER },
+                    baseLoaderOptions,
+                ),
                 (modelRes: LoaderResource) => {
                     if (modelRes.error) {
+                        warn(TAG, `Failed to load model data from "${modelURL}"`, modelRes.error);
                         next(modelRes.error);
                         return;
                     }
 
-                    console.log('Model Res:', modelRes.name);
+                    live2DResource.model = modelRes.data;
 
-                    (resource as Live2DResource).model = modelRes.data;
+                    log(`Loaded model data (${live2DResource.model.byteLength}) :`, modelRes.name);
 
                     next();
                 },
@@ -57,27 +71,22 @@ export class Live2DLoader implements PIXI.ILoaderPlugin {
 
         // load textures
 
-        resource.textures = {};
+        live2DResource.textures = {};
 
         settings.textures.forEach((texture: string, index: number) => {
             const textureURL = urlResolve(basePath, texture);
 
             if (!this.resources[textureURL]) {
-                this.add(
-                    textureURL,
-                    {
-                        crossOrigin: resource.crossOrigin,
-                        parentResource: resource,
-                    },
-                    (textureRes: LoaderResource) => {
+                this.add(textureURL, baseLoaderOptions, (textureRes: LoaderResource) => {
                         if (textureRes.error) {
+                            warn(TAG, `Failed to load texture from "${textureURL}"`, textureRes.error);
                             next(textureRes.error);
                             return;
                         }
 
-                        resource.textures![index] = textureRes.texture;
+                    live2DResource.textures![index] = textureRes.texture;
 
-                        console.log('Texture Res:', textureRes.name, Object.keys(resource.textures!));
+                    log(`Loaded texture (${textureRes.texture.width}x${textureRes.texture.height}) :`, textureRes.name);
 
                         next();
                     },
@@ -91,21 +100,16 @@ export class Live2DLoader implements PIXI.ILoaderPlugin {
             const poseURL = urlResolve(basePath, settings.pose);
 
             if (!this.resources[poseURL]) {
-                this.add(
-                    poseURL,
-                    {
-                        crossOrigin: resource.crossOrigin,
-                        parentResource: resource,
-                    },
-                    (poseRes: LoaderResource) => {
+                this.add(poseURL, baseLoaderOptions, (poseRes: LoaderResource) => {
                         if (poseRes.error) {
+                            warn(TAG, `Failed to load pose data from "${poseURL}"`, poseRes.error);
                             next(poseRes.error);
                             return;
                         }
 
-                        (resource as Live2DResource).pose = poseRes.data;
+                    live2DResource.pose = poseRes.data;
 
-                        console.log('Pose Res:', poseRes.name);
+                    log(`Loaded pose data :`, poseRes.name);
 
                         next();
                     },
@@ -119,21 +123,16 @@ export class Live2DLoader implements PIXI.ILoaderPlugin {
             const physicsURL = urlResolve(basePath, settings.physics);
 
             if (!this.resources[physicsURL]) {
-                this.add(
-                    physicsURL,
-                    {
-                        crossOrigin: resource.crossOrigin,
-                        parentResource: resource,
-                    },
-                    (physicsRes: LoaderResource) => {
+                this.add(physicsURL, baseLoaderOptions, (physicsRes: LoaderResource) => {
                         if (physicsRes.error) {
+                            warn(TAG, `Failed to load physics data from "${physicsURL}"`, physicsRes.error);
                             next(physicsRes.error);
                             return;
                         }
 
-                        (resource as Live2DResource).physics = physicsRes.data;
+                    live2DResource.physics = physicsRes.data;
 
-                        console.log('Physics Res:', physicsRes.name);
+                    log(`Loaded physics data :`, physicsRes.name);
 
                         next();
                     },
