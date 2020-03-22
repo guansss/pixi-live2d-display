@@ -1,4 +1,4 @@
-import clamp from 'lodash/clamp';
+import { clamp } from '@/utils/math';
 
 interface PartsDefinition {
     group: {
@@ -8,33 +8,25 @@ interface PartsDefinition {
 }
 
 class Live2DPartsParam {
-    readonly id: string;
-
     paramIndex = -1;
     partsIndex = -1;
     link: Live2DPartsParam[] = [];
 
-    constructor(id: string) {
-        this.id = id;
-    }
+    constructor(readonly id: string) {}
 
-    initIndex(internalModel: Live2DModelWebGL) {
-        this.paramIndex = internalModel.getParamIndex('VISIBLE:' + this.id);
-        this.partsIndex = internalModel.getPartsDataIndex(PartsDataID.getID(this.id));
-        internalModel.setParamFloat(this.paramIndex, 1);
+    initIndex(model: Live2DModelWebGL) {
+        this.paramIndex = model.getParamIndex('VISIBLE:' + this.id);
+        this.partsIndex = model.getPartsDataIndex(PartsDataID.getID(this.id));
+        model.setParamFloat(this.paramIndex, 1);
     }
 }
 
 export default class Live2DPose {
-    readonly internalModel: Live2DModelWebGL;
-
     opacityAnimDuration: DOMHighResTimeStamp = 500;
 
     partsGroups: Live2DPartsParam[][] = [];
 
-    constructor(internalModel: Live2DModelWebGL, json: any) {
-        this.internalModel = internalModel;
-
+    constructor(readonly coreModel: Live2DModelWebGL, json: any) {
         if (json['parts_visible']) {
             this.partsGroups = (json['parts_visible'] as PartsDefinition[]).map(({ group }) =>
                 group.map(({ id, link }) => {
@@ -55,15 +47,15 @@ export default class Live2DPose {
     init() {
         this.partsGroups.forEach(group => {
             group.forEach(parts => {
-                parts.initIndex(this.internalModel);
+                parts.initIndex(this.coreModel);
 
                 if (parts.paramIndex >= 0) {
-                    const visible = this.internalModel.getParamFloat(parts.paramIndex) !== 0;
-                    this.internalModel.setPartsOpacity(parts.partsIndex, visible ? 1 : 0);
-                    this.internalModel.setParamFloat(parts.paramIndex, visible ? 1 : 0);
+                    const visible = this.coreModel.getParamFloat(parts.paramIndex) !== 0;
+                    this.coreModel.setPartsOpacity(parts.partsIndex, visible ? 1 : 0);
+                    this.coreModel.setParamFloat(parts.paramIndex, visible ? 1 : 0);
 
                     if (parts.link.length > 0) {
-                        parts.link.forEach(p => p.initIndex(this.internalModel));
+                        parts.link.forEach(p => p.initIndex(this.coreModel));
                     }
                 }
             });
@@ -71,18 +63,18 @@ export default class Live2DPose {
     }
 
     normalizePartsOpacityGroup(partsGroup: Live2DPartsParam[], dt: DOMHighResTimeStamp) {
-        const internalModel = this.internalModel;
+        const model = this.coreModel;
         const phi = 0.5;
         const maxBackOpacity = 0.15;
         let visibleOpacity = 1;
 
         let visibleIndex = partsGroup.findIndex(
-            ({ paramIndex, partsIndex }) => partsIndex >= 0 && internalModel.getParamFloat(paramIndex) !== 0,
+            ({ paramIndex, partsIndex }) => partsIndex >= 0 && model.getParamFloat(paramIndex) !== 0,
         );
 
         if (visibleIndex >= 0) {
             const parts = partsGroup[visibleIndex];
-            const originalOpacity = internalModel.getPartsOpacity(parts.partsIndex);
+            const originalOpacity = model.getPartsOpacity(parts.partsIndex);
 
             visibleOpacity = clamp(originalOpacity + dt / this.opacityAnimDuration, 0, 1);
         } else {
@@ -93,9 +85,9 @@ export default class Live2DPose {
         partsGroup.forEach(({ partsIndex }, index) => {
             if (partsIndex >= 0) {
                 if (visibleIndex == index) {
-                    internalModel.setPartsOpacity(partsIndex, visibleOpacity);
+                    model.setPartsOpacity(partsIndex, visibleOpacity);
                 } else {
-                    let opacity = internalModel.getPartsOpacity(partsIndex);
+                    let opacity = model.getPartsOpacity(partsIndex);
 
                     // I can't understand this part, so just leave it original
                     let a1;
@@ -112,22 +104,22 @@ export default class Live2DPose {
                         opacity = a1;
                     }
 
-                    internalModel.setPartsOpacity(partsIndex, opacity);
+                    model.setPartsOpacity(partsIndex, opacity);
                 }
             }
         });
     }
 
     copyOpacity(partsGroup: Live2DPartsParam[]) {
-        const internalModel = this.internalModel;
+        const model = this.coreModel;
 
         partsGroup.forEach(({ partsIndex, link }) => {
             if (partsIndex >= 0 && link) {
-                const opacity = internalModel.getPartsOpacity(partsIndex);
+                const opacity = model.getPartsOpacity(partsIndex);
 
                 link.forEach(({ partsIndex }) => {
                     if (partsIndex >= 0) {
-                        internalModel.setPartsOpacity(partsIndex, opacity);
+                        model.setPartsOpacity(partsIndex, opacity);
                     }
                 });
             }

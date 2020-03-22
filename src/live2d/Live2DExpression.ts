@@ -15,14 +15,11 @@ interface Param {
 const DEFAULT_FADING_DURATION = 500;
 
 export default class Live2DExpression extends AMotion {
-    name?: string;
-
     readonly params: Param[] = [];
 
-    constructor(readonly internalModel: Live2DModelWebGL, json: object, name?: string) {
+    constructor(readonly coreModel: Live2DModelWebGL, json: object, readonly name?: string) {
         super();
 
-        this.name = name;
         this.load(cloneWithCamelCase(json));
     }
 
@@ -39,7 +36,7 @@ export default class Live2DExpression extends AMotion {
                     return;
                 }
 
-                const id = this.internalModel.getParamIndex(paramDef.id);
+                const id = this.coreModel.getParamIndex(paramDef.id);
                 const type = paramDef.calc || ParamCalcType.Add;
 
                 if (type === ParamCalcType.Add) {

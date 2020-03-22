@@ -36,13 +36,9 @@ const TARGET_TYPE_MAP = {
 };
 
 export default class Live2DPhysics {
-    internalModel: Live2DModelWebGL;
-
     physicsHairs: PhysicsHair[] = [];
 
-    constructor(internalModel: Live2DModelWebGL, json: any) {
-        this.internalModel = internalModel;
-
+    constructor(readonly coreModel: Live2DModelWebGL, json: any) {
         if (json['physics_hair']) {
             this.physicsHairs = (json['physics_hair'] as PhysicsHairDefinition[]).map(definition => {
                 const physicsHair = new PhysicsHair();
@@ -71,6 +67,6 @@ export default class Live2DPhysics {
     }
 
     update(elapsed: DOMHighResTimeStamp) {
-        this.physicsHairs.forEach(physicsHair => physicsHair.update(this.internalModel, elapsed));
+        this.physicsHairs.forEach(physicsHair => physicsHair.update(this.coreModel, elapsed));
     }
 }
