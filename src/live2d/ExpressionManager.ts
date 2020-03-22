@@ -1,5 +1,7 @@
 import Live2DExpression from '@/live2d/Live2DExpression';
+import ModelSettings from '@/live2d/ModelSettings';
 import { ExpressionDefinition } from '@/live2d/ModelSettingsJSON';
+import { warn } from '@/utils/log';
 import { Loader, LoaderResource } from '@pixi/loaders';
 import sample from 'lodash/sample';
 
@@ -10,10 +12,14 @@ export default class ExpressionManager extends MotionQueueManager {
     defaultExpression: Live2DExpression;
     currentExpression: Live2DExpression;
 
-    constructor(readonly coreModel: Live2DModelWebGL, definitions: ExpressionDefinition[]) {
+    constructor(readonly coreModel: Live2DModelWebGL, readonly modelSettings: ModelSettings) {
         super();
 
-        this.definitions = definitions;
+        if (!modelSettings.expressions) {
+            throw new TypeError('Missing expression definitions.');
+        }
+
+        this.definitions = modelSettings.expressions;
 
         this.defaultExpression = new Live2DExpression(coreModel, {}, '(default)');
         this.currentExpression = this.defaultExpression;
@@ -26,13 +32,18 @@ export default class ExpressionManager extends MotionQueueManager {
         return new Promise(resolve => {
             const loader = new Loader();
 
-            this.definitions.forEach(({ name, file }) => loader.add(file, { name }));
+            this.definitions.forEach(({ name, file }) => loader.add(this.modelSettings.resolvePath(file), { name }));
 
             loader
                 .on('load', (loader: Loader, resource: LoaderResource) => {
-                    if (resource.xhrType === LoaderResource.XHR_RESPONSE_TYPE.JSON) {
+                    if (resource.type === LoaderResource.TYPE.JSON) {
                         this.expressions.push(new Live2DExpression(this.coreModel, resource.data, resource.name));
+                    } else {
+                        warn(`Unexpected format of expression file "${resource.name}"`);
                     }
+                })
+                .on('error', (error: Error, loader: Loader, resource: LoaderResource) => {
+                    warn(`Failed to load expression file "${resource.name}"`);
                 })
                 .load(() => {
                     this.expressions.push(this.defaultExpression); // at least put a normal expression
