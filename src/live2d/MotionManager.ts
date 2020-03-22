@@ -1,7 +1,8 @@
 import ExpressionManager from '@/live2d/ExpressionManager';
-import { ExpressionDefinition, MotionDefinition } from '@/live2d/ModelSettings';
-import { error, log } from '@/core/utils/log';
-import { getArrayBuffer } from '@/core/utils/net';
+import ModelSettings from '@/live2d/ModelSettings';
+import { MotionDefinition } from '@/live2d/ModelSettingsJSON';
+import { log, warn } from '@/utils/log';
+import { Loader, LoaderResource } from '@pixi/loaders';
 
 export enum Priority {
     None = 0,
@@ -19,8 +20,6 @@ const DEFAULT_FADE_TIMEOUT = 500;
 export default class MotionManager extends MotionQueueManager {
     tag: string;
 
-    readonly internalModel: Live2DModelWebGL;
-
     definitions: { [group: string]: MotionDefinition[] };
     motionGroups: { [group: string]: Live2DMotion[] } = {};
 
@@ -29,60 +28,81 @@ export default class MotionManager extends MotionQueueManager {
     currentPriority = Priority.None;
     reservePriority = Priority.None;
 
-    constructor(
-        name: string,
-        model: Live2DModelWebGL,
-        motionDefinitions: { [group: string]: MotionDefinition[] },
-        expressionDefinitions?: ExpressionDefinition[],
-    ) {
+    constructor(readonly coreModel: Live2DModelWebGL, readonly modelSettings: ModelSettings) {
         super();
 
-        this.tag = `MotionManager\n(${name})`;
-        this.internalModel = model;
-        this.definitions = motionDefinitions;
+        this.tag = `MotionManager\n(${modelSettings.name})`;
 
-        if (expressionDefinitions) {
-            this.expressionManager = new ExpressionManager(name, model!, expressionDefinitions);
+        if (!modelSettings.motions) {
+            throw new TypeError('Missing motion definitions.');
         }
 
-        this.loadMotions().then();
+        this.definitions = modelSettings.motions;
 
+        if (modelSettings.expressions) {
+            this.expressionManager = new ExpressionManager(coreModel, modelSettings);
+        }
+
+        this.setupMotions();
         this.stopAllMotions();
     }
 
-    private async loadMotions() {
+    private setupMotions() {
         // initialize all motion groups with empty arrays
         Object.keys(this.definitions).forEach(group => (this.motionGroups[group] = []));
 
         // preload idle motions
-        if (this.definitions[Group.Idle]) {
-            for (let i = this.definitions[Group.Idle].length - 1; i >= 0; i--) {
-                this.loadMotion(Group.Idle, i).then();
-            }
-        }
+        this.loadMotion(Group.Idle).then();
     }
 
-    private async loadMotion(group: string, index: number) {
-        const definition = this.definitions[group] && this.definitions[group][index];
+    /**
+     * Loads a motion, or entire motion group if no index specified.
+     */
+    private async loadMotion(group: string, index?: number): Promise<Live2DMotion | void> {
+        return new Promise(resolve => {
+            const definitionGroup = this.definitions[group];
 
-        if (!definition) {
-            error(this.tag, `Motion not found at ${index} in group "${group}"`);
-            return;
-        }
+            if (definitionGroup) {
+                const indices = index ? [index] : definitionGroup.keys();
 
-        log(this.tag, `Loading motion [${definition.name}]`);
+                const loader = new Loader();
 
-        try {
-            const buffer = await getArrayBuffer(definition.file);
-            const motion = Live2DMotion.loadMotion(buffer);
-            motion.setFadeIn(definition.fadeIn! > 0 ? definition.fadeIn! : DEFAULT_FADE_TIMEOUT);
-            motion.setFadeOut(definition.fadeOut! > 0 ? definition.fadeOut! : DEFAULT_FADE_TIMEOUT);
+                for (const i of indices as any) {
+                    const definition = definitionGroup[i];
 
-            this.motionGroups[group][index] = motion;
-            return motion;
-        } catch (e) {
-            error(this.tag, `Failed to load motion [${definition.name}]: ${definition.file}`, e);
-        }
+                    if (definition) {
+                        loader.add(
+                            this.modelSettings.resolvePath(definition.file),
+                            {
+                                xhrType: LoaderResource.XHR_RESPONSE_TYPE.BUFFER,
+                                metadata: { definition, index: i },
+                            },
+                        );
+                    }
+                }
+
+                loader
+                    .on('load', (loader: Loader, resource: LoaderResource) => {
+                        const definition = resource.metadata.definition as MotionDefinition;
+
+                        try {
+                            const motion = Live2DMotion.loadMotion(resource.data);
+
+                            motion.setFadeIn(definition.fadeIn! > 0 ? definition.fadeIn! : DEFAULT_FADE_TIMEOUT);
+                            motion.setFadeOut(definition.fadeOut! > 0 ? definition.fadeOut! : DEFAULT_FADE_TIMEOUT);
+
+                            this.motionGroups[group][resource.metadata.index] = motion;
+
+                            resolve(motion);
+                        } catch (e) {
+                            warn(this.tag, `Failed to load motion [${definition.name}]: ${definition.file}`, e);
+                        }
+                    })
+                    .load(() => resolve());
+            } else {
+                resolve();
+            }
+        });
     }
 
     async startMotionByPriority(group: string, index: number, priority: Priority = Priority.Normal): Promise<boolean> {
@@ -132,7 +152,7 @@ export default class MotionManager extends MotionQueueManager {
             this.startRandomMotion(Group.Idle, Priority.Idle);
         }
 
-        const updated = this.updateParam(this.internalModel);
+        const updated = this.updateParam(this.coreModel);
 
         this.expressionManager && this.expressionManager.update();
 
