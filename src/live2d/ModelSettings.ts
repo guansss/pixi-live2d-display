@@ -6,6 +6,8 @@ import { cloneWithCamelCase } from '../utils';
 import { ExpressionDefinition, Layout, ModelSettingsJSON, MotionDefinition } from './ModelSettingsJSON';
 
 export default class ModelSettings {
+    readonly basePath: string;
+
     readonly name?: string;
 
     // files
@@ -63,21 +65,23 @@ export default class ModelSettings {
                         }),
                 },
             },
-            dirname(mocFile),
+            dirname(mocFile) + '/fake.model.json',
         );
     }
 
     /**
      * @param json - The model settings JSON
-     * @param basePath - Base path of the model.
+     * @param path - Path of the model settings file, used to resolve paths of resources defined in settings.
      */
-    constructor(readonly json: ModelSettingsJSON, readonly basePath: string) {
+    constructor(readonly json: ModelSettingsJSON, readonly path: string) {
         if (!ModelSettings.isModelSettingsJSON(json)) {
             throw new TypeError('Invalid JSON.');
         }
 
+        this.basePath = dirname(path) + '/';
+
         // set default name to folder's name
-        this.name = basename(basePath);
+        this.name = basename(this.basePath);
 
         this.copy(cloneWithCamelCase(json));
         this.adaptLegacy();
@@ -218,7 +222,7 @@ export default class ModelSettings {
             const path: string = get(obj, propertyPath);
 
             if (path) {
-                set(obj, propertyPath, urlResolve(basePath, path));
+                set(obj, propertyPath, this.resolvePath(path));
             }
         };
         const convertArray = (obj: object, arrayPath: string, propertyPath: string) => {

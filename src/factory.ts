@@ -27,7 +27,7 @@ export async function fromModelSettingsFile(url: string, options?: PIXI.ILoaderO
                 const resource = resources[url]!;
 
                 if (!resource.error) {
-                    fromModelSettingsJSON(resource.data, urlParse(url).pathname || '').then(resolve).catch(reject);
+                    fromModelSettingsJSON(resource.data, url).then(resolve).catch(reject);
                 } else {
                     reject(resource.error);
                 }
