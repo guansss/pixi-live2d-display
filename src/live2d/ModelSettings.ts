@@ -72,7 +72,7 @@ export default class ModelSettings {
      * @param basePath - Base path of the model.
      */
     constructor(readonly json: ModelSettingsJSON, readonly basePath: string) {
-        if (!(json && typeof json === 'object')) {
+        if (ModelSettings.isModelSettingsJSON(json)) {
             throw new TypeError('Invalid JSON.');
         }
 
