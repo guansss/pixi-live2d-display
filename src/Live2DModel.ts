@@ -97,7 +97,7 @@ export class Live2DModel extends Container {
 
         const hitAreaNames = this.internal.hitTest(_point.x, _point.y);
 
-        if (hitAreaNames) {
+        if (hitAreaNames.length) {
             log(this.tag, `Hit`, hitAreaNames);
 
             this.emit('hit', hitAreaNames);
