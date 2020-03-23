@@ -7,13 +7,13 @@
   "author": "guansss <821143943@qq.com>",
   "license": "MIT",
   "scripts": {
-    "pretest": "yarn build",
-    "test": "node node_modules/floss/bin/floss.js --path test -d",
+    "pretest": "webpack --mode=development test/index.js -o build.test/index.js",
+    "test": "node node_modules/floss/bin/floss.js --path build.test -d",
     "build": "webpack --mode=production & yarn typing:tsc & yarn typing:dts",
     "typing:tsc": "tsc --emitDeclarationOnly",
     "typing:dts": "dts-bundle --name pixi-live2d-plugin --main build/index.d.ts --out ~/lib/index.d.ts"
   },
-  "peerDependencies": {
+  "dependencies": {
     "pixi.js": "^5.2.1",
     "lodash": "latest"
   },

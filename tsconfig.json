@@ -3,7 +3,6 @@
     "experimentalDecorators": true,
     "declaration": true,
     "incremental": true,
-    "tsBuildInfoFile": ".tsbuildinfo",
     "target": "ES5",
     "module": "esnext",
     "strict": true,
@@ -12,6 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "declarationDir": "build",
+    "outDir": "build",
     "types": [
       "node"
     ],

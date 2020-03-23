@@ -1,6 +1,6 @@
 live2d.min.js
 
-/build
+/build*
 /lib
 
 .DS_Store
