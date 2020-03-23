@@ -1,6 +1,5 @@
 const base = document.createElement('base');
-base.href = '../../../';
-
+base.href = '../../../test/';
 document.head.appendChild(base);
 
 require('./live2d.min');

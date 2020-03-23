@@ -25,6 +25,7 @@
   },
   "hit_areas": [
     {"name": "head", "id": "D_REF.HEAD"},
+    {"name": "mouth", "id": "D_REF.MOUTH"},
     {"name": "body", "id": "D_REF.BODY"}
   ],
   "motions": {
