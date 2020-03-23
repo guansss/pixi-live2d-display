@@ -6,8 +6,6 @@ import { cloneWithCamelCase } from '../utils';
 import { ExpressionDefinition, Layout, ModelSettingsJSON, MotionDefinition } from './ModelSettingsJSON';
 
 export default class ModelSettings {
-    readonly basePath: string;
-
     readonly name?: string;
 
     // files
@@ -78,17 +76,15 @@ export default class ModelSettings {
             throw new TypeError('Invalid JSON.');
         }
 
-        this.basePath = dirname(path) + '/';
-
         // set default name to folder's name
-        this.name = basename(this.basePath);
+        this.name = basename(dirname(path));
 
         this.copy(cloneWithCamelCase(json));
         this.adaptLegacy();
     }
 
     resolvePath(path: string) {
-        return urlResolve(this.basePath, path);
+        return urlResolve(this.path, path);
     }
 
     /**
