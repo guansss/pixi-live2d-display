@@ -18,6 +18,8 @@ declare class Live2DModelWebGL {
 
     drawParamWebGL: DrawParamWebGL;
 
+    getModelContext(): ModelContext;
+
     /**
      * @returns The width of model's Live2D drawing canvas but NOT the html canvas element.
      */
@@ -59,14 +61,6 @@ declare class Live2DModelWebGL {
     update(): void;
 
     draw(): void;
-}
-
-// this class is not exposed from Live2D library, never use it outside
-declare class DrawParamWebGL {
-    gl: WebGLRenderingContext;
-    glno: number;
-
-    setGL(gl: WebGLRenderingContext): void;
 }
 
 declare class AMotion {
@@ -123,4 +117,23 @@ declare class PhysicsHair {
 
 declare class PartsDataID {
     static getID(id: string): string;
+}
+
+// Hidden classes
+
+declare class DrawParamWebGL {
+    gl: WebGLRenderingContext;
+    glno: number;
+
+    setGL(gl: WebGLRenderingContext): void;
+}
+
+declare class ModelContext {
+    clipManager: ClipManager;
+}
+
+declare class ClipManager {
+    curFrameNo: number;
+
+    getMaskRenderTexture(): number;
 }

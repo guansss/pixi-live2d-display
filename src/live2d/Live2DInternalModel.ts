@@ -1,8 +1,6 @@
-import { Loader, LoaderResource } from '@pixi/loaders';
 import { Matrix } from '@pixi/math';
 import FocusController from './FocusController';
 import Live2DEyeBlink from './Live2DEyeBlink';
-import { Live2DResource } from './Live2DLoader';
 import Live2DPhysics from './Live2DPhysics';
 import Live2DPose from './Live2DPose';
 import ModelSettings from './ModelSettings';
@@ -44,47 +42,7 @@ export class Live2DInternalModel {
     bodyAngleXParamIndex: number;
     breathParamIndex: number;
 
-    static async fromModelSettings(url: string): Promise<Live2DInternalModel> {
-        return new Promise((resolve, reject) => {
-            new Loader()
-                .add(url)
-                .load((loader: Loader, resources: Partial<Record<string, LoaderResource>>) => {
-                    const resource = resources[url] as Live2DResource;
-
-                    if (resource.model) {
-                        try {
-                            resolve(Live2DInternalModel.fromResource(resource));
-                        } catch (e) {
-                            reject(e);
-                        }
-                    } else {
-                        reject(new TypeError('Failed to load Live2D model.'));
-                    }
-                })
-                .on('error', e => reject(e));
-        });
-    }
-
-    static fromResource(resource: Live2DResource): Live2DInternalModel {
-        const coreModel = Live2DModelWebGL.loadModel(resource.model);
-
-        const error = Live2D.getError();
-        if (error) throw error;
-
-        const model = new Live2DInternalModel(coreModel, resource.modelSettings);
-
-        if (resource.pose) {
-            model.pose = new Live2DPose(coreModel, resource.pose);
-        }
-
-        if (resource.physics) {
-            model.physics = new Live2DPhysics(coreModel, resource.physics);
-        }
-
-        return model;
-    }
-
-    private constructor(readonly coreModel: Live2DModelWebGL, readonly modelSettings: ModelSettings) {
+    constructor(readonly coreModel: Live2DModelWebGL, readonly modelSettings: ModelSettings) {
         this.motionManager = new MotionManager(coreModel, modelSettings);
         this.eyeBlink = new Live2DEyeBlink(coreModel);
 

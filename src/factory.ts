@@ -146,5 +146,9 @@ export function fromResources(resources: Live2DResources): Live2DModel {
         internalModel.physics = new Live2DPhysics(coreModel, resources.physics);
     }
 
-    return new Live2DModel(internalModel);
+    const model = new Live2DModel(internalModel);
+
+    model.textures = resources.textures;
+
+    return model;
 }
