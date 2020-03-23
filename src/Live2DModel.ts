@@ -17,13 +17,15 @@ export class Live2DModel extends Container {
     tag: string;
 
     textures: Texture[] = [];
-    textureBound = false;
 
     transform: Live2DTransform; // override the type
 
     highlightCover?: Sprite;
 
-    lastTime = performance.now();
+    attachedToGL = false;
+
+    currentTime = performance.now();
+    lastTime = this.currentTime;
 
     static fromModelSettingsFile = fromModelSettingsFile;
     static fromModelSettingsJSON = fromModelSettingsJSON;
@@ -124,8 +126,9 @@ export class Live2DModel extends Container {
     }
 
     update(time: DOMHighResTimeStamp) {
-        this.internal.update(time - this.lastTime, time);
-        this.lastTime = time;
+        this.currentTime = time;
+
+        // don't call update() for internal model here, because it requires WebGL context
     }
 
     protected _render(renderer: Renderer) {
@@ -142,8 +145,7 @@ export class Live2DModel extends Container {
         if ((renderer as any).CONTEXT_UID !== glContextID) {
             glContextID = (renderer as any).CONTEXT_UID;
 
-            // re-bind textures
-            this.textureBound = false;
+            this.attachedToGL = false;
 
             // a temporary workaround for the frame buffers bound to WebGL context in Live2D
             const clipManager = this.internal.coreModel.getModelContext().clipManager;
@@ -151,7 +153,7 @@ export class Live2DModel extends Container {
             clipManager.getMaskRenderTexture();
         }
 
-        if (!this.textureBound) {
+        if (!this.attachedToGL) {
             for (let i = 0; i < this.textures.length; i++) {
                 const baseTexture = this.textures[i].baseTexture;
 
@@ -172,6 +174,9 @@ export class Live2DModel extends Container {
             // manually update the GC counter so they won't be GCed
             (texture.baseTexture as any).touched = renderer.textureGC.count;
         }
+
+        this.internal.update(this.currentTime - this.lastTime, this.currentTime);
+        this.lastTime = this.currentTime;
 
         this.internal.draw(this.transform.getDrawingMatrix(renderer.gl));
 
