@@ -1,6 +1,6 @@
 import { Texture } from '@pixi/core';
 import { Loader, LoaderResource } from '@pixi/loaders';
-import { parse as urlParse } from 'url';
+import { TextureCache } from '@pixi/utils';
 import { Live2DInternalModel } from './live2d/Live2DInternalModel';
 import Live2DPhysics from './live2d/Live2DPhysics';
 import Live2DPose from './live2d/Live2DPose';
@@ -18,6 +18,8 @@ export interface Live2DResources {
     pose?: any;
     physics?: any;
 }
+
+export const MODEL_DATA_CACHE: Record<string, ArrayBuffer> = {};
 
 export async function fromModelSettingsFile(url: string, options?: PIXI.ILoaderOptions): Promise<Live2DModel> {
     return new Promise((resolve, reject) => {
@@ -70,23 +72,37 @@ export async function fromModelSettings(settings: ModelSettings, options?: PIXI.
         }
 
         try {
-            loader.add(
-                settings.resolvePath(settings.model),
-                Object.assign({ xhrType: LoaderResource.XHR_RESPONSE_TYPE.BUFFER }, options),
-                (modelRes: LoaderResource) => {
-                    if (!modelRes.error) {
-                        resources.model = modelRes.data;
-                        log(TAG, `Loaded model data (${resources.model!.byteLength}):`, modelRes.name);
-                    } else {
-                        finish(modelRes.error);
-                    }
-                },
-            );
+            const modelURL = settings.resolvePath(settings.model);
+
+            if (MODEL_DATA_CACHE[modelURL]) {
+                resources.model = MODEL_DATA_CACHE[modelURL];
+
+                log(TAG, `Loaded model data from cache (${resources.model!.byteLength}):`, modelURL);
+            } else {
+                loader.add(
+                    modelURL,
+                    Object.assign({ xhrType: LoaderResource.XHR_RESPONSE_TYPE.BUFFER }, options),
+                    (modelRes: LoaderResource) => {
+                        if (!modelRes.error) {
+                            resources.model = modelRes.data;
+                            log(TAG, `Loaded model data (${resources.model!.byteLength}):`, modelRes.name);
+                        } else {
+                            finish(modelRes.error);
+                        }
+                    },
+                );
+            }
 
             settings.textures.forEach((texture: string, index: number) => {
                 const textureURL = settings.resolvePath(texture);
 
-                if (!loader.resources[textureURL]) {
+                if (TextureCache[textureURL]) {
+                    const texture = TextureCache[textureURL];
+
+                    resources.textures![index] = TextureCache[textureURL];
+
+                    log(TAG, `Loaded texture from cache (${texture.width}x${texture.height}):`, textureURL);
+                } else if (!loader.resources[textureURL]) {
                     loader.add(textureURL, options, (textureRes: LoaderResource) => {
                             if (!textureRes.error) {
                                 resources.textures![index] = textureRes.texture;
