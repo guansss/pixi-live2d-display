@@ -33,11 +33,7 @@ export default class MotionManager extends MotionQueueManager {
 
         this.tag = `MotionManager\n(${modelSettings.name})`;
 
-        if (!modelSettings.motions) {
-            throw new TypeError('Missing motion definitions.');
-        }
-
-        this.definitions = modelSettings.motions;
+        this.definitions = modelSettings.motions || {};
 
         if (modelSettings.expressions) {
             this.expressionManager = new ExpressionManager(coreModel, modelSettings);

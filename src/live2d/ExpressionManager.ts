@@ -1,4 +1,3 @@
-
 import { Loader, LoaderResource } from '@pixi/loaders';
 import sample from 'lodash/sample';
 import { warn } from '../utils/log';
@@ -16,11 +15,7 @@ export default class ExpressionManager extends MotionQueueManager {
     constructor(readonly coreModel: Live2DModelWebGL, readonly modelSettings: ModelSettings) {
         super();
 
-        if (!modelSettings.expressions) {
-            throw new TypeError('Missing expression definitions.');
-        }
-
-        this.definitions = modelSettings.expressions;
+        this.definitions = modelSettings.expressions || [];
 
         this.defaultExpression = new Live2DExpression(coreModel, {}, '(default)');
         this.currentExpression = this.defaultExpression;
