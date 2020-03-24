@@ -26,7 +26,7 @@ export default class MotionManager extends MotionQueueManager {
     constructor(readonly coreModel: Live2DModelWebGL, readonly modelSettings: ModelSettings) {
         super();
 
-        this.tag = `MotionManager\n(${modelSettings.name})`;
+        this.tag = `MotionManager(${modelSettings.name})`;
 
         this.definitions = modelSettings.motions || {};
 

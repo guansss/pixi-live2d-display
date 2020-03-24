@@ -6,6 +6,8 @@ import ModelSettings from './ModelSettings';
 import { ExpressionDefinition } from './ModelSettingsJSON';
 
 export default class ExpressionManager extends MotionQueueManager {
+    tag: string;
+
     readonly definitions: ExpressionDefinition[];
     readonly expressions: Live2DExpression[] = [];
 
@@ -14,6 +16,8 @@ export default class ExpressionManager extends MotionQueueManager {
 
     constructor(readonly coreModel: Live2DModelWebGL, readonly modelSettings: ModelSettings) {
         super();
+
+        this.tag = `ExpressionManager(${modelSettings.name})`;
 
         this.definitions = modelSettings.expressions || [];
 
@@ -35,11 +39,11 @@ export default class ExpressionManager extends MotionQueueManager {
                     if (resource.type === LoaderResource.TYPE.JSON) {
                         this.expressions.push(new Live2DExpression(this.coreModel, resource.data, resource.name));
                     } else {
-                        warn(`Unexpected format of expression file "${resource.name}"`);
+                        warn(this.tag, `Unexpected format of expression file "${resource.name}"`);
                     }
                 })
                 .on('error', (error: Error, loader: Loader, resource: LoaderResource) => {
-                    warn(`Failed to load expression file "${resource.name}"`);
+                    warn(this.tag, `Failed to load expression file "${resource.name}"`);
                 })
                 .load(() => {
                     this.expressions.push(this.defaultExpression); // at least put a normal expression
