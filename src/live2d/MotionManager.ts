@@ -4,12 +4,7 @@ import ExpressionManager from './ExpressionManager';
 import ModelSettings from './ModelSettings';
 import { MotionDefinition } from './ModelSettingsJSON';
 
-export enum Priority {
-    None = 0,
-    Idle = 1,
-    Normal = 2,
-    Force = 3,
-}
+export enum Priority { None, Idle, Normal, Force }
 
 enum Group {
     Idle = 'idle',
@@ -109,8 +104,7 @@ export default class MotionManager extends MotionQueueManager {
 
         this.reservePriority = priority;
 
-        const motion =
-            (this.motionGroups[group] && this.motionGroups[group][index]) || (await this.loadMotion(group, index));
+        const motion = (this.motionGroups[group] && this.motionGroups[group][index]) || (await this.loadMotion(group, index));
         if (!motion) return false;
 
         if (priority === this.reservePriority) {
@@ -144,13 +138,17 @@ export default class MotionManager extends MotionQueueManager {
             if (this.currentPriority > Priority.Idle) {
                 this.expressionManager && this.expressionManager.restoreExpression();
             }
+
             this.currentPriority = Priority.None;
-            this.startRandomMotion(Group.Idle, Priority.Idle);
+
+            if (this.reservePriority === Priority.None) {
+                this.startRandomMotion(Group.Idle, Priority.Idle);
+            }
         }
 
         const updated = this.updateParam(this.coreModel);
 
-        this.expressionManager && this.expressionManager.update();
+        this.expressionManager?.update();
 
         return updated;
     }
