@@ -20,3 +20,9 @@ export function loadArrayBuffer(url) {
             .on('error', reject);
     });
 }
+
+export function resetState(model) {
+    model.scale.set(1, 1);
+    model.position.set(0, 0);
+    model.anchor.set(0, 0);
+}

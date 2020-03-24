@@ -33,5 +33,5 @@ declare module '@pixi/sprite' {
 }
 
 declare module '@pixi/math' {
-    export { Matrix, Point, Rectangle, Bounds, Transform } from 'pixi.js';
+    export { Matrix, Point, ObservablePoint, Rectangle, Bounds, Transform } from 'pixi.js';
 }

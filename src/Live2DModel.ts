@@ -1,6 +1,6 @@
 import { Renderer, Texture } from '@pixi/core';
 import { Container } from '@pixi/display';
-import { Point } from '@pixi/math';
+import { ObservablePoint, Point } from '@pixi/math';
 import { Sprite } from '@pixi/sprite';
 import { fromModelSettings, fromModelSettingsFile, fromModelSettingsJSON, fromResources } from './factory';
 import { Live2DInternalModel } from './live2d/Live2DInternalModel';
@@ -19,6 +19,8 @@ export class Live2DModel extends Container {
     textures: Texture[] = [];
 
     transform: Live2DTransform; // override the type
+
+    anchor = new ObservablePoint(this.onAnchorChange, this, 0, 0);
 
     highlightCover?: Sprite;
 
@@ -42,6 +44,10 @@ export class Live2DModel extends Container {
         this.transform = new Live2DTransform(internal);
 
         this.on('tap', (event: PIXI.interaction.InteractionEvent) => this.tap(event.data.global.x, event.data.global.y));
+    }
+
+    private onAnchorChange() {
+        this.pivot.set(this.anchor.x * this.internal.width, this.anchor.y * this.internal.height);
     }
 
     highlight(enabled: boolean) {
