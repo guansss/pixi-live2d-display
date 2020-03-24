@@ -54,11 +54,10 @@ export default class MotionManager extends MotionQueueManager {
             const definitionGroup = this.definitions[group];
 
             if (definitionGroup) {
-                const indices = index ? [index] : definitionGroup.keys();
-
                 const loader = new Loader();
+                const indices = index !== undefined ? [index] : definitionGroup.keys();
 
-                for (const i of indices as any) {
+                for (const i of indices as number[]) {
                     const definition = definitionGroup[i];
 
                     if (definition) {
@@ -69,6 +68,8 @@ export default class MotionManager extends MotionQueueManager {
                                 metadata: { definition, index: i },
                             },
                         );
+                    } else {
+                        warn(this.tag, `Cannot find motion at "${group}"[${i}]`);
                     }
                 }
 
@@ -91,6 +92,7 @@ export default class MotionManager extends MotionQueueManager {
                     })
                     .load(() => resolve());
             } else {
+                warn(this.tag, `Cannot find motion group "${group}"`);
                 resolve();
             }
         });
@@ -104,7 +106,7 @@ export default class MotionManager extends MotionQueueManager {
 
         this.reservePriority = priority;
 
-        const motion = (this.motionGroups[group] && this.motionGroups[group][index]) || (await this.loadMotion(group, index));
+        const motion = this.motionGroups[group]?.[index] || (await this.loadMotion(group, index));
         if (!motion) return false;
 
         if (priority === this.reservePriority) {
@@ -127,7 +129,7 @@ export default class MotionManager extends MotionQueueManager {
     startRandomMotion(group: string, priority: Priority = Priority.Normal) {
         const groupDefinitions = this.definitions[group];
 
-        if (groupDefinitions && groupDefinitions.length > 0) {
+        if (groupDefinitions?.length > 0) {
             const index = Math.floor(Math.random() * groupDefinitions.length);
             this.startMotionByPriority(group, index, priority).then();
         }
@@ -136,7 +138,7 @@ export default class MotionManager extends MotionQueueManager {
     update() {
         if (this.isFinished()) {
             if (this.currentPriority > Priority.Idle) {
-                this.expressionManager && this.expressionManager.restoreExpression();
+                this.expressionManager?.restoreExpression();
             }
 
             this.currentPriority = Priority.None;
