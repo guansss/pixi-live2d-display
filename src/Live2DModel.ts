@@ -69,7 +69,10 @@ export class Live2DModel extends Container {
     focus(x: number, y: number) {
         _point.x = x;
         _point.y = y;
-        this.toModelPosition(_point, _point);
+
+        // the update transform can be skipped because the focus won't take effect until model is rendered,
+        //  and a model being rendered will always get transform updated
+        this.toModelPosition(_point, _point, true);
 
         this.internal.focusController.focus(
             clamp((_point.x / this.internal.originalWidth) * 2 - 1, -1, 1),
@@ -112,8 +115,15 @@ export class Live2DModel extends Container {
      */
     toModelPosition(position: Point, point?: Point, skipUpdate?: boolean) {
         if (!skipUpdate) {
-            // only local transform is needed to update!
-            this.transform.updateLocalTransform();
+            this._recursivePostUpdateTransform();
+
+            if (!this.parent) {
+                (this.parent as any) = this._tempDisplayObjectParent;
+                this.displayObjectUpdateTransform();
+                (this.parent as any) = null;
+            } else {
+                this.displayObjectUpdateTransform();
+            }
         }
 
         point = point || new Point();
