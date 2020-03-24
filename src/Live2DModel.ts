@@ -108,8 +108,14 @@ export class Live2DModel extends Container {
      * Gets the position in original (unscaled) Live2D model.
      * @param position - The point in world space.
      * @param point - The point to store new value.
+     * @param skipUpdate - True to skip the update transform.
      */
-    toModelPosition(position: Point, point?: Point) {
+    toModelPosition(position: Point, point?: Point, skipUpdate?: boolean) {
+        if (!skipUpdate) {
+            // only local transform is needed to update!
+            this.transform.updateLocalTransform();
+        }
+
         point = point || new Point();
 
         const transform = this.transform.worldTransform;
@@ -128,7 +134,7 @@ export class Live2DModel extends Container {
     update(time: DOMHighResTimeStamp) {
         this.currentTime = time;
 
-        // don't call update() for internal model here, because it requires WebGL context
+        // don't call update() on internal model here, because it requires WebGL context
     }
 
     protected _render(renderer: Renderer) {
