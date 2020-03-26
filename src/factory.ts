@@ -1,5 +1,5 @@
 import { Texture } from '@pixi/core';
-import { Loader, LoaderResource } from '@pixi/loaders';
+import { ILoaderOptions, Loader, LoaderResource } from '@pixi/loaders';
 import { TextureCache } from '@pixi/utils';
 import { Live2DInternalModel } from './live2d/Live2DInternalModel';
 import Live2DPhysics from './live2d/Live2DPhysics';
@@ -21,7 +21,7 @@ export interface Live2DResources {
 
 export const MODEL_DATA_CACHE: Record<string, ArrayBuffer> = {};
 
-export async function fromModelSettingsFile(url: string, options?: PIXI.ILoaderOptions): Promise<Live2DModel> {
+export async function fromModelSettingsFile(url: string, options?: ILoaderOptions): Promise<Live2DModel> {
     return new Promise((resolve, reject) => {
         new Loader()
             .add(url, options)
@@ -38,11 +38,11 @@ export async function fromModelSettingsFile(url: string, options?: PIXI.ILoaderO
     });
 }
 
-export async function fromModelSettingsJSON(json: ModelSettingsJSON, basePath: string, options?: PIXI.ILoaderOptions): Promise<Live2DModel> {
+export async function fromModelSettingsJSON(json: ModelSettingsJSON, basePath: string, options?: ILoaderOptions): Promise<Live2DModel> {
     return fromModelSettings(new ModelSettings(json, basePath), options);
 }
 
-export async function fromModelSettings(settings: ModelSettings, options?: PIXI.ILoaderOptions): Promise<Live2DModel> {
+export async function fromModelSettings(settings: ModelSettings, options?: ILoaderOptions): Promise<Live2DModel> {
     return new Promise((resolve, reject) => {
         const resources: Partial<Live2DResources> = {
             settings,

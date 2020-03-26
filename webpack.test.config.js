@@ -1,13 +1,14 @@
 const path = require('path');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.ts',
-    devtool: 'source-map', // issue related: https://bugs.chromium.org/p/chromium/issues/detail?id=1052872
+    entry: './test/index.js',
+    mode: 'development',
+    target: 'electron-renderer',
+    devtool: 'inline-source-map',
     output: {
-        path: path.resolve(__dirname, 'lib'),
+        path: path.resolve(__dirname, 'build.test'),
         filename: 'index.js',
-        library: process.env.npm_package_name,
+        library: JSON.stringify(process.env.npm_package_name),
         libraryTarget: 'umd',
     },
     module: {
@@ -29,8 +30,5 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js'],
     },
-    plugins: [
-        new ForkTsCheckerWebpackPlugin(),
-    ],
     externals: [/@pixi.*/, /lodash/],
 };

@@ -1,5 +1,6 @@
 import { Renderer, Texture } from '@pixi/core';
 import { Container } from '@pixi/display';
+import { InteractionEvent } from '@pixi/interaction';
 import { ObservablePoint, Point } from '@pixi/math';
 import { Sprite } from '@pixi/sprite';
 import { fromModelSettings, fromModelSettingsFile, fromModelSettingsJSON, fromResources } from './factory';
@@ -43,7 +44,7 @@ export class Live2DModel extends Container {
 
         this.transform = new Live2DTransform(internal);
 
-        this.on('tap', (event: PIXI.interaction.InteractionEvent) => this.tap(event.data.global.x, event.data.global.y));
+        this.on('tap', (event: InteractionEvent) => this.tap(event.data.global.x, event.data.global.y));
     }
 
     private onAnchorChange() {

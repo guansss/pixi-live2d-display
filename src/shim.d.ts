@@ -7,7 +7,7 @@ declare module '@pixi/core' {
 }
 
 declare module '@pixi/loaders' {
-    export { Loader, LoaderResource } from 'pixi.js';
+    export { Loader, LoaderResource, ILoaderOptions } from 'pixi.js';
 }
 
 declare module '@pixi/utils' {
@@ -30,6 +30,11 @@ declare module '@pixi/display' {
 
 declare module '@pixi/sprite' {
     export { Sprite } from 'pixi.js';
+}
+
+declare module '@pixi/interaction' {
+    import { interaction } from 'pixi.js';
+    export import InteractionEvent = interaction.InteractionEvent;
 }
 
 declare module '@pixi/math' {
