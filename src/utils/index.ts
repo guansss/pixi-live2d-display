@@ -1,4 +1,3 @@
-import { Loader, LoaderResource } from '@pixi/loaders';
 import camelCase from 'lodash/camelCase';
 
 /**
@@ -22,13 +21,4 @@ export function cloneWithCamelCase(value: any): any {
     }
 
     return value;
-}
-
-export function loadAsync(url: string | string[]): Promise<Partial<Record<string, LoaderResource>>> {
-    return new Promise((resolve, reject) => {
-        new Loader()
-            .add(url)
-            .load((loader: Loader, resources: Partial<Record<string, LoaderResource>>) => resolve(resources))
-            .on('error', e => reject(e));
-    });
 }
