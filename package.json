@@ -13,8 +13,10 @@
     "typing:tsc": "tsc --emitDeclarationOnly",
     "typing:dts": "dts-bundle --name pixi-live2d-plugin --main build/index.d.ts --out ~/lib/index.d.ts"
   },
+  "dependencies": {
+    "lodash": "latest"
+  },
   "peerDependencies": {
-    "lodash": "latest",
     "@pixi/core": "^5.2.1",
     "@pixi/display": "^5.2.1",
     "@pixi/loaders": "^5.2.1",

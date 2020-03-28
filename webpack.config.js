@@ -1,13 +1,36 @@
 const path = require('path');
+const merge = require('lodash/merge');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
-module.exports = {
+module.exports = [
+    // profile for module systems
+    {
+        output: {
+            filename: 'index.js',
+            library: {
+                commonjs: 'pixi-live2d-plugin',
+                amd: 'pixi-live2d-plugin',
+                root: ['PIXI', 'Live2D'],
+            },
+        },
+        plugins: [
+            new ForkTsCheckerWebpackPlugin(), // just check it once!
+        ],
+        externals: [/* place holder for merging */ undefined, /lodash/],
+    },
+
+    // profile for browser, Lodash is bundled
+    {
+        output: {
+            filename: 'browser.js',
+            library: ['PIXI', 'Live2D'],
+        },
+    },
+].map(override => merge({
     entry: './src/index.ts',
     devtool: 'source-map', // issue related: https://bugs.chromium.org/p/chromium/issues/detail?id=1052872
     output: {
         path: path.resolve(__dirname, 'lib'),
-        filename: 'index.js',
-        library: process.env.npm_package_name,
         libraryTarget: 'umd',
     },
     module: {
@@ -29,8 +52,25 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js'],
     },
-    plugins: [
-        new ForkTsCheckerWebpackPlugin(),
+    optimization: {
+        minimize: false,
+    },
+    externals: [
+        function(context, request, callback) {
+            if (request.startsWith('@pixi/')) {
+                const packageJSON = require('./node_modules/' + request + '/package.json');
+
+                return callback(null, {
+                    commonjs: request,
+                    commonjs2: request,
+                    amd: request,
+
+                    // read namespace setting from respective package.json
+                    // e.g. the namespace of "@pixi/utils" is "PIXI.utils", then the root will be ['PIXI', 'utils']
+                    root: packageJSON.namespace ? packageJSON.namespace.split('.') : 'PIXI',
+                });
+            }
+            callback();
+        },
     ],
-    externals: [/@pixi.*/, /lodash/],
-};
+}, override));
