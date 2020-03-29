@@ -15,7 +15,7 @@ document.body.appendChild(app.view);
 
 describe('Live2DModel', async () => {
     /** @type {Live2DModel} */
-    let model;
+    let model, model2;
     let modelBaseWidth, modelBaseHeight;
 
     before(async () => {
@@ -23,7 +23,12 @@ describe('Live2DModel', async () => {
         modelBaseWidth = model.internal.originalWidth * (model.internal.modelSettings.layout.width || LOGICAL_WIDTH) / LOGICAL_WIDTH;
         modelBaseHeight = model.internal.originalHeight * (model.internal.modelSettings.layout.height || LOGICAL_HEIGHT) / LOGICAL_HEIGHT;
 
+        // testing multiple models
+        model2 = await Live2DModel.fromModelSettingsFile(TEST_MODEL.file);
+        model2.scale.set(0.5, 0.5);
+
         app.stage.addChild(model);
+        app.stage.addChild(model2);
     });
 
     beforeEach(() => {

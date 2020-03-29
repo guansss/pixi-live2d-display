@@ -96,10 +96,12 @@ export class Live2DInternalModel {
         this.breathParamIndex = coreModel.getParamIndex('PARAM_BREATH');
     }
 
-    resetWebGLAttachment(glContextID: number) {
+    updateWebGLContext(gl: WebGLRenderingContext, glContextID: number) {
         const drawParamWebGL = this.coreModel.drawParamWebGL;
 
         drawParamWebGL.firstDraw = true;
+        drawParamWebGL.setGL(gl);
+        drawParamWebGL.glno = glContextID;
 
         // reset WebGL buffers
         for (const prop in drawParamWebGL) {
