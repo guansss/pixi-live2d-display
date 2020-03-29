@@ -125,6 +125,8 @@ declare class DrawParamWebGL {
     gl: WebGLRenderingContext;
     glno: number;
 
+    firstDraw: boolean;
+
     setGL(gl: WebGLRenderingContext): void;
 }
 

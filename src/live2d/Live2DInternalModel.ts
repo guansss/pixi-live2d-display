@@ -96,6 +96,24 @@ export class Live2DInternalModel {
         this.breathParamIndex = coreModel.getParamIndex('PARAM_BREATH');
     }
 
+    resetWebGLAttachment(glContextID: number) {
+        const drawParamWebGL = this.coreModel.drawParamWebGL;
+
+        drawParamWebGL.firstDraw = true;
+
+        // reset WebGL buffers
+        for (const prop in drawParamWebGL) {
+            if (drawParamWebGL.hasOwnProperty(prop) && (drawParamWebGL as any)[prop] instanceof WebGLBuffer) {
+                (drawParamWebGL as any)[prop] = null;
+            }
+        }
+
+        // a temporary workaround for the frame buffers bound to WebGL context in Live2D
+        const clipManager = this.coreModel.getModelContext().clipManager;
+        clipManager.curFrameNo = glContextID;
+        clipManager.getMaskRenderTexture();
+    }
+
     bindTexture(index: number, texture: WebGLTexture) {
         this.coreModel.setTexture(index, texture);
     }
