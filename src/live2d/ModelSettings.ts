@@ -1,5 +1,3 @@
-import get from 'lodash/get';
-import set from 'lodash/set';
 import { basename, dirname } from 'path';
 import { resolve as urlResolve } from 'url';
 import { cloneWithCamelCase } from '../utils';
@@ -31,43 +29,6 @@ export default class ModelSettings {
     }
 
     /**
-     * Creates a simple model settings by files of a folder. This is useful for models without model settings file.
-     */
-    static fromFolder(files: string[]) {
-        const mocFile = files.find(f => f.endsWith('.moc'));
-
-        if (!mocFile) {
-            throw new TypeError('Cannot find moc file from files.');
-        }
-
-        return new ModelSettings(
-            {
-                name: basename(mocFile, '.moc'),
-                model: mocFile,
-                textures: files.filter(f => f.endsWith('.jpg') || f.endsWith('.png')),
-                physics: files.find(f => f.includes('physics')),
-                expressions: files
-                    .filter(f => f.includes('exp/') || f.endsWith('exp.json'))
-                    .map(f => ({ name: f, file: f })),
-                motions: {
-                    tap_body: files
-                        .filter(f => f.endsWith('.mtn'))
-                        .map(f => {
-                            const name = basename(f, '.mtn');
-                            const soundRegex = new RegExp(name + '\\.(ogg|mp3)$');
-
-                            return {
-                                file: f,
-                                sound: files.find(f => soundRegex.test(f)),
-                            };
-                        }),
-                },
-            },
-            dirname(mocFile) + '/fake.model.json',
-        );
-    }
-
-    /**
      * @param json - The model settings JSON
      * @param path - Path of the model settings file, used to resolve paths of resources defined in settings.
      */
@@ -80,7 +41,6 @@ export default class ModelSettings {
         this.name = basename(dirname(path));
 
         this.copy(cloneWithCamelCase(json));
-        this.adaptLegacy();
     }
 
     resolvePath(path: string) {
@@ -178,84 +138,15 @@ export default class ModelSettings {
             }
         }
     }
-
-    /**
-     * Adapt legacy models for version 1.x.
-     */
-    private adaptLegacy() {
-        if (this.pose) {
-            // @ts-ignore
-            this.pose = this.pose.replace(/^\.\/general/, '../general').replace(/^\.\/neptune/, '../neptune');
-        }
-
-        if (this.motions['start_up']) {
-            this.motions['greet'] = this.motions['start_up'];
-            this.motions['greet'].forEach(motionDef => {
-                switch (motionDef.time) {
-                    case -1:
-                        // @ts-ignore
-                        motionDef.season = 'Halloween';
-                        break;
-                    case -2:
-                        // @ts-ignore
-                        motionDef.season = 'Christmas';
-                        break;
-                    case -3:
-                        // @ts-ignore
-                        motionDef.season = 'NewYear';
-                        break;
-                }
-            });
-        }
-    }
-
-    /**
-     * Converts each file from relative path to absolute path.
-     * @deprecated
-     */
-    private convertPaths(basePath: string) {
-        const convertProperty = (obj: object, propertyPath: string | number) => {
-            const path: string = get(obj, propertyPath);
-
-            if (path) {
-                set(obj, propertyPath, this.resolvePath(path));
-            }
-        };
-        const convertArray = (obj: object, arrayPath: string, propertyPath: string) => {
-            const array: [] = get(obj, arrayPath);
-
-            if (Array.isArray(array)) {
-                array.forEach(obj => convertProperty(obj, propertyPath));
-            }
-        };
-
-        convertProperty(this, 'model');
-        convertProperty(this, 'preview');
-        convertProperty(this, 'pose');
-        convertProperty(this, 'physics');
-        convertProperty(this, 'subtitle');
-
-        convertArray(this, 'textures', 'file');
-        convertArray(this, 'expressions', 'file');
-
-        Object.keys(this.motions).forEach(group => {
-            convertArray(this.motions, group, 'file');
-            convertArray(this.motions, group, 'sound');
-        });
-
-        if (Array.isArray(this.textures)) {
-            this.textures.forEach((texture, i) => convertProperty(this.textures, i));
-        }
-    }
 }
 
 /**
  * Copies a property at `path` only if it matches the `type`.
  */
-function copyProperty(dest: object, src: object, path: string, type: string) {
-    const value = get(src, path);
+function copyProperty(dest: any, src: any, path: string, type: string) {
+    const value = src[path];
 
     if (typeof value === type) {
-        set(dest, path, value);
+        dest[path] = value;
     }
 }
