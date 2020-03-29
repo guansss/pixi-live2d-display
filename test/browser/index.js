@@ -3,7 +3,7 @@ import { TEST_MODEL } from '../env';
 import { loadScript } from '../utils';
 
 describe('Browser script tag', () => {
-    before(async () => {
+    it('should work with Pixi in browser', async function() {
         // provide globals
         window.assert = assert;
         window.TEST_MODEL = TEST_MODEL;
@@ -18,9 +18,5 @@ describe('Browser script tag', () => {
 
         // initialize, also test
         await BrowserTest.loadModel();
-    });
-
-    it('should work with Pixi', function() {
-        BrowserTest.display();
     });
 });

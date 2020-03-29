@@ -1,4 +1,5 @@
 import { Application } from '@pixi/app';
+import { TickerPlugin } from '@pixi/ticker';
 import assert from 'assert';
 import sinon from 'sinon';
 import { resolve as urlResolve } from 'url';
@@ -7,9 +8,12 @@ import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from '../../src/live2d/Live2DInternalMo
 import { TEST_MODEL } from './../env';
 import { loadArrayBuffer, remoteRequire } from './../utils';
 
+Application.registerPlugin(TickerPlugin);
+
 const app = new Application({
     width: 1000,
     height: 1000,
+    autoStart: true,
 });
 document.body.appendChild(app.view);
 
@@ -29,6 +33,11 @@ describe('Live2DModel', async () => {
 
         app.stage.addChild(model);
         app.stage.addChild(model2);
+
+        app.ticker.add(function() {
+            model.update(app.ticker.deltaMS);
+            model2.update(app.ticker.deltaMS);
+        });
     });
 
     beforeEach(() => {
@@ -36,17 +45,6 @@ describe('Live2DModel', async () => {
         model.scale.set(1, 1);
         model.position.set(0, 0);
         model.anchor.set(0, 0);
-    });
-
-    afterEach(() => {
-        app.render(); // let me see see!!
-    });
-
-    it('should render without error', () => {
-        app.render();
-        app.render();
-        model.update(performance.now() + 1000);
-        app.render();
     });
 
     it('should have correct size', () => {
@@ -81,15 +79,17 @@ describe('Live2DModel', async () => {
         model.on('hit', listener);
 
         model.tap(-1, -1);
-        assert(!listener.called);
+        sinon.assert.notCalled(listener);
 
         for (const { name, x, y } of TEST_MODEL.hitAreas) {
             model.tap(x, y);
-            assert(listener.lastCall.calledWith(name), name);
+            sinon.assert.calledWith(listener, name);
+            listener.resetHistory();
 
             // mimic an InteractionEvent
             model.emit('tap', { data: { global: { x, y } } });
-            assert(listener.lastCall.calledWith(name), name);
+            sinon.assert.calledWith(listener, name);
+            listener.resetHistory();
         }
     });
 
@@ -99,14 +99,7 @@ describe('Live2DModel', async () => {
 
         setTimeout(() => {
             ext.restoreContext();
-
-            setTimeout(() => {
-                app.render();
-                model.update(performance.now() + 1000);
-                app.render();
-
-                done();
-            }, 100);
+            done();
         }, 100);
     });
 });
