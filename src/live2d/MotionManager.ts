@@ -3,6 +3,7 @@ import { log, warn } from '../utils/log';
 import ExpressionManager from './ExpressionManager';
 import ModelSettings from './ModelSettings';
 import { MotionDefinition } from './ModelSettingsJSON';
+import SoundManager from './SoundManager';
 
 export enum Priority { None, Idle, Normal, Force }
 
@@ -18,6 +19,7 @@ export default class MotionManager extends MotionQueueManager {
     definitions: { [group: string]: MotionDefinition[] };
     motionGroups: { [group: string]: Live2DMotion[] } = {};
 
+    soundManager = new SoundManager();
     expressionManager?: ExpressionManager;
 
     currentPriority = Priority.None;
@@ -115,13 +117,19 @@ export default class MotionManager extends MotionQueueManager {
 
         this.currentPriority = priority;
 
-        log(this.tag, 'Start motion:', this.definitions[group][index].file);
+        const definition = this.definitions[group][index];
+
+        log(this.tag, 'Start motion:', definition.file);
 
         if (priority > Priority.Idle) {
             this.expressionManager && this.expressionManager.resetExpression();
         }
 
         this.startMotion(motion);
+
+        if (definition.sound) {
+            this.soundManager.playSound(this.modelSettings.resolvePath(definition.sound));
+        }
 
         return true;
     }
