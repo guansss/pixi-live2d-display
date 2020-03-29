@@ -1,4 +1,5 @@
 import { Loader, LoaderResource } from '@pixi/loaders';
+import { config } from '../config';
 import { log, warn } from '../utils/log';
 import ExpressionManager from './ExpressionManager';
 import ModelSettings from './ModelSettings';
@@ -127,7 +128,7 @@ export default class MotionManager extends MotionQueueManager {
 
         this.startMotion(motion);
 
-        if (definition.sound) {
+        if (config.sound && definition.sound) {
             this.soundManager.playSound(this.modelSettings.resolvePath(definition.sound));
         }
 

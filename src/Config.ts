@@ -5,4 +5,6 @@ export namespace config {
     export const LOG_LEVEL_ERROR = 3;
 
     export let logLevel = process.env.NODE_ENV === 'production' ? LOG_LEVEL_WARNING : LOG_LEVEL_VERBOSE;
+
+    export let sound = true;
 }
