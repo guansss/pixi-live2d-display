@@ -3,10 +3,8 @@ export interface ModelSettingsJSON {
 
     // files
     readonly model: string;
-    readonly preview?: string;
     readonly pose?: string;
     readonly physics?: string;
-    readonly subtitle?: string;
     readonly textures: string[];
 
     // metadata
@@ -34,28 +32,17 @@ export interface Layout {
 }
 
 export interface MotionDefinition {
-    readonly name?: string;
-
     /** `*.mtn` file. */
     readonly file: string;
 
     /** Sound file. */
     readonly sound?: string;
 
-    /** Subtitle name. */
-    readonly subtitle?: string;
-
     /** Motion fade-in timeout. */
     readonly fadeIn?: number;
 
     /** Motion fade-out timeout. */
     readonly fadeOut?: number;
-
-    /** Start time in hours (for start-up motions only). */
-    readonly time?: number;
-
-    /** Used by greeting. */
-    readonly season?: string;
 }
 
 export interface ExpressionDefinition {

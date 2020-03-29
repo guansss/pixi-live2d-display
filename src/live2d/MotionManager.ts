@@ -87,7 +87,7 @@ export default class MotionManager extends MotionQueueManager {
 
                             resolve(motion);
                         } catch (e) {
-                            warn(this.tag, `Failed to load motion [${definition.name}]: ${definition.file}`, e);
+                            warn(this.tag, `Failed to load motion: ${definition.file}`, e);
                         }
                     })
                     .load(() => resolve());
