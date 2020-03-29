@@ -1,14 +1,11 @@
-// required globals: assert, TEST_MODEL
+// required globals: assert, TEST_MODEL, createApp
 
 (function() {
     let model;
 
-    const app = new PIXI.Application({
-        width: 1000,
-        height: 1000,
-        autoStart: true,
-    });
-    document.body.appendChild(app.view);
+    const app = createApp(PIXI.Application);
+
+    PIXI.Live2D.interaction.register(app.renderer.plugins.interaction);
 
     app.ticker.add(() => model && model.update(app.ticker.deltaMS));
 

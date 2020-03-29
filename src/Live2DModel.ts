@@ -1,16 +1,15 @@
 import { Renderer, Texture } from '@pixi/core';
 import { Container } from '@pixi/display';
-import { InteractionEvent } from '@pixi/interaction';
 import { ObservablePoint, Point } from '@pixi/math';
 import { Sprite } from '@pixi/sprite';
 import { fromModelSettings, fromModelSettingsFile, fromModelSettingsJSON, fromResources } from './factory';
+import { interaction } from './interaction';
 import { Live2DInternalModel } from './live2d/Live2DInternalModel';
 import Live2DTransform from './Live2DTransform';
 import { log } from './utils/log';
 import { clamp } from './utils/math';
 
-// for temporarily use
-const _point = new Point();
+const tempPoint = new Point();
 
 export class Live2DModel extends Container {
     tag: string;
@@ -40,7 +39,8 @@ export class Live2DModel extends Container {
 
         this.transform = new Live2DTransform(internal);
 
-        this.on('tap', (event: InteractionEvent) => this.tap(event.data.global.x, event.data.global.y));
+        this.interactive = true; // defaults to true
+        interaction.registerInteraction(this);
     }
 
     private onAnchorChange() {
@@ -70,16 +70,16 @@ export class Live2DModel extends Container {
      * @param y - The y position in world space.
      */
     focus(x: number, y: number) {
-        _point.x = x;
-        _point.y = y;
+        tempPoint.x = x;
+        tempPoint.y = y;
 
         // the update transform can be skipped because the focus won't take effect until model is rendered,
         //  and a model being rendered will always get transform updated
-        this.toModelPosition(_point, _point, true);
+        this.toModelPosition(tempPoint, tempPoint, true);
 
         this.internal.focusController.focus(
-            clamp((_point.x / this.internal.originalWidth) * 2 - 1, -1, 1),
-            -clamp((_point.y / this.internal.originalHeight) * 2 - 1, -1, 1),
+            clamp((tempPoint.x / this.internal.originalWidth) * 2 - 1, -1, 1),
+            -clamp((tempPoint.y / this.internal.originalHeight) * 2 - 1, -1, 1),
         );
     }
 
@@ -97,11 +97,11 @@ export class Live2DModel extends Container {
      * @fires Live2DModel#hit
      */
     tap(x: number, y: number) {
-        _point.x = x;
-        _point.y = y;
-        this.toModelPosition(_point, _point);
+        tempPoint.x = x;
+        tempPoint.y = y;
+        this.toModelPosition(tempPoint, tempPoint);
 
-        const hitAreaNames = this.internal.hitTest(_point.x, _point.y);
+        const hitAreaNames = this.internal.hitTest(tempPoint.x, tempPoint.y);
 
         if (hitAreaNames.length) {
             log(this.tag, `Hit`, hitAreaNames);
@@ -138,6 +138,10 @@ export class Live2DModel extends Container {
         point.y = ((position.y - transform.ty) / transform.d - internal.matrix.ty) / internal.matrix.d;
 
         return point;
+    }
+
+    containsPoint(point: Point) {
+        return this.getBounds(true).contains(point.x, point.y);
     }
 
     protected _calculateBounds() {
@@ -192,5 +196,11 @@ export class Live2DModel extends Container {
 
         // reset the active texture that has been changed by Live2D's drawing system
         renderer.gl.activeTexture(WebGLRenderingContext.TEXTURE0 + renderer.texture.currentLocation);
+    }
+
+    destroy(options?: { children?: boolean, texture?: boolean, baseTexture?: boolean }) {
+        interaction.unregisterInteraction(this);
+
+        super.destroy(options);
     }
 }

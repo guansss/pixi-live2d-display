@@ -35,6 +35,7 @@ declare module '@pixi/sprite' {
 declare module '@pixi/interaction' {
     import { interaction } from 'pixi.js';
     export import InteractionEvent = interaction.InteractionEvent;
+    export import InteractionManager = interaction.InteractionManager;
 }
 
 declare module '@pixi/math' {

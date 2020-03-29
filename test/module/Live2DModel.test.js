@@ -1,21 +1,22 @@
 import { Application } from '@pixi/app';
+import { Renderer } from '@pixi/core';
+import { InteractionManager } from '@pixi/interaction';
 import { TickerPlugin } from '@pixi/ticker';
 import assert from 'assert';
 import sinon from 'sinon';
 import { resolve as urlResolve } from 'url';
 import { Live2DModel } from '../../src';
+import { interaction } from '../../src/interaction';
 import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from '../../src/live2d/Live2DInternalModel';
 import { TEST_MODEL } from './../env';
-import { loadArrayBuffer, remoteRequire } from './../utils';
+import { createApp, loadArrayBuffer, remoteRequire } from './../utils';
 
 Application.registerPlugin(TickerPlugin);
+Renderer.registerPlugin('interaction', InteractionManager);
 
-const app = new Application({
-    width: 1000,
-    height: 1000,
-    autoStart: true,
-});
-document.body.appendChild(app.view);
+const app = createApp(Application);
+
+interaction.register(app.renderer.plugins.interaction);
 
 describe('Live2DModel', async () => {
     /** @type {Live2DModel} */
@@ -87,7 +88,7 @@ describe('Live2DModel', async () => {
             listener.resetHistory();
 
             // mimic an InteractionEvent
-            model.emit('tap', { data: { global: { x, y } } });
+            model.emit('pointertap', { data: { global: { x, y } } });
             sinon.assert.calledWith(listener, name);
             listener.resetHistory();
         }

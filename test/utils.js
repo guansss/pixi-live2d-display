@@ -31,3 +31,17 @@ export function loadScript(url) {
         document.head.appendChild(script);
     });
 }
+
+export function createApp(appClass) {
+    const app = new appClass({
+        width: innerWidth,
+        height: 1000,
+        autoStart: true,
+        autoDensity: true,
+    });
+    document.body.appendChild(app.view);
+
+    window.addEventListener('resize', () => app.renderer.resize(innerWidth, 1000));
+
+    return app;
+}
