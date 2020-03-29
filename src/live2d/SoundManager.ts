@@ -5,6 +5,8 @@ const TAG = 'SoundManager';
 export default class SoundManager {
     static VOLUME = 0.5;
 
+    audios: HTMLAudioElement[] = [];
+
     private _volume = SoundManager.VOLUME;
 
     get volume(): number {
@@ -16,9 +18,7 @@ export default class SoundManager {
         this.audios.forEach(audio => (audio.volume = this._volume));
     }
 
-    audios: HTMLAudioElement[] = [];
-
-    playSound(file: string): HTMLAudioElement {
+    playSound(file: string, onFinish?: () => void, onError?: (e: Error) => void): HTMLAudioElement {
         const audio = new Audio(file);
         audio.volume = this._volume;
 
@@ -26,16 +26,21 @@ export default class SoundManager {
 
         audio.addEventListener('ended', () => {
             this.audios.splice(this.audios.indexOf(audio));
+            onFinish?.();
         });
         audio.addEventListener('error', (e: ErrorEvent) => {
             this.audios.splice(this.audios.indexOf(audio));
-            warn(TAG, e.error);
+            warn(TAG, `Error occurred when playing "${file}"`, e.error);
+            onError?.(e.error);
         });
 
         const playResult = audio.play();
 
         if (playResult) {
-            playResult.catch(e => warn(TAG, e));
+            playResult.catch(e => {
+                warn(TAG, `Error occurred when playing "${file}"`, e);
+                onError?.(e.error);
+            });
         }
 
         return audio;
