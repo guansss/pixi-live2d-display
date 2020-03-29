@@ -41,6 +41,22 @@ export class Live2DModel extends Container {
 
         this.interactive = true; // defaults to true
         interaction.registerInteraction(this);
+
+        const startMotionByPriority = internal.motionManager.startMotionByPriority.bind(internal.motionManager);
+        internal.motionManager.startMotionByPriority = async (group, index, priority) => {
+            const started = await startMotionByPriority(group, index, priority);
+            if (started) {
+                this.emit('motion', group, index);
+            }
+            return started;
+        };
+
+        const playSound = internal.motionManager.soundManager.playSound.bind(internal.motionManager.soundManager);
+        internal.motionManager.soundManager.playSound = (file: string) => {
+            const audio = playSound(file);
+            this.emit('sound', file, audio);
+            return audio;
+        };
     }
 
     private onAnchorChange() {
@@ -84,17 +100,12 @@ export class Live2DModel extends Container {
     }
 
     /**
-     * @event Live2DModel#hit
-     * @param {string[]} hitAreaNames - The names of hit Live2D hit areas.
-     */
-
-    /**
      * Performs tap action on sprite.
      *
      * @param x - The x position in world space.
      * @param y - The y position in world space.
      *
-     * @fires Live2DModel#hit
+     * @emits Live2DModel#hit
      */
     tap(x: number, y: number) {
         tempPoint.x = x;
@@ -204,3 +215,20 @@ export class Live2DModel extends Container {
         super.destroy(options);
     }
 }
+
+/**
+ * @event Live2DModel#hit
+ * @param {string[]} hitAreaNames - The names of hit Live2D hit areas.
+ */
+
+/**
+ * @event Live2DModel#motion
+ * @param {string} group - The group of started motion.
+ * @param {string} index - The index in group of started motion.
+ */
+
+/**
+ * @event Live2DModel#sound
+ * @param {string} file - Sound source.
+ * @param {HTMLAudioElement} audio
+ */

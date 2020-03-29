@@ -18,27 +18,26 @@ export default class SoundManager {
 
     audios: HTMLAudioElement[] = [];
 
-    playSound(file: string): Promise<void> {
+    playSound(file: string): HTMLAudioElement {
         const audio = new Audio(file);
         audio.volume = this._volume;
 
         this.audios.push(audio);
 
-        return new Promise((resolve, reject) => {
-            audio.addEventListener('ended', () => {
-                this.audios.splice(this.audios.indexOf(audio));
-                resolve();
-            });
-            audio.addEventListener('error', reject);
-
-            const playResult = audio.play();
-
-            if (playResult) {
-                playResult.catch(e => {
-                    warn(TAG, e);
-                    reject(e);
-                });
-            }
+        audio.addEventListener('ended', () => {
+            this.audios.splice(this.audios.indexOf(audio));
         });
+        audio.addEventListener('error', (e: ErrorEvent) => {
+            this.audios.splice(this.audios.indexOf(audio));
+            warn(TAG, e.error);
+        });
+
+        const playResult = audio.play();
+
+        if (playResult) {
+            playResult.catch(e => warn(TAG, e));
+        }
+
+        return audio;
     }
 }
