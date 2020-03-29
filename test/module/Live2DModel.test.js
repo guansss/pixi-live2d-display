@@ -95,13 +95,17 @@ describe('Live2DModel', async () => {
     });
 
     it('should work after losing and restoring WebGL context', function(done) {
-        const ext = app.renderer.gl.getExtension('WEBGL_lose_context');
-        ext.loseContext();
-
         setTimeout(() => {
-            ext.restoreContext();
-            done();
-        }, 100);
+            console.warn('WebGL lose context');
+            const ext = app.renderer.gl.getExtension('WEBGL_lose_context');
+            ext.loseContext();
+
+            setTimeout(() => {
+                console.warn('WebGL restore context');
+                ext.restoreContext();
+                done();
+            }, 100);
+        }, 200);
     });
 });
 
