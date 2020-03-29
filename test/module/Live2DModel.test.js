@@ -87,6 +87,23 @@ describe('Live2DModel', async () => {
             assert(listener.lastCall.calledWith(name), name);
         }
     });
+
+    it('should work after losing and restoring WebGL context', function(done) {
+        const ext = app.renderer.gl.getExtension('WEBGL_lose_context');
+        ext.loseContext();
+
+        setTimeout(() => {
+            ext.restoreContext();
+
+            setTimeout(() => {
+                app.render();
+                model.update(performance.now() + 1000);
+                app.render();
+
+                done();
+            }, 100);
+        }, 100);
+    });
 });
 
 describe('Live2DModel loading variants', () => {
