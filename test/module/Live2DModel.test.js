@@ -2,10 +2,10 @@ import { Application } from '@pixi/app';
 import assert from 'assert';
 import sinon from 'sinon';
 import { resolve as urlResolve } from 'url';
-import { Live2DModel } from '../src';
-import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from '../src/live2d/Live2DInternalModel';
-import { TEST_MODEL } from './env';
-import { loadArrayBuffer, remoteRequire, resetState } from './utils';
+import { Live2DModel } from '../../src';
+import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from '../../src/live2d/Live2DInternalModel';
+import { TEST_MODEL } from './../env';
+import { loadArrayBuffer, remoteRequire } from './../utils';
 
 const app = new Application({
     width: 1000,
@@ -27,7 +27,10 @@ describe('Live2DModel', async () => {
     });
 
     beforeEach(() => {
-        resetState(model);
+        // reset state
+        model.scale.set(1, 1);
+        model.position.set(0, 0);
+        model.anchor.set(0, 0);
     });
 
     afterEach(() => {

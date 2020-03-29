@@ -21,8 +21,13 @@ export function loadArrayBuffer(url) {
     });
 }
 
-export function resetState(model) {
-    model.scale.set(1, 1);
-    model.position.set(0, 0);
-    model.anchor.set(0, 0);
+export function loadScript(url) {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = url;
+        script.onload = resolve;
+        script.onerror = reject;
+
+        document.head.appendChild(script);
+    });
 }
