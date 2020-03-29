@@ -7,6 +7,8 @@
 
     PIXI.Live2D.interaction.register(app.renderer.plugins.interaction);
 
+    PIXI.Live2D.config.logLevel = PIXI.Live2D.config.LOG_LEVEL_NONE;
+
     app.ticker.add(() => model && model.update(app.ticker.deltaMS));
 
     async function loadModel() {
