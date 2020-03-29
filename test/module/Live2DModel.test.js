@@ -32,6 +32,9 @@ describe('Live2DModel', async () => {
         model2 = await Live2DModel.fromModelSettingsFile(TEST_MODEL.file);
         model2.scale.set(0.5, 0.5);
 
+        model.on('hit', hitAreas => hitAreas.includes('body') && model.internal.motionManager.startRandomMotion('tapBody'));
+        model2.on('hit', hitAreas => hitAreas.includes('body') && model2.internal.motionManager.startRandomMotion('tapBody'));
+
         app.stage.addChild(model);
         app.stage.addChild(model2);
 
@@ -92,6 +95,15 @@ describe('Live2DModel', async () => {
             sinon.assert.calledWith(listener, name);
             listener.resetHistory();
         }
+    });
+
+    it('should start motion when tapped', function() {
+        const startMotionByPriority = sinon.spy(model.internal.motionManager, 'startMotionByPriority');
+
+        const bodyPoint = TEST_MODEL.hitAreas.find(area => area.name.includes('body'));
+        model.tap(bodyPoint.x, bodyPoint.y);
+
+        sinon.assert.calledWith(startMotionByPriority, 'tapBody');
     });
 
     it('should work after losing and restoring WebGL context', function(done) {
