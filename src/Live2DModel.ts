@@ -25,7 +25,7 @@ export class Live2DModel extends Container {
 
     glContextID = -1;
 
-    currentTime = performance.now();
+    elapsedTime = performance.now();
     deltaTime = 0;
 
     static fromModelSettingsFile = fromModelSettingsFile;
@@ -168,8 +168,8 @@ export class Live2DModel extends Container {
     }
 
     update(dt: DOMHighResTimeStamp) {
-        this.deltaTime = dt;
-        this.currentTime += dt;
+        this.deltaTime += dt;
+        this.elapsedTime += dt;
 
         // don't call update() on internal model here, because it requires WebGL context
     }
@@ -208,7 +208,7 @@ export class Live2DModel extends Container {
             (texture.baseTexture as any).touched = renderer.textureGC.count;
         }
 
-        this.internal.update(this.deltaTime, this.currentTime);
+        this.internal.update(this.deltaTime, this.elapsedTime);
         this.deltaTime = 0;
 
         this.internal.draw(this.transform.getDrawingMatrix(renderer.gl));
