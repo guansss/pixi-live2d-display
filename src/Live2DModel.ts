@@ -5,6 +5,7 @@ import { Sprite } from '@pixi/sprite';
 import { fromModelSettings, fromModelSettingsFile, fromModelSettingsJSON, fromResources } from './factory';
 import { interaction } from './interaction';
 import { Live2DInternalModel } from './live2d/Live2DInternalModel';
+import { Priority } from './live2d/MotionManager';
 import Live2DTransform from './Live2DTransform';
 import { log } from './utils/log';
 import { clamp } from './utils/math';
@@ -77,6 +78,13 @@ export class Live2DModel extends Container {
         } else if (this.highlightCover) {
             this.highlightCover.visible = false;
         }
+    }
+
+    /**
+     * Shorthand method.
+     */
+    motion(group: string, priority?: Priority) {
+        this.internal.motionManager.startRandomMotion(group, priority);
     }
 
     /**
