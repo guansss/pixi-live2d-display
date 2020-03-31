@@ -12,11 +12,15 @@ import { log, warn } from './utils/log';
 const TAG = 'Live2DFactory';
 
 export interface FactoryOptions extends Live2DModelOptions {
-    loaderOptions?: ILoaderOptions
+    loaderOptions?: ILoaderOptions;
+
+    // defaults to true
+    modelDataCache?: boolean;
+    textureCache?: boolean;
 }
 
 export interface Live2DResources {
-    settings: ModelSettings,
+    settings: ModelSettings;
     model: ArrayBuffer;
     textures: Texture[];
     pose?: any;
@@ -77,8 +81,9 @@ export async function fromModelSettings(settings: ModelSettings, options?: Facto
 
         try {
             const modelURL = settings.resolvePath(settings.model);
+            const modelCache = (options && 'modelDataCache' in options) ? options.modelDataCache : true;
 
-            if (MODEL_DATA_CACHE[modelURL]) {
+            if (modelCache && MODEL_DATA_CACHE[modelURL]) {
                 resources.model = MODEL_DATA_CACHE[modelURL];
 
                 log(TAG, `Loaded model data from cache (${resources.model!.byteLength}):`, modelURL);
@@ -97,10 +102,12 @@ export async function fromModelSettings(settings: ModelSettings, options?: Facto
                 );
             }
 
+            const textureCache = (options && 'textureCache' in options) ? options.textureCache : true;
+
             settings.textures.forEach((texture: string, index: number) => {
                 const textureURL = settings.resolvePath(texture);
 
-                if (TextureCache[textureURL]) {
+                if (textureCache && TextureCache[textureURL]) {
                     const texture = TextureCache[textureURL];
 
                     resources.textures![index] = TextureCache[textureURL];
