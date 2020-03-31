@@ -17,9 +17,7 @@ export namespace interaction {
 
         model.interactionManager = manager;
 
-        function onPointerMove(event: InteractionEvent) {
-            model.focus(event.data.global.x, event.data.global.y);
-        }
+        const onPointerMove = (event: InteractionEvent) => model.focus(event.data.global.x, event.data.global.y);
 
         manager.on('pointermove', onPointerMove);
 
@@ -31,5 +29,6 @@ export namespace interaction {
     export function unregisterInteraction(model: Live2DModel) {
         model._unregisterInteraction?.();
         model._unregisterInteraction = undefined;
+        model.interactionManager = undefined;
     }
 }

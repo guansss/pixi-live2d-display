@@ -6,10 +6,14 @@ import Live2DPhysics from './live2d/Live2DPhysics';
 import Live2DPose from './live2d/Live2DPose';
 import ModelSettings from './live2d/ModelSettings';
 import { ModelSettingsJSON } from './live2d/ModelSettingsJSON';
-import { Live2DModel } from './Live2DModel';
+import { Live2DModel, Live2DModelOptions } from './Live2DModel';
 import { log, warn } from './utils/log';
 
 const TAG = 'Live2DFactory';
+
+export interface FactoryOptions extends Live2DModelOptions {
+    loaderOptions?: ILoaderOptions
+}
 
 export interface Live2DResources {
     settings: ModelSettings,
@@ -21,15 +25,15 @@ export interface Live2DResources {
 
 export const MODEL_DATA_CACHE: Record<string, ArrayBuffer> = {};
 
-export async function fromModelSettingsFile(url: string, options?: ILoaderOptions): Promise<Live2DModel> {
+export async function fromModelSettingsFile(url: string, options?: FactoryOptions): Promise<Live2DModel> {
     return new Promise((resolve, reject) => {
         new Loader()
-            .add(url, options)
+            .add(url, options?.loaderOptions)
             .load((loader: Loader, resources: Partial<Record<string, LoaderResource>>) => {
                 const resource = resources[url]!;
 
                 if (!resource.error) {
-                    fromModelSettingsJSON(resource.data, url).then(resolve).catch(reject);
+                    fromModelSettingsJSON(resource.data, url, options).then(resolve).catch(reject);
                 } else {
                     reject(resource.error);
                 }
@@ -38,11 +42,11 @@ export async function fromModelSettingsFile(url: string, options?: ILoaderOption
     });
 }
 
-export async function fromModelSettingsJSON(json: ModelSettingsJSON, basePath: string, options?: ILoaderOptions): Promise<Live2DModel> {
+export async function fromModelSettingsJSON(json: ModelSettingsJSON, basePath: string, options?: FactoryOptions): Promise<Live2DModel> {
     return fromModelSettings(new ModelSettings(json, basePath), options);
 }
 
-export async function fromModelSettings(settings: ModelSettings, options?: ILoaderOptions): Promise<Live2DModel> {
+export async function fromModelSettings(settings: ModelSettings, options?: FactoryOptions): Promise<Live2DModel> {
     return new Promise((resolve, reject) => {
         const resources: Partial<Live2DResources> = {
             settings,
@@ -55,7 +59,7 @@ export async function fromModelSettings(settings: ModelSettings, options?: ILoad
             if (!error) {
                 if (resources.model) {
                     try {
-                        resolve(fromResources(resources as Live2DResources));
+                        resolve(fromResources(resources as Live2DResources, options));
                     } catch (e) {
                         error = e;
                     }
@@ -81,7 +85,7 @@ export async function fromModelSettings(settings: ModelSettings, options?: ILoad
             } else {
                 loader.add(
                     modelURL,
-                    Object.assign({ xhrType: LoaderResource.XHR_RESPONSE_TYPE.BUFFER }, options),
+                    Object.assign({ xhrType: LoaderResource.XHR_RESPONSE_TYPE.BUFFER }, options?.loaderOptions),
                     (modelRes: LoaderResource) => {
                         if (!modelRes.error) {
                             resources.model = modelRes.data;
@@ -103,7 +107,7 @@ export async function fromModelSettings(settings: ModelSettings, options?: ILoad
 
                     log(TAG, `Loaded texture from cache (${texture.width}x${texture.height}):`, textureURL);
                 } else if (!loader.resources[textureURL]) {
-                    loader.add(textureURL, options, (textureRes: LoaderResource) => {
+                    loader.add(textureURL, options?.loaderOptions, (textureRes: LoaderResource) => {
                             if (!textureRes.error) {
                                 resources.textures![index] = textureRes.texture;
                                 log(TAG, `Loaded texture (${textureRes.texture.width}x${textureRes.texture.height}):`, textureRes.name);
@@ -116,7 +120,7 @@ export async function fromModelSettings(settings: ModelSettings, options?: ILoad
             });
 
             if (settings.pose) {
-                loader.add(settings.resolvePath(settings.pose), options, (poseRes: LoaderResource) => {
+                loader.add(settings.resolvePath(settings.pose), options?.loaderOptions, (poseRes: LoaderResource) => {
                         if (!poseRes.error) {
                             resources.pose = poseRes.data;
                             log(TAG, `Loaded pose data:`, poseRes.name);
@@ -128,7 +132,7 @@ export async function fromModelSettings(settings: ModelSettings, options?: ILoad
             }
 
             if (settings.physics) {
-                loader.add(settings.resolvePath(settings.physics), options, (physicsRes: LoaderResource) => {
+                loader.add(settings.resolvePath(settings.physics), options?.loaderOptions, (physicsRes: LoaderResource) => {
                         if (!physicsRes.error) {
                             resources.physics = physicsRes.data;
                             log(TAG, `Loaded physics data:`, physicsRes.name);
@@ -146,7 +150,7 @@ export async function fromModelSettings(settings: ModelSettings, options?: ILoad
     });
 }
 
-export function fromResources(resources: Live2DResources): Live2DModel {
+export function fromResources(resources: Live2DResources, options?: FactoryOptions): Live2DModel {
     const coreModel = Live2DModelWebGL.loadModel(resources.model);
 
     const error = Live2D.getError();
@@ -162,9 +166,5 @@ export function fromResources(resources: Live2DResources): Live2DModel {
         internalModel.physics = new Live2DPhysics(coreModel, resources.physics);
     }
 
-    const model = new Live2DModel(internalModel);
-
-    model.textures = resources.textures;
-
-    return model;
+    return new Live2DModel(internalModel, resources.textures, options);
 }

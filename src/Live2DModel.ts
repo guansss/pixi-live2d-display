@@ -11,20 +11,31 @@ import Live2DTransform from './Live2DTransform';
 import { log } from './utils/log';
 import { clamp } from './utils/math';
 
+export interface Live2DModelOptions {
+    /**
+     * Automatically listen for pointer events from InteractionManager to achieve interaction.
+     */
+    autoInteract?: boolean;
+}
+
+const DEFAULT_OPTIONS: Required<Live2DModelOptions> = {
+    autoInteract: true,
+};
+
 const tempPoint = new Point();
 
 export class Live2DModel extends Container {
     tag: string;
 
-    transform: Live2DTransform; // override the type
-
-    textures: Texture[] = [];
     highlightCover?: Sprite;
 
-    interactionManager?: InteractionManager;
+    transform: Live2DTransform; // override the type
 
     /** Works like sprite.anchor */
     anchor = new ObservablePoint(this.onAnchorChange, this, 0, 0);
+
+    autoInteract: boolean;
+    interactionManager?: InteractionManager;
 
     glContextID = -1;
 
@@ -36,14 +47,21 @@ export class Live2DModel extends Container {
     static fromModelSettings = fromModelSettings;
     static fromResources = fromResources;
 
-    constructor(readonly internal: Live2DInternalModel) {
+    constructor(readonly internal: Live2DInternalModel, readonly textures: Texture[], options?: Live2DModelOptions) {
         super();
+
+        const _options = Object.assign({}, DEFAULT_OPTIONS, options);
 
         this.tag = `Live2DModel(${internal.modelSettings.name})`;
 
         this.transform = new Live2DTransform(internal);
 
-        this.interactive = true; // defaults to true
+        this.autoInteract = _options.autoInteract;
+
+        if (this.autoInteract) {
+            this.interactive = true;
+            this.on('pointertap', this.onTap);
+        }
 
         // hook motion
         const startMotionByPriority = internal.motionManager.startMotionByPriority.bind(internal.motionManager);
@@ -62,8 +80,6 @@ export class Live2DModel extends Container {
             this.emit('sound', file, audio);
             return audio;
         };
-
-        this.on('pointertap', this.onTap);
     }
 
     private onAnchorChange() {
@@ -169,6 +185,9 @@ export class Live2DModel extends Container {
         return point;
     }
 
+    /**
+     * Offered to InteractionManager to perform hit testing.
+     */
     containsPoint(point: Point) {
         return this.getBounds(true).contains(point.x, point.y);
     }
@@ -185,7 +204,7 @@ export class Live2DModel extends Container {
     }
 
     protected _render(renderer: Renderer) {
-        if (renderer.plugins.interaction !== this.interactionManager) {
+        if (this.autoInteract && renderer.plugins.interaction !== this.interactionManager) {
             interaction.registerInteraction(this, renderer.plugins.interaction);
         }
 
