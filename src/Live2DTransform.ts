@@ -1,5 +1,5 @@
 import { Matrix, Transform } from '@pixi/math';
-import { Live2DInternalModel, LOGICAL_HEIGHT, LOGICAL_WIDTH } from './live2d/Live2DInternalModel';
+import { Live2DInternalModel, LOGICAL_HEIGHT, LOGICAL_WIDTH } from './live2d';
 
 export default class Live2DTransform extends Transform {
     drawingMatrix = new Matrix();

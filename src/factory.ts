@@ -1,11 +1,10 @@
 import { Texture } from '@pixi/core';
 import { ILoaderOptions, Loader, LoaderResource } from '@pixi/loaders';
 import { TextureCache } from '@pixi/utils';
-import { Live2DInternalModel } from './live2d/Live2DInternalModel';
+import { Live2DInternalModel, ModelSettingsJSON } from './live2d';
 import Live2DPhysics from './live2d/Live2DPhysics';
 import Live2DPose from './live2d/Live2DPose';
 import ModelSettings from './live2d/ModelSettings';
-import { ModelSettingsJSON } from './live2d/ModelSettingsJSON';
 import { Live2DModel, Live2DModelOptions } from './Live2DModel';
 import { log, warn } from './utils/log';
 
