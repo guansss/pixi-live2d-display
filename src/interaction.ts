@@ -1,47 +1,35 @@
 import { InteractionEvent, InteractionManager } from '@pixi/interaction';
 import { Live2DModel } from './Live2DModel';
 
+declare module './Live2DModel' {
+    interface Live2DModel {
+        /**
+         * Unregisters interaction bound to InteractionManager.
+         * @private
+         */
+        _unregisterInteraction?(): void;
+    }
+}
+
 export namespace interaction {
-    const live2dModels: Live2DModel[] = [];
+    export function registerInteraction(model: Live2DModel, manager: InteractionManager) {
+        unregisterInteraction(model);
 
-    let interactionManager: InteractionManager | undefined;
+        model.interactionManager = manager;
 
-    export function register(manager: InteractionManager) {
-        if (interactionManager) {
-            unregister();
+        function onPointerMove(event: InteractionEvent) {
+            model.focus(event.data.global.x, event.data.global.y);
         }
 
-        interactionManager = manager;
-        interactionManager.on('pointermove', onPointerMove);
-    }
+        manager.on('pointermove', onPointerMove);
 
-    export function unregister() {
-        if (interactionManager) {
-            interactionManager.off('pointermove', onPointerMove);
-        }
-
-        interactionManager = undefined;
-    }
-
-    function onPointerMove(event: InteractionEvent) {
-        for (const model of live2dModels) {
-            if (model.interactive) {
-                model.focus(event.data.global.x, event.data.global.y);
-            }
-        }
-    }
-
-    export function registerInteraction(model: Live2DModel) {
-        model.on('pointertap', (event: InteractionEvent) => model.tap(event.data.global.x, event.data.global.y));
-
-        live2dModels.push(model);
+        model._unregisterInteraction = function() {
+            this.interactionManager?.off('pointermove', onPointerMove);
+        };
     }
 
     export function unregisterInteraction(model: Live2DModel) {
-        const index = live2dModels.indexOf(model);
-
-        if (index !== -1) {
-            live2dModels.splice(index, 1);
-        }
+        model._unregisterInteraction?.();
+        model._unregisterInteraction = undefined;
     }
 }

@@ -1,5 +1,6 @@
 import { Renderer, Texture } from '@pixi/core';
 import { Container } from '@pixi/display';
+import { InteractionEvent, InteractionManager } from '@pixi/interaction';
 import { ObservablePoint, Point } from '@pixi/math';
 import { Sprite } from '@pixi/sprite';
 import { fromModelSettings, fromModelSettingsFile, fromModelSettingsJSON, fromResources } from './factory';
@@ -15,13 +16,15 @@ const tempPoint = new Point();
 export class Live2DModel extends Container {
     tag: string;
 
-    textures: Texture[] = [];
-
     transform: Live2DTransform; // override the type
 
-    anchor = new ObservablePoint(this.onAnchorChange, this, 0, 0);
-
+    textures: Texture[] = [];
     highlightCover?: Sprite;
+
+    interactionManager?: InteractionManager;
+
+    /** Works like sprite.anchor */
+    anchor = new ObservablePoint(this.onAnchorChange, this, 0, 0);
 
     glContextID = -1;
 
@@ -41,8 +44,8 @@ export class Live2DModel extends Container {
         this.transform = new Live2DTransform(internal);
 
         this.interactive = true; // defaults to true
-        interaction.registerInteraction(this);
 
+        // hook motion
         const startMotionByPriority = internal.motionManager.startMotionByPriority.bind(internal.motionManager);
         internal.motionManager.startMotionByPriority = async (group, index, priority) => {
             const started = await startMotionByPriority(group, index, priority);
@@ -52,12 +55,15 @@ export class Live2DModel extends Container {
             return started;
         };
 
+        // hook sound
         const playSound = internal.motionManager.soundManager.playSound.bind(internal.motionManager.soundManager);
         internal.motionManager.soundManager.playSound = (file: string) => {
             const audio = playSound(file);
             this.emit('sound', file, audio);
             return audio;
         };
+
+        this.on('pointertap', this.onTap);
     }
 
     private onAnchorChange() {
@@ -85,6 +91,10 @@ export class Live2DModel extends Container {
      */
     motion(group: string, priority?: Priority) {
         this.internal.motionManager.startRandomMotion(group, priority);
+    }
+
+    onTap(event: InteractionEvent) {
+        this.tap(event.data.global.x, event.data.global.y);
     }
 
     /**
@@ -175,6 +185,10 @@ export class Live2DModel extends Container {
     }
 
     protected _render(renderer: Renderer) {
+        if (renderer.plugins.interaction !== this.interactionManager) {
+            interaction.registerInteraction(this, renderer.plugins.interaction);
+        }
+
         // reset certain systems in renderer to make Live2D's drawing system compatible with Pixi
         renderer.batch.reset();
         renderer.geometry.reset();

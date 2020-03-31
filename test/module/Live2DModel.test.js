@@ -6,7 +6,6 @@ import assert from 'assert';
 import sinon from 'sinon';
 import { resolve as urlResolve } from 'url';
 import { Live2DModel } from '../../src';
-import { interaction } from '../../src/interaction';
 import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from '../../src/live2d/Live2DInternalModel';
 import { TEST_MODEL } from './../env';
 import { createApp, loadArrayBuffer, remoteRequire } from './../utils';
@@ -15,8 +14,6 @@ Application.registerPlugin(TickerPlugin);
 Renderer.registerPlugin('interaction', InteractionManager);
 
 const app = createApp(Application);
-
-interaction.register(app.renderer.plugins.interaction);
 
 describe('Live2DModel', async () => {
     /** @type {Live2DModel} */
