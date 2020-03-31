@@ -1,7 +1,7 @@
 import { Application } from '@pixi/app';
 import { Renderer } from '@pixi/core';
 import { InteractionManager } from '@pixi/interaction';
-import { TickerPlugin } from '@pixi/ticker';
+import { Ticker, TickerPlugin } from '@pixi/ticker';
 import assert from 'assert';
 import sinon from 'sinon';
 import { resolve as urlResolve } from 'url';
@@ -12,6 +12,7 @@ import { createApp, loadArrayBuffer, remoteRequire } from './../utils';
 
 Application.registerPlugin(TickerPlugin);
 Renderer.registerPlugin('interaction', InteractionManager);
+Live2DModel.registerTicker(Ticker);
 
 const app = createApp(Application);
 
@@ -34,11 +35,6 @@ describe('Live2DModel', async () => {
 
         app.stage.addChild(model);
         app.stage.addChild(model2);
-
-        app.ticker.add(function() {
-            model.update(app.ticker.deltaMS);
-            model2.update(app.ticker.deltaMS);
-        });
     });
 
     beforeEach(() => {

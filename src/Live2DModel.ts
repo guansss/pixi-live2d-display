@@ -3,14 +3,20 @@ import { Container } from '@pixi/display';
 import { InteractionEvent, InteractionManager } from '@pixi/interaction';
 import { ObservablePoint, Point } from '@pixi/math';
 import { Sprite } from '@pixi/sprite';
+import { Ticker } from '@pixi/ticker';
 import { fromModelSettings, fromModelSettingsFile, fromModelSettingsJSON, fromResources } from './factory';
 import { interaction } from './interaction';
 import { Live2DInternalModel, Priority } from './live2d';
 import Live2DTransform from './Live2DTransform';
-import { log } from './utils/log';
+import { log, warn } from './utils/log';
 import { clamp } from './utils/math';
 
 export interface Live2DModelOptions {
+    /**
+     * Automatically update internal model by Ticker.
+     */
+    autoUpdate?: boolean;
+
     /**
      * Automatically listen for pointer events from InteractionManager to achieve interaction.
      */
@@ -18,10 +24,14 @@ export interface Live2DModelOptions {
 }
 
 const DEFAULT_OPTIONS: Required<Live2DModelOptions> = {
+    autoUpdate: true,
     autoInteract: true,
 };
 
 const tempPoint = new Point();
+
+// a reference to Ticker class, defaults to the one in window.PIXI (when loaded by script tag)
+let TickerClass: typeof Ticker | undefined = (window as any).PIXI?.Ticker;
 
 export class Live2DModel extends Container {
     tag: string;
@@ -36,6 +46,28 @@ export class Live2DModel extends Container {
     autoInteract: boolean;
     interactionManager?: InteractionManager;
 
+    protected _autoUpdate = false;
+
+    get autoUpdate() {
+        return this._autoUpdate;
+    }
+
+    set autoUpdate(autoUpdate: boolean) {
+        if (autoUpdate) {
+            if (TickerClass) {
+                TickerClass?.shared.add(this.onTickerUpdate, this);
+
+                this._autoUpdate = true;
+            } else {
+                warn(this.tag, 'No Ticker registered, please call Live2DModel.registerTicker(Ticker).');
+            }
+        } else {
+            TickerClass?.shared.remove(this.onTickerUpdate, this);
+
+            this._autoUpdate = false;
+        }
+    }
+
     glContextID = -1;
 
     elapsedTime = performance.now();
@@ -45,6 +77,10 @@ export class Live2DModel extends Container {
     static fromModelSettingsJSON = fromModelSettingsJSON;
     static fromModelSettings = fromModelSettings;
     static fromResources = fromResources;
+
+    static registerTicker(tickerClass: typeof Ticker) {
+        TickerClass = tickerClass;
+    }
 
     constructor(readonly internal: Live2DInternalModel, readonly textures: Texture[], options?: Live2DModelOptions) {
         super();
@@ -61,6 +97,8 @@ export class Live2DModel extends Container {
             this.interactive = true;
             this.on('pointertap', this.onTap);
         }
+
+        this.autoUpdate = _options.autoUpdate;
 
         // hook motion
         const startMotionByPriority = internal.motionManager.startMotionByPriority.bind(internal.motionManager);
@@ -193,6 +231,10 @@ export class Live2DModel extends Container {
 
     protected _calculateBounds() {
         this._bounds.addFrame(this.transform, 0, 0, this.internal.width, this.internal.height);
+    }
+
+    onTickerUpdate() {
+        this.update(TickerClass!.shared.deltaMS);
     }
 
     update(dt: DOMHighResTimeStamp) {

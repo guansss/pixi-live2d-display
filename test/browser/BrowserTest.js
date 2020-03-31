@@ -7,8 +7,6 @@
 
     PIXI.Live2D.config.logLevel = PIXI.Live2D.config.LOG_LEVEL_NONE;
 
-    app.ticker.add(() => model && model.update(app.ticker.deltaMS));
-
     async function loadModel() {
         model = await PIXI.Live2D.Live2DModel.fromModelSettingsFile(TEST_MODEL.file);
         app.stage.addChild(model);

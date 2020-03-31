@@ -21,7 +21,7 @@ declare module '@pixi/app' {
 }
 
 declare module '@pixi/ticker' {
-    export { TickerPlugin } from 'pixi.js';
+    export { Ticker } from 'pixi.js';
 }
 
 declare module '@pixi/display' {
