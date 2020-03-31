@@ -7,7 +7,7 @@ export default class Live2DTransform extends Transform {
     glWidth = -1;
     glHeight = -1;
 
-    needsUpdate = false;
+    needsUpdate = true;
 
     constructor(readonly model: Live2DInternalModel) {
         super();
