@@ -8,8 +8,8 @@ module.exports = [
         output: {
             filename: 'index.js',
             library: {
-                commonjs: 'pixi-live2d-plugin',
-                amd: 'pixi-live2d-plugin',
+                commonjs: 'pixi-live2d-display',
+                amd: 'pixi-live2d-display',
                 root: ['PIXI', 'Live2D'],
             },
         },

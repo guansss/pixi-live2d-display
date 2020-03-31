@@ -1,4 +1,4 @@
-# pixi-live2d-plugin
+# pixi-live2d-display
 
 Yet another powerful Live2D plugin for PixiJS.
 
