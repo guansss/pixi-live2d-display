@@ -10,7 +10,7 @@ module.exports = [
             library: {
                 commonjs: 'pixi-live2d-display',
                 amd: 'pixi-live2d-display',
-                root: ['PIXI', 'Live2D'],
+                root: ['PIXI', 'live2d'],
             },
         },
         plugins: [
