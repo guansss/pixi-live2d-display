@@ -293,6 +293,10 @@ export class Live2DModel extends Container {
     }
 
     destroy(options?: { children?: boolean, texture?: boolean, baseTexture?: boolean }) {
+        // the setter will remove listener from ticker
+        this.autoUpdate = false;
+
+        this.autoInteract = false;
         interaction.unregisterInteraction(this);
 
         super.destroy(options);
