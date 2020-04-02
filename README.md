@@ -3,7 +3,11 @@
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/guansss/pixi-live2d-display?style=flat-square)
 [![Codacy Badge](https://img.shields.io/codacy/grade/815a5e1399b74441a2203b7c7b4861c0?style=flat-square&logo=codacy)](https://www.codacy.com/manual/guansss/pixi-live2d-display?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=guansss/pixi-live2d-display&amp;utm_campaign=Badge_Grade)
 
-Yet another powerful Live2D plugin for PixiJS.
+Live2D integration for [PixiJS](https://github.com/pixijs/pixi.js) v5.
+
+Only compatible with Cubism 2.1. Support of Cubism 4 is on the way!
+
+[Play with demo](https://codepen.io/guansss/pen/MWwRNyP?editors=1010)
 
 ## Install
 
@@ -12,6 +16,8 @@ npm install pixi-live2d-display
 ```
 
 This library relies on `Promise`, you may need a polyfill, e.g. [es6-promise](https://github.com/stefanpenner/es6-promise).
+
+You'll also need to include the Cubism 2.1 core library, which is typically named `live2d.min.js`. The official download has been dead [since 9/4/2019](https://help.live2d.com/en/other/other_20/), but its spirit still exists [somewhere on the net](https://github.com/dylanNew/live2d/tree/master/webgl/Live2D/lib)...
 
 ## Usage
 
