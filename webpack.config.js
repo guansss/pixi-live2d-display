@@ -23,7 +23,7 @@ module.exports = [
     {
         output: {
             filename: 'browser.js',
-            library: ['PIXI', 'Live2D'],
+            library: ['PIXI', 'live2d'],
         },
     },
 ].map(override => merge({
