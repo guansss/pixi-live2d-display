@@ -154,14 +154,10 @@ If you don't want the default behaviour, you can disable it by setting `autoInte
 ```javascript
 const model = await Live2DModel.fromModelSettingsFile('my-model.model.json', { autoInteract: false });
 
+// focusing
 canvasElement.addEventListener('mousemove', event => model.focus(event.clientX, event.clientY));
-```
 
-#### Tapping
-
-```javascript
-const model = await Live2DModel.fromModelSettingsFile('my-model.model.json', { autoInteract: false });
-
+// tapping
 canvasElement.addEventListener('mousedown', event => model.tap(event.clientX, event.clientY));
 ```
 
