@@ -52,9 +52,6 @@ module.exports = [
     resolve: {
         extensions: ['.ts', '.js'],
     },
-    optimization: {
-        minimize: false,
-    },
     externals: [
         function(context, request, callback) {
             if (request.startsWith('@pixi/')) {
