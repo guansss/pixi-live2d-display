@@ -8,7 +8,7 @@ import { fromModelSettings, fromModelSettingsFile, fromModelSettingsJSON, fromRe
 import { interaction } from './interaction';
 import { Live2DInternalModel, Priority } from './live2d';
 import Live2DTransform from './Live2DTransform';
-import { log, warn } from './utils/log';
+import { logger } from './utils/log';
 import { clamp } from './utils/math';
 
 export interface Live2DModelOptions {
@@ -59,7 +59,7 @@ export class Live2DModel extends Container {
 
                 this._autoUpdate = true;
             } else {
-                warn(this.tag, 'No Ticker registered, please call Live2DModel.registerTicker(Ticker).');
+                logger.warn(this.tag, 'No Ticker registered, please call Live2DModel.registerTicker(Ticker).');
             }
         } else {
             TickerClass?.shared.remove(this.onTickerUpdate, this);
@@ -186,7 +186,7 @@ export class Live2DModel extends Container {
         const hitAreaNames = this.internal.hitTest(tempPoint.x, tempPoint.y);
 
         if (hitAreaNames.length) {
-            log(this.tag, `Hit`, hitAreaNames);
+            logger.log(this.tag, `Hit`, hitAreaNames);
 
             this.emit('hit', hitAreaNames);
         }

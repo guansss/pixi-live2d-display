@@ -1,6 +1,6 @@
 import { Loader, LoaderResource } from '@pixi/loaders';
 import sample from 'lodash/sample';
-import { warn } from '../utils/log';
+import { logger } from '../utils/log';
 import Live2DExpression from './Live2DExpression';
 import ModelSettings from './ModelSettings';
 import { ExpressionDefinition } from './ModelSettingsJSON';
@@ -39,11 +39,11 @@ export default class ExpressionManager extends MotionQueueManager {
                     if (resource.type === LoaderResource.TYPE.JSON) {
                         this.expressions.push(new Live2DExpression(this.coreModel, resource.data, resource.name));
                     } else {
-                        warn(this.tag, `Unexpected format of expression file "${resource.name}"`);
+                        logger.warn(this.tag, `Unexpected format of expression file "${resource.name}"`);
                     }
                 })
                 .on('error', (error: Error, loader: Loader, resource: LoaderResource) => {
-                    warn(this.tag, `Failed to load expression file "${resource.name}"`);
+                    logger.warn(this.tag, `Failed to load expression file "${resource.name}"`);
                 })
                 .load(() => {
                     this.expressions.push(this.defaultExpression); // at least put a normal expression

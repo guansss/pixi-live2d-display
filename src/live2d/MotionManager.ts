@@ -1,6 +1,6 @@
 import { Loader, LoaderResource } from '@pixi/loaders';
 import { config } from '../config';
-import { log, warn } from '../utils/log';
+import { logger } from '../utils/log';
 import ExpressionManager from './ExpressionManager';
 import ModelSettings from './ModelSettings';
 import { MotionDefinition } from './ModelSettingsJSON';
@@ -72,7 +72,7 @@ export default class MotionManager extends MotionQueueManager {
                             },
                         );
                     } else {
-                        warn(this.tag, `Cannot find motion at "${group}"[${i}]`);
+                        logger.warn(this.tag, `Cannot find motion at "${group}"[${i}]`);
                     }
                 }
 
@@ -90,12 +90,12 @@ export default class MotionManager extends MotionQueueManager {
 
                             resolve(motion);
                         } catch (e) {
-                            warn(this.tag, `Failed to load motion: ${definition.file}`, e);
+                            logger.warn(this.tag, `Failed to load motion: ${definition.file}`, e);
                         }
                     })
                     .load(() => resolve());
             } else {
-                warn(this.tag, `Cannot find motion group "${group}"`);
+                logger.warn(this.tag, `Cannot find motion group "${group}"`);
                 resolve();
             }
         });
@@ -103,7 +103,7 @@ export default class MotionManager extends MotionQueueManager {
 
     async startMotionByPriority(group: string, index: number, priority: Priority = Priority.Normal): Promise<boolean> {
         if (priority !== Priority.Force && (priority <= this.currentPriority || priority <= this.reservePriority)) {
-            log(this.tag, 'Cannot start motion because another motion of same or higher priority is running');
+            logger.log(this.tag, 'Cannot start motion because another motion of same or higher priority is running');
             return false;
         }
 
@@ -120,7 +120,7 @@ export default class MotionManager extends MotionQueueManager {
 
         const definition = this.definitions[group][index];
 
-        log(this.tag, 'Start motion:', definition.file);
+        logger.log(this.tag, 'Start motion:', definition.file);
 
         if (priority > Priority.Idle) {
             this.expressionManager && this.expressionManager.resetExpression();

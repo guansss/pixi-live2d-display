@@ -1,4 +1,4 @@
-import { warn } from '../utils/log';
+import { logger } from '../utils/log';
 
 const TAG = 'SoundManager';
 
@@ -30,7 +30,7 @@ export default class SoundManager {
         });
         audio.addEventListener('error', (e: ErrorEvent) => {
             this.audios.splice(this.audios.indexOf(audio));
-            warn(TAG, `Error occurred when playing "${file}"`, e.error);
+            logger.warn(TAG, `Error occurred when playing "${file}"`, e.error);
             onError?.(e.error);
         });
 
@@ -38,7 +38,7 @@ export default class SoundManager {
 
         if (playResult) {
             playResult.catch(e => {
-                warn(TAG, `Error occurred when playing "${file}"`, e);
+                logger.warn(TAG, `Error occurred when playing "${file}"`, e);
                 onError?.(e.error);
             });
         }

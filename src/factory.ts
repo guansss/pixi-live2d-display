@@ -6,7 +6,7 @@ import Live2DPhysics from './live2d/Live2DPhysics';
 import Live2DPose from './live2d/Live2DPose';
 import ModelSettings from './live2d/ModelSettings';
 import { Live2DModel, Live2DModelOptions } from './Live2DModel';
-import { log, warn } from './utils/log';
+import { logger } from './utils/log';
 
 const TAG = 'Live2DFactory';
 
@@ -85,7 +85,7 @@ export async function fromModelSettings(settings: ModelSettings, options?: Facto
             if (modelCache && MODEL_DATA_CACHE[modelURL]) {
                 resources.model = MODEL_DATA_CACHE[modelURL];
 
-                log(TAG, `Loaded model data from cache (${resources.model!.byteLength}):`, modelURL);
+                logger.log(TAG, `Loaded model data from cache (${resources.model!.byteLength}):`, modelURL);
             } else {
                 loader.add(
                     modelURL,
@@ -93,7 +93,7 @@ export async function fromModelSettings(settings: ModelSettings, options?: Facto
                     (modelRes: LoaderResource) => {
                         if (!modelRes.error) {
                             resources.model = modelRes.data;
-                            log(TAG, `Loaded model data (${resources.model!.byteLength}):`, modelRes.name);
+                            logger.log(TAG, `Loaded model data (${resources.model!.byteLength}):`, modelRes.name);
                         } else {
                             finish(modelRes.error);
                         }
@@ -111,14 +111,14 @@ export async function fromModelSettings(settings: ModelSettings, options?: Facto
 
                     resources.textures![index] = TextureCache[textureURL];
 
-                    log(TAG, `Loaded texture from cache (${texture.width}x${texture.height}):`, textureURL);
+                    logger.log(TAG, `Loaded texture from cache (${texture.width}x${texture.height}):`, textureURL);
                 } else if (!loader.resources[textureURL]) {
                     loader.add(textureURL, options?.loaderOptions, (textureRes: LoaderResource) => {
                             if (!textureRes.error) {
                                 resources.textures![index] = textureRes.texture;
-                                log(TAG, `Loaded texture (${textureRes.texture.width}x${textureRes.texture.height}):`, textureRes.name);
+                                logger.log(TAG, `Loaded texture (${textureRes.texture.width}x${textureRes.texture.height}):`, textureRes.name);
                             } else {
-                                warn(TAG, `Failed to load texture from "${textureRes.url}"`, textureRes.error);
+                                logger.warn(TAG, `Failed to load texture from "${textureRes.url}"`, textureRes.error);
                             }
                         },
                     );
@@ -129,9 +129,9 @@ export async function fromModelSettings(settings: ModelSettings, options?: Facto
                 loader.add(settings.resolvePath(settings.pose), options?.loaderOptions, (poseRes: LoaderResource) => {
                         if (!poseRes.error) {
                             resources.pose = poseRes.data;
-                            log(TAG, `Loaded pose data:`, poseRes.name);
+                            logger.log(TAG, `Loaded pose data:`, poseRes.name);
                         } else {
-                            warn(TAG, `Failed to load pose data from "${poseRes.url}"`, poseRes.error);
+                            logger.warn(TAG, `Failed to load pose data from "${poseRes.url}"`, poseRes.error);
                         }
                     },
                 );
@@ -141,9 +141,9 @@ export async function fromModelSettings(settings: ModelSettings, options?: Facto
                 loader.add(settings.resolvePath(settings.physics), options?.loaderOptions, (physicsRes: LoaderResource) => {
                         if (!physicsRes.error) {
                             resources.physics = physicsRes.data;
-                            log(TAG, `Loaded physics data:`, physicsRes.name);
+                            logger.log(TAG, `Loaded physics data:`, physicsRes.name);
                         } else {
-                            warn(TAG, `Failed to load physics data from "${physicsRes.url}"`, physicsRes.error);
+                            logger.warn(TAG, `Failed to load physics data from "${physicsRes.url}"`, physicsRes.error);
                         }
                     },
                 );
