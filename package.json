@@ -3,7 +3,10 @@
   "version": "0.1.1",
   "description": "Live2D plugin for PixiJS",
   "main": "lib/index.js",
-  "repository": "git@github.com:guansss/pixi-live2d-display.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guansss/pixi-live2d-display.git"
+  },
   "author": "guansss <821143943@qq.com>",
   "license": "MIT",
   "scripts": {
