@@ -10,8 +10,6 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "declarationDir": "build",
-    "outDir": "build",
     "types": [
       "node"
     ],

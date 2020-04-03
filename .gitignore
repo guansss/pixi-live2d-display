@@ -2,6 +2,7 @@ live2d.min.js
 
 /build*
 /lib
+/types
 
 .DS_Store
 node_modules
