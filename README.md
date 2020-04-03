@@ -155,8 +155,6 @@ Renderer.registerPlugin('interaction', InteractionManager);
 
 If you don't want the default behaviour, you can disable it by setting `autoInteract` to `false`, then play with corresponding interaction methods.
 
-#### Focusing
-
 ```javascript
 const model = await Live2DModel.fromModelSettingsFile('my-model.model.json', { autoInteract: false });
 
