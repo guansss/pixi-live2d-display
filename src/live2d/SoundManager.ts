@@ -7,7 +7,7 @@ export class SoundManager {
 
     audios: HTMLAudioElement[] = [];
 
-    private _volume = SoundManager.VOLUME;
+    protected _volume = SoundManager.VOLUME;
 
     get volume(): number {
         return this._volume;

@@ -119,7 +119,7 @@ export class Live2DModel extends Container {
         };
     }
 
-    private onAnchorChange() {
+    protected onAnchorChange() {
         this.pivot.set(this.anchor.x * this.internal.width, this.anchor.y * this.internal.height);
     }
 

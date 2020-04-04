@@ -28,7 +28,7 @@ export class ExpressionManager extends MotionQueueManager {
         this.stopAllMotions();
     }
 
-    private async loadExpressions() {
+    protected async loadExpressions() {
         return new Promise(resolve => {
             const loader = new Loader();
 

@@ -23,7 +23,7 @@ export class Live2DExpression extends AMotion {
         this.load(cloneWithCamelCase(json));
     }
 
-    private load(json: any) {
+    protected load(json: any) {
         this.setFadeIn(json.fadeIn > 0 ? json.fadeIn : DEFAULT_FADING_DURATION);
         this.setFadeOut(json.fadeOut > 0 ? json.fadeOut : DEFAULT_FADING_DURATION);
 

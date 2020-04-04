@@ -50,7 +50,7 @@ export class ModelSettings {
     /**
      * Validates and copies properties from JSON.
      */
-    private copy(json: any) {
+    protected copy(json: any) {
         // begin essential properties
 
         copyProperty(this, json, 'model', 'string');

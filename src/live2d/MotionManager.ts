@@ -41,7 +41,7 @@ export class MotionManager extends MotionQueueManager {
         this.stopAllMotions();
     }
 
-    private setupMotions() {
+    protected setupMotions() {
         // initialize all motion groups with empty arrays
         Object.keys(this.definitions).forEach(group => (this.motionGroups[group] = []));
 
@@ -52,7 +52,7 @@ export class MotionManager extends MotionQueueManager {
     /**
      * Loads a motion, or entire motion group if no index specified.
      */
-    private async loadMotion(group: string, index?: number): Promise<Live2DMotion | void> {
+    async loadMotion(group: string, index?: number): Promise<Live2DMotion | void> {
         return new Promise(resolve => {
             const definitionGroup = this.definitions[group];
 
