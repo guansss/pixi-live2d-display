@@ -5,7 +5,7 @@
 
     const app = createApp(PIXI.Application);
 
-    PIXI.Live2D.config.logLevel = PIXI.live2d.config.LOG_LEVEL_NONE;
+    PIXI.live2d.config.logLevel = PIXI.live2d.config.LOG_LEVEL_NONE;
 
     async function loadModel() {
         model = await PIXI.live2d.Live2DModel.fromModelSettingsFile(TEST_MODEL.file);
