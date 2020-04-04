@@ -7,6 +7,10 @@ import { logger } from './utils';
 
 const TAG = 'Live2DFactory';
 
+export interface Class<T> {
+    new(...args: any[]): T
+}
+
 export interface FactoryOptions extends Live2DModelOptions {
     loaderOptions?: ILoaderOptions;
 
@@ -25,7 +29,7 @@ export interface Live2DResources {
 
 export const MODEL_DATA_CACHE: Record<string, ArrayBuffer> = {};
 
-export async function fromModelSettingsFile(url: string, options?: FactoryOptions): Promise<Live2DModel> {
+export async function fromModelSettingsFile<T extends Live2DModel>(this: Class<T>, url: string, options?: FactoryOptions): Promise<T> {
     return new Promise((resolve, reject) => {
         new Loader()
             .add(url, options?.loaderOptions)
@@ -33,7 +37,7 @@ export async function fromModelSettingsFile(url: string, options?: FactoryOption
                 const resource = resources[url]!;
 
                 if (!resource.error) {
-                    fromModelSettingsJSON(resource.data, url, options).then(resolve).catch(reject);
+                    (fromModelSettingsJSON.call(this, resource.data, url, options) as Promise<T>).then(resolve).catch(reject);
                 } else {
                     reject(resource.error);
                 }
@@ -42,11 +46,11 @@ export async function fromModelSettingsFile(url: string, options?: FactoryOption
     });
 }
 
-export async function fromModelSettingsJSON(json: ModelSettingsJSON, basePath: string, options?: FactoryOptions): Promise<Live2DModel> {
-    return fromModelSettings(new ModelSettings(json, basePath), options);
+export async function fromModelSettingsJSON<T extends Live2DModel>(this: Class<T>, json: ModelSettingsJSON, basePath: string, options?: FactoryOptions): Promise<T> {
+    return await fromModelSettings.call(this, new ModelSettings(json, basePath), options) as T;
 }
 
-export async function fromModelSettings(settings: ModelSettings, options?: FactoryOptions): Promise<Live2DModel> {
+export async function fromModelSettings<T extends Live2DModel>(this: Class<T>, settings: ModelSettings, options?: FactoryOptions): Promise<T> {
     return new Promise((resolve, reject) => {
         const resources: Partial<Live2DResources> = {
             settings,
@@ -55,11 +59,11 @@ export async function fromModelSettings(settings: ModelSettings, options?: Facto
 
         const loader = new Loader();
 
-        function finish(error?: Error) {
+        const finish = (error?: Error) => {
             if (!error) {
                 if (resources.model) {
                     try {
-                        resolve(fromResources(resources as Live2DResources, options));
+                        resolve(fromResources.call(this, resources as Live2DResources, options) as T);
                     } catch (e) {
                         error = e;
                     }
@@ -73,7 +77,7 @@ export async function fromModelSettings(settings: ModelSettings, options?: Facto
                 loader.reset();
                 reject(error);
             }
-        }
+        };
 
         try {
             const modelURL = settings.resolvePath(settings.model);
@@ -153,7 +157,7 @@ export async function fromModelSettings(settings: ModelSettings, options?: Facto
     });
 }
 
-export function fromResources(resources: Live2DResources, options?: FactoryOptions): Live2DModel {
+export function fromResources<T extends Live2DModel>(this: Class<T>, resources: Live2DResources, options?: FactoryOptions): T {
     const coreModel = Live2DModelWebGL.loadModel(resources.model);
 
     const error = Live2D.getError();
@@ -169,5 +173,5 @@ export function fromResources(resources: Live2DResources, options?: FactoryOptio
         internalModel.physics = new Live2DPhysics(coreModel, resources.physics);
     }
 
-    return new Live2DModel(internalModel, resources.textures, options);
+    return new this(internalModel, resources.textures, options);
 }
