@@ -1,6 +1,6 @@
 import { Loader, LoaderResource } from '@pixi/loaders';
 import sample from 'lodash/sample';
-import { logger } from '../utils/log';
+import { logger } from '../utils';
 import { Live2DExpression } from './Live2DExpression';
 import { ModelSettings } from './ModelSettings';
 import { ExpressionDefinition } from './ModelSettingsJSON';

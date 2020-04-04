@@ -3,7 +3,7 @@ import { ILoaderOptions, Loader, LoaderResource } from '@pixi/loaders';
 import { TextureCache } from '@pixi/utils';
 import { Live2DInternalModel, Live2DPhysics, Live2DPose, ModelSettings, ModelSettingsJSON } from './live2d';
 import { Live2DModel, Live2DModelOptions } from './Live2DModel';
-import { logger } from './utils/log';
+import { logger } from './utils';
 
 const TAG = 'Live2DFactory';
 

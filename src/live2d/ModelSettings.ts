@@ -1,6 +1,6 @@
 import { basename, dirname } from 'path';
 import { resolve as urlResolve } from 'url';
-import { cloneWithCamelCase } from '../utils';
+import { cloneWithCamelCase, copyProperty } from '../utils';
 import { ExpressionDefinition, Layout, ModelSettingsJSON, MotionDefinition } from './ModelSettingsJSON';
 
 export class ModelSettings {
@@ -137,16 +137,5 @@ export class ModelSettings {
                 }
             }
         }
-    }
-}
-
-/**
- * Copies a property at `path` only if it matches the `type`.
- */
-function copyProperty(dest: any, src: any, path: string, type: string) {
-    const value = src[path];
-
-    if (typeof value === type) {
-        dest[path] = value;
     }
 }

@@ -1,4 +1,4 @@
-import { logger } from '../utils/log';
+import { logger } from '../utils';
 
 const TAG = 'SoundManager';
 

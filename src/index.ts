@@ -2,6 +2,7 @@
 /// <reference path="shim.d.ts"/>
 
 export * from './live2d';
+export * from './utils';
 
 export * from './Live2DModel';
 export * from './Live2DTransform';

@@ -8,8 +8,7 @@ import { fromModelSettings, fromModelSettingsFile, fromModelSettingsJSON, fromRe
 import { interaction } from './interaction';
 import { Live2DInternalModel, Priority } from './live2d';
 import { Live2DTransform } from './Live2DTransform';
-import { logger } from './utils/log';
-import { clamp } from './utils/math';
+import { clamp, logger } from './utils';
 
 export interface Live2DModelOptions {
     /**

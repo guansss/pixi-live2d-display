@@ -1,6 +1,6 @@
 import { Loader, LoaderResource } from '@pixi/loaders';
 import { config } from '../config';
-import { logger } from '../utils/log';
+import { logger } from '../utils';
 import { ExpressionManager } from './ExpressionManager';
 import { ModelSettings } from './ModelSettings';
 import { MotionDefinition } from './ModelSettingsJSON';
