@@ -99,10 +99,7 @@ export class Live2DModel extends Container {
 
         this.autoUpdate = _options.autoUpdate;
 
-        internal.motionManager.onMotionStart = (group, index, audio) => {
-            this.emit('motion', group, index);
-            audio && this.emit('sound', audio);
-        };
+        internal.motionManager.onMotionStart = (group, index, audio) => this.emit('motion', group, index, audio);
     }
 
     protected onAnchorChange() {
