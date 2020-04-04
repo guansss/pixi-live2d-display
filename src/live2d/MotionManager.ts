@@ -1,10 +1,10 @@
 import { Loader, LoaderResource } from '@pixi/loaders';
 import { config } from '../config';
+import { SoundManager } from '../SoundManager';
 import { logger } from '../utils';
 import { ExpressionManager } from './ExpressionManager';
 import { ModelSettings } from './ModelSettings';
 import { MotionDefinition } from './ModelSettingsJSON';
-import { SoundManager } from './SoundManager';
 
 export enum Priority { None, Idle, Normal, Force }
 
@@ -20,7 +20,6 @@ export class MotionManager extends MotionQueueManager {
     definitions: { [group: string]: MotionDefinition[] };
     motionGroups: { [group: string]: Live2DMotion[] } = {};
 
-    soundManager = new SoundManager();
     expressionManager?: ExpressionManager;
 
     currentPriority = Priority.None;
@@ -126,11 +125,15 @@ export class MotionManager extends MotionQueueManager {
             this.expressionManager && this.expressionManager.resetExpression();
         }
 
-        this.startMotion(motion);
+        let audio: HTMLAudioElement | undefined;
 
         if (config.sound && definition.sound) {
-            this.soundManager.playSound(this.modelSettings.resolvePath(definition.sound));
+            audio = SoundManager.playSound(this.modelSettings.resolvePath(definition.sound));
         }
+
+        this.startMotion(motion);
+
+        this.onMotionStart(group, index, audio);
 
         return true;
     }
@@ -163,4 +166,7 @@ export class MotionManager extends MotionQueueManager {
 
         return updated;
     }
+
+    // to be overridden
+    onMotionStart(group: string, index: number, audio?: HTMLAudioElement) {}
 }

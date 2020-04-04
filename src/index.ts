@@ -6,5 +6,6 @@ export * from './utils';
 
 export * from './Live2DModel';
 export * from './Live2DTransform';
+export * from './SoundManager';
 export * from './interaction';
 export * from './config';

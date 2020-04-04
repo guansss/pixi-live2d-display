@@ -99,22 +99,9 @@ export class Live2DModel extends Container {
 
         this.autoUpdate = _options.autoUpdate;
 
-        // hook motion
-        const startMotionByPriority = internal.motionManager.startMotionByPriority.bind(internal.motionManager);
-        internal.motionManager.startMotionByPriority = async (group, index, priority) => {
-            const started = await startMotionByPriority(group, index, priority);
-            if (started) {
-                this.emit('motion', group, index);
-            }
-            return started;
-        };
-
-        // hook sound
-        const playSound = internal.motionManager.soundManager.playSound.bind(internal.motionManager.soundManager);
-        internal.motionManager.soundManager.playSound = (file: string) => {
-            const audio = playSound(file);
-            this.emit('sound', file, audio);
-            return audio;
+        internal.motionManager.onMotionStart = (group, index, audio) => {
+            this.emit('motion', group, index);
+            audio && this.emit('sound', audio);
         };
     }
 

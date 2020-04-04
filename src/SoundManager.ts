@@ -1,24 +1,23 @@
-import { logger } from '../utils';
+import { logger } from './utils';
 
 const TAG = 'SoundManager';
+const VOLUME = 0.5;
 
 export class SoundManager {
-    static VOLUME = 0.5;
+    static audios: HTMLAudioElement[] = [];
 
-    audios: HTMLAudioElement[] = [];
+    protected static _volume = VOLUME;
 
-    protected _volume = SoundManager.VOLUME;
-
-    get volume(): number {
+    static get volume(): number {
         return this._volume;
     }
 
-    set volume(value: number) {
+    static set volume(value: number) {
         this._volume = (value > 1 ? 1 : value < 0 ? 0 : value) || 0;
         this.audios.forEach(audio => (audio.volume = this._volume));
     }
 
-    playSound(file: string, onFinish?: () => void, onError?: (e: Error) => void): HTMLAudioElement {
+    static playSound(file: string, onFinish?: () => void, onError?: (e: Error) => void): HTMLAudioElement {
         const audio = new Audio(file);
         audio.volume = this._volume;
 
@@ -45,4 +44,6 @@ export class SoundManager {
 
         return audio;
     }
+
+    private constructor() {}
 }

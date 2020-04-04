@@ -8,4 +8,3 @@ export * from './Live2DPose';
 export * from './ModelSettings';
 export * from './ModelSettingsJSON';
 export * from './MotionManager';
-export * from './SoundManager';
