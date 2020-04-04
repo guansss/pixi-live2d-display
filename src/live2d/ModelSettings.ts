@@ -1,31 +1,29 @@
 import { basename, dirname } from 'path';
 import { resolve as urlResolve } from 'url';
-import { cloneWithCamelCase, copyProperty } from '../utils';
+import { cloneWithCamelCase, copyArray, copyArrayDeep, copyProperty } from '../utils';
 import { ExpressionDefinition, Layout, ModelSettingsJSON, MotionDefinition } from './ModelSettingsJSON';
 
 export class ModelSettings {
-    readonly name?: string;
+    name?: string;
 
     // files
-    readonly model: string = '';
-    readonly preview?: string;
-    readonly pose?: string;
-    readonly physics?: string;
-    readonly subtitle?: string;
-    readonly textures: string[] = [];
+    model: string = '';
+    pose?: string;
+    physics?: string;
+    textures: string[] = [];
 
     // metadata
-    readonly layout?: Layout;
-    readonly hitAreas?: { name: string; id: string }[];
-    readonly initParams?: [{ id: string; value: number }];
-    readonly initOpacities?: [{ id: string; value: number }];
+    layout?: Layout;
+    hitAreas?: { name: string; id: string }[];
+    initParams?: { id: string; value: number }[];
+    initOpacities?: { id: string; value: number }[];
 
     // motions
-    readonly expressions?: ExpressionDefinition[];
-    readonly motions: { [group: string]: MotionDefinition[] } = {};
+    expressions?: ExpressionDefinition[];
+    motions: { [group: string]: MotionDefinition[] } = {};
 
     static isModelSettingsJSON(json: any): json is ModelSettingsJSON {
-        return json && json.model && json.textures;
+        return json && json.model && json.textures?.length > 0;
     }
 
     /**
@@ -50,33 +48,24 @@ export class ModelSettings {
     /**
      * Validates and copies properties from JSON.
      */
-    protected copy(json: any) {
-        // begin essential properties
-
+    protected copy(json: ModelSettingsJSON) {
         copyProperty(this, json, 'model', 'string');
 
         if (!this.model) {
             throw new TypeError('Missing model file.');
         }
 
-        if (json.textures) {
-            this.textures.push(...json.textures.filter((file: any) => typeof file === 'string'));
-        }
+        copyArray(this, json, 'textures', 'string');
 
         if (this.textures.length === 0) {
             throw new TypeError('Missing textures.');
         }
 
-        // end essential properties
-
         copyProperty(this, json, 'name', 'string');
         copyProperty(this, json, 'pose', 'string');
-        copyProperty(this, json, 'preview', 'string');
         copyProperty(this, json, 'physics', 'string');
-        copyProperty(this, json, 'subtitle', 'string');
 
         if (json.layout && typeof json.layout === 'object') {
-            // @ts-ignore
             this.layout = {};
 
             // copy only the number properties
@@ -87,54 +76,15 @@ export class ModelSettings {
             }
         }
 
-        if (Array.isArray(json.hitAreas)) {
-            const filter = (hitArea: any) => typeof hitArea.name === 'string' && typeof hitArea.id === 'string';
-            // @ts-ignore
-            this.hitAreas = json.hitAreas.filter(filter);
-        }
+        copyArrayDeep(this, json, 'hitAreas', { name: 'string', id: 'string' });
+        copyArrayDeep(this, json, 'expressions', { name: 'string', file: 'string' });
+        copyArrayDeep(this, json, 'initParams', { id: 'string', value: 'string' });
+        copyArrayDeep(this, json, 'initOpacities', { id: 'string', value: 'string' });
 
-        if (Array.isArray(json.expressions)) {
-            const filter = (exp: any) => typeof exp.name === 'string' && typeof exp.file === 'string';
-            // @ts-ignore
-            this.expressions = json.expressions.filter(filter);
-        }
-
-        if (Array.isArray(json.initParam)) {
-            const filter = (param: any) => typeof param.id === 'string' && typeof param.value === 'string';
-            // @ts-ignore
-            this.initParams = json.initParam.filter(filter);
-        }
-
-        if (Array.isArray(json.initPartsVisible)) {
-            const filter = (param: any) => typeof param.id === 'string' && typeof param.value === 'string';
-            // @ts-ignore
-            this.initOpacities = json.initPartsVisible.filter(filter);
-        }
-
+        // copy all motion groups
         if (json.motions && typeof json.motions === 'object') {
-            for (const [group, motionGroup] of Object.entries(json.motions)) {
-                if (Array.isArray(motionGroup)) {
-                    this.motions[group] = motionGroup
-
-                    // filter out the motions without `file` defined
-                        .filter(motion => motion && typeof motion.file === 'string')
-
-                        // copy only the valid properties
-                        .map((motion: any) => {
-                            const copy: MotionDefinition = {
-                                file: motion.file,
-                            };
-
-                            copyProperty(copy, motion, 'sound', 'string');
-                            copyProperty(copy, motion, 'subtitle', 'string');
-                            copyProperty(copy, motion, 'season', 'string');
-                            copyProperty(copy, motion, 'fadeIn', 'number');
-                            copyProperty(copy, motion, 'fadeOut', 'number');
-                            copyProperty(copy, motion, 'time', 'number');
-
-                            return copy;
-                        });
-                }
+            for (const group of Object.keys(json.motions)) {
+                copyArrayDeep(this.motions, json.motions, group, { file: 'string' });
             }
         }
     }

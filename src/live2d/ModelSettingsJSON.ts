@@ -1,21 +1,21 @@
 export interface ModelSettingsJSON {
-    readonly name?: string;
+    name?: string;
 
     // files
-    readonly model: string;
-    readonly pose?: string;
-    readonly physics?: string;
-    readonly textures: string[];
+    model: string;
+    pose?: string;
+    physics?: string;
+    textures: string[];
 
     // metadata
-    readonly layout?: Layout;
-    readonly hitAreas?: { name: string; id: string }[];
-    readonly initParams?: [{ id: string; value: number }];
-    readonly initOpacities?: [{ id: string; value: number }];
+    layout?: Layout;
+    hitAreas?: { name: string; id: string }[];
+    initParams?: [{ id: string; value: number }];
+    initOpacities?: [{ id: string; value: number }];
 
     // motions
-    readonly expressions?: ExpressionDefinition[];
-    readonly motions?: { [group: string]: MotionDefinition[] };
+    expressions?: ExpressionDefinition[];
+    motions?: { [group: string]: MotionDefinition[] };
 }
 
 export interface Layout {
@@ -33,21 +33,21 @@ export interface Layout {
 
 export interface MotionDefinition {
     /** `*.mtn` file. */
-    readonly file: string;
+    file: string;
 
     /** Sound file. */
-    readonly sound?: string;
+    sound?: string;
 
     /** Motion fade-in timeout. */
-    readonly fadeIn?: number;
+    fadeIn?: number;
 
     /** Motion fade-out timeout. */
-    readonly fadeOut?: number;
+    fadeOut?: number;
 }
 
 export interface ExpressionDefinition {
-    readonly name: string;
+    name: string;
 
     /** `*.json` file. */
-    readonly file: string;
+    file: string;
 }

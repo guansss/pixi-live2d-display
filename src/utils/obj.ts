@@ -33,3 +33,27 @@ export function copyProperty(dest: any, src: any, path: string, type: string) {
         dest[path] = value;
     }
 }
+
+/**
+ * Copies a array at `path`, filtering the items that match the `type`.
+ */
+export function copyArray(dest: any, src: any, path: string, type: string) {
+    const array = src[path];
+
+    if (Array.isArray(array)) {
+        dest[path] = array.filter(item => typeof item === type);
+    }
+}
+
+/**
+ * Copies a array at `path`, filtering the items whose properties match the type in given `types` map.
+ */
+export function copyArrayDeep(dest: any, src: any, path: string, types: Record<string, string>) {
+    const array = src[path];
+
+    const matchers = Object.entries(types);
+
+    if (Array.isArray(array)) {
+        dest[path] = array.filter(item => matchers.every(([key, type]) => typeof item[key] === type));
+    }
+}
