@@ -21,7 +21,7 @@ class Live2DPartsParam {
     }
 }
 
-export default class Live2DPose {
+export class Live2DPose {
     opacityAnimDuration: DOMHighResTimeStamp = 500;
 
     partsGroups: Live2DPartsParam[][] = [];

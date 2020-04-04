@@ -2,7 +2,7 @@ import { logger } from '../utils/log';
 
 const TAG = 'SoundManager';
 
-export default class SoundManager {
+export class SoundManager {
     static VOLUME = 0.5;
 
     audios: HTMLAudioElement[] = [];

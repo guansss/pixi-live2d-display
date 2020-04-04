@@ -1,10 +1,10 @@
 import { Matrix } from '@pixi/math';
-import FocusController from './FocusController';
-import Live2DEyeBlink from './Live2DEyeBlink';
-import Live2DPhysics from './Live2DPhysics';
-import Live2DPose from './Live2DPose';
-import ModelSettings from './ModelSettings';
-import MotionManager from './MotionManager';
+import { FocusController } from './FocusController';
+import { Live2DEyeBlink } from './Live2DEyeBlink';
+import { Live2DPhysics } from './Live2DPhysics';
+import { Live2DPose } from './Live2DPose';
+import { ModelSettings } from './ModelSettings';
+import { MotionManager } from './MotionManager';
 
 export const LOGICAL_WIDTH = 2;
 export const LOGICAL_HEIGHT = 2;

@@ -7,7 +7,7 @@ import { Ticker } from '@pixi/ticker';
 import { fromModelSettings, fromModelSettingsFile, fromModelSettingsJSON, fromResources } from './factory';
 import { interaction } from './interaction';
 import { Live2DInternalModel, Priority } from './live2d';
-import Live2DTransform from './Live2DTransform';
+import { Live2DTransform } from './Live2DTransform';
 import { logger } from './utils/log';
 import { clamp } from './utils/math';
 

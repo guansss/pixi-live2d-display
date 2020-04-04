@@ -14,7 +14,7 @@ interface Param {
 
 const DEFAULT_FADING_DURATION = 500;
 
-export default class Live2DExpression extends AMotion {
+export class Live2DExpression extends AMotion {
     readonly params: Param[] = [];
 
     constructor(readonly coreModel: Live2DModelWebGL, json: object, readonly name?: string) {

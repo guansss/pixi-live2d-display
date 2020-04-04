@@ -3,7 +3,7 @@ import { resolve as urlResolve } from 'url';
 import { cloneWithCamelCase } from '../utils';
 import { ExpressionDefinition, Layout, ModelSettingsJSON, MotionDefinition } from './ModelSettingsJSON';
 
-export default class ModelSettings {
+export class ModelSettings {
     readonly name?: string;
 
     // files

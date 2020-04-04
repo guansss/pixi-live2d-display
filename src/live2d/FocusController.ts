@@ -3,7 +3,7 @@ const EPSILON = 0.01; // Minimum distance to respond
 const MAX_SPEED = 40 / 7.5;
 const ACCELERATION_TIME = 1 / (0.15 * 1000);
 
-export default class FocusController {
+export class FocusController {
     targetX = 0;
     targetY = 0;
     x = 0;

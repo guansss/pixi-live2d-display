@@ -7,7 +7,7 @@ enum EyeState {
     Opening,
 }
 
-export default class Live2DEyeBlink {
+export class Live2DEyeBlink {
     leftParam: number;
     rightParam: number;
 

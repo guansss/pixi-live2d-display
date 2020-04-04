@@ -35,7 +35,7 @@ const TARGET_TYPE_MAP = {
     [key: string]: string;
 };
 
-export default class Live2DPhysics {
+export class Live2DPhysics {
     physicsHairs: PhysicsHair[] = [];
 
     constructor(readonly coreModel: Live2DModelWebGL, json: any) {

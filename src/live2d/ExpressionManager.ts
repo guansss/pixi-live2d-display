@@ -1,11 +1,11 @@
 import { Loader, LoaderResource } from '@pixi/loaders';
 import sample from 'lodash/sample';
 import { logger } from '../utils/log';
-import Live2DExpression from './Live2DExpression';
-import ModelSettings from './ModelSettings';
+import { Live2DExpression } from './Live2DExpression';
+import { ModelSettings } from './ModelSettings';
 import { ExpressionDefinition } from './ModelSettingsJSON';
 
-export default class ExpressionManager extends MotionQueueManager {
+export class ExpressionManager extends MotionQueueManager {
     tag: string;
 
     readonly definitions: ExpressionDefinition[];

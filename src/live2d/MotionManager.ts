@@ -1,10 +1,10 @@
 import { Loader, LoaderResource } from '@pixi/loaders';
 import { config } from '../config';
 import { logger } from '../utils/log';
-import ExpressionManager from './ExpressionManager';
-import ModelSettings from './ModelSettings';
+import { ExpressionManager } from './ExpressionManager';
+import { ModelSettings } from './ModelSettings';
 import { MotionDefinition } from './ModelSettingsJSON';
-import SoundManager from './SoundManager';
+import { SoundManager } from './SoundManager';
 
 export enum Priority { None, Idle, Normal, Force }
 
@@ -14,7 +14,7 @@ enum Group {
 
 const DEFAULT_FADE_TIMEOUT = 500;
 
-export default class MotionManager extends MotionQueueManager {
+export class MotionManager extends MotionQueueManager {
     tag: string;
 
     definitions: { [group: string]: MotionDefinition[] };
