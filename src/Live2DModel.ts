@@ -42,30 +42,7 @@ export class Live2DModel extends Container {
     /** Works like sprite.anchor */
     anchor = new ObservablePoint(this.onAnchorChange, this, 0, 0);
 
-    autoInteract: boolean;
     interactionManager?: InteractionManager;
-
-    protected _autoUpdate = false;
-
-    get autoUpdate() {
-        return this._autoUpdate;
-    }
-
-    set autoUpdate(autoUpdate: boolean) {
-        if (autoUpdate) {
-            if (TickerClass) {
-                TickerClass?.shared.add(this.onTickerUpdate, this);
-
-                this._autoUpdate = true;
-            } else {
-                logger.warn(this.tag, 'No Ticker registered, please call Live2DModel.registerTicker(Ticker).');
-            }
-        } else {
-            TickerClass?.shared.remove(this.onTickerUpdate, this);
-
-            this._autoUpdate = false;
-        }
-    }
 
     glContextID = -1;
 
@@ -91,15 +68,51 @@ export class Live2DModel extends Container {
         this.transform = new Live2DTransform(internal);
 
         this.autoInteract = _options.autoInteract;
-
-        if (this.autoInteract) {
-            this.interactive = true;
-            this.on('pointertap', this.onTap);
-        }
-
         this.autoUpdate = _options.autoUpdate;
 
+        if (_options.autoInteract) {
+            this.interactive = true;
+        }
+
         internal.motionManager.onMotionStart = (group, index, audio) => this.emit('motion', group, index, audio);
+    }
+
+    private _autoInteract = false;
+
+    get autoInteract(): boolean {
+        return this._autoInteract;
+    }
+
+    set autoInteract(autoInteract: boolean) {
+        if (autoInteract) {
+            this.on('pointertap', this.onTap);
+        } else {
+            this.off('pointertap', this.onTap);
+        }
+
+        this._autoInteract = autoInteract;
+    }
+
+    protected _autoUpdate = false;
+
+    get autoUpdate() {
+        return this._autoUpdate;
+    }
+
+    set autoUpdate(autoUpdate: boolean) {
+        if (autoUpdate) {
+            if (TickerClass) {
+                TickerClass?.shared.add(this.onTickerUpdate, this);
+
+                this._autoUpdate = true;
+            } else {
+                logger.warn(this.tag, 'No Ticker registered, please call Live2DModel.registerTicker(Ticker).');
+            }
+        } else {
+            TickerClass?.shared.remove(this.onTickerUpdate, this);
+
+            this._autoUpdate = false;
+        }
     }
 
     protected onAnchorChange() {
@@ -228,7 +241,7 @@ export class Live2DModel extends Container {
     }
 
     protected _render(renderer: Renderer) {
-        if (this.autoInteract && renderer.plugins.interaction !== this.interactionManager) {
+        if (this._autoInteract && renderer.plugins.interaction !== this.interactionManager) {
             interaction.registerInteraction(this, renderer.plugins.interaction);
         }
 
