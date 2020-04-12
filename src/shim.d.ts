@@ -3,7 +3,7 @@
  */
 
 declare module '@pixi/core' {
-    export { Renderer, Shader, Texture, BaseTexture } from 'pixi.js';
+    export { Renderer, Texture, BaseTexture } from 'pixi.js';
 }
 
 declare module '@pixi/loaders' {
@@ -26,10 +26,6 @@ declare module '@pixi/ticker' {
 
 declare module '@pixi/display' {
     export { DisplayObject, Container } from 'pixi.js';
-}
-
-declare module '@pixi/sprite' {
-    export { Sprite } from 'pixi.js';
 }
 
 declare module '@pixi/interaction' {

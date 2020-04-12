@@ -2,7 +2,6 @@ import { Renderer, Texture } from '@pixi/core';
 import { Container } from '@pixi/display';
 import { InteractionEvent, InteractionManager } from '@pixi/interaction';
 import { ObservablePoint, Point } from '@pixi/math';
-import { Sprite } from '@pixi/sprite';
 import { Ticker } from '@pixi/ticker';
 import { fromModelSettings, fromModelSettingsFile, fromModelSettingsJSON, fromResources } from './factory';
 import { interaction } from './interaction';
@@ -34,8 +33,6 @@ let TickerClass: typeof Ticker | undefined = (window as any).PIXI?.Ticker;
 
 export class Live2DModel extends Container {
     tag: string;
-
-    highlightCover?: Sprite;
 
     transform: Live2DTransform; // override the type
 
@@ -119,22 +116,6 @@ export class Live2DModel extends Container {
         this.pivot.set(this.anchor.x * this.internal.width, this.anchor.y * this.internal.height);
     }
 
-    highlight(enabled: boolean) {
-        if (enabled) {
-            if (!this.highlightCover) {
-                this.highlightCover = new Sprite(Texture.WHITE);
-                this.highlightCover.width = this.internal.width;
-                this.highlightCover.height = this.internal.height;
-                this.highlightCover.alpha = 0.3;
-
-                this.addChild(this.highlightCover);
-            }
-            this.highlightCover.visible = true;
-        } else if (this.highlightCover) {
-            this.highlightCover.visible = false;
-        }
-    }
-
     /**
      * Shorthand method.
      */
@@ -167,7 +148,7 @@ export class Live2DModel extends Container {
     }
 
     /**
-     * Performs tap action on sprite.
+     * Performs tap action on model.
      *
      * @param x - The x position in world space.
      * @param y - The y position in world space.
