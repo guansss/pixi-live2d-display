@@ -14,7 +14,7 @@
     "test": "node node_modules/floss/bin/floss.js --path build.test -d",
     "build": "webpack --mode=production",
     "type": "dts-bundle-generator --no-check -o types/index.d.ts src/index.ts && node scripts/patch-types.js",
-    "doc": "typedoc src --mode file --excludeNotExported && node scripts/patch-docs.js",
+    "doc": "rimraf docs && typedoc src --mode file --excludeNotExported && node scripts/patch-docs.js",
     "prepare": "yarn build && yarn type"
   },
   "files": [
@@ -45,6 +45,7 @@
     "glob": "^7.1.6",
     "lodash": "latest",
     "pixi.js": "^5.2.1",
+    "rimraf": "^3.0.2",
     "sinon": "^9.0.1",
     "ts-loader": "^6.2.1",
     "typedoc": "^0.17.4",

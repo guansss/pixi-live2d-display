@@ -62,3 +62,8 @@ cssContent = cssContent + `
 }`;
 
 fs.writeFileSync(cssFile, cssContent);
+
+console.log(chalk.blue('Write .nojekyll'));
+
+// https://github.com/TypeStrong/typedoc/issues/149
+fs.writeFileSync('docs/.nojekyll', '');

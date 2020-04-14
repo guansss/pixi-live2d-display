@@ -65,11 +65,8 @@
 				<a href="#pixi-live2d-display" id="pixi-live2d-display" style="color: inherit; text-decoration: none;">
 					<h1>pixi-live2d-display</h1>
 				</a>
-				<p><img src="https://img.shields.io/github/package-json/v/guansss/pixi-live2d-display?style=flat-square"
-                    alt="GitHub package.json version">
-				<a href="https://www.codacy.com/manual/guansss/pixi-live2d-display?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=guansss/pixi-live2d-display&amp;utm_campaign=Badge_Grade"><img
-                    src="https://img.shields.io/codacy/grade/815a5e1399b74441a2203b7c7b4861c0?style=flat-square&logo=codacy"
-                    alt="Codacy Badge"></a></p>
+				<p><img src="https://img.shields.io/github/package-json/v/guansss/pixi-live2d-display?style=flat-square" alt="GitHub package.json version">
+				<a href="https://www.codacy.com/manual/guansss/pixi-live2d-display?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=guansss/pixi-live2d-display&amp;utm_campaign=Badge_Grade"><img src="https://img.shields.io/codacy/grade/815a5e1399b74441a2203b7c7b4861c0?style=flat-square&logo=codacy" alt="Codacy Badge"></a></p>
 				<p>Live2D integration for <a href="https://github.com/pixijs/pixi.js">PixiJS</a> v5.</p>
 				<p>Only compatible with Cubism 2.1. Support of Cubism 4 is on the way!</p>
 				<p><a href="https://codepen.io/guansss/pen/MWwRNyP?editors=1010">Play with demo</a></p>
@@ -78,27 +75,21 @@
 				</a>
 				<pre><code class="language-sh">npm install pixi-live2d-display</code></pre>
 				<p>This library relies on <code>Promise</code>, you may need a polyfill, e.g. <a href="https://github.com/stefanpenner/es6-promise">es6-promise</a>.</p>
-				<p>You&#39;ll also need to include the Cubism 2.1 core library, which is typically named <code>live2d.min.js</code>. The official download has been dead <a
-                    href="https://help.live2d.com/en/other/other_20/">since 9/4/2019</a>, but its spirit still exists <a
-                    href="https://github.com/dylanNew/live2d/tree/master/webgl/Live2D/lib">somewhere on the net</a>...</p>
+				<p>You&#39;ll also need to include the Cubism 2.1 core library, which is typically named <code>live2d.min.js</code>. The official download has been dead <a href="https://help.live2d.com/en/other/other_20/">since 9/4/2019</a>, but its spirit still exists <a href="https://github.com/dylanNew/live2d/tree/master/webgl/Live2D/lib">somewhere on the net</a>...</p>
 				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 					<h2>Usage</h2>
 				</a>
 				<a href="#basic" id="basic" style="color: inherit; text-decoration: none;">
 					<h3>Basic</h3>
 				</a>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> PIXI <span
-                    class="hljs-keyword">from</span> <span class="hljs-string">'pixi.js'</span>;
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> PIXI <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi.js'</span>;
 <span class="hljs-built_in">window</span>.PIXI = PIXI;
 <span class="hljs-keyword">import</span> { Live2DModel } <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi-live2d-display'</span>;
 
-<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span
-                        class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span
-                        class="hljs-string">'my-model.model.json'</span>);
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span class="hljs-string">'my-model.model.json'</span>);
 
-    <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> PIXI.Application({ <span class="hljs-attr">autoStart</span>: <span
-                        class="hljs-literal">true</span> });
+    <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> PIXI.Application({ <span class="hljs-attr">autoStart</span>: <span class="hljs-literal">true</span> });
     app.stage.addChild(model);
 
     <span class="hljs-comment">// transformation</span>
@@ -119,14 +110,11 @@ main();</code></pre>
 					<h3>Modules</h3>
 				</a>
 				<p>It&#39;s possible to import only the necessary modules rather than a full build of PixiJS.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Application } <span
-                    class="hljs-keyword">from</span> <span class="hljs-string">'@pixi/app'</span>;
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Application } <span class="hljs-keyword">from</span> <span class="hljs-string">'@pixi/app'</span>;
 <span class="hljs-keyword">import</span> { Live2DModel } <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi-live2d-display'</span>;
 
-<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span
-                        class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span
-                        class="hljs-string">'my-model.model.json'</span>);
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span class="hljs-string">'my-model.model.json'</span>);
 
     <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Application();
     app.stage.addChild(model);
@@ -137,18 +125,12 @@ main();</code></pre>
 					<h3>Prebuilt File</h3>
 				</a>
 				<p>When including prebuilt file by script tag, all exported members are available in <code>PIXI.live2d</code> namespace. For example <code>import { Live2DModel } from &#39;pixi-live2d-display&#39;</code> becomes <code>PIXI.live2d.Live2DModel</code>.</p>
-				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span
-                    class="hljs-attr">src</span>=<span class="hljs-string">"pixi.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span
-                    class="hljs-name">script</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"pixi-live2d-display.browser.js"</span>&gt;</span><span
-                        class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
-				<pre><code class="language-javascript"><span class="hljs-keyword">async</span> <span class="hljs-function"><span
-                    class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> PIXI.live2d.Live2DModel.fromModelSettingsFile(<span
-                        class="hljs-string">'my-model.model.json'</span>);
+				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"pixi.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"pixi-live2d-display.browser.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
+				<pre><code class="language-javascript"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> PIXI.live2d.Live2DModel.fromModelSettingsFile(<span class="hljs-string">'my-model.model.json'</span>);
 
-    <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> PIXI.Application({ <span class="hljs-attr">autoStart</span>: <span
-                        class="hljs-literal">true</span> });
+    <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> PIXI.Application({ <span class="hljs-attr">autoStart</span>: <span class="hljs-literal">true</span> });
     app.stage.addChild(model);
 }
 
@@ -158,29 +140,22 @@ main();</code></pre>
 				</a>
 				<p>To make a Live2D model &quot;live&quot;, it should be updated with delta time, which is the time elapsed from last frame to this frame, in milliseconds.</p>
 				<p>When a full build of PixiJS is imported, each model will be automatically updated using <code>window.PIXI.Ticker.shared</code>.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> PIXI <span
-                    class="hljs-keyword">from</span> <span class="hljs-string">'pixi.js'</span>;
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> PIXI <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi.js'</span>;
 <span class="hljs-built_in">window</span>.PIXI = PIXI;</code></pre>
 				<p>Otherwise you need to register the <code>Ticker</code> to <code>Live2DModel</code>.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Application } <span
-                    class="hljs-keyword">from</span> <span class="hljs-string">'@pixi/app'</span>;
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Application } <span class="hljs-keyword">from</span> <span class="hljs-string">'@pixi/app'</span>;
 <span class="hljs-keyword">import</span> { Ticker, TickerPlugin } <span class="hljs-keyword">from</span> <span class="hljs-string">'@pixi/ticker'</span>;
 
 Application.registerPlugin(TickerPlugin);
 Live2DModel.registerTicker(Ticker);</code></pre>
 				<p>Or you may want to do it yourself:</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Ticker } <span class="hljs-keyword">from</span> <span
-                    class="hljs-string">'@pixi/ticker'</span>;
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Ticker } <span class="hljs-keyword">from</span> <span class="hljs-string">'@pixi/ticker'</span>;
 
-<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span
-                        class="hljs-string">'my-model.model.json'</span>, { <span class="hljs-attr">autoUpdate</span>: <span
-                        class="hljs-literal">false</span> });
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span class="hljs-string">'my-model.model.json'</span>, { <span class="hljs-attr">autoUpdate</span>: <span class="hljs-literal">false</span> });
 
 Ticker.shared.add(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span> model.update(Ticker.shared.elapsedMS));</code></pre>
 				<p>Or without <code>Ticker</code>:</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span
-                    class="hljs-string">'my-model.model.json'</span>, { <span class="hljs-attr">autoUpdate</span>: <span
-                    class="hljs-literal">false</span> });
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span class="hljs-string">'my-model.model.json'</span>, { <span class="hljs-attr">autoUpdate</span>: <span class="hljs-literal">false</span> });
 <span class="hljs-keyword">let</span> then = performance.now();
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">tick</span>(<span class="hljs-params">now</span>) </span>{
@@ -195,19 +170,15 @@ requestAnimationFrame(tick)</code></pre>
 					<h3>Interaction</h3>
 				</a>
 				<p>Interaction will be automatically set up for each model if <code>Renderer</code> has an <code>InteractionManager</code> plugin, which happens when a full build of PixiJS is imported:</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> PIXI <span
-                    class="hljs-keyword">from</span> <span class="hljs-string">'pixi.js'</span>;
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> PIXI <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi.js'</span>;
 <span class="hljs-built_in">window</span>.PIXI = PIXI;</code></pre>
 				<p>Or when the plugin is manually registered using modules:</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Renderer } <span class="hljs-keyword">from</span> <span
-                    class="hljs-string">'@pixi/core'</span>;
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Renderer } <span class="hljs-keyword">from</span> <span class="hljs-string">'@pixi/core'</span>;
 <span class="hljs-keyword">import</span> { InteractionManager } <span class="hljs-keyword">from</span> <span class="hljs-string">'@pixi/interaction'</span>;
 
 Renderer.registerPlugin(<span class="hljs-string">'interaction'</span>, InteractionManager);</code></pre>
 				<p>If you don&#39;t want the default behaviour, you can disable it by setting <code>autoInteract</code> to <code>false</code>, then play with corresponding interaction methods.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span
-                    class="hljs-string">'my-model.model.json'</span>, { <span class="hljs-attr">autoInteract</span>: <span
-                    class="hljs-literal">false</span> });
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span class="hljs-string">'my-model.model.json'</span>, { <span class="hljs-attr">autoInteract</span>: <span class="hljs-literal">false</span> });
 
 <span class="hljs-comment">// focusing</span>
 canvasElement.addEventListener(<span class="hljs-string">'mousemove'</span>, event =&gt; model.focus(event.clientX, event.clientY));
@@ -224,8 +195,7 @@ canvasElement.addEventListener(<span class="hljs-string">'mousedown'</span>, eve
 					<h3>Motion</h3>
 				</a>
 				<p>Motions are managed by <code>MotionManager</code> of each model.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Priority } <span class="hljs-keyword">from</span> <span
-                    class="hljs-string">'pixi-live2d-display'</span>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Priority } <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi-live2d-display'</span>
 
 <span class="hljs-comment">// start a random motion in "tap_body" group</span>
 model.internal.motionManager.startRandomMotion(<span class="hljs-string">'tapBody'</span>);
@@ -247,8 +217,7 @@ model.motion(<span class="hljs-string">'tapBody'</span>);</code></pre>
 				<pre><code class="language-javascript">model.internal.motionManager.soundManager.volume = <span class="hljs-number">0.5</span>;</code></pre>
 				<p>When a motion with <code>sound</code> defined starts, the sound will be played, and a <code>sound</code> event will be emitted.</p>
 				<pre><code class="language-javascript">model.on(<span class="hljs-string">'sound'</span>, (file, audio) =&gt; {
-    audio.addEventListener(<span class="hljs-string">'ended'</span>, () =&gt; <span class="hljs-built_in">console</span>.log(<span
-                        class="hljs-string">'finished'</span>));
+    audio.addEventListener(<span class="hljs-string">'ended'</span>, () =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'finished'</span>));
 });</code></pre>
 				<hr>
 				<p>The testing Live2D model, Shizuku, is distributed under Live2D&#39;s <a href="https://www.live2d.com/eula/live2d-free-material-license-agreement_en.html">Free Material License</a>.</p>
