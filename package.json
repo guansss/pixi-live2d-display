@@ -13,7 +13,7 @@
     "pretest": "webpack --config webpack.test.config.js",
     "test": "node node_modules/floss/bin/floss.js --path build.test -d",
     "build": "webpack --mode=production",
-    "type": "dts-bundle-generator --no-check -o types/index.d.ts src/index.ts",
+    "type": "dts-bundle-generator --no-check -o types/index.d.ts src/index.ts && node scripts/patch-types.js",
     "doc": "typedoc src --mode file --excludeNotExported && node scripts/patch-docs.js",
     "prepare": "yarn build && yarn type"
   },
