@@ -66,16 +66,18 @@
 					<h1>pixi-live2d-display</h1>
 				</a>
 				<p><img src="https://img.shields.io/github/package-json/v/guansss/pixi-live2d-display?style=flat-square" alt="GitHub package.json version">
+					<img src="https://img.shields.io/badge/Cubism-2.1-ff69b4?style=flat-square" alt="Cubism version">
 				<a href="https://www.codacy.com/manual/guansss/pixi-live2d-display?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=guansss/pixi-live2d-display&amp;utm_campaign=Badge_Grade"><img src="https://img.shields.io/codacy/grade/815a5e1399b74441a2203b7c7b4861c0?style=flat-square&logo=codacy" alt="Codacy Badge"></a></p>
 				<p>Live2D integration for <a href="https://github.com/pixijs/pixi.js">PixiJS</a> v5.</p>
 				<p>Only compatible with Cubism 2.1. Support of Cubism 4 is on the way!</p>
+				<p><a href="https://guansss.github.io/pixi-live2d-display/">Documentation</a></p>
 				<p><a href="https://codepen.io/guansss/pen/MWwRNyP?editors=1010">Play with demo</a></p>
 				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
 					<h2>Install</h2>
 				</a>
 				<pre><code class="language-sh">npm install pixi-live2d-display</code></pre>
 				<p>This library relies on <code>Promise</code>, you may need a polyfill, e.g. <a href="https://github.com/stefanpenner/es6-promise">es6-promise</a>.</p>
-				<p>You&#39;ll also need to include the Cubism 2.1 core library, which is typically named <code>live2d.min.js</code>. The official download has been dead <a href="https://help.live2d.com/en/other/other_20/">since 9/4/2019</a>, but its spirit still exists <a href="https://github.com/dylanNew/live2d/tree/master/webgl/Live2D/lib">somewhere on the net</a>...</p>
+				<p>You&#39;ll also need to include the Cubism 2.1 runtime library, which is typically named <code>live2d.min.js</code>. The official download has been gone <a href="https://help.live2d.com/en/other/other_20/">since 9/4/2019</a>, but its spirit still exists <a href="https://github.com/dylanNew/live2d/tree/master/webgl/Live2D/lib">somewhere on the net</a>...</p>
 				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 					<h2>Usage</h2>
 				</a>
@@ -103,9 +105,7 @@
             model.motion(<span class="hljs-string">'tapBody'</span>);
         }
     });
-}
-
-main();</code></pre>
+}</code></pre>
 				<a href="#modules" id="modules" style="color: inherit; text-decoration: none;">
 					<h3>Modules</h3>
 				</a>
@@ -118,23 +118,18 @@ main();</code></pre>
 
     <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Application();
     app.stage.addChild(model);
-}
-
-main();</code></pre>
-				<a href="#prebuilt-file" id="prebuilt-file" style="color: inherit; text-decoration: none;">
-					<h3>Prebuilt File</h3>
+}</code></pre>
+				<a href="#prebuilt-files" id="prebuilt-files" style="color: inherit; text-decoration: none;">
+					<h3>Prebuilt Files</h3>
 				</a>
-				<p>When including prebuilt file by script tag, all exported members are available in <code>PIXI.live2d</code> namespace. For example <code>import { Live2DModel } from &#39;pixi-live2d-display&#39;</code> becomes <code>PIXI.live2d.Live2DModel</code>.</p>
+				<p>When including <a href="https://github.com/guansss/pixi-live2d-display/releases">prebuilt files</a> by script tag, all exported members are available in <code>PIXI.live2d</code> namespace. For example <code>import { Live2DModel } from &#39;pixi-live2d-display&#39;</code> becomes <code>PIXI.live2d.Live2DModel</code>.</p>
 				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"pixi.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"pixi-live2d-display.browser.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
-				<pre><code class="language-javascript"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> PIXI.live2d.Live2DModel.fromModelSettingsFile(<span class="hljs-string">'my-model.model.json'</span>);
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> PIXI.Application({ <span class="hljs-attr">autoStart</span>: <span class="hljs-literal">true</span> });
 
-    <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> PIXI.Application({ <span class="hljs-attr">autoStart</span>: <span class="hljs-literal">true</span> });
+PIXI.live2d.Live2DModel.fromModelSettingsFile(<span class="hljs-string">'my-model.model.json'</span>).then(<span class="hljs-function"><span class="hljs-params">model</span> =&gt;</span> {
     app.stage.addChild(model);
-}
-
-main();</code></pre>
+})</code></pre>
 				<a href="#updating" id="updating" style="color: inherit; text-decoration: none;">
 					<h3>Updating</h3>
 				</a>
@@ -153,9 +148,10 @@ Live2DModel.registerTicker(Ticker);</code></pre>
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span class="hljs-string">'my-model.model.json'</span>, { <span class="hljs-attr">autoUpdate</span>: <span class="hljs-literal">false</span> });
 
-Ticker.shared.add(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span> model.update(Ticker.shared.elapsedMS));</code></pre>
+<span class="hljs-keyword">new</span> Ticker().add(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span> model.update(Ticker.shared.elapsedMS));</code></pre>
 				<p>Or without <code>Ticker</code>:</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span class="hljs-string">'my-model.model.json'</span>, { <span class="hljs-attr">autoUpdate</span>: <span class="hljs-literal">false</span> });
+
 <span class="hljs-keyword">let</span> then = performance.now();
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">tick</span>(<span class="hljs-params">now</span>) </span>{
@@ -185,7 +181,7 @@ canvasElement.addEventListener(<span class="hljs-string">'mousemove'</span>, eve
 
 <span class="hljs-comment">// tapping</span>
 canvasElement.addEventListener(<span class="hljs-string">'mousedown'</span>, event =&gt; model.tap(event.clientX, event.clientY));</code></pre>
-				<p>When any hit area (also called <a href="http://sites.cybernoids.jp/cubism_e/modeler/models/collision/placement">Collision Detection</a>) is hit on tapping, a <code>hit</code> event will be emitted with an array of hit hit areas.</p>
+				<p>When any hit area (also called <a href="http://sites.cybernoids.jp/cubism_e/modeler/models/collision/placement">Collision Detection</a>) is hit on tapping, a <code>hit</code> event will be emitted with an array of the names of hit hit areas.</p>
 				<pre><code class="language-javascript">model.on(<span class="hljs-string">'hit'</span>, hitAreas =&gt; {
     <span class="hljs-keyword">if</span>(hitAreas.includes(<span class="hljs-string">'body'</span>)) {
         <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'hit body'</span>)
@@ -195,16 +191,22 @@ canvasElement.addEventListener(<span class="hljs-string">'mousedown'</span>, eve
 					<h3>Motion</h3>
 				</a>
 				<p>Motions are managed by <code>MotionManager</code> of each model.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Priority } <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi-live2d-display'</span>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Priority } <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi-live2d-display'</span>;
 
-<span class="hljs-comment">// start a random motion in "tap_body" group</span>
+<span class="hljs-comment">// start a random motion in "tap_body" group, note that it's camelCased into "tapBody" when using in the code</span>
 model.internal.motionManager.startRandomMotion(<span class="hljs-string">'tapBody'</span>);
 
-<span class="hljs-comment">// start an explicit motion</span>
+<span class="hljs-comment">// start an explicit motion as normal priority</span>
 model.internal.motionManager.startMotionByPriority(<span class="hljs-string">'tapBody'</span>, <span class="hljs-number">0</span>, Priority.Normal);
 
 <span class="hljs-comment">// a shorthand of startRandomMotion()</span>
 model.motion(<span class="hljs-string">'tapBody'</span>);</code></pre>
+				<p>When a motion starts, the sound will be played (if there is), and a <code>motion</code> event will be emitted.</p>
+				<pre><code class="language-javascript">model.on(<span class="hljs-string">'motion'</span>, (group, index, audio) =&gt; {
+    <span class="hljs-keyword">if</span>(audio) {
+        audio.addEventListener(<span class="hljs-string">'ended'</span>, () =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'finished'</span>));    
+    }
+});</code></pre>
 				<a href="#expression" id="expression" style="color: inherit; text-decoration: none;">
 					<h3>Expression</h3>
 				</a>
@@ -213,12 +215,23 @@ model.motion(<span class="hljs-string">'tapBody'</span>);</code></pre>
 				<a href="#sound" id="sound" style="color: inherit; text-decoration: none;">
 					<h3>Sound</h3>
 				</a>
-				<p>Sounds are managed by <code>SoundManager</code> in <code>MotionManager</code>.</p>
-				<pre><code class="language-javascript">model.internal.motionManager.soundManager.volume = <span class="hljs-number">0.5</span>;</code></pre>
-				<p>When a motion with <code>sound</code> defined starts, the sound will be played, and a <code>sound</code> event will be emitted.</p>
-				<pre><code class="language-javascript">model.on(<span class="hljs-string">'sound'</span>, (file, audio) =&gt; {
-    audio.addEventListener(<span class="hljs-string">'ended'</span>, () =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'finished'</span>));
-});</code></pre>
+				<p>Sounds are managed by static <code>SoundManager</code>.</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { SoundManager } <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi-live2d-display'</span>;
+
+SoundManager.volume = <span class="hljs-number">0.5</span>;</code></pre>
+				<a href="#global-config" id="global-config" style="color: inherit; text-decoration: none;">
+					<h3>Global Config</h3>
+				</a>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { config } <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi-live2d-display'</span>;
+
+<span class="hljs-comment">// log level</span>
+config.logLevel = config.LOG_LEVEL_WARNING;
+
+<span class="hljs-comment">// play sound for motions</span>
+config.sound = <span class="hljs-literal">true</span>;
+
+<span class="hljs-comment">// defer motion and corresponding sound until both are loaded </span>
+config.motionSync = <span class="hljs-literal">true</span>;</code></pre>
 				<hr>
 				<p>The testing Live2D model, Shizuku, is distributed under Live2D&#39;s <a href="https://www.live2d.com/eula/live2d-free-material-license-agreement_en.html">Free Material License</a>.</p>
 			</div>
