@@ -1,5 +1,5 @@
-/// <reference path="live2d/live2d.d.ts"/>
-/// <reference path="shim.d.ts"/>
+/// <reference path="types/live2d.d.ts"/>
+/// <reference path="types/shim.d.ts"/>
 
 export * from './live2d';
 export * from './utils';

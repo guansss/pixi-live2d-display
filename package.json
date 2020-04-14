@@ -14,6 +14,7 @@
     "test": "node node_modules/floss/bin/floss.js --path build.test -d",
     "build": "webpack --mode=production",
     "type": "dts-bundle-generator --no-check -o types/index.d.ts src/index.ts",
+    "doc": "typedoc src --mode file --excludeNotExported && node scripts/patch-docs.js",
     "prepare": "yarn build && yarn type"
   },
   "files": [
@@ -36,14 +37,17 @@
   "devDependencies": {
     "@types/lodash": "^4.14.149",
     "@types/node": "latest",
+    "chalk": "^4.0.0",
     "dts-bundle-generator": "^4.0.0",
     "electron": "^8.1.1",
     "floss": "^3.0.0",
     "fork-ts-checker-webpack-plugin": "^4.1.0",
+    "glob": "^7.1.6",
     "lodash": "latest",
     "pixi.js": "^5.2.1",
     "sinon": "^9.0.1",
     "ts-loader": "^6.2.1",
+    "typedoc": "^0.17.4",
     "typescript": "^3.8.3",
     "webpack": "^4.42.0",
     "webpack-cli": "^3.3.11"
