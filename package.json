@@ -15,7 +15,8 @@
     "build": "webpack --mode=production",
     "type": "dts-bundle-generator --no-check -o types/index.d.ts src/index.ts && node scripts/patch-types.js",
     "doc": "rimraf docs && typedoc src --mode file --excludeNotExported && node scripts/patch-docs.js",
-    "prepare": "yarn build && yarn type"
+    "prepack": "yarn build && yarn type",
+    "prepublish": "yarn doc"
   },
   "files": [
     "lib",
