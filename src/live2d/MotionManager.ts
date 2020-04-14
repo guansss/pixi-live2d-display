@@ -105,7 +105,7 @@ export class MotionManager extends MotionQueueManager {
 
     async startMotionByPriority(group: string, index: number, priority: Priority = Priority.Normal): Promise<boolean> {
         if (priority !== Priority.Force && (priority <= this.currentPriority || priority <= this.reservePriority)) {
-            logger.log(this.tag, 'Cannot start motion because another motion of same or higher priority is running');
+            logger.log(this.tag, 'Cannot start motion because another motion on same or higher priority is running');
             return false;
         }
 

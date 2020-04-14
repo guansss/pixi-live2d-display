@@ -1,11 +1,14 @@
 # pixi-live2d-display
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/guansss/pixi-live2d-display?style=flat-square)
+![Cubism version](https://img.shields.io/badge/Cubism-2.1-ff69b4?style=flat-square)
 [![Codacy Badge](https://img.shields.io/codacy/grade/815a5e1399b74441a2203b7c7b4861c0?style=flat-square&logo=codacy)](https://www.codacy.com/manual/guansss/pixi-live2d-display?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=guansss/pixi-live2d-display&amp;utm_campaign=Badge_Grade)
 
 Live2D integration for [PixiJS](https://github.com/pixijs/pixi.js) v5.
 
 Only compatible with Cubism 2.1. Support of Cubism 4 is on the way!
+
+[Documentation](https://guansss.github.io/pixi-live2d-display/)
 
 [Play with demo](https://codepen.io/guansss/pen/MWwRNyP?editors=1010)
 
@@ -17,7 +20,7 @@ npm install pixi-live2d-display
 
 This library relies on `Promise`, you may need a polyfill, e.g. [es6-promise](https://github.com/stefanpenner/es6-promise).
 
-You'll also need to include the Cubism 2.1 core library, which is typically named `live2d.min.js`. The official download has been dead [since 9/4/2019](https://help.live2d.com/en/other/other_20/), but its spirit still exists [somewhere on the net](https://github.com/dylanNew/live2d/tree/master/webgl/Live2D/lib)...
+You'll also need to include the Cubism 2.1 runtime library, which is typically named `live2d.min.js`. The official download has been gone [since 9/4/2019](https://help.live2d.com/en/other/other_20/), but its spirit still exists [somewhere on the net](https://github.com/dylanNew/live2d/tree/master/webgl/Live2D/lib)...
 
 ## Usage
 
@@ -46,8 +49,6 @@ async function main() {
         }
     });
 }
-
-main();
 ```
 
 ### Modules
@@ -64,13 +65,11 @@ async function main() {
     const app = new Application();
     app.stage.addChild(model);
 }
-
-main();
 ```
 
-### Prebuilt File
+### Prebuilt Files
 
-When including prebuilt file by script tag, all exported members are available in `PIXI.live2d` namespace. For example `import { Live2DModel } from 'pixi-live2d-display'` becomes `PIXI.live2d.Live2DModel`.
+When including [prebuilt files](https://github.com/guansss/pixi-live2d-display/releases) by script tag, all exported members are available in `PIXI.live2d` namespace. For example `import { Live2DModel } from 'pixi-live2d-display'` becomes `PIXI.live2d.Live2DModel`.
 
 ```html
 <script src="pixi.min.js"></script>
@@ -78,14 +77,11 @@ When including prebuilt file by script tag, all exported members are available i
 ```
 
 ```javascript
-async function main() {
-    const model = await PIXI.live2d.Live2DModel.fromModelSettingsFile('my-model.model.json');
+const app = new PIXI.Application({ autoStart: true });
 
-    const app = new PIXI.Application({ autoStart: true });
+PIXI.live2d.Live2DModel.fromModelSettingsFile('my-model.model.json').then(model => {
     app.stage.addChild(model);
-}
-
-main();
+})
 ```
 
 ### Updating
@@ -116,13 +112,14 @@ import { Ticker } from '@pixi/ticker';
 
 const model = await Live2DModel.fromModelSettingsFile('my-model.model.json', { autoUpdate: false });
 
-Ticker.shared.add(()=> model.update(Ticker.shared.elapsedMS));
+new Ticker().add(()=> model.update(Ticker.shared.elapsedMS));
 ```
 
 Or without `Ticker`:
 
 ```javascript
 const model = await Live2DModel.fromModelSettingsFile('my-model.model.json', { autoUpdate: false });
+
 let then = performance.now();
 
 function tick(now) {
@@ -165,7 +162,7 @@ canvasElement.addEventListener('mousemove', event => model.focus(event.clientX, 
 canvasElement.addEventListener('mousedown', event => model.tap(event.clientX, event.clientY));
 ```
 
-When any hit area (also called [Collision Detection](http://sites.cybernoids.jp/cubism_e/modeler/models/collision/placement)) is hit on tapping, a `hit` event will be emitted with an array of hit hit areas.
+When any hit area (also called [Collision Detection](http://sites.cybernoids.jp/cubism_e/modeler/models/collision/placement)) is hit on tapping, a `hit` event will be emitted with an array of the names of hit hit areas.
 
 ```javascript
 model.on('hit', hitAreas => {
@@ -180,17 +177,27 @@ model.on('hit', hitAreas => {
 Motions are managed by `MotionManager` of each model.
 
 ```javascript
-import { Priority } from 'pixi-live2d-display'
+import { Priority } from 'pixi-live2d-display';
 
-// start a random motion in "tap_body" group
+// start a random motion in "tap_body" group, note that it's camelCased into "tapBody" when using in the code
 model.internal.motionManager.startRandomMotion('tapBody');
 
-// start an explicit motion
+// start an explicit motion as normal priority
 model.internal.motionManager.startMotionByPriority('tapBody', 0, Priority.Normal);
 
 // a shorthand of startRandomMotion()
 model.motion('tapBody');
 ```
+
+When a motion starts, the sound will be played (if there is), and a `motion` event will be emitted.
+
+```javascript
+model.on('motion', (group, index, audio) => {
+    if(audio) {
+        audio.addEventListener('ended', () => console.log('finished'));    
+    }
+});
+``` 
 
 ### Expression
 
@@ -202,19 +209,28 @@ model.internal.motionManager.expressionManager.setRandomExpression();
 
 ### Sound
 
-Sounds are managed by `SoundManager` in `MotionManager`.
+Sounds are managed by static `SoundManager`.
 
 ```javascript
-model.internal.motionManager.soundManager.volume = 0.5;
+import { SoundManager } from 'pixi-live2d-display';
+
+SoundManager.volume = 0.5;
 ```
 
-When a motion with `sound` defined starts, the sound will be played, and a `sound` event will be emitted.
+### Global Config
 
 ```javascript
-model.on('sound', (file, audio) => {
-    audio.addEventListener('ended', () => console.log('finished'));
-});
-``` 
+import { config } from 'pixi-live2d-display';
+
+// log level
+config.logLevel = config.LOG_LEVEL_WARNING;
+
+// play sound for motions
+config.sound = true;
+
+// defer motion and corresponding sound until both are loaded 
+config.motionSync = true;
+```
 
 ---
 
