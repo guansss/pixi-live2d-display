@@ -17,32 +17,59 @@ export class SoundManager {
         this.audios.forEach(audio => (audio.volume = this._volume));
     }
 
-    static playSound(file: string, onFinish?: () => void, onError?: (e: Error) => void): HTMLAudioElement {
+    static add(file: string, onFinish?: () => void, onError?: (e: Error) => void): HTMLAudioElement {
         const audio = new Audio(file);
-        audio.volume = this._volume;
 
-        this.audios.push(audio);
+        audio.volume = this._volume;
+        audio.preload = 'auto';
 
         audio.addEventListener('ended', () => {
-            this.audios.splice(this.audios.indexOf(audio));
+            this.dispose(audio);
             onFinish?.();
         });
+
         audio.addEventListener('error', (e: ErrorEvent) => {
-            this.audios.splice(this.audios.indexOf(audio));
+            this.dispose(audio);
             logger.warn(TAG, `Error occurred when playing "${file}"`, e.error);
             onError?.(e.error);
         });
 
-        const playResult = audio.play();
-
-        if (playResult) {
-            playResult.catch(e => {
-                logger.warn(TAG, `Error occurred when playing "${file}"`, e);
-                onError?.(e.error);
-            });
-        }
+        this.audios.push(audio);
 
         return audio;
+    }
+
+    static play(audio: HTMLAudioElement): Promise<void> {
+        return new Promise((resolve, reject) => {
+            // see https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
+            audio.play()?.catch(e => {
+                audio.dispatchEvent(new ErrorEvent('error', { error: e }));
+                reject(e);
+            });
+
+            if (audio.readyState === audio.HAVE_ENOUGH_DATA) {
+                resolve();
+            } else {
+                audio.addEventListener('canplaythrough', resolve as () => void);
+            }
+        });
+    }
+
+    static dispose(audio: HTMLAudioElement) {
+        audio.pause();
+        audio.src = '';
+
+        const index = this.audios.indexOf(audio);
+
+        if (index !== -1) {
+            this.audios.splice(index, 1);
+        }
+    }
+
+    static destroy() {
+        for (const audio of this.audios) {
+            this.dispose(audio);
+        }
     }
 
     private constructor() {}

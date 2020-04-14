@@ -1,4 +1,5 @@
 import { Loader, LoaderResource } from '@pixi/loaders';
+import noop from 'lodash/noop';
 import { config } from '../config';
 import { SoundManager } from '../SoundManager';
 import { logger } from '../utils';
@@ -24,6 +25,8 @@ export class MotionManager extends MotionQueueManager {
 
     currentPriority = Priority.None;
     reservePriority = Priority.None;
+
+    currentAudio?: HTMLAudioElement;
 
     constructor(readonly coreModel: Live2DModelWebGL, readonly modelSettings: ModelSettings) {
         super();
@@ -108,8 +111,39 @@ export class MotionManager extends MotionQueueManager {
 
         this.reservePriority = priority;
 
-        const motion = this.motionGroups[group]?.[index] || (await this.loadMotion(group, index));
-        if (!motion) return false;
+        const definition = this.definitions[group]?.[index];
+
+        if (!definition) {
+            return false;
+        }
+
+        if (this.currentAudio) {
+            SoundManager.dispose(this.currentAudio);
+        }
+
+        let audio: HTMLAudioElement | undefined;
+
+        if (config.sound && definition.sound) {
+            // start to load the audio
+            audio = SoundManager.add(this.modelSettings.resolvePath(definition.sound));
+
+            this.currentAudio = audio;
+        }
+
+        let motion = this.motionGroups[group]?.[index] || (await this.loadMotion(group, index));
+
+        if (!motion) {
+            return false;
+        }
+
+        if (audio) {
+            if (config.motionSync) {
+                // wait until the audio has finished loading
+                await SoundManager.play(audio).catch(noop);
+            } else {
+                SoundManager.play(audio).catch(noop);
+            }
+        }
 
         if (priority === this.reservePriority) {
             this.reservePriority = Priority.None;
@@ -117,18 +151,10 @@ export class MotionManager extends MotionQueueManager {
 
         this.currentPriority = priority;
 
-        const definition = this.definitions[group][index];
-
         logger.log(this.tag, 'Start motion:', definition.file);
 
         if (priority > Priority.Idle) {
             this.expressionManager && this.expressionManager.resetExpression();
-        }
-
-        let audio: HTMLAudioElement | undefined;
-
-        if (config.sound && definition.sound) {
-            audio = SoundManager.playSound(this.modelSettings.resolvePath(definition.sound));
         }
 
         this.startMotion(motion);
