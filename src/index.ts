@@ -9,3 +9,4 @@ export * from './Live2DTransform';
 export * from './SoundManager';
 export * from './interaction';
 export * from './config';
+export * from './factory';

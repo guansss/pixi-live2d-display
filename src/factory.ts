@@ -7,10 +7,6 @@ import { logger } from './utils';
 
 const TAG = 'Live2DFactory';
 
-export interface Class<T> {
-    new(...args: any[]): T
-}
-
 export interface FactoryOptions extends Live2DModelOptions {
     /**
      * Options that will be passed to `PIXI.Loader#add`.
@@ -36,7 +32,7 @@ export interface FactoryOptions extends Live2DModelOptions {
  */
 export interface Live2DResources {
     /**
-     * The ModelSettings.
+     * Created ModelSettings.
      */
     settings: ModelSettings;
 
@@ -61,18 +57,66 @@ export interface Live2DResources {
     physics?: any;
 }
 
+declare module './Live2DModel' {
+    namespace Live2DModel {
+        /**
+         * Creates a `Live2DModel` from URL of model settings file.
+         * @param url - The URL of model settings file that is typically named with `.model.json` extension.
+         * @param options
+         * @return Created `Live2DModel`.
+         */
+        function fromModelSettingsFile<T extends typeof Live2DModel>(
+            this: T,
+            url: string,
+            options?: FactoryOptions,
+        ): Promise<InstanceType<T>>;
+
+        /**
+         * Creates a `Live2DModel` from model settings JSON.
+         * @param json - Model settings JSON
+         * @param basePath - URL of the model settings file.
+         * @param options
+         * @return Created `Live2DModel`.
+         */
+        function fromModelSettingsJSON<T extends typeof Live2DModel>(
+            this: T,
+            json: ModelSettingsJSON,
+            basePath: string,
+            options?: FactoryOptions,
+        ): Promise<InstanceType<T>>;
+
+        /**
+         * Creates a `Live2DModel` from a {@link ModelSettings}.
+         * @param settings
+         * @param options
+         * @return Created `Live2DModel`.
+         */
+        function fromModelSettings<T extends typeof Live2DModel>(
+            this: T,
+            settings: ModelSettings,
+            options?: FactoryOptions,
+        ): Promise<InstanceType<T>>;
+
+        /**
+         * Creates a `Live2DModel` from a {@link Live2DResources}.
+         * @param resources
+         * @param options
+         * @return Created `Live2DModel`.
+         */
+        function fromResources<T extends typeof Live2DModel>(
+            this: T,
+            resources: Live2DResources,
+            options?: FactoryOptions,
+        ): InstanceType<T>;
+    }
+}
+
 /**
  * Cached model data. Indexed with the URL.
  */
 export const MODEL_DATA_CACHE: Record<string, ArrayBuffer> = {};
 
-/**
- * Creates a `Live2DModel` from URL of model settings file.
- * @param url - The URL of model settings file that is typically named with `.model.json` extension.
- * @param options
- * @return Created `Live2DModel`.
- */
-export async function fromModelSettingsFile<T extends Live2DModel>(this: Class<T>, url: string, options?: FactoryOptions): Promise<T> {
+Live2DModel.fromModelSettingsFile = function(url: string, options?: FactoryOptions) {
     return new Promise((resolve, reject) => {
         new Loader()
             .add(url, options?.loaderOptions)
@@ -80,33 +124,20 @@ export async function fromModelSettingsFile<T extends Live2DModel>(this: Class<T
                 const resource = resources[url]!;
 
                 if (!resource.error) {
-                    (fromModelSettingsJSON.call(this, resource.data, url, options) as Promise<T>).then(resolve).catch(reject);
+                    this.fromModelSettingsJSON(resource.data, url, options).then(resolve).catch(reject);
                 } else {
                     reject(resource.error);
                 }
             })
             .on('error', reject);
     });
-}
+};
 
-/**
- * Creates a `Live2DModel` from model settings JSON.
- * @param json - Model settings JSON
- * @param basePath - URL of the model settings file.
- * @param options
- * @return Created `Live2DModel`.
- */
-export async function fromModelSettingsJSON<T extends Live2DModel>(this: Class<T>, json: ModelSettingsJSON, basePath: string, options?: FactoryOptions): Promise<T> {
-    return await fromModelSettings.call(this, new ModelSettings(json, basePath), options) as T;
-}
+Live2DModel.fromModelSettingsJSON = function(json: ModelSettingsJSON, basePath: string, options?: FactoryOptions) {
+    return this.fromModelSettings(new ModelSettings(json, basePath), options);
+};
 
-/**
- * Creates a `Live2DModel` from a {@link ModelSettings}.
- * @param settings
- * @param options
- * @return Created `Live2DModel`.
- */
-export async function fromModelSettings<T extends Live2DModel>(this: Class<T>, settings: ModelSettings, options?: FactoryOptions): Promise<T> {
+Live2DModel.fromModelSettings = function(settings: ModelSettings, options?: FactoryOptions) {
     return new Promise((resolve, reject) => {
         const resources: Partial<Live2DResources> = {
             settings,
@@ -119,7 +150,7 @@ export async function fromModelSettings<T extends Live2DModel>(this: Class<T>, s
             if (!error) {
                 if (resources.model) {
                     try {
-                        resolve(fromResources.call(this, resources as Live2DResources, options) as T);
+                        resolve(this.fromResources(resources as Live2DResources, options));
                     } catch (e) {
                         error = e;
                     }
@@ -211,15 +242,9 @@ export async function fromModelSettings<T extends Live2DModel>(this: Class<T>, s
             finish(e);
         }
     });
-}
+};
 
-/**
- * Creates a `Live2DModel` from a {@link Live2DResources}.
- * @param resources
- * @param options
- * @return Created `Live2DModel`.
- */
-export function fromResources<T extends Live2DModel>(this: Class<T>, resources: Live2DResources, options?: FactoryOptions): T {
+Live2DModel.fromResources = function <T extends typeof Live2DModel>(resources: Live2DResources, options?: FactoryOptions) {
     const coreModel = Live2DModelWebGL.loadModel(resources.model);
 
     const error = Live2D.getError();
@@ -235,5 +260,5 @@ export function fromResources<T extends Live2DModel>(this: Class<T>, resources: 
         internalModel.physics = new Live2DPhysics(coreModel, resources.physics);
     }
 
-    return new this(internalModel, resources.textures, options);
-}
+    return new this(internalModel, resources.textures, options) as InstanceType<T>;
+};

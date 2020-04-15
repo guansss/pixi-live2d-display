@@ -3,29 +3,10 @@ import { Container } from '@pixi/display';
 import { InteractionEvent, InteractionManager } from '@pixi/interaction';
 import { ObservablePoint, Point } from '@pixi/math';
 import { Ticker } from '@pixi/ticker';
-import { fromModelSettings, fromModelSettingsFile, fromModelSettingsJSON, fromResources } from './factory';
 import { interaction } from './interaction';
 import { Live2DInternalModel, Priority } from './live2d';
 import { Live2DTransform } from './Live2DTransform';
 import { clamp, logger } from './utils';
-
-export interface Live2DModelEvents {
-    /**
-     * One or more hit areas are hit.
-     * @event Live2DModel#hit
-     * @param {string[]} hitAreas - The names of hit hit areas.
-     */
-    hit: [string[]];
-
-    /**
-     * A Live2D motion has started.
-     * @event Live2DModel#motion
-     * @param {string} group - Group of this motion.
-     * @param {string} index - Index of this motion in group.
-     * @param {HTMLAudioElement?} audio - The audio element used to play sound of this motion.
-     */
-    motion: [string, number, HTMLAudioElement?];
-}
 
 export interface Live2DModelOptions {
     /**
@@ -94,15 +75,6 @@ export class Live2DModel extends Container {
      * The time elapsed from last frame to current frame. Milliseconds.
      */
     deltaTime: DOMHighResTimeStamp = 0;
-
-    /**
-     * @method
-     * @borrows factory:fromModelSettingsFile
-     */
-    static fromModelSettingsFile = fromModelSettingsFile;
-    static fromModelSettingsJSON = fromModelSettingsJSON;
-    static fromModelSettings = fromModelSettings;
-    static fromResources = fromResources;
 
     /**
      * Registers the class of `Ticker` for auto updating.

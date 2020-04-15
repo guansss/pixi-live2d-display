@@ -9,7 +9,6 @@ import { ExpressionDefinition, Layout, ModelSettingsJSON, MotionDefinition } fro
  * The structure of properties is the same as a raw model settings JSON,
  * but **all the keys are converted into camelCase**.
  *
- * @example
  * ```js
  * let settings = new ModelSettings({
  *     "motions": {
