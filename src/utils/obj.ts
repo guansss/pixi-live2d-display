@@ -3,7 +3,7 @@ import camelCase from 'lodash/camelCase';
 /**
  * Deep clones a JSON object, converting all the property names to camel case.
  * @param value - JSON object.
- * @returns Cloned object.
+ * @return Cloned object.
  */
 export function cloneWithCamelCase(value: any): any {
     if (Array.isArray(value)) {
@@ -24,36 +24,53 @@ export function cloneWithCamelCase(value: any): any {
 }
 
 /**
- * Copies a property at `path` only if it matches the `type`.
+ * Copies a property at only if it matches the `type`.
+ * @param dest - Destination object.
+ * @param src - Source object.
+ * @param key - Key of the property.
+ * @param type - Type expected to match `typeof` on the property.
  */
-export function copyProperty(dest: any, src: any, path: string, type: string) {
-    const value = src[path];
+export function copyProperty(dest: any, src: any, key: string, type: string) {
+    const value = src[key];
 
     if (typeof value === type) {
-        dest[path] = value;
+        dest[key] = value;
     }
 }
 
 /**
- * Copies a array at `path`, filtering the items that match the `type`.
+ * Copies a array at `key`, filtering the items that match the `type`.
+ * @param dest - Destination object.
+ * @param src - Source object.
+ * @param key - Key of the array property.
+ * @param type - Type expected to match `typeof` on the items.
  */
-export function copyArray(dest: any, src: any, path: string, type: string) {
-    const array = src[path];
+export function copyArray(dest: any, src: any, key: string, type: string) {
+    const array = src[key];
 
     if (Array.isArray(array)) {
-        dest[path] = array.filter(item => typeof item === type);
+        dest[key] = array.filter(item => typeof item === type);
     }
 }
 
 /**
- * Copies a array at `path`, filtering the items whose properties match the type in given `types` map.
+ * Copies a array at `key`, filtering the items with properties matching the type in given `types` map.
+ *
+ * ```js
+ * copyArrayDeep(o1, o2, 'users', { name: 'string', id: 'number' });
+ * ```
+ *
+ * @param dest - Destination object.
+ * @param src - Source object.
+ * @param key - Key of the array property.
+ * @param types - Type dictionary to match `typeof` on each property of the items.
  */
-export function copyArrayDeep(dest: any, src: any, path: string, types: Record<string, string>) {
-    const array = src[path];
+export function copyArrayDeep(dest: any, src: any, key: string, types: Record<string, string>) {
+    const array = src[key];
 
     const matchers = Object.entries(types);
 
     if (Array.isArray(array)) {
-        dest[path] = array.filter(item => matchers.every(([key, type]) => typeof item[key] === type));
+        dest[key] = array.filter(item => matchers.every(([key, type]) => typeof item[key] === type));
     }
 }

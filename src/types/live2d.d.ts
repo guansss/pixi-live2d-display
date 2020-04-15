@@ -1,8 +1,7 @@
 /**
- * Declares types of the exposed variables from Live2D library.
+ * Types of exposed members in Live2D runtime library.
  *
  * Since Live2D library is not open-source, these types come from inference or guess.
- * Many of them are `unknown` though.
  */
 
 declare class Live2D {
@@ -21,12 +20,12 @@ declare class Live2DModelWebGL {
     getModelContext(): ModelContext;
 
     /**
-     * @returns The width of model's Live2D drawing canvas but NOT the html canvas element.
+     * @return The width of model's Live2D drawing canvas but NOT the html canvas element.
      */
     getCanvasWidth(): number;
 
     /**
-     * @returns The height of model's Live2D drawing canvas but NOT the html canvas element.
+     * @return The height of model's Live2D drawing canvas but NOT the html canvas element.
      */
     getCanvasHeight(): number;
 
@@ -81,7 +80,7 @@ declare class MotionQueueManager {
     motions: unknown[];
 
     /**
-     * @returns The size of internal motion arrays.
+     * @return The size of internal motion arrays.
      */
     startMotion(motion: AMotion, neverUsedArg?: boolean): number;
 
@@ -90,7 +89,7 @@ declare class MotionQueueManager {
     isFinished(): boolean;
 
     /**
-     * @returns True if parameters are updated by any motion.
+     * @return True if parameters are updated by any motion.
      */
     updateParam(model: Live2DModelWebGL): boolean;
 }

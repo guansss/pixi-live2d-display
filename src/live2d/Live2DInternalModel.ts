@@ -17,23 +17,46 @@ const tempMatrixArray = new Float32Array([
     0, 0, 0, 1,
 ]);
 
+/**
+ * A wrapper of core model, which is `Live2DModelWebGL` from Live2D runtime library.
+ */
 export class Live2DInternalModel {
     motionManager: MotionManager;
+
+    focusController = new FocusController();
 
     eyeBlink: Live2DEyeBlink;
     physics?: Live2DPhysics;
     pose?: Live2DPose;
 
+    /**
+     * Original width of model canvas.
+     */
     readonly originalWidth: number;
+
+    /**
+     * Original height of model canvas.
+     */
     readonly originalHeight: number;
 
+    /**
+     * Width of model canvas, scaled by `width` in {@link ModelSettings#layout}.
+     */
     readonly width: number;
+
+    /**
+     * Width of model canvas, scaled by `height` in {@link ModelSettings#layout}.
+     */
     readonly height: number;
 
+    /**
+     * Transformation matrix, calculated from {@link ModelSettings#layout}.
+     */
     matrix = new Matrix();
 
-    focusController = new FocusController();
-
+    /**
+     * Live2D parameter index, cached for better performance.
+     */
     eyeballXParamIndex: number;
     eyeballYParamIndex: number;
     angleXParamIndex: number;
@@ -96,7 +119,12 @@ export class Live2DInternalModel {
         this.breathParamIndex = coreModel.getParamIndex('PARAM_BREATH');
     }
 
-    updateWebGLContext(gl: WebGLRenderingContext, glContextID: number) {
+    /**
+     * Updates GL context when it's changed.
+     * @param gl
+     * @param glContextID - Unique ID of given Gl context.
+     */
+    updateWebGLContext(gl: WebGLRenderingContext, glContextID: number): void {
         const drawParamWebGL = this.coreModel.drawParamWebGL;
 
         drawParamWebGL.firstDraw = true;
@@ -116,17 +144,21 @@ export class Live2DInternalModel {
         clipManager.getMaskRenderTexture();
     }
 
-    bindTexture(index: number, texture: WebGLTexture) {
+    /**
+     * Binds a texture to core model. The index must be the same as the index of this texture
+     * in {@link ModelSettings#textures}
+     * @param index
+     * @param texture
+     */
+    bindTexture(index: number, texture: WebGLTexture): void {
         this.coreModel.setTexture(index, texture);
     }
 
     /**
      * Hit test on model.
-     *
-     * @param x - The x position in model canvas.
-     * @param y - The y position in model canvas.
-     *
-     * @returns The names of hit areas that have passed the test.
+     * @param x - Position in model canvas.
+     * @param y - Position in model canvas.
+     * @return The names of hit hit areas.
      */
     hitTest(x: number, y: number): string[] {
         if (this.coreModel && this.modelSettings.hitAreas) {
@@ -160,7 +192,7 @@ export class Live2DInternalModel {
         return [];
     }
 
-    update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp) {
+    update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {
         const model = this.coreModel;
 
         model.loadParam();
@@ -191,7 +223,7 @@ export class Live2DInternalModel {
         model.update();
     }
 
-    draw(matrix: Matrix) {
+    draw(matrix: Matrix): void {
         // set given 3x3 matrix into a 4x4 matrix, with Y inverted
         tempMatrixArray[0] = matrix.a;
         tempMatrixArray[1] = -matrix.c;

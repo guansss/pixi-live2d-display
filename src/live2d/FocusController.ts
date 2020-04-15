@@ -53,8 +53,5 @@ export class FocusController {
 
         this.x += this.vx;
         this.y += this.vy;
-
-        // so many sqrt's here, it's painful...
-        // I tried hard to reduce the amount of them, but finally failed :(
     }
 }

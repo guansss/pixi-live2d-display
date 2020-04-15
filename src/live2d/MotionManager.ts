@@ -16,16 +16,39 @@ enum Group {
 const DEFAULT_FADE_TIMEOUT = 500;
 
 export class MotionManager extends MotionQueueManager {
+    /**
+     * Tag for logging.
+     */
     tag: string;
 
-    definitions: { [group: string]: MotionDefinition[] };
-    motionGroups: { [group: string]: Live2DMotion[] } = {};
+    /**
+     * Motion definitions copied from {@link ModelSettings#motions};
+     */
+    definitions: { [Group: string]: MotionDefinition[] };
 
+    /**
+     * Instances of `Live2DMotion`. The structure is the same as {@link MotionManager#definitions};
+     */
+    motionGroups: { [Group: string]: Live2DMotion[] } = {};
+
+    /**
+     * Can be undefined if missing {@link ModelSettings#expressions}.
+     */
     expressionManager?: ExpressionManager;
 
+    /**
+     * Priority of currently playing motion.
+     */
     currentPriority = Priority.None;
+
+    /**
+     * Priority of reserved motion, i.e. the motion that will play subsequently.
+     */
     reservePriority = Priority.None;
 
+    /**
+     * Audio element of currently playing motion.
+     */
     currentAudio?: HTMLAudioElement;
 
     constructor(readonly coreModel: Live2DModelWebGL, readonly modelSettings: ModelSettings) {
@@ -43,7 +66,7 @@ export class MotionManager extends MotionQueueManager {
         this.stopAllMotions();
     }
 
-    protected setupMotions() {
+    protected setupMotions(): void {
         // initialize all motion groups with empty arrays
         Object.keys(this.definitions).forEach(group => (this.motionGroups[group] = []));
 
@@ -52,7 +75,9 @@ export class MotionManager extends MotionQueueManager {
     }
 
     /**
-     * Loads a motion, or entire motion group if no index specified.
+     * Loads a motion, or all motions, in a group.
+     * @param group
+     * @param index - If not specified, all motions in this group will be loaded.
      */
     async loadMotion(group: string, index?: number): Promise<Live2DMotion | void> {
         return new Promise(resolve => {
@@ -103,6 +128,13 @@ export class MotionManager extends MotionQueueManager {
         });
     }
 
+    /**
+     * Starts a motion as given priority.
+     * @param group
+     * @param index
+     * @param priority
+     * @return Promise that resolves with true if a motion is successfully started.
+     */
     async startMotionByPriority(group: string, index: number, priority: Priority = Priority.Normal): Promise<boolean> {
         if (priority !== Priority.Force && (priority <= this.currentPriority || priority <= this.reservePriority)) {
             logger.log(this.tag, 'Cannot start motion because another motion on same or higher priority is running');
@@ -164,7 +196,12 @@ export class MotionManager extends MotionQueueManager {
         return true;
     }
 
-    startRandomMotion(group: string, priority: Priority = Priority.Normal) {
+    /**
+     * Starts a random motion in the group as given priority.
+     * @param group
+     * @param priority
+     */
+    startRandomMotion(group: string, priority: Priority = Priority.Normal): void {
         const groupDefinitions = this.definitions[group];
 
         if (groupDefinitions?.length > 0) {
@@ -173,7 +210,11 @@ export class MotionManager extends MotionQueueManager {
         }
     }
 
-    update() {
+    /**
+     * Updates parameters of core model.
+     * @return True if the parameters are actually updated.
+     */
+    update(): boolean {
         if (this.isFinished()) {
             if (this.currentPriority > Priority.Idle) {
                 this.expressionManager?.restoreExpression();
@@ -188,11 +229,17 @@ export class MotionManager extends MotionQueueManager {
 
         const updated = this.updateParam(this.coreModel);
 
+        // TODO: handle returned value
         this.expressionManager?.update();
 
         return updated;
     }
 
-    // to be overridden
-    onMotionStart(group: string, index: number, audio?: HTMLAudioElement) {}
+    /**
+     * Called when a motion is started. Will be implemented when constructing {@link Live2DModel}.
+     * @param group
+     * @param index
+     * @param audio
+     */
+    onMotionStart(group: string, index: number, audio?: HTMLAudioElement): void {}
 }

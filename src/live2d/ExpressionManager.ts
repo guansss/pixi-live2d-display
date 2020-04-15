@@ -6,12 +6,29 @@ import { ModelSettings } from './ModelSettings';
 import { ExpressionDefinition } from './ModelSettingsJSON';
 
 export class ExpressionManager extends MotionQueueManager {
+    /**
+     * Tag for logging.
+     */
     tag: string;
 
+    /**
+     * Expression definitions copied from {@link ModelSettings#expressions};
+     */
     readonly definitions: ExpressionDefinition[];
+
+    /**
+     * Instances of `Live2DExpression`. The structure is the same as {@link ExpressionManager#definitions};
+     */
     readonly expressions: Live2DExpression[] = [];
 
+    /**
+     * An empty `Live2DExpression`, used to reset the expression.
+     */
     defaultExpression: Live2DExpression;
+
+    /**
+     * Current expression. This won't change even when the expression has been reset in {@link ExpressionManager#resetExpression}.
+     */
     currentExpression: Live2DExpression;
 
     constructor(readonly coreModel: Live2DModelWebGL, readonly modelSettings: ModelSettings) {
@@ -28,7 +45,10 @@ export class ExpressionManager extends MotionQueueManager {
         this.stopAllMotions();
     }
 
-    protected async loadExpressions() {
+    /**
+     * Loads all expressions.
+     */
+    protected async loadExpressions(): Promise<void> {
         return new Promise(resolve => {
             const loader = new Loader();
 
@@ -53,13 +73,15 @@ export class ExpressionManager extends MotionQueueManager {
         });
     }
 
-    setRandomExpression() {
+    /**
+     * Sets a random expression. Selected expression won't be the same as previous one.
+     */
+    setRandomExpression(): void {
         if (this.expressions.length == 1) {
             this.setExpression(this.expressions[0]);
         } else {
             let expression;
 
-            // prevent showing same expression twice
             do {
                 expression = sample(this.expressions);
             } while (expression == this.currentExpression);
@@ -68,22 +90,37 @@ export class ExpressionManager extends MotionQueueManager {
         }
     }
 
-    resetExpression() {
+    /**
+     * Resets expression using {@link ExpressionManager#defaultExpression}.
+     */
+    resetExpression(): void {
         this.startMotion(this.defaultExpression);
     }
 
-    restoreExpression() {
+    /**
+     * Restores expression to {@link ExpressionManager#currentExpression}.
+     */
+    restoreExpression(): void {
         this.startMotion(this.currentExpression);
     }
 
-    setExpression(expression: Live2DExpression) {
+    /**
+     * Sets an expression.
+     * @param expression
+     */
+    setExpression(expression: Live2DExpression): void {
         this.currentExpression = expression;
         this.startMotion(expression);
     }
 
+    /**
+     * Update parameters of core model.
+     * @return True if the parameters are actually updated.
+     */
     update() {
         if (!this.isFinished()) {
             return this.updateParam(this.coreModel);
         }
+        // TODO: return false
     }
 }

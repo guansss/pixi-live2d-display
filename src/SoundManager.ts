@@ -3,11 +3,20 @@ import { logger } from './utils';
 const TAG = 'SoundManager';
 const VOLUME = 0.5;
 
+/**
+ * Manages all the sounds.
+ */
 export class SoundManager {
+    /**
+     * Audio elements that are playing or pending to play. Finished audios will be removed automatically.
+     */
     static audios: HTMLAudioElement[] = [];
 
     protected static _volume = VOLUME;
 
+    /**
+     * Global volume that affects all the sounds.
+     */
     static get volume(): number {
         return this._volume;
     }
@@ -17,6 +26,13 @@ export class SoundManager {
         this.audios.forEach(audio => (audio.volume = this._volume));
     }
 
+    /**
+     * Adds a sound.
+     * @param file - URL of the sound.
+     * @param onFinish
+     * @param onError
+     * @return Added audio element.
+     */
     static add(file: string, onFinish?: () => void, onError?: (e: Error) => void): HTMLAudioElement {
         const audio = new Audio(file);
 
@@ -39,6 +55,11 @@ export class SoundManager {
         return audio;
     }
 
+    /**
+     * Plays a sound.
+     * @param audio
+     * @return Promise that resolves when the audio is ready to play, rejects when error occurs.
+     */
     static play(audio: HTMLAudioElement): Promise<void> {
         return new Promise((resolve, reject) => {
             // see https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
@@ -55,7 +76,11 @@ export class SoundManager {
         });
     }
 
-    static dispose(audio: HTMLAudioElement) {
+    /**
+     * Disposes an audio element and removes it from {@link SoundManager.audios}.
+     * @param audio
+     */
+    static dispose(audio: HTMLAudioElement): void {
         audio.pause();
         audio.src = '';
 
@@ -66,7 +91,10 @@ export class SoundManager {
         }
     }
 
-    static destroy() {
+    /**
+     * Destroys all audios.
+     */
+    static destroy(): void {
         for (const audio of this.audios) {
             this.dispose(audio);
         }

@@ -3,6 +3,23 @@ import { resolve as urlResolve } from 'url';
 import { cloneWithCamelCase, copyArray, copyArrayDeep, copyProperty } from '../utils';
 import { ExpressionDefinition, Layout, ModelSettingsJSON, MotionDefinition } from './ModelSettingsJSON';
 
+/**
+ * The container of Live2D model settings.
+ *
+ * The structure of properties is the same as a raw model settings JSON,
+ * but **all the keys are converted into camelCase**.
+ *
+ * @example
+ * ```js
+ * let settings = new ModelSettings({
+ *     "motions": {
+ *         "tap_body": []
+ *     }
+ * }, 'path/to/my-model.model.json');
+ *
+ * let tapBodyMotions = settings.motion.tapBody;
+ * ```
+ */
 export class ModelSettings {
     name?: string;
 
@@ -22,12 +39,16 @@ export class ModelSettings {
     expressions?: ExpressionDefinition[];
     motions: { [group: string]: MotionDefinition[] } = {};
 
+    /**
+     * Checks if a JSON object is valid model settings.
+     * @param json
+     */
     static isModelSettingsJSON(json: any): json is ModelSettingsJSON {
         return json && json.model && json.textures?.length > 0;
     }
 
     /**
-     * @param json - The model settings JSON
+     * @param json - The model settings JSON.
      * @param path - Path of the model settings file, used to resolve paths of resources defined in settings.
      */
     constructor(readonly json: ModelSettingsJSON, readonly path: string) {
@@ -41,14 +62,19 @@ export class ModelSettings {
         this.copy(cloneWithCamelCase(json));
     }
 
-    resolvePath(path: string) {
+    /**
+     * Resolves a relative path to be absolute using {@link ModelSettings.path}.
+     * @param path
+     */
+    resolvePath(path: string): string {
         return urlResolve(this.path, path);
     }
 
     /**
-     * Validates and copies properties from JSON.
+     * Validates and copies properties from raw JSON.
+     * @param json
      */
-    protected copy(json: ModelSettingsJSON) {
+    protected copy(json: ModelSettingsJSON): void {
         copyProperty(this, json, 'model', 'string');
 
         if (!this.model) {

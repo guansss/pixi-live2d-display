@@ -12,23 +12,66 @@ export interface Class<T> {
 }
 
 export interface FactoryOptions extends Live2DModelOptions {
+    /**
+     * Options that will be passed to `PIXI.Loader#add`.
+     * @default undefined
+     */
     loaderOptions?: ILoaderOptions;
 
-    // defaults to true
+    /**
+     * Use cache when loading model data.
+     * @default true
+     */
     modelDataCache?: boolean;
+
+    /**
+     * Use cache when loading textures.
+     * @default true
+     */
     textureCache?: boolean;
 }
 
+/**
+ * Bundled resources for creating a `Live2DModel`.
+ */
 export interface Live2DResources {
+    /**
+     * The ModelSettings.
+     */
     settings: ModelSettings;
+
+    /**
+     * Loaded model data.
+     */
     model: ArrayBuffer;
+
+    /**
+     * Loaded textures.
+     */
     textures: Texture[];
+
+    /**
+     * Loaded pose JSON.
+     */
     pose?: any;
+
+    /**
+     * Loaded pose JSON.
+     */
     physics?: any;
 }
 
+/**
+ * Cached model data. Indexed with the URL.
+ */
 export const MODEL_DATA_CACHE: Record<string, ArrayBuffer> = {};
 
+/**
+ * Creates a `Live2DModel` from URL of model settings file.
+ * @param url - The URL of model settings file that is typically named with `.model.json` extension.
+ * @param options
+ * @return Created `Live2DModel`.
+ */
 export async function fromModelSettingsFile<T extends Live2DModel>(this: Class<T>, url: string, options?: FactoryOptions): Promise<T> {
     return new Promise((resolve, reject) => {
         new Loader()
@@ -46,10 +89,23 @@ export async function fromModelSettingsFile<T extends Live2DModel>(this: Class<T
     });
 }
 
+/**
+ * Creates a `Live2DModel` from model settings JSON.
+ * @param json - Model settings JSON
+ * @param basePath - URL of the model settings file.
+ * @param options
+ * @return Created `Live2DModel`.
+ */
 export async function fromModelSettingsJSON<T extends Live2DModel>(this: Class<T>, json: ModelSettingsJSON, basePath: string, options?: FactoryOptions): Promise<T> {
     return await fromModelSettings.call(this, new ModelSettings(json, basePath), options) as T;
 }
 
+/**
+ * Creates a `Live2DModel` from a {@link ModelSettings}.
+ * @param settings
+ * @param options
+ * @return Created `Live2DModel`.
+ */
 export async function fromModelSettings<T extends Live2DModel>(this: Class<T>, settings: ModelSettings, options?: FactoryOptions): Promise<T> {
     return new Promise((resolve, reject) => {
         const resources: Partial<Live2DResources> = {
@@ -157,6 +213,12 @@ export async function fromModelSettings<T extends Live2DModel>(this: Class<T>, s
     });
 }
 
+/**
+ * Creates a `Live2DModel` from a {@link Live2DResources}.
+ * @param resources
+ * @param options
+ * @return Created `Live2DModel`.
+ */
 export function fromResources<T extends Live2DModel>(this: Class<T>, resources: Live2DResources, options?: FactoryOptions): T {
     const coreModel = Live2DModelWebGL.loadModel(resources.model);
 

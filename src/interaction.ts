@@ -4,7 +4,7 @@ import { Live2DModel } from './Live2DModel';
 declare module './Live2DModel' {
     interface Live2DModel {
         /**
-         * Unregisters interaction bound to InteractionManager.
+         * Unregisters interaction bound to `InteractionManager`.
          * @private
          */
         _unregisterInteraction?(): void;
@@ -12,7 +12,12 @@ declare module './Live2DModel' {
 }
 
 export namespace interaction {
-    export function registerInteraction(model: Live2DModel, manager: InteractionManager) {
+    /**
+     * Registers interaction for a `Live2DModel`.
+     * @param model
+     * @param manager
+     */
+    export function registerInteraction(model: Live2DModel, manager: InteractionManager): void {
         unregisterInteraction(model);
 
         model.interactionManager = manager;
@@ -26,7 +31,11 @@ export namespace interaction {
         };
     }
 
-    export function unregisterInteraction(model: Live2DModel) {
+    /**
+     * Unregisters interaction for a `Live2DModel`.
+     * @param model
+     */
+    export function unregisterInteraction(model: Live2DModel): void {
         model._unregisterInteraction?.();
         model._unregisterInteraction = undefined;
         model.interactionManager = undefined;

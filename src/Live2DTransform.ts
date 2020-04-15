@@ -1,12 +1,29 @@
 import { Matrix, Transform } from '@pixi/math';
 import { Live2DInternalModel, LOGICAL_HEIGHT, LOGICAL_WIDTH } from './live2d';
 
+/**
+ * Provides the ability to generate a matrix for Live2D model to draw.
+ */
 export class Live2DTransform extends Transform {
+
+    /**
+     * Cached drawing matrix, pretty performant!
+     */
     drawingMatrix = new Matrix();
 
+    /**
+     * Stored width of GL context, used to check if its size has changed.
+     */
     glWidth = -1;
+
+    /**
+     * Stored width of GL context, used to check if its size has changed.
+     */
     glHeight = -1;
 
+    /**
+     * The drawing matrix will be updated only when needed.
+     */
     needsUpdate = true;
 
     constructor(readonly model: Live2DInternalModel) {
@@ -14,7 +31,7 @@ export class Live2DTransform extends Transform {
     }
 
     /** @override */
-    updateTransform(parentTransform: Transform) {
+    updateTransform(parentTransform: Transform): void {
         const lastWorldID = this._worldID;
 
         super.updateTransform(parentTransform);
@@ -25,7 +42,8 @@ export class Live2DTransform extends Transform {
     }
 
     /**
-     * Generates a matrix for Live2D model to draw.
+     * Gets a drawing matrix for Live2D model.
+     * @param gl
      */
     getDrawingMatrix(gl: WebGLRenderingContext): Matrix {
         if (this.needsUpdate || this.glWidth !== gl.drawingBufferWidth || this.glHeight !== gl.drawingBufferHeight) {
