@@ -103,12 +103,12 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="live2dmodeloptions.html">Live2DModelOptions</a>.<a href="live2dmodeloptions.html#autointeract">autoInteract</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L21">src/Live2DModel.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L39">src/Live2DModel.ts:39</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Automatically listen for pointer events from InteractionManager to achieve interaction.</p>
+							<p>Automatically listen for pointer events from <code>InteractionManager</code> to achieve interaction.</p>
 						</div>
 					</div>
 				</section>
@@ -119,12 +119,12 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="live2dmodeloptions.html">Live2DModelOptions</a>.<a href="live2dmodeloptions.html#autoupdate">autoUpdate</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L16">src/Live2DModel.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L34">src/Live2DModel.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Automatically update internal model by Ticker.</p>
+							<p>Automatically update internal model by <code>Ticker.shared</code>.</p>
 						</div>
 					</div>
 				</section>
@@ -134,9 +134,19 @@
 					<div class="tsd-signature tsd-kind-icon">loader<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ILoaderOptions</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/factory.ts#L15">src/factory.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/factory.ts#L19">src/factory.ts:19</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Options that will be passed to <code>PIXI.Loader#add</code>.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>undefined</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="modeldatacache" class="tsd-anchor"></a>
@@ -144,9 +154,19 @@
 					<div class="tsd-signature tsd-kind-icon">model<wbr>Data<wbr>Cache<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/factory.ts#L18">src/factory.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/factory.ts#L25">src/factory.ts:25</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Use cache when loading model data.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>true</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="texturecache" class="tsd-anchor"></a>
@@ -154,9 +174,19 @@
 					<div class="tsd-signature tsd-kind-icon">texture<wbr>Cache<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/factory.ts#L19">src/factory.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/factory.ts#L31">src/factory.ts:31</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Use cache when loading textures.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>true</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 			</section>
 		</div>

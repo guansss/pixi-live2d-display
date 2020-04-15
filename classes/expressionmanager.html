@@ -130,7 +130,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/live2d/ExpressionManager.ts#L15">src/live2d/ExpressionManager.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/live2d/ExpressionManager.ts#L32">src/live2d/ExpressionManager.ts:32</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -155,7 +155,7 @@
 					<div class="tsd-signature tsd-kind-icon">core<wbr>Model<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Live2DModelWebGL</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/live2d/ExpressionManager.ts#L17">src/live2d/ExpressionManager.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/live2d/ExpressionManager.ts#L34">src/live2d/ExpressionManager.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -165,9 +165,14 @@
 					<div class="tsd-signature tsd-kind-icon">current<wbr>Expression<span class="tsd-signature-symbol">:</span> <a href="live2dexpression.html" class="tsd-signature-type">Live2DExpression</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/live2d/ExpressionManager.ts#L15">src/live2d/ExpressionManager.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/live2d/ExpressionManager.ts#L32">src/live2d/ExpressionManager.ts:32</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Current expression. This won&#39;t change even when the expression has been reset in {@link ExpressionManager#resetExpression}.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="defaultexpression" class="tsd-anchor"></a>
@@ -175,9 +180,14 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Expression<span class="tsd-signature-symbol">:</span> <a href="live2dexpression.html" class="tsd-signature-type">Live2DExpression</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/live2d/ExpressionManager.ts#L14">src/live2d/ExpressionManager.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/live2d/ExpressionManager.ts#L27">src/live2d/ExpressionManager.ts:27</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An empty <code>Live2DExpression</code>, used to reset the expression.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="definitions" class="tsd-anchor"></a>
@@ -185,9 +195,14 @@
 					<div class="tsd-signature tsd-kind-icon">definitions<span class="tsd-signature-symbol">:</span> <a href="../interfaces/expressiondefinition.html" class="tsd-signature-type">ExpressionDefinition</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/live2d/ExpressionManager.ts#L11">src/live2d/ExpressionManager.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/live2d/ExpressionManager.ts#L17">src/live2d/ExpressionManager.ts:17</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Expression definitions copied from {@link ModelSettings#expressions};</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="expressions" class="tsd-anchor"></a>
@@ -195,9 +210,14 @@
 					<div class="tsd-signature tsd-kind-icon">expressions<span class="tsd-signature-symbol">:</span> <a href="live2dexpression.html" class="tsd-signature-type">Live2DExpression</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/live2d/ExpressionManager.ts#L12">src/live2d/ExpressionManager.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/live2d/ExpressionManager.ts#L22">src/live2d/ExpressionManager.ts:22</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Instances of <code>Live2DExpression</code>. The structure is the same as {@link ExpressionManager#definitions};</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="modelsettings" class="tsd-anchor"></a>
@@ -205,7 +225,7 @@
 					<div class="tsd-signature tsd-kind-icon">model<wbr>Settings<span class="tsd-signature-symbol">:</span> <a href="modelsettings.html" class="tsd-signature-type">ModelSettings</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/live2d/ExpressionManager.ts#L17">src/live2d/ExpressionManager.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/live2d/ExpressionManager.ts#L34">src/live2d/ExpressionManager.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -216,7 +236,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="expressionmanager.html">ExpressionManager</a>.<a href="expressionmanager.html#motions">motions</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/types/live2d.d.ts#L81">src/types/live2d.d.ts:81</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/types/live2d.d.ts#L80">src/types/live2d.d.ts:80</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -226,9 +246,14 @@
 					<div class="tsd-signature tsd-kind-icon">tag<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/live2d/ExpressionManager.ts#L9">src/live2d/ExpressionManager.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/live2d/ExpressionManager.ts#L12">src/live2d/ExpressionManager.ts:12</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Tag for logging.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -244,7 +269,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="expressionmanager.html">ExpressionManager</a>.<a href="expressionmanager.html#isfinished">isFinished</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/types/live2d.d.ts#L90">src/types/live2d.d.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/types/live2d.d.ts#L89">src/types/live2d.d.ts:89</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -255,16 +280,21 @@
 					<a name="loadexpressions" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> load<wbr>Expressions</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">load<wbr>Expressions<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">load<wbr>Expressions<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/live2d/ExpressionManager.ts#L31">src/live2d/ExpressionManager.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/live2d/ExpressionManager.ts#L51">src/live2d/ExpressionManager.ts:51</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Loads all expressions.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -278,9 +308,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/live2d/ExpressionManager.ts#L71">src/live2d/ExpressionManager.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/live2d/ExpressionManager.ts#L96">src/live2d/ExpressionManager.ts:96</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Resets expression using {@link ExpressionManager#defaultExpression}.</p>
+								</div>
+							</div>
 							
 						</li>
 					</ul>
@@ -295,9 +330,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/live2d/ExpressionManager.ts#L75">src/live2d/ExpressionManager.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/live2d/ExpressionManager.ts#L103">src/live2d/ExpressionManager.ts:103</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Restores expression to {@link ExpressionManager#currentExpression}.</p>
+								</div>
+							</div>
 							
 						</li>
 					</ul>
@@ -312,13 +352,20 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/live2d/ExpressionManager.ts#L79">src/live2d/ExpressionManager.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/live2d/ExpressionManager.ts#L111">src/live2d/ExpressionManager.ts:111</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets an expression.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>expression: <a href="live2dexpression.html" class="tsd-signature-type">Live2DExpression</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
 								</li>
 							</ul>
 							
@@ -335,9 +382,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/live2d/ExpressionManager.ts#L56">src/live2d/ExpressionManager.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/live2d/ExpressionManager.ts#L79">src/live2d/ExpressionManager.ts:79</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets a random expression. Selected expression won&#39;t be the same as previous one.</p>
+								</div>
+							</div>
 							
 						</li>
 					</ul>
@@ -353,7 +405,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="expressionmanager.html">ExpressionManager</a>.<a href="expressionmanager.html#startmotion">startMotion</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/types/live2d.d.ts#L86">src/types/live2d.d.ts:86</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/types/live2d.d.ts#L85">src/types/live2d.d.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -383,7 +435,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="expressionmanager.html">ExpressionManager</a>.<a href="expressionmanager.html#stopallmotions">stopAllMotions</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/types/live2d.d.ts#L88">src/types/live2d.d.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/types/live2d.d.ts#L87">src/types/live2d.d.ts:87</a></li>
 								</ul>
 							</aside>
 							
@@ -400,10 +452,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/live2d/ExpressionManager.ts#L84">src/live2d/ExpressionManager.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/live2d/ExpressionManager.ts#L120">src/live2d/ExpressionManager.ts:120</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Update parameters of core model.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h4>
+							<p>True if the parameters are actually updated.</p>
 						</li>
 					</ul>
 				</section>
@@ -418,7 +476,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="expressionmanager.html">ExpressionManager</a>.<a href="expressionmanager.html#updateparam">updateParam</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/types/live2d.d.ts#L95">src/types/live2d.d.ts:95</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/types/live2d.d.ts#L94">src/types/live2d.d.ts:94</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

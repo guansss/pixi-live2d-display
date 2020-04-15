@@ -64,6 +64,20 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A wrapper that makes Live2D model possible to be used as a <code>DisplayObject</code> in PixiJS.</p>
+					</div>
+					<pre><code class="language-ts"><span class="hljs-keyword">let</span> model = Live2DModel.fromModelSettingsFile(<span class="hljs-string">'path/to/my-model.model.json'</span>);
+container.add(model);</code></pre>
+					<dl class="tsd-comment-tags">
+						<dt>emits</dt>
+						<dd><p><a href="../interfaces/live2dmodelevents.html">Live2DModelEvents</a></p>
+						</dd>
+					</dl>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -225,7 +239,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides Container.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L56">src/Live2DModel.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L113">src/Live2DModel.ts:113</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -303,7 +317,7 @@
 					<div class="tsd-signature tsd-kind-icon">_auto<wbr>Interact<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L77">src/Live2DModel.ts:77</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L134">src/Live2DModel.ts:134</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -313,7 +327,7 @@
 					<div class="tsd-signature tsd-kind-icon">_auto<wbr>Update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L93">src/Live2DModel.ts:93</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L153">src/Live2DModel.ts:153</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -640,12 +654,12 @@
 					<div class="tsd-signature tsd-kind-icon">anchor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObservablePoint</span><span class="tsd-signature-symbol"> = new ObservablePoint(this.onAnchorChange, this, 0, 0)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L40">src/Live2DModel.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L76">src/Live2DModel.ts:76</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Works like sprite.anchor</p>
+							<p>Works like the one in <code>Sprite</code>.</p>
 						</div>
 					</div>
 				</section>
@@ -793,22 +807,32 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="deltatime" class="tsd-anchor"></a>
 					<h3>delta<wbr>Time</h3>
-					<div class="tsd-signature tsd-kind-icon">delta<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+					<div class="tsd-signature tsd-kind-icon">delta<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DOMHighResTimeStamp</span><span class="tsd-signature-symbol"> = 0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L47">src/Live2DModel.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L96">src/Live2DModel.ts:96</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The time elapsed from last frame to current frame. Milliseconds.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="elapsedtime" class="tsd-anchor"></a>
 					<h3>elapsed<wbr>Time</h3>
-					<div class="tsd-signature tsd-kind-icon">elapsed<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = performance.now()</span></div>
+					<div class="tsd-signature tsd-kind-icon">elapsed<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DOMHighResTimeStamp</span><span class="tsd-signature-symbol"> = performance.now()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L46">src/Live2DModel.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L91">src/Live2DModel.ts:91</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Elapsed time since created. Milliseconds.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="filterarea" class="tsd-anchor"></a>
@@ -866,9 +890,14 @@
 					<div class="tsd-signature tsd-kind-icon">gl<wbr>ContextID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = -1</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L44">src/Live2DModel.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L86">src/Live2DModel.ts:86</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An ID of Gl context that syncs with <code>renderer.CONTEXT_UID</code>.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="height" class="tsd-anchor"></a>
@@ -928,9 +957,14 @@
 					<div class="tsd-signature tsd-kind-icon">interaction<wbr>Manager<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">InteractionManager</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L42">src/Live2DModel.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L81">src/Live2DModel.ts:81</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The <code>InteractionManager</code> is locally stored so we can on/off events anytime.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="interactive" class="tsd-anchor"></a>
@@ -996,7 +1030,7 @@
 					<div class="tsd-signature tsd-kind-icon">internal<span class="tsd-signature-symbol">:</span> <a href="live2dinternalmodel.html" class="tsd-signature-type">Live2DInternalModel</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L58">src/Live2DModel.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L115">src/Live2DModel.ts:115</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1351,9 +1385,14 @@
 					<div class="tsd-signature tsd-kind-icon">tag<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L35">src/Live2DModel.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L66">src/Live2DModel.ts:66</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Tag for logging.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="textures" class="tsd-anchor"></a>
@@ -1361,7 +1400,7 @@
 					<div class="tsd-signature tsd-kind-icon">textures<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Texture</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L58">src/Live2DModel.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L115">src/Live2DModel.ts:115</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1372,9 +1411,14 @@
 					<aside class="tsd-sources">
 						<p>Overrides Container.transform</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L37">src/Live2DModel.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L71">src/Live2DModel.ts:71</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Custom transform, declared to override the inherited type.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="visible" class="tsd-anchor"></a>
@@ -1570,7 +1614,7 @@
 					<div class="tsd-signature tsd-kind-icon">from<wbr>Model<wbr>Settings<span class="tsd-signature-symbol">:</span> <a href="../globals.html#frommodelsettings" class="tsd-signature-type">fromModelSettings</a><span class="tsd-signature-symbol"> = fromModelSettings</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L51">src/Live2DModel.ts:51</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L104">src/Live2DModel.ts:104</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1580,9 +1624,18 @@
 					<div class="tsd-signature tsd-kind-icon">from<wbr>Model<wbr>Settings<wbr>File<span class="tsd-signature-symbol">:</span> <a href="../globals.html#frommodelsettingsfile" class="tsd-signature-type">fromModelSettingsFile</a><span class="tsd-signature-symbol"> = fromModelSettingsFile</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L49">src/Live2DModel.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L102">src/Live2DModel.ts:102</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>method</dt>
+							<dd></dd>
+							<dt>borrows</dt>
+							<dd><p>factory:fromModelSettingsFile</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
 					<a name="frommodelsettingsjson" class="tsd-anchor"></a>
@@ -1590,7 +1643,7 @@
 					<div class="tsd-signature tsd-kind-icon">from<wbr>Model<wbr>SettingsJSON<span class="tsd-signature-symbol">:</span> <a href="../globals.html#frommodelsettingsjson" class="tsd-signature-type">fromModelSettingsJSON</a><span class="tsd-signature-symbol"> = fromModelSettingsJSON</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L50">src/Live2DModel.ts:50</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L103">src/Live2DModel.ts:103</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1600,7 +1653,7 @@
 					<div class="tsd-signature tsd-kind-icon">from<wbr>Resources<span class="tsd-signature-symbol">:</span> <a href="../globals.html#fromresources" class="tsd-signature-type">fromResources</a><span class="tsd-signature-symbol"> = fromResources</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L52">src/Live2DModel.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L105">src/Live2DModel.ts:105</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1618,17 +1671,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L79">src/Live2DModel.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L139">src/Live2DModel.ts:139</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Enabling automatic interaction. Will not take effect if the <code>InteractionManager</code> plugin is not registered in <code>Renderer</code>.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L83">src/Live2DModel.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L143">src/Live2DModel.ts:143</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Enabling automatic interaction. Will not take effect if the <code>InteractionManager</code> plugin is not registered in <code>Renderer</code>.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -1650,17 +1713,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L95">src/Live2DModel.ts:95</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L158">src/Live2DModel.ts:158</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Enabling automatic updating. Requires <a href="live2dmodel.html#registerticker">Live2DModel.registerTicker</a> or global <code>window.PIXI.Ticker</code>.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L99">src/Live2DModel.ts:99</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L162">src/Live2DModel.ts:162</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Enabling automatic updating. Requires <a href="live2dmodel.html#registerticker">Live2DModel.registerTicker</a> or global <code>window.PIXI.Ticker</code>.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -1685,9 +1758,15 @@
 							<aside class="tsd-sources">
 								<p>Overrides Container._calculateBounds</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L209">src/Live2DModel.ts:209</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L280">src/Live2DModel.ts:280</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>override</dt>
+									<dd></dd>
+								</dl>
+							</div>
 							
 						</li>
 					</ul>
@@ -1728,9 +1807,15 @@
 							<aside class="tsd-sources">
 								<p>Overrides Container._render</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L224">src/Live2DModel.ts:224</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L303">src/Live2DModel.ts:303</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>override</dt>
+									<dd></dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -1860,21 +1945,25 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L205">src/Live2DModel.ts:205</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L275">src/Live2DModel.ts:275</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Offered to InteractionManager to perform hit testing.</p>
+									<p>Required by <code>InteractionManager</code> to perform hit testing.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>point: <span class="tsd-signature-type">Point</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The point in world space.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>True if given point is inside this model.</p>
 						</li>
 					</ul>
 				</section>
@@ -1889,9 +1978,15 @@
 							<aside class="tsd-sources">
 								<p>Overrides Container.destroy</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L272">src/Live2DModel.ts:272</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L352">src/Live2DModel.ts:352</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>override</dt>
+									<dd></dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -1945,7 +2040,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L136">src/Live2DModel.ts:136</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L205">src/Live2DModel.ts:205</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1958,13 +2053,13 @@
 								<li>
 									<h5>x: <span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The x position in world space.</p>
+										<p>Position in world space.</p>
 									</div>
 								</li>
 								<li>
 									<h5>y: <span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The y position in world space.</p>
+										<p>Position in world space.</p>
 									</div>
 								</li>
 							</ul>
@@ -2196,12 +2291,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L122">src/Live2DModel.ts:122</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L188">src/Live2DModel.ts:188</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Shorthand method.</p>
+									<p>Shorthand of {@link MotionManager#startRandomMotion}.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2327,9 +2422,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L115">src/Live2DModel.ts:115</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L181">src/Live2DModel.ts:181</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Called when the values of {@link Live2DModel#anchor} are changed.</p>
+								</div>
+							</div>
 							
 						</li>
 					</ul>
@@ -2367,13 +2467,20 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L126">src/Live2DModel.ts:126</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L196">src/Live2DModel.ts:196</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Handles <code>tap</code> event emitted by <code>InteractionManager</code>.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>event: <span class="tsd-signature-type">InteractionEvent</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
 								</li>
 							</ul>
 							
@@ -2390,9 +2497,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L213">src/Live2DModel.ts:213</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L287">src/Live2DModel.ts:287</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>A listener to be added to <code>Ticker</code>.</p>
+								</div>
+							</div>
 							
 						</li>
 					</ul>
@@ -2835,16 +2947,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L158">src/Live2DModel.ts:158</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L225">src/Live2DModel.ts:225</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Performs tap action on model.</p>
+									<p>Performs tap on the model.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>emits</dt>
-									<dd><p>Live2DModel#hit</p>
+									<dd><p><a href="../interfaces/live2dmodelevents.html#hit">Live2DModelEvents.hit</a></p>
 									</dd>
 								</dl>
 							</div>
@@ -2960,7 +3072,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L178">src/Live2DModel.ts:178</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L246">src/Live2DModel.ts:246</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2990,6 +3102,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Point</span></h4>
+							<p>The point in Live2D model.</p>
 						</li>
 					</ul>
 				</section>
@@ -3003,13 +3116,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L217">src/Live2DModel.ts:217</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L295">src/Live2DModel.ts:295</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Updates parameters of the model.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>dt: <span class="tsd-signature-type">DOMHighResTimeStamp</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The time elapsed since last frame.</p>
+									</div>
 								</li>
 							</ul>
 							
@@ -3082,13 +3203,20 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DModel.ts#L54">src/Live2DModel.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DModel.ts#L111">src/Live2DModel.ts:111</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Registers the class of <code>Ticker</code> for auto updating.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>tickerClass: <span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">Ticker</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
 								</li>
 							</ul>
 							

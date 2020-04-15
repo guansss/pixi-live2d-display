@@ -64,6 +64,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Provides the ability to generate a matrix for Live2D model to draw.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -141,7 +148,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides Transform.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DTransform.ts#L10">src/Live2DTransform.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DTransform.ts#L27">src/Live2DTransform.ts:27</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -358,9 +365,14 @@
 					<div class="tsd-signature tsd-kind-icon">drawing<wbr>Matrix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Matrix</span><span class="tsd-signature-symbol"> = new Matrix()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DTransform.ts#L5">src/Live2DTransform.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DTransform.ts#L12">src/Live2DTransform.ts:12</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Cached drawing matrix, pretty performant!</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="glheight" class="tsd-anchor"></a>
@@ -368,9 +380,14 @@
 					<div class="tsd-signature tsd-kind-icon">gl<wbr>Height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = -1</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DTransform.ts#L8">src/Live2DTransform.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DTransform.ts#L22">src/Live2DTransform.ts:22</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Stored width of GL context, used to check if its size has changed.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="glwidth" class="tsd-anchor"></a>
@@ -378,9 +395,14 @@
 					<div class="tsd-signature tsd-kind-icon">gl<wbr>Width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = -1</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DTransform.ts#L7">src/Live2DTransform.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DTransform.ts#L17">src/Live2DTransform.ts:17</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Stored width of GL context, used to check if its size has changed.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="localtransform" class="tsd-anchor"></a>
@@ -409,7 +431,7 @@
 					<div class="tsd-signature tsd-kind-icon">model<span class="tsd-signature-symbol">:</span> <a href="live2dinternalmodel.html" class="tsd-signature-type">Live2DInternalModel</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DTransform.ts#L12">src/Live2DTransform.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DTransform.ts#L29">src/Live2DTransform.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -419,9 +441,14 @@
 					<div class="tsd-signature tsd-kind-icon">needs<wbr>Update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DTransform.ts#L10">src/Live2DTransform.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DTransform.ts#L27">src/Live2DTransform.ts:27</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The drawing matrix will be updated only when needed.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="pivot" class="tsd-anchor"></a>
@@ -587,18 +614,20 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DTransform.ts#L30">src/Live2DTransform.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DTransform.ts#L48">src/Live2DTransform.ts:48</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Generates a matrix for Live2D model to draw.</p>
+									<p>Gets a drawing matrix for Live2D model.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>gl: <span class="tsd-signature-type">WebGLRenderingContext</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Matrix</span></h4>
@@ -717,7 +746,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides Transform.updateTransform</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/Live2DTransform.ts#L17">src/Live2DTransform.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/Live2DTransform.ts#L34">src/Live2DTransform.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

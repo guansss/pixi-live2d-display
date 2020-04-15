@@ -64,6 +64,21 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A logger that supports tagging.</p>
+					</div>
+					<p>You can override the methods with your own ones.</p>
+					<pre><code class="language-js"><span class="hljs-keyword">import</span> { logger } <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi-live2d-display'</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">myLog</span>(<span class="hljs-params">tag, ...messages</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(tag, <span class="hljs-string">'says:'</span>, ...messages);
+}
+
+logger.log = myLog;</code></pre>
+				</div>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -91,7 +106,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/utils/log.ts#L16">src/utils/log.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/utils/log.ts#L31">src/utils/log.ts:31</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -117,7 +132,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/utils/log.ts#L4">src/utils/log.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/utils/log.ts#L19">src/utils/log.ts:19</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -143,7 +158,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/c909eee/src/utils/log.ts#L10">src/utils/log.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/835f763/src/utils/log.ts#L25">src/utils/log.ts:25</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
