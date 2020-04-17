@@ -8,7 +8,7 @@ import { resolve as urlResolve } from 'url';
 import { Live2DModel } from '../../src';
 import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from '../../src/live2d/Live2DInternalModel';
 import { TEST_MODEL } from './../env';
-import { createApp, loadArrayBuffer, remoteRequire } from './../utils';
+import { createApp, readArrayBuffer, remoteRequire } from './../utils';
 
 Application.registerPlugin(TickerPlugin);
 Renderer.registerPlugin('interaction', InteractionManager);
@@ -130,7 +130,7 @@ describe('Live2DModel loading variants', () => {
 
         model = Live2DModel.fromResources({
             settings,
-            model: await loadArrayBuffer(urlResolve(TEST_MODEL.file, settings.model)),
+            model: await readArrayBuffer(urlResolve(TEST_MODEL.file, settings.model)),
             textures: model.textures,
             pose: settings.pose && urlResolve(TEST_MODEL.file, settings.pose),
             physics: settings.physics && urlResolve(TEST_MODEL.file, settings.physics),
