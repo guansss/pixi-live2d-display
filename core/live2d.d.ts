@@ -1,7 +1,5 @@
 /**
- * Types of exposed members in Live2D runtime library.
- *
- * Since Live2D library is not open-source, these types come from inference or guess.
+ * Unofficial declaration file of Cubism 2.1 core library.
  */
 
 declare class Live2D {
