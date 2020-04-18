@@ -2,10 +2,10 @@
  * Global configs.
  */
 export namespace config {
-    export const LOG_LEVEL_NONE = 0;
-    export const LOG_LEVEL_VERBOSE = 1;
-    export const LOG_LEVEL_WARNING = 2;
-    export const LOG_LEVEL_ERROR = 3;
+    export const LOG_LEVEL_VERBOSE = 0;
+    export const LOG_LEVEL_WARNING = 1;
+    export const LOG_LEVEL_ERROR = 2;
+    export const LOG_LEVEL_NONE = 999;
 
     /**
      * Log level.
