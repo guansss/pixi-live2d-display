@@ -14,6 +14,7 @@ declare module '@pixi/utils' {
     import { utils } from 'pixi.js';
     export import EventEmitter = utils.EventEmitter;
     export import TextureCache = utils.TextureCache;
+    export import url = utils.url;
 }
 
 declare module '@pixi/app' {

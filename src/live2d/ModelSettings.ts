@@ -1,5 +1,5 @@
+import { url } from '@pixi/utils';
 import { basename, dirname } from 'path';
-import { resolve as urlResolve } from 'url';
 import { cloneWithCamelCase, copyArray, copyArrayDeep, copyProperty } from '../utils';
 import { ExpressionDefinition, Layout, ModelSettingsJSON, MotionDefinition } from './ModelSettingsJSON';
 
@@ -71,7 +71,7 @@ export class ModelSettings {
      * @param path
      */
     resolvePath(path: string): string {
-        return urlResolve(this.path, path);
+        return url.resolve(this.path, path);
     }
 
     /**
