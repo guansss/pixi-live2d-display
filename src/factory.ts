@@ -28,7 +28,7 @@ export interface FactoryOptions extends Live2DModelOptions {
 }
 
 /**
- * Bundled resources for creating a `Live2DModel`.
+ * Bundled resources for creating a `Live2DModel`. Either `model` or `modelData` must be provided.
  */
 export interface Live2DResources {
     /**
@@ -39,7 +39,12 @@ export interface Live2DResources {
     /**
      * Loaded model data.
      */
-    model: ArrayBuffer;
+    modelData?: ArrayBuffer;
+
+    /**
+     * Instance of core model.
+     */
+    model?: Live2DModelWebGL;
 
     /**
      * Loaded textures.
@@ -148,7 +153,7 @@ Live2DModel.fromModelSettings = function(settings: ModelSettings, options?: Fact
 
         const finish = (error?: Error) => {
             if (!error) {
-                if (resources.model) {
+                if (resources.modelData) {
                     try {
                         resolve(this.fromResources(resources as Live2DResources, options));
                     } catch (e) {
@@ -171,17 +176,17 @@ Live2DModel.fromModelSettings = function(settings: ModelSettings, options?: Fact
             const modelCache = (options && 'modelDataCache' in options) ? options.modelDataCache : true;
 
             if (modelCache && MODEL_DATA_CACHE[modelURL]) {
-                resources.model = MODEL_DATA_CACHE[modelURL];
+                resources.modelData = MODEL_DATA_CACHE[modelURL];
 
-                logger.log(TAG, `Loaded model data from cache (${resources.model!.byteLength}):`, modelURL);
+                logger.log(TAG, `Loaded model data from cache (${resources.modelData!.byteLength}):`, modelURL);
             } else {
                 loader.add(
                     modelURL,
                     Object.assign({ xhrType: LoaderResource.XHR_RESPONSE_TYPE.BUFFER }, options?.loaderOptions),
                     (modelRes: LoaderResource) => {
                         if (!modelRes.error) {
-                            resources.model = modelRes.data;
-                            logger.log(TAG, `Loaded model data (${resources.model!.byteLength}):`, modelRes.name);
+                            resources.modelData = modelRes.data;
+                            logger.log(TAG, `Loaded model data (${resources.modelData!.byteLength}):`, modelRes.name);
                         } else {
                             finish(modelRes.error);
                         }
@@ -245,19 +250,25 @@ Live2DModel.fromModelSettings = function(settings: ModelSettings, options?: Fact
 };
 
 Live2DModel.fromResources = function <T extends typeof Live2DModel>(resources: Live2DResources, options?: FactoryOptions) {
-    const coreModel = Live2DModelWebGL.loadModel(resources.model);
+    if (!resources.model) {
+        if (!resources.modelData) {
+            throw new TypeError('Missing model data.');
+        }
 
-    const error = Live2D.getError();
-    if (error) throw error;
+        resources.model = Live2DModelWebGL.loadModel(resources.modelData);
 
-    const internalModel = new Live2DInternalModel(coreModel, resources.settings);
+        const error = Live2D.getError();
+        if (error) throw error;
+    }
+
+    const internalModel = new Live2DInternalModel(resources.model, resources.settings);
 
     if (resources.pose) {
-        internalModel.pose = new Live2DPose(coreModel, resources.pose);
+        internalModel.pose = new Live2DPose(resources.model, resources.pose);
     }
 
     if (resources.physics) {
-        internalModel.physics = new Live2DPhysics(coreModel, resources.physics);
+        internalModel.physics = new Live2DPhysics(resources.model, resources.physics);
     }
 
     return new this(internalModel, resources.textures, options) as InstanceType<T>;
