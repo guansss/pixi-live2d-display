@@ -39,7 +39,7 @@ export function copyProperty(dest: any, src: any, key: string, type: string) {
 }
 
 /**
- * Copies a array at `key`, filtering the items that match the `type`.
+ * Copies an array at `key`, filtering the items that match the `type`.
  * @param dest - Destination object.
  * @param src - Source object.
  * @param key - Key of the array property.
@@ -54,7 +54,7 @@ export function copyArray(dest: any, src: any, key: string, type: string) {
 }
 
 /**
- * Copies a array at `key`, filtering the items with properties matching the type in given `types` map.
+ * Copies an object array at `key`, filtering the items with properties matching the type in given `types` map.
  *
  * ```js
  * copyArrayDeep(o1, o2, 'users', { name: 'string', id: 'number' });
@@ -65,7 +65,7 @@ export function copyArray(dest: any, src: any, key: string, type: string) {
  * @param key - Key of the array property.
  * @param types - Type dictionary to match `typeof` on each property of the items.
  */
-export function copyArrayDeep(dest: any, src: any, key: string, types: Record<string, string>) {
+export function copyObjectArray(dest: any, src: any, key: string, types: Record<string, string>) {
     const array = src[key];
 
     const matchers = Object.entries(types);

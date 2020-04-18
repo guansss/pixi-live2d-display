@@ -1,6 +1,5 @@
 import { url } from '@pixi/utils';
-import { basename, dirname } from 'path';
-import { cloneWithCamelCase, copyArray, copyArrayDeep, copyProperty } from '../utils';
+import { cloneWithCamelCase, copyArray, copyObjectArray, copyProperty, folderName } from '../utils';
 import { ExpressionDefinition, Layout, ModelSettingsJSON, MotionDefinition } from './ModelSettingsJSON';
 
 /**
@@ -61,7 +60,7 @@ export class ModelSettings {
         }
 
         // set default name to folder's name
-        this.name = basename(dirname(path));
+        this.name = folderName(path);
 
         this.copy(cloneWithCamelCase(json));
     }
@@ -97,15 +96,15 @@ export class ModelSettings {
             }
         }
 
-        copyArrayDeep(this, json, 'hitAreas', { name: 'string', id: 'string' });
-        copyArrayDeep(this, json, 'expressions', { name: 'string', file: 'string' });
-        copyArrayDeep(this, json, 'initParams', { id: 'string', value: 'string' });
-        copyArrayDeep(this, json, 'initOpacities', { id: 'string', value: 'string' });
+        copyObjectArray(this, json, 'hitAreas', { name: 'string', id: 'string' });
+        copyObjectArray(this, json, 'expressions', { name: 'string', file: 'string' });
+        copyObjectArray(this, json, 'initParams', { id: 'string', value: 'string' });
+        copyObjectArray(this, json, 'initOpacities', { id: 'string', value: 'string' });
 
         // copy all motion groups
         if (json.motions && typeof json.motions === 'object') {
             for (const group of Object.keys(json.motions)) {
-                copyArrayDeep(this.motions, json.motions, group, { file: 'string' });
+                copyObjectArray(this.motions, json.motions, group, { file: 'string' });
             }
         }
     }
