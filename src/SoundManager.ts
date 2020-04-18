@@ -46,7 +46,7 @@ export class SoundManager {
 
         audio.addEventListener('error', (e: ErrorEvent) => {
             this.dispose(audio);
-            logger.warn(TAG, `Error occurred when playing "${file}"`, e.error);
+            logger.warn(TAG, `Error occurred on "${file}"`, e.error);
             onError?.(e.error);
         });
 
@@ -82,7 +82,7 @@ export class SoundManager {
      */
     static dispose(audio: HTMLAudioElement): void {
         audio.pause();
-        audio.src = '';
+        audio.removeAttribute('arc');
 
         const index = this.audios.indexOf(audio);
 
