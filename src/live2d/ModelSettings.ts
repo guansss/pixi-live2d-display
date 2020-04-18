@@ -43,7 +43,12 @@ export class ModelSettings {
      * @param json
      */
     static isModelSettingsJSON(json: any): json is ModelSettingsJSON {
-        return json && json.model && json.textures?.length > 0;
+        return json
+            && typeof json.model === 'string'
+            && Array.isArray(json.textures)
+
+            // textures must be a non-empty array of strings
+            && typeof json.textures[0] === 'string';
     }
 
     /**
@@ -75,16 +80,7 @@ export class ModelSettings {
      */
     protected copy(json: ModelSettingsJSON): void {
         copyProperty(this, json, 'model', 'string');
-
-        if (!this.model) {
-            throw new TypeError('Missing model file.');
-        }
-
         copyArray(this, json, 'textures', 'string');
-
-        if (this.textures.length === 0) {
-            throw new TypeError('Missing textures.');
-        }
 
         copyProperty(this, json, 'name', 'string');
         copyProperty(this, json, 'pose', 'string');
