@@ -32,6 +32,11 @@ export class MotionManager extends MotionQueueManager {
     motionGroups: { [Group: string]: Live2DMotion[] } = {};
 
     /**
+     * loading tasks of `Live2DMotion`. The structure is the same as {@link MotionManager#definitions};
+     */
+    tasks: { [Group: string]: (Promise<Live2DMotion | undefined> | undefined)[] } = {};
+
+    /**
      * Can be undefined if missing {@link ModelSettings#expressions}.
      */
     expressionManager?: ExpressionManager;
@@ -70,6 +75,9 @@ export class MotionManager extends MotionQueueManager {
         // initialize all motion groups with empty arrays
         Object.keys(this.definitions).forEach(group => (this.motionGroups[group] = []));
 
+        // initialize all task groups with empty arrays
+        Object.keys(this.definitions).forEach(group => (this.tasks[group] = []));
+
         // preload idle motions
         this.loadMotion(Group.Idle).then();
     }
@@ -79,53 +87,77 @@ export class MotionManager extends MotionQueueManager {
      * @param group
      * @param index - If not specified, all motions in this group will be loaded.
      */
-    async loadMotion(group: string, index?: number): Promise<Live2DMotion | void> {
-        return new Promise(resolve => {
-            const definitionGroup = this.definitions[group];
+    loadMotion(group: string): Promise<(Live2DMotion | undefined)[]>;
+    loadMotion(group: string, index: number): Promise<Live2DMotion | undefined>;
+    loadMotion(group: string, index?: number): Promise<(Live2DMotion | undefined)[] | Live2DMotion | undefined> {
+        const definitionGroup = this.definitions[group];
 
-            if (definitionGroup) {
-                const loader = new Loader();
-                const indices = index !== undefined ? [index] : definitionGroup.keys();
+        if (!definitionGroup) {
+            logger.warn(this.tag, `Cannot find motion group "${group}"`);
 
-                for (const i of indices as number[]) {
-                    const definition = definitionGroup[i];
+            return Promise.resolve(index === undefined ? [] : undefined);
+        }
 
-                    if (definition) {
-                        loader.add(
-                            this.modelSettings.resolvePath(definition.file),
-                            {
-                                xhrType: LoaderResource.XHR_RESPONSE_TYPE.BUFFER,
-                                metadata: { definition, index: i },
+        const motionGroup = this.motionGroups[group];
+        const taskGroup = this.tasks[group];
+        const results: (Promise<Live2DMotion | undefined> | Live2DMotion | undefined)[] = [];
+
+        const loader = new Loader();
+        const indices = index !== undefined ? [index] : definitionGroup.keys();
+
+        for (const i of indices as number[]) {
+            const definition = definitionGroup[i];
+
+            if (!definition) {
+                results[i] = undefined;
+
+                logger.warn(this.tag, `Cannot find motion at "${group}"[${i}]`);
+
+                continue;
+            }
+
+            if (motionGroup[i]) {
+                results[i] = motionGroup[i];
+            } else {
+                if (!taskGroup[i]) {
+                    taskGroup[i] = new Promise(resolve => {
+                        loader.add({
+                            url: this.modelSettings.resolvePath(definition.file),
+                            xhrType: LoaderResource.XHR_RESPONSE_TYPE.BUFFER,
+                            metadata: { definition, index: i },
+                            onComplete(resource: LoaderResource) {
+                                try {
+                                    if (resource.error) {
+                                        // noinspection ExceptionCaughtLocallyJS
+                                        throw resource.error;
+                                    }
+
+                                    const motion = Live2DMotion.loadMotion(resource.data);
+
+                                    motion.setFadeIn(definition.fadeIn! > 0 ? definition.fadeIn! : DEFAULT_FADE_TIMEOUT);
+                                    motion.setFadeOut(definition.fadeOut! > 0 ? definition.fadeOut! : DEFAULT_FADE_TIMEOUT);
+
+                                    motionGroup[i] = motion;
+
+                                    delete taskGroup[i];
+
+                                    resolve(motion);
+                                } catch (e) {
+                                    logger.warn(this.tag, `Failed to load motion: ${definition.file}`, e);
+                                    resolve(undefined);
+                                }
                             },
-                        );
-                    } else {
-                        logger.warn(this.tag, `Cannot find motion at "${group}"[${i}]`);
-                    }
+                        });
+                    });
                 }
 
-                loader
-                    .on('load', (loader: Loader, resource: LoaderResource) => {
-                        const definition = resource.metadata.definition as MotionDefinition;
-
-                        try {
-                            const motion = Live2DMotion.loadMotion(resource.data);
-
-                            motion.setFadeIn(definition.fadeIn! > 0 ? definition.fadeIn! : DEFAULT_FADE_TIMEOUT);
-                            motion.setFadeOut(definition.fadeOut! > 0 ? definition.fadeOut! : DEFAULT_FADE_TIMEOUT);
-
-                            this.motionGroups[group][resource.metadata.index] = motion;
-
-                            resolve(motion);
-                        } catch (e) {
-                            logger.warn(this.tag, `Failed to load motion: ${definition.file}`, e);
-                        }
-                    })
-                    .load(() => resolve());
-            } else {
-                logger.warn(this.tag, `Cannot find motion group "${group}"`);
-                resolve();
+                results[i] = taskGroup[i];
             }
-        });
+        }
+
+        loader.load();
+
+        return Promise.all(results).then(fulfilled => index === undefined ? fulfilled : fulfilled[0]);
     }
 
     /**
@@ -137,7 +169,7 @@ export class MotionManager extends MotionQueueManager {
      */
     async startMotionByPriority(group: string, index: number, priority: Priority = Priority.Normal): Promise<boolean> {
         if (priority !== Priority.Force && (priority <= this.currentPriority || priority <= this.reservePriority)) {
-            logger.log(this.tag, 'Cannot start motion because another motion on same or higher priority is running');
+            logger.log(this.tag, 'Cannot start motion because another motion is running as same or higher priority');
             return false;
         }
 
