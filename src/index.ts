@@ -1,4 +1,4 @@
-/// <reference path="types/live2d.d.ts"/>
+/// <reference path="../core/live2d.d.ts"/>
 /// <reference path="types/shim.d.ts"/>
 
 export * from './live2d';
