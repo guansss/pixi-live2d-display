@@ -15,6 +15,13 @@ enum Group {
 
 const DEFAULT_FADE_TIMEOUT = 500;
 
+/**
+ * Creates an ID from given group and index.
+ */
+export function motionID(group: string, index: number): string {
+    return group + '#' + index;
+}
+
 export class MotionManager extends MotionQueueManager {
     /**
      * Tag for logging.
@@ -50,6 +57,11 @@ export class MotionManager extends MotionQueueManager {
      * Priority of reserved motion, i.e. the motion that will play subsequently.
      */
     reservePriority = Priority.None;
+
+    /**
+     * ID of motion that is still loading and will be played once loaded.
+     */
+    pendingMotionID?: string;
 
     /**
      * Audio element of currently playing motion.
@@ -125,7 +137,7 @@ export class MotionManager extends MotionQueueManager {
                             url: this.modelSettings.resolvePath(definition.file),
                             xhrType: LoaderResource.XHR_RESPONSE_TYPE.BUFFER,
                             metadata: { definition, index: i },
-                            onComplete(resource: LoaderResource) {
+                            onComplete: (resource: LoaderResource) => {
                                 try {
                                     if (resource.error) {
                                         // noinspection ExceptionCaughtLocallyJS
@@ -194,9 +206,26 @@ export class MotionManager extends MotionQueueManager {
             this.currentAudio = audio;
         }
 
-        let motion = this.motionGroups[group]?.[index] || (await this.loadMotion(group, index));
+        let id;
 
-        if (!motion) {
+        // handle pending motion only if this motion is not idle priority
+        if (priority > Priority.Idle) {
+            id = motionID(group, index);
+
+            // set this motion as pending motion
+            this.pendingMotionID = id;
+        }
+
+        let motion = this.motionGroups[group][index] || (await this.loadMotion(group, index));
+
+        if (priority > Priority.Idle) {
+            if (!motion || this.pendingMotionID !== id) {
+                return false;
+            }
+
+            // clear the pending motion
+            this.pendingMotionID = undefined;
+        } else if (!motion) {
             return false;
         }
 
@@ -240,6 +269,14 @@ export class MotionManager extends MotionQueueManager {
             const index = Math.floor(Math.random() * groupDefinitions.length);
             this.startMotionByPriority(group, index, priority).then();
         }
+    }
+
+    /** @override */
+    stopAllMotions(): void {
+        super.stopAllMotions();
+
+        // make sure the pending motion (if existing) won't start when it's loaded
+        this.pendingMotionID = undefined;
     }
 
     /**
