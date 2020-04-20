@@ -103,9 +103,9 @@ export class MotionManager extends MotionQueueManager {
         const results: (Promise<Live2DMotion | undefined> | Live2DMotion | undefined)[] = [];
 
         const loader = new Loader();
-        const indices = index !== undefined ? [index] : definitionGroup.keys();
+        const indices = index !== undefined ? [index] : Array.from(definitionGroup.keys());
 
-        for (const i of indices as number[]) {
+        for (const i of indices) {
             const definition = definitionGroup[i];
 
             if (!definition) {
