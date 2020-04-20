@@ -157,7 +157,7 @@ export class MotionManager extends MotionQueueManager {
 
         loader.load();
 
-        return Promise.all(results).then(fulfilled => index === undefined ? fulfilled : fulfilled[0]);
+        return Promise.all(results).then(fulfilled => index === undefined ? fulfilled : fulfilled[index]);
     }
 
     /**
