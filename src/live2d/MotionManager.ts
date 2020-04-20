@@ -64,6 +64,11 @@ export class MotionManager extends MotionQueueManager {
     pendingMotionID?: string;
 
     /**
+     * Indicates the idle motions has been loaded.
+     */
+    idleMotionsReady = false;
+
+    /**
      * Audio element of currently playing motion.
      */
     currentAudio?: HTMLAudioElement;
@@ -91,7 +96,7 @@ export class MotionManager extends MotionQueueManager {
         Object.keys(this.definitions).forEach(group => (this.tasks[group] = []));
 
         // preload idle motions
-        this.loadMotion(Group.Idle).then();
+        this.loadMotion(Group.Idle).then(() => this.idleMotionsReady = true);
     }
 
     /**
@@ -180,8 +185,15 @@ export class MotionManager extends MotionQueueManager {
      * @return Promise that resolves with true if a motion is successfully started.
      */
     async startMotionByPriority(group: string, index: number, priority: Priority = Priority.Normal): Promise<boolean> {
-        if (priority !== Priority.Force && (priority <= this.currentPriority || priority <= this.reservePriority)) {
-            logger.log(this.tag, 'Cannot start motion because another motion is running as same or higher priority');
+        if (!(
+            priority === Priority.Force
+
+            // keep on starting idle motions even when there is a pending motion
+            || (priority === Priority.Idle && this.currentPriority === Priority.None)
+
+            || (priority > this.currentPriority && priority > this.reservePriority)
+        )) {
+            logger.log(this.tag, 'Cannot start motion because another motion is running as same or higher priority.');
             return false;
         }
 
@@ -291,7 +303,7 @@ export class MotionManager extends MotionQueueManager {
 
             this.currentPriority = Priority.None;
 
-            if (this.reservePriority === Priority.None) {
+            if (this.idleMotionsReady) {
                 this.startRandomMotion(Group.Idle, Priority.Idle);
             }
         }
