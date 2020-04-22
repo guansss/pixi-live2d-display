@@ -10,41 +10,26 @@ let tsdContent = fs.readFileSync(tsdFile, 'utf8');
 
 const secondLineIndex = tsdContent.indexOf('\n', tsdContent.indexOf('\n') + 1);
 
-// dts-bundle-generator will somehow miss this import statement
-tsdContent = tsdContent.slice(0, secondLineIndex)
-    + '\nimport { InteractionEvent, InteractionManager } from \'@pixi/interaction\';'
-    + tsdContent.slice(secondLineIndex);
+tsdContent = tsdContent.slice(0, secondLineIndex) +
+    // import types from main package
+    '\n///<reference types="pixi.js"/>\n' +
 
-const pixiMembers = new Set();
-let firstImportStatementIndex = 0;
+    // dts-bundle-generator will somehow miss this import statement
+    '\nimport { InteractionEvent, InteractionManager } from \'@pixi/interaction\';' +
+
+    tsdContent.slice(secondLineIndex);
 
 // convert scoped-package imports to a single main-package import
 tsdContent = tsdContent.replace(
-    /import { (.+) } from '@pixi\/(.+)';\n/g,
-    (match, members, pkg, offset) => {
-        firstImportStatementIndex = firstImportStatementIndex || offset;
-
+    /import { (.+) } from '@pixi\/(.+)';/g,
+    (match, members, pkg) => {
         // read namespace setting from respective package.json
-        let namespace = require('@pixi/' + pkg + '/package.json').namespace;
+        const namespace = require('@pixi/' + pkg + '/package.json').namespace || 'PIXI';
 
-        if (namespace) {
-            return members.split(', ')
-                .map(member => `import ${member} = ${namespace}.${member};`)
-                .join('\n')
-                + '\n';
-        } else {
-            pixiMembers.add(members);
-
-            return '';
-        }
+        return members.split(', ')
+            .map(member => `import ${member} = ${namespace}.${member};`)
+            .join('\n');
     },
 );
-
-tsdContent = `${tsdContent.slice(0, firstImportStatementIndex)}
-import {
-${[...pixiMembers].map(member => '    ' + member).join(',\n')}
-} from 'pixi.js';
-
-${tsdContent.slice(firstImportStatementIndex)}`;
 
 fs.writeFileSync(tsdFile, tsdContent);
