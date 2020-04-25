@@ -61,7 +61,7 @@ export class MotionManager extends MotionQueueManager {
     /**
      * ID of motion that is still loading and will be played once loaded.
      */
-    pendingMotionID?: string;
+    reserveMotionID?: string;
 
     /**
      * Indicates the idle motions has been loaded.
@@ -182,13 +182,13 @@ export class MotionManager extends MotionQueueManager {
      * @param group
      * @param index
      * @param priority
-     * @return Promise that resolves with true if a motion is successfully started.
+     * @return Promise that resolves with true if the motion is successfully started.
      */
     async startMotionByPriority(group: string, index: number, priority: Priority = Priority.Normal): Promise<boolean> {
         if (!(
             priority === Priority.Force
 
-            // keep on starting idle motions even when there is a pending motion
+            // keep on starting idle motions even when there is a reserved motion
             || (priority === Priority.Idle && this.currentPriority === Priority.None)
 
             || (priority > this.currentPriority && priority > this.reservePriority)
@@ -198,6 +198,16 @@ export class MotionManager extends MotionQueueManager {
         }
 
         this.reservePriority = priority;
+
+        let id;
+
+        // update reserved motion only if this motion is not idle priority
+        if (priority > Priority.Idle) {
+            id = motionID(group, index);
+
+            // set this motion as reserved motion
+            this.reserveMotionID = id;
+        }
 
         const definition = this.definitions[group]?.[index];
 
@@ -213,33 +223,16 @@ export class MotionManager extends MotionQueueManager {
 
         if (config.sound && definition.sound) {
             // start to load the audio
-            audio = SoundManager.add(this.modelSettings.resolvePath(definition.sound));
+            audio = SoundManager.add(
+                this.modelSettings.resolvePath(definition.sound),
+                () => this.currentAudio = undefined,
+                () => this.currentAudio = undefined,
+            );
 
             this.currentAudio = audio;
         }
 
-        let id;
-
-        // handle pending motion only if this motion is not idle priority
-        if (priority > Priority.Idle) {
-            id = motionID(group, index);
-
-            // set this motion as pending motion
-            this.pendingMotionID = id;
-        }
-
         let motion = this.motionGroups[group][index] || (await this.loadMotion(group, index));
-
-        if (priority > Priority.Idle) {
-            if (!motion || this.pendingMotionID !== id) {
-                return false;
-            }
-
-            // clear the pending motion
-            this.pendingMotionID = undefined;
-        } else if (!motion) {
-            return false;
-        }
 
         if (audio) {
             if (config.motionSync) {
@@ -248,6 +241,17 @@ export class MotionManager extends MotionQueueManager {
             } else {
                 SoundManager.play(audio).catch(noop);
             }
+        }
+
+        if (priority > Priority.Idle) {
+            if (!motion || this.reserveMotionID !== id) {
+                return false;
+            }
+
+            // clear reserved motion
+            this.reserveMotionID = undefined;
+        } else if (!motion) {
+            return false;
         }
 
         if (priority === this.reservePriority) {
@@ -273,22 +277,34 @@ export class MotionManager extends MotionQueueManager {
      * Starts a random motion in the group as given priority.
      * @param group
      * @param priority
+     * @return Promise that resolves with true if a motion is successfully started.
      */
-    startRandomMotion(group: string, priority: Priority = Priority.Normal): void {
+    startRandomMotion(group: string, priority?: Priority): Promise<boolean> {
         const groupDefinitions = this.definitions[group];
 
         if (groupDefinitions?.length > 0) {
             const index = Math.floor(Math.random() * groupDefinitions.length);
-            this.startMotionByPriority(group, index, priority).then();
+
+            return this.startMotionByPriority(group, index, priority);
         }
+
+        return Promise.resolve(false);
     }
 
     /** @override */
     stopAllMotions(): void {
         super.stopAllMotions();
 
-        // make sure the pending motion (if existing) won't start when it's loaded
-        this.pendingMotionID = undefined;
+        this.currentPriority = Priority.None;
+        this.reservePriority = Priority.None;
+
+        // make sure the reserved motion (if existing) won't start when it's loaded
+        this.reserveMotionID = undefined;
+
+        if (this.currentAudio) {
+            SoundManager.dispose(this.currentAudio);
+            this.currentAudio = undefined;
+        }
     }
 
     /**
