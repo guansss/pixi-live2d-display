@@ -82,7 +82,7 @@ export class SoundManager {
      */
     static dispose(audio: HTMLAudioElement): void {
         audio.pause();
-        audio.removeAttribute('arc');
+        audio.removeAttribute('src');
 
         const index = this.audios.indexOf(audio);
 
