@@ -42,7 +42,8 @@ export class ModelSettings {
      * @param json
      */
     static isModelSettingsJSON(json: any): json is ModelSettingsJSON {
-        return json
+        // should always return a boolean
+        return !!json
             && typeof json.model === 'string'
             && Array.isArray(json.textures)
 
