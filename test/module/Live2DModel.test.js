@@ -2,42 +2,51 @@ import { Application } from '@pixi/app';
 import { Renderer } from '@pixi/core';
 import { InteractionManager } from '@pixi/interaction';
 import { Ticker, TickerPlugin } from '@pixi/ticker';
-import assert from 'assert';
-import sinon from 'sinon';
-import { resolve as urlResolve } from 'url';
 import { Live2DModel } from '../../src';
 import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from '../../src/live2d/Live2DInternalModel';
+import { createApp } from '../utils';
 import { TEST_MODEL } from './../env';
-import { createApp, readArrayBuffer, remoteRequire } from './../utils';
 
 Application.registerPlugin(TickerPlugin);
 Renderer.registerPlugin('interaction', InteractionManager);
 Live2DModel.registerTicker(Ticker);
 
-const app = createApp(Application);
+// model's non-scaled size, taking into account the `layout` defined in model settings
+const modelBaseWidth = TEST_MODEL.width * (TEST_MODEL.json.layout.width || LOGICAL_WIDTH) / LOGICAL_WIDTH;
+const modelBaseHeight = TEST_MODEL.height * (TEST_MODEL.json.layout.height || LOGICAL_HEIGHT) / LOGICAL_HEIGHT;
 
 describe('Live2DModel', async () => {
-    /** @type {Live2DModel} */
+    let app;
     let model, model2;
-    let modelBaseWidth, modelBaseHeight;
 
     before(async () => {
         model = await Live2DModel.fromModelSettingsFile(TEST_MODEL.file);
-        modelBaseWidth = model.internal.originalWidth * (model.internal.modelSettings.layout.width || LOGICAL_WIDTH) / LOGICAL_WIDTH;
-        modelBaseHeight = model.internal.originalHeight * (model.internal.modelSettings.layout.height || LOGICAL_HEIGHT) / LOGICAL_HEIGHT;
 
-        // testing multiple models
+        // test multiple models
         model2 = await Live2DModel.fromModelSettingsFile(TEST_MODEL.file);
         model2.scale.set(0.5, 0.5);
 
-        model.on('hit', hitAreas => hitAreas.includes('body') && model.internal.motionManager.startRandomMotion('tapBody'));
-        model2.on('hit', hitAreas => hitAreas.includes('body') && model2.internal.motionManager.startRandomMotion('tapBody'));
-
+        app = createApp(Application);
         app.stage.addChild(model);
         app.stage.addChild(model2);
+
+        // at least render the models once, otherwise hit testing will always fail
+        // because Live2DModelWebGL#getTransformedPoints will return an array of zeros
+        app.render();
     });
 
-    beforeEach(() => {
+    after(function() {
+        function hitHandler(hitAreas) {
+            hitAreas.includes('head') && this.internal.motionManager.expressionManager.setRandomExpression();
+            hitAreas.includes('body') && this.internal.motionManager.startRandomMotion('tapBody');
+        }
+
+        // free to play!
+        model.on('hit', hitHandler);
+        model2.on('hit', hitHandler);
+    });
+
+    afterEach(() => {
         // reset state
         model.scale.set(1, 1);
         model.position.set(0, 0);
@@ -45,16 +54,16 @@ describe('Live2DModel', async () => {
     });
 
     it('should have correct size', () => {
-        assert.equal(model.internal.originalWidth, TEST_MODEL.width);
-        assert.equal(model.internal.originalHeight, TEST_MODEL.height);
+        expect(model.internal.originalWidth).to.equal(TEST_MODEL.width);
+        expect(model.internal.originalHeight).to.equal(TEST_MODEL.height);
 
-        assert.equal(model.width, modelBaseWidth);
-        assert.equal(model.height, modelBaseHeight);
+        expect(model.width).to.equal(modelBaseWidth);
+        expect(model.height).to.equal(modelBaseHeight);
 
         model.scale.set(10, 0.1);
 
-        assert.equal(model.width, modelBaseWidth * 10);
-        assert.equal(model.height, modelBaseHeight * 0.1);
+        expect(model.width).to.equal(modelBaseWidth * 10);
+        expect(model.height).to.equal(modelBaseHeight * 0.1);
     });
 
     it('should have correct bounds according to size, position and anchor', () => {
@@ -64,10 +73,10 @@ describe('Live2DModel', async () => {
 
         const bounds = model.getBounds();
 
-        assert.equal(bounds.x, 200 - modelBaseWidth * 2 * 0.2);
-        assert.equal(bounds.y, 300 - modelBaseHeight * 3 * 0.3);
-        assert.equal(bounds.width, modelBaseWidth * 2);
-        assert.equal(bounds.height, modelBaseHeight * 3);
+        expect(bounds.x).to.equal(200 - modelBaseWidth * 2 * 0.2);
+        expect(bounds.y).to.equal(300 - modelBaseHeight * 3 * 0.3);
+        expect(bounds.width).to.equal(modelBaseWidth * 2);
+        expect(bounds.height).to.equal(modelBaseHeight * 3);
     });
 
     it('should handle tapping', () => {
@@ -75,28 +84,19 @@ describe('Live2DModel', async () => {
 
         model.on('hit', listener);
 
-        model.tap(-1, -1);
-        sinon.assert.notCalled(listener);
+        model.tap(-1000, -1000);
+        expect(listener).to.not.be.called;
 
-        for (const { name, x, y } of TEST_MODEL.hitAreas) {
+        for (const { hitArea, x, y } of TEST_MODEL.hitTests) {
             model.tap(x, y);
-            sinon.assert.calledWith(listener, name);
+            expect(listener).to.be.calledWith(hitArea);
             listener.resetHistory();
 
             // mimic an InteractionEvent
             model.emit('pointertap', { data: { global: { x, y } } });
-            sinon.assert.calledWith(listener, name);
+            expect(listener).to.be.calledWith(hitArea);
             listener.resetHistory();
         }
-    });
-
-    it('should start motion when tapped', function() {
-        const startMotionByPriority = sinon.spy(model.internal.motionManager, 'startMotionByPriority');
-
-        const bodyPoint = TEST_MODEL.hitAreas.find(area => area.name.includes('body'));
-        model.tap(bodyPoint.x, bodyPoint.y);
-
-        sinon.assert.calledWith(startMotionByPriority, 'tapBody');
     });
 
     it('should work after losing and restoring WebGL context', function(done) {
@@ -108,34 +108,13 @@ describe('Live2DModel', async () => {
             setTimeout(() => {
                 console.warn('WebGL restore context');
                 ext.restoreContext();
-                done();
+
+                setTimeout(() => {
+                    expect(() => app.render()).to.not.throw();
+
+                    done();
+                }, 100);
             }, 100);
         }, 200);
-    });
-});
-
-describe('Live2DModel loading variants', () => {
-    const json = remoteRequire(TEST_MODEL.file);
-
-    it('should load Live2DModel', async () => {
-        let model = await Live2DModel.fromModelSettingsJSON(json, TEST_MODEL.file);
-
-        assert(model, 'fromModelSettingsJSON');
-
-        const settings = model.internal.modelSettings;
-
-        model = await Live2DModel.fromModelSettings(settings);
-
-        assert(model, 'fromModelSettings');
-
-        model = Live2DModel.fromResources({
-            settings,
-            model: await readArrayBuffer(urlResolve(TEST_MODEL.file, settings.model)),
-            textures: model.textures,
-            pose: settings.pose && urlResolve(TEST_MODEL.file, settings.pose),
-            physics: settings.physics && urlResolve(TEST_MODEL.file, settings.physics),
-        });
-
-        assert(model, 'fromResources');
     });
 });

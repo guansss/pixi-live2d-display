@@ -4,14 +4,17 @@ import { createApp, loadScript } from '../utils';
 
 describe('Browser script tag', () => {
     it('should work with Pixi in browser', async function() {
-        // provide globals
-        window.assert = assert;
-        window.TEST_MODEL = TEST_MODEL;
-        window.createApp = createApp;
+        // provide globals for browser test, don't directly assign them to window
+        // because that will confuse coding assistance in IDE
+        const env = { assert, TEST_MODEL, createApp };
+
+        for (const key in env) {
+            window[key] = env[key];
+        }
 
         await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.3/pixi.min.js');
 
-        // production build required!!
+        // a production build is required!!
         await loadScript('../lib/browser.js');
 
         // load original, non-bundled source
