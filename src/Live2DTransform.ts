@@ -1,5 +1,5 @@
 import { Matrix, Transform } from '@pixi/math';
-import { Live2DInternalModel, LOGICAL_HEIGHT, LOGICAL_WIDTH } from './live2d';
+import { Live2DInternalModel, LOGICAL_HEIGHT, LOGICAL_WIDTH } from './cubism2';
 
 /**
  * Provides the ability to generate a matrix for Live2D model to draw.

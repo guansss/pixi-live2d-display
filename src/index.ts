@@ -1,7 +1,7 @@
 /// <reference path="../core/live2d.d.ts"/>
 /// <reference path="types/shim.d.ts"/>
 
-export * from './live2d';
+export * from './cubism2';
 export * from './utils';
 
 export * from './Live2DModel';

@@ -3,8 +3,8 @@ import { Container } from '@pixi/display';
 import { InteractionEvent, InteractionManager } from '@pixi/interaction';
 import { ObservablePoint, Point } from '@pixi/math';
 import { Ticker } from '@pixi/ticker';
+import { Live2DInternalModel, Priority } from './cubism2';
 import { interaction } from './interaction';
-import { Live2DInternalModel, Priority } from './live2d';
 import { Live2DTransform } from './Live2DTransform';
 import { clamp, logger } from './utils';
 
