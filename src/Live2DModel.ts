@@ -289,7 +289,6 @@ export class Live2DModel extends Container {
 
             this.internal.updateWebGLContext(renderer.gl, this.glContextID);
 
-            const flipY = renderer.gl.getParameter(WebGLRenderingContext.UNPACK_FLIP_Y_WEBGL);
             renderer.gl.pixelStorei(WebGLRenderingContext.UNPACK_FLIP_Y_WEBGL, true);
 
             for (let i = 0; i < this.textures.length; i++) {
@@ -302,8 +301,6 @@ export class Live2DModel extends Container {
                 // kind of ugly but it does the trick :/
                 this.internal.bindTexture(i, (baseTexture as any)._glTextures[this.glContextID].texture);
             }
-
-            renderer.gl.pixelStorei(WebGLRenderingContext.UNPACK_FLIP_Y_WEBGL, flipY);
         }
 
         for (const texture of this.textures) {
@@ -317,7 +314,12 @@ export class Live2DModel extends Container {
         this.internal.draw(this.transform.getDrawingMatrix(renderer.gl));
 
         // reset the active texture that has been changed by Live2D's drawing system
-        renderer.gl.activeTexture(WebGLRenderingContext.TEXTURE0 + renderer.texture.currentLocation);
+        if (renderer.texture.currentLocation >= 0) {
+            renderer.gl.activeTexture(WebGLRenderingContext.TEXTURE0 + renderer.texture.currentLocation);
+        }
+
+        // reset WebGL state
+        renderer.state.reset();
     }
 
     /** @override */
