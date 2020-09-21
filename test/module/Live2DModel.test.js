@@ -1,5 +1,6 @@
 import { Application } from '@pixi/app';
-import { Renderer } from '@pixi/core';
+import { BatchRenderer, Renderer } from '@pixi/core';
+import { Graphics } from '@pixi/graphics';
 import { InteractionManager } from '@pixi/interaction';
 import { Ticker, TickerPlugin } from '@pixi/ticker';
 import { Live2DModel } from '../../src';
@@ -8,6 +9,7 @@ import { createApp } from '../utils';
 import { TEST_MODEL } from './../env';
 
 Application.registerPlugin(TickerPlugin);
+Renderer.registerPlugin('batch', BatchRenderer);
 Renderer.registerPlugin('interaction', InteractionManager);
 Live2DModel.registerTicker(Ticker);
 
@@ -77,6 +79,40 @@ describe('Live2DModel', async () => {
         expect(bounds.y).to.equal(300 - modelBaseHeight * 3 * 0.3);
         expect(bounds.width).to.equal(modelBaseWidth * 2);
         expect(bounds.height).to.equal(modelBaseHeight * 3);
+    });
+
+    it('should not break rendering of PIXI.Graphics', function() {
+        // https://github.com/guansss/pixi-live2d-display/issues/5
+
+        const SIZE = 50;
+
+        const graphics = new Graphics();
+        graphics.beginFill(0xff0000);
+        graphics.drawRect(0, 0, SIZE, SIZE);
+        app.stage.addChild(graphics);
+        app.render();
+
+        const offscreenCanvas = document.createElement('canvas');
+        offscreenCanvas.width = app.view.width;
+        offscreenCanvas.height = app.view.height;
+
+        const context = offscreenCanvas.getContext('2d');
+        context.drawImage(app.view, 0, 0);
+
+        const pixels = context.getImageData(0, 0, SIZE, SIZE).data;
+
+        // detect the red square
+        expect(pixels).to.satisfy(() => {
+            for (let i = 0; i < pixels.length; i += 4) {
+                if (pixels[i] !== 255 ||
+                    pixels[i + 1] !== 0 ||
+                    pixels[i + 2] !== 0 ||
+                    pixels[i + 3] !== 255) {
+                    return false;
+                }
+            }
+            return true;
+        });
     });
 
     it('should handle tapping', () => {
