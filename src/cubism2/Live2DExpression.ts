@@ -1,4 +1,4 @@
-import { cloneWithCamelCase } from '../utils';
+import { EXPRESSION_FADING_DURATION } from '@/cubism-common/constants';
 
 const enum ParamCalcType {
     Set = 'set',
@@ -7,47 +7,47 @@ const enum ParamCalcType {
 }
 
 interface Param {
-    id: number;
+    id: string;
     value: number;
     type: ParamCalcType;
 }
 
-const DEFAULT_FADING_DURATION = 500;
-
 export class Live2DExpression extends AMotion {
     readonly params: Param[] = [];
 
-    constructor(readonly coreModel: Live2DModelWebGL, json: object, readonly name?: string) {
+    constructor(json: JSONObject) {
         super();
 
-        this.load(cloneWithCamelCase(json));
-    }
+        const fadeInTime = json.fade_in as number | undefined;
+        const fadeOutTime = json.fade_out as number | undefined;
 
-    protected load(json: any) {
-        this.setFadeIn(json.fadeIn > 0 ? json.fadeIn : DEFAULT_FADING_DURATION);
-        this.setFadeOut(json.fadeOut > 0 ? json.fadeOut : DEFAULT_FADING_DURATION);
+        this.setFadeIn(fadeInTime! > 0 ? fadeInTime! : EXPRESSION_FADING_DURATION);
+        this.setFadeOut(fadeOutTime! > 0 ? fadeOutTime! : EXPRESSION_FADING_DURATION);
 
         if (Array.isArray(json.params)) {
-            json.params.forEach((paramDef: any) => {
-                let value = parseFloat(paramDef.val);
+            (json.params as JSONObject[]).forEach((paramDef: JSONObject) => {
+                let value = parseFloat(paramDef.val as string);
 
                 if (!paramDef.id || !value) {
                     // skip if missing essential properties
                     return;
                 }
 
-                const id = this.coreModel.getParamIndex(paramDef.id);
-                const type = paramDef.calc || ParamCalcType.Add;
+                const type = (paramDef.calc || ParamCalcType.Add) as ParamCalcType;
 
                 if (type === ParamCalcType.Add) {
-                    const defaultValue = parseFloat(paramDef.def) || 0;
+                    const defaultValue = parseFloat(paramDef.def as string) || 0;
                     value -= defaultValue;
                 } else if (type === ParamCalcType.Mult) {
-                    const defaultValue = parseFloat(paramDef.def) || 1;
+                    const defaultValue = parseFloat(paramDef.def as string) || 1;
                     value /= defaultValue;
                 }
 
-                this.params.push({ id, value, type });
+                this.params.push({
+                    value,
+                    type,
+                    id: paramDef.id as string,
+                });
             });
         }
     }

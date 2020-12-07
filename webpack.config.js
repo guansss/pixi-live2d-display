@@ -50,6 +50,10 @@ module.exports = [
         ],
     },
     resolve: {
+        alias: {
+            '@': path.resolve(__dirname, 'src'),
+            '@cubism': path.resolve(__dirname, 'cubism/src'),
+        },
         extensions: ['.ts', '.js'],
     },
     externals: [

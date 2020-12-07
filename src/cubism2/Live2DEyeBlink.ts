@@ -1,4 +1,4 @@
-import { clamp, rand } from '../utils';
+import { clamp, rand } from '@/utils';
 
 enum EyeState {
     Idle,
@@ -21,15 +21,15 @@ export class Live2DEyeBlink {
     closedTimer = 0;
     nextBlinkTimeLeft = this.blinkInterval;
 
-    constructor(readonly coreModel: Live2DModelWebGL) {
-        this.leftParam = coreModel.getParamIndex('PARAM_EYE_L_OPEN');
-        this.rightParam = coreModel.getParamIndex('PARAM_EYE_R_OPEN');
+    constructor(readonly model: Live2DModelWebGL) {
+        this.leftParam = model.getParamIndex('PARAM_EYE_L_OPEN');
+        this.rightParam = model.getParamIndex('PARAM_EYE_R_OPEN');
     }
 
     setEyeParams(value: number) {
         this.eyeParamValue = clamp(value, 0, 1);
-        this.coreModel.setParamFloat(this.leftParam, this.eyeParamValue);
-        this.coreModel.setParamFloat(this.rightParam, this.eyeParamValue);
+        this.model.setParamFloat(this.leftParam, this.eyeParamValue);
+        this.model.setParamFloat(this.rightParam, this.eyeParamValue);
     }
 
     update(dt: DOMHighResTimeStamp) {

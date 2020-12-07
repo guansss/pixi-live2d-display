@@ -1,5 +1,7 @@
 /**
  * Unofficial declaration file of Cubism 2.1 core library.
+ *
+ * @see {@link http://doc.live2d.com/api/core/cpp2.0j/}
  */
 
 declare class Live2D {
@@ -65,6 +67,8 @@ declare class AMotion {
 
     setFadeOut(time: number): unknown;
 
+    updateParam(model: Live2DModelWebGL, entry: MotionQueueEnt): void
+
     updateParamExe(model: Live2DModelWebGL, time: DOMTimeStamp, weight: number, MotionQueueEnt: unknown): unknown;
 }
 
@@ -117,6 +121,10 @@ declare class PartsDataID {
 }
 
 // Hidden classes
+
+declare class MotionQueueEnt {
+    isFinished(): boolean;
+}
 
 declare class DrawParamWebGL {
     gl: WebGLRenderingContext;

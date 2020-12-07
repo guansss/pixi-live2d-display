@@ -1,10 +1,12 @@
+import { InternalModel } from '@/cubism-common/InternalModel';
 import { Matrix, Transform } from '@pixi/math';
-import { Live2DInternalModel, LOGICAL_HEIGHT, LOGICAL_WIDTH } from './cubism2';
+import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from './cubism-common/constants';
 
 /**
  * Provides the ability to generate a matrix for Live2D model to draw.
  */
 export class Live2DTransform extends Transform {
+    internalModel?: InternalModel;
 
     /**
      * Cached drawing matrix, pretty performant!
@@ -26,10 +28,6 @@ export class Live2DTransform extends Transform {
      */
     needsUpdate = true;
 
-    constructor(readonly model: Live2DInternalModel) {
-        super();
-    }
-
     /** @override */
     updateTransform(parentTransform: Transform): void {
         const lastWorldID = this._worldID;
@@ -46,7 +44,7 @@ export class Live2DTransform extends Transform {
      * @param gl
      */
     getDrawingMatrix(gl: WebGLRenderingContext): Matrix {
-        if (this.needsUpdate || this.glWidth !== gl.drawingBufferWidth || this.glHeight !== gl.drawingBufferHeight) {
+        if (this.internalModel && (this.needsUpdate || this.glWidth !== gl.drawingBufferWidth || this.glHeight !== gl.drawingBufferHeight)) {
             this.needsUpdate = false;
 
             this.glWidth = gl.drawingBufferWidth;
@@ -61,7 +59,7 @@ export class Live2DTransform extends Transform {
                 // move the Live2D origin from center to top-left
                 .translate(-LOGICAL_WIDTH / 2, -LOGICAL_HEIGHT / 2)
 
-                .append(this.model.matrix);
+                .append(this.internalModel.matrix);
         }
 
         return this.drawingMatrix;

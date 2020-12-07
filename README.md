@@ -234,4 +234,4 @@ config.motionSync = true;
 
 ---
 
-The testing Live2D model, Shizuku, is distributed under Live2D's [Free Material License](https://www.live2d.com/eula/live2d-free-material-license-agreement_en.html).
+The testing Live2D model, Shizuku, is redistributed under Live2D's [Free Material License](https://www.live2d.com/eula/live2d-free-material-license-agreement_en.html).

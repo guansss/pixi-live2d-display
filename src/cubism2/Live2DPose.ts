@@ -1,6 +1,6 @@
-import { clamp } from '../utils';
+import { clamp } from '@/utils';
 
-interface PartsDefinition {
+interface PartsDef {
     group: {
         id: string;
         link?: string[];
@@ -28,7 +28,7 @@ export class Live2DPose {
 
     constructor(readonly coreModel: Live2DModelWebGL, json: any) {
         if (json['parts_visible']) {
-            this.partsGroups = (json['parts_visible'] as PartsDefinition[]).map(({ group }) =>
+            this.partsGroups = (json['parts_visible'] as PartsDef[]).map(({ group }) =>
                 group.map(({ id, link }) => {
                     const parts = new Live2DPartsParam(id);
 

@@ -1,28 +1,20 @@
+import { DerivedInternalModel, MotionManager, MotionPriority } from '@/cubism-common';
+import { Live2DModelOptions } from '@/cubism-common/defs';
+import type { Cubism4InternalModel } from '@/cubism4';
+import { Live2DFactory } from '@/factory/Live2DFactory';
 import { Renderer, Texture } from '@pixi/core';
 import { Container } from '@pixi/display';
 import { InteractionEvent, InteractionManager } from '@pixi/interaction';
 import { ObservablePoint, Point } from '@pixi/math';
 import { Ticker } from '@pixi/ticker';
-import { Live2DInternalModel, Priority } from './cubism2';
 import { interaction } from './interaction';
 import { Live2DTransform } from './Live2DTransform';
 import { clamp, logger } from './utils';
 
-export interface Live2DModelOptions {
-    /**
-     * Automatically update internal model by `Ticker.shared`.
-     */
-    autoUpdate?: boolean;
-
-    /**
-     * Automatically listen for pointer events from `InteractionManager` to achieve interaction.
-     */
-    autoInteract?: boolean;
-}
-
-const DEFAULT_OPTIONS: Required<Live2DModelOptions> = {
+const DEFAULT_OPTIONS: Pick<Required<Live2DModelOptions>, 'autoUpdate' | 'autoInteract' | 'factory'> = {
     autoUpdate: true,
     autoInteract: true,
+    factory: Live2DFactory.instance,
 };
 
 const tempPoint = new Point();
@@ -40,19 +32,23 @@ let TickerClass: typeof Ticker | undefined = (window as any).PIXI?.Ticker;
  *
  * @emits {@link Live2DModelEvents}
  */
-export class Live2DModel extends Container {
+export class Live2DModel<IM extends DerivedInternalModel = Cubism4InternalModel> extends Container {
     /**
      * Tag for logging.
      */
-    tag: string;
+    tag = 'Live2DModel(uninitialized)';
+
+    internalModel?: IM;
+
+    textures: Texture[] = [];
 
     /**
-     * Custom transform, declared to override the inherited type.
+     * Custom transform.
      */
-    transform: Live2DTransform;
+    transform = new Live2DTransform();
 
     /**
-     * Works like the one in `Sprite`.
+     * Works like the one in `PIXI.Sprite`.
      */
     anchor = new ObservablePoint(this.onAnchorChange, this, 0, 0);
 
@@ -84,14 +80,10 @@ export class Live2DModel extends Container {
         TickerClass = tickerClass;
     }
 
-    constructor(readonly internal: Live2DInternalModel, readonly textures: Texture[], options?: Live2DModelOptions) {
+    constructor(source: any, options?: Live2DModelOptions) {
         super();
 
         const _options = Object.assign({}, DEFAULT_OPTIONS, options);
-
-        this.tag = `Live2DModel(${internal.modelSettings.name})`;
-
-        this.transform = new Live2DTransform(internal);
 
         this.autoInteract = _options.autoInteract;
         this.autoUpdate = _options.autoUpdate;
@@ -100,7 +92,18 @@ export class Live2DModel extends Container {
             this.interactive = true;
         }
 
-        internal.motionManager.onMotionStart = (group, index, audio) => this.emit('motion', group, index, audio);
+        const factory = _options.factory ?? Live2DFactory.instance;
+
+        factory.initBySource(this, source).catch(e => {
+            logger.warn(this.tag, 'Failed to initialize Live2DModel:', e);
+            this.emit('error:init', e);
+        });
+
+        this.on('modelLoaded', () => {
+            this.tag = `Live2DModel(${this.internalModel!.settings.name})`;
+
+            this.internalModel!.motionManager.onMotionStart = (group: string, index: number, audio?: HTMLAudioElement) => this.emit('motion', group, index, audio);
+        });
     }
 
     private _autoInteract = false;
@@ -133,12 +136,14 @@ export class Live2DModel extends Container {
 
     set autoUpdate(autoUpdate: boolean) {
         if (autoUpdate) {
-            if (TickerClass) {
-                TickerClass?.shared.add(this.onTickerUpdate, this);
+            if (!this._destroyed) {
+                if (TickerClass) {
+                    TickerClass?.shared.add(this.onTickerUpdate, this);
 
-                this._autoUpdate = true;
-            } else {
-                logger.warn(this.tag, 'No Ticker registered, please call Live2DModel.registerTicker(Ticker).');
+                    this._autoUpdate = true;
+                } else {
+                    logger.warn(this.tag, 'No Ticker registered, please call Live2DModel.registerTicker(Ticker).');
+                }
             }
         } else {
             TickerClass?.shared.remove(this.onTickerUpdate, this);
@@ -151,14 +156,21 @@ export class Live2DModel extends Container {
      * Called when the values of {@link Live2DModel#anchor} are changed.
      */
     protected onAnchorChange(): void {
-        this.pivot.set(this.anchor.x * this.internal.width, this.anchor.y * this.internal.height);
+        if (this.internalModel) {
+            this.pivot.set(this.anchor.x * this.internalModel.width, this.anchor.y * this.internalModel.height);
+        }
     }
 
     /**
      * Shorthand of {@link MotionManager#startRandomMotion}.
+     * The types may look ugly but it WORKS!
      */
-    motion(group: string, priority?: Priority): void {
-        this.internal.motionManager.startRandomMotion(group, priority);
+    motion(group: NonNullable<this['internalModel']>['motionManager']['groups']['idle'], priority?: MotionPriority): Promise<boolean> {
+        // because `startRandomMotion` is a union function, the types of its first parameter are
+        // intersected and therefore collapsed to `never`, that's why we need to cast the type for it.
+        // see https://github.com/Microsoft/TypeScript/issues/30581
+        return (this.internalModel?.motionManager as MotionManager<any, any, any, any, any, Parameters<this['motion']>[0]>)
+            .startRandomMotion(group, priority) ?? Promise.resolve(false);
     }
 
     /**
@@ -178,13 +190,14 @@ export class Live2DModel extends Container {
         tempPoint.x = x;
         tempPoint.y = y;
 
-        // the update transform can be skipped because the focus won't take effect until model is rendered,
-        //  and a model being rendered will always get transform updated
+        // we can pass `true` as third argument to skip the update transform
+        // because focus won't take effect until the model is rendered,
+        // and a model being rendered will always get transform updated
         this.toModelPosition(tempPoint, tempPoint, true);
 
-        this.internal.focusController.focus(
-            clamp((tempPoint.x / this.internal.originalWidth) * 2 - 1, -1, 1),
-            -clamp((tempPoint.y / this.internal.originalHeight) * 2 - 1, -1, 1),
+        this.internalModel?.focusController.focus(
+            clamp((tempPoint.x / this.internalModel.originalWidth) * 2 - 1, -1, 1),
+            -clamp((tempPoint.y / this.internalModel.originalHeight) * 2 - 1, -1, 1),
         );
     }
 
@@ -195,16 +208,18 @@ export class Live2DModel extends Container {
      * @emits {@link Live2DModelEvents.hit}
      */
     tap(x: number, y: number): void {
-        tempPoint.x = x;
-        tempPoint.y = y;
-        this.toModelPosition(tempPoint, tempPoint);
+        if (this.internalModel) {
+            tempPoint.x = x;
+            tempPoint.y = y;
+            this.toModelPosition(tempPoint, tempPoint);
 
-        const hitAreaNames = this.internal.hitTest(tempPoint.x, tempPoint.y);
+            const hitAreaNames = this.internalModel.hitTest(tempPoint.x, tempPoint.y);
 
-        if (hitAreaNames.length) {
-            logger.log(this.tag, `Hit`, hitAreaNames);
+            if (hitAreaNames.length) {
+                logger.log(this.tag, `Hit`, hitAreaNames);
 
-            this.emit('hit', hitAreaNames);
+                this.emit('hit', hitAreaNames);
+            }
         }
     }
 
@@ -215,26 +230,26 @@ export class Live2DModel extends Container {
      * @param skipUpdate - True to skip the update transform.
      * @return The point in Live2D model.
      */
-    toModelPosition(position: Point, point?: Point, skipUpdate?: boolean): Point {
-        if (!skipUpdate) {
-            this._recursivePostUpdateTransform();
+    toModelPosition(position: Point, point = new Point(), skipUpdate?: boolean): Point {
+        if (this.internalModel) {
+            if (!skipUpdate) {
+                this._recursivePostUpdateTransform();
 
-            if (!this.parent) {
-                (this.parent as any) = this._tempDisplayObjectParent;
-                this.displayObjectUpdateTransform();
-                (this.parent as any) = null;
-            } else {
-                this.displayObjectUpdateTransform();
+                if (!this.parent) {
+                    (this.parent as any) = this._tempDisplayObjectParent;
+                    this.displayObjectUpdateTransform();
+                    (this.parent as any) = null;
+                } else {
+                    this.displayObjectUpdateTransform();
+                }
             }
+
+            const transform = this.transform.worldTransform;
+            const model1 = this.internalModel;
+
+            point.x = ((position.x - transform.tx) / transform.a - model1.matrix.tx) / model1.matrix.a;
+            point.y = ((position.y - transform.ty) / transform.d - model1.matrix.ty) / model1.matrix.d;
         }
-
-        point = point || new Point();
-
-        const transform = this.transform.worldTransform;
-        const internal = this.internal;
-
-        point.x = ((position.x - transform.tx) / transform.a - internal.matrix.tx) / internal.matrix.a;
-        point.y = ((position.y - transform.ty) / transform.d - internal.matrix.ty) / internal.matrix.d;
 
         return point;
     }
@@ -250,7 +265,9 @@ export class Live2DModel extends Container {
 
     /** @override */
     protected _calculateBounds(): void {
-        this._bounds.addFrame(this.transform, 0, 0, this.internal.width, this.internal.height);
+        if (this.internalModel) {
+            this._bounds.addFrame(this.transform, 0, 0, this.internalModel.width, this.internalModel.height);
+        }
     }
 
     /**
@@ -268,11 +285,13 @@ export class Live2DModel extends Container {
         this.deltaTime += dt;
         this.elapsedTime += dt;
 
-        // don't call `internal.update()` here, because it requires WebGL context
+        // don't call `this.model.update()` here, because it requires WebGL context
     }
 
     /** @override */
     protected _render(renderer: Renderer): void {
+        if (!this.internalModel) return;
+
         if (this._autoInteract && renderer.plugins.interaction !== this.interactionManager) {
             interaction.registerInteraction(this, renderer.plugins.interaction);
         }
@@ -287,7 +306,7 @@ export class Live2DModel extends Container {
         if (this.glContextID !== (renderer as any).CONTEXT_UID) {
             this.glContextID = (renderer as any).CONTEXT_UID;
 
-            this.internal.updateWebGLContext(renderer.gl, this.glContextID);
+            this.internalModel.updateWebGLContext(renderer.gl, this.glContextID);
 
             renderer.gl.pixelStorei(WebGLRenderingContext.UNPACK_FLIP_Y_WEBGL, true);
 
@@ -299,7 +318,7 @@ export class Live2DModel extends Container {
 
                 // bind the WebGLTexture generated by TextureSystem
                 // kind of ugly but it does the trick :/
-                this.internal.bindTexture(i, (baseTexture as any)._glTextures[this.glContextID].texture);
+                this.internalModel.bindTexture(i, (baseTexture as any)._glTextures[this.glContextID].texture);
             }
         }
 
@@ -308,10 +327,10 @@ export class Live2DModel extends Container {
             (texture.baseTexture as any).touched = renderer.textureGC.count;
         }
 
-        this.internal.update(this.deltaTime, this.elapsedTime);
+        this.internalModel.update(this.deltaTime, this.elapsedTime);
         this.deltaTime = 0;
 
-        this.internal.draw(this.transform.getDrawingMatrix(renderer.gl));
+        this.internalModel.draw(this.transform.getDrawingMatrix(renderer.gl));
 
         // reset the active texture that has been changed by Live2D's drawing system
         if (renderer.texture.currentLocation >= 0) {
@@ -324,7 +343,7 @@ export class Live2DModel extends Container {
 
     /** @override */
     destroy(options?: { children?: boolean, texture?: boolean, baseTexture?: boolean }): void {
-        // the setter will remove listener from Ticker
+        // the setter will do the cleanup
         this.autoUpdate = false;
 
         this.autoInteract = false;

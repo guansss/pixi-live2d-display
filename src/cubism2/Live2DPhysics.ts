@@ -1,4 +1,4 @@
-interface PhysicsHairDefinition {
+interface PhysicsHairDef {
     label: string;
     setup: {
         length: number;
@@ -40,7 +40,7 @@ export class Live2DPhysics {
 
     constructor(readonly coreModel: Live2DModelWebGL, json: any) {
         if (json['physics_hair']) {
-            this.physicsHairs = (json['physics_hair'] as PhysicsHairDefinition[]).map(definition => {
+            this.physicsHairs = (json['physics_hair'] as PhysicsHairDef[]).map(definition => {
                 const physicsHair = new PhysicsHair();
 
                 physicsHair.setup(definition.setup.length, definition.setup.regist, definition.setup.mass);
