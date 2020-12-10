@@ -5,7 +5,7 @@ import { Live2DPhysics } from '@/cubism2/Live2DPhysics';
 import { Live2DPose } from '@/cubism2/Live2DPose';
 import { Live2DFactory, Live2DFactoryOptions } from '@/factory/Live2DFactory';
 
-Live2DFactory.registerSubFactory<Cubism2InternalModel>({
+Live2DFactory.registerPlatform({
     version: 2,
 
     createModelSettings(json: any): Cubism2ModelSettings | undefined {

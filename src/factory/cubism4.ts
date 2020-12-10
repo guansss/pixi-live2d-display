@@ -7,7 +7,7 @@ import { CubismMoc } from '@cubism/model/cubismmoc';
 import { CubismModel } from '@cubism/model/cubismmodel';
 import { CubismPhysics } from '@cubism/physics/cubismphysics';
 
-Live2DFactory.registerSubFactory<Cubism4InternalModel>({
+Live2DFactory.registerPlatform({
     version: 4,
 
     createModelSettings(json: any): Cubism4ModelSettings | undefined {

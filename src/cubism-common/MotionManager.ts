@@ -13,13 +13,13 @@ import {
 import { ExpressionManager } from '@/cubism-common/ExpressionManager';
 import { ModelSettings } from '@/cubism-common/ModelSettings';
 import { SoundManager } from '@/cubism-common/SoundManager';
-import { Live2DFactory } from '@/factory/Live2DFactory';
+import { Live2DFactory } from '@/factory';
 import { logger } from '@/utils';
+import { EventEmitter } from '@pixi/utils';
 import noop from 'lodash/noop';
 
 export interface MotionManagerOptions {
     motionPreload?: MotionPreloadStrategy;
-    factory?: Live2DFactory;
 }
 
 /**
@@ -29,7 +29,7 @@ export function motionID(group: string, index: number): string {
     return group + '#' + index;
 }
 
-export abstract class MotionManager<Model = any, Settings extends ModelSettings = ModelSettings, ExpManager extends ExpressionManager<Model, Settings> = ExpressionManager<Model, Settings>, Motion = any, MotionDef = any, Groups extends string = string> {
+export abstract class MotionManager<Model = any, Settings extends ModelSettings = ModelSettings, ExpManager extends ExpressionManager<Model, Settings> = ExpressionManager<Model, Settings>, Motion = any, MotionDef = any, Groups extends string = string> extends EventEmitter {
     /**
      * Tag for logging.
      */
@@ -76,24 +76,26 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
      */
     currentAudio?: HTMLAudioElement;
 
+    motionPreload: MotionPreloadStrategy = MOTION_PRELOAD_IDLE;
+
     destroyed = false;
 
-    factory: Live2DFactory;
-
     protected constructor(settings: Settings, options?: MotionManagerOptions) {
+        super();
         this.settings = settings;
         this.tag = `MotionManager(${settings.name})`;
-        this.factory = options?.factory ?? Live2DFactory.instance;
+
+        this.motionPreload = options?.motionPreload ?? this.motionPreload;
     }
 
-    protected init(options?: MotionManagerOptions) {
+    protected init() {
         (this as Mutable<this>).definitions = this.getDefinitions();
 
-        this.setupMotions(options);
+        this.setupMotions();
         this.stopAllMotions();
     }
 
-    protected setupMotions(options?: MotionManagerOptions): void {
+    protected setupMotions(): void {
         for (const group of Object.keys(this.definitions) as Groups[]) {
             // init with the same structure of definitions
             this.motionGroups[group] = [];
@@ -103,7 +105,7 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
 
         let groups;
 
-        switch (options?.motionPreload) {
+        switch (this.motionPreload) {
             case MOTION_PRELOAD_NONE:
                 return;
 
@@ -144,7 +146,7 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
             return this.motionGroups[group]![index] as Motion;
         }
 
-        const motion = await this.factory.loadMotion(this, group, index);
+        const motion = await Live2DFactory.loadMotion(this, group, index);
 
         this.motionGroups[group]![index] = motion ?? null;
 
@@ -309,14 +311,13 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
     }
 
     destroy() {
-        this.stopAllMotions();
-
         this.destroyed = true;
-        this.factory.releaseMotionManager(this);
+        this.emit('destroy');
+
+        this.stopAllMotions();
         this.expressionManager?.destroy();
 
         const self = this as Mutable<Partial<this>>;
-        self.factory = undefined;
         self.definitions = undefined;
         self.motionGroups = undefined;
     }

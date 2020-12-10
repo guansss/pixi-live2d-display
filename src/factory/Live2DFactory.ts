@@ -2,12 +2,11 @@
 
 import { DerivedInternalModel, ExpressionManager, ModelSettings, MotionManager } from '@/cubism-common';
 import { Live2DModelOptions } from '@/cubism-common/defs';
+import { Live2DLoader } from '@/factory/Live2DLoader';
 import { Live2DModel } from '@/Live2DModel';
-import { Live2DLoader } from '@/loader/loader';
-import { XHRLoader } from '@/loader/XHRLoader';
 import { logger } from '@/utils';
+import { Middleware, runMiddlewares } from '@/utils/middleware';
 import { Texture } from '@pixi/core';
-import noop from 'lodash/noop';
 
 const TAG = 'Live2DFactory';
 
@@ -19,156 +18,182 @@ export interface Live2DFactoryOptions extends Live2DModelOptions {
     crossOrigin?: string;
 }
 
-export interface SubFactory<IM extends DerivedInternalModel> {
-    version: number;
-
-    createModelSettings(json: any): IM['settings'] | undefined;
-
-    test(settings: ModelSettings): settings is IM['settings'];
-
-    createCoreModel(data: ArrayBuffer): IM['coreModel'];
-
-    createInternalModel(coreModel: IM['coreModel'], settings: IM['settings'], options?: Live2DFactoryOptions): IM;
-
-    createPose(coreModel: IM['coreModel'], data: any): NonNullable<IM['pose']>;
-
-    createPhysics(coreModel: IM['coreModel'], data: any): NonNullable<IM['physics']>;
+export interface Live2DFactoryContext {
+    source: any,
+    options: Live2DFactoryOptions;
+    live2DModel: Live2DModel;
+    internalModel?: DerivedInternalModel;
+    settings?: ModelSettings;
 }
 
-export class Live2DFactory {
-    static instance = new Live2DFactory(XHRLoader.instance);
+export interface Live2DPlatform {
+    version: number;
 
-    static subFactories: SubFactory<DerivedInternalModel>[] = [];
+    createModelSettings(json: any): ModelSettings | undefined;
 
-    static registerSubFactory<IM extends DerivedInternalModel>(subFactory: SubFactory<IM>) {
-        this.subFactories.push(subFactory);
+    test(settings: ModelSettings): settings is ModelSettings;
 
-        // higher version as higher priority
-        this.subFactories.sort((a, b) => b.version - a.version);
+    createCoreModel(data: ArrayBuffer): any;
+
+    createInternalModel(coreModel: any, settings: ModelSettings, options?: Live2DFactoryOptions): DerivedInternalModel;
+
+    createPose(coreModel: any, data: any): any;
+
+    createPhysics(coreModel: any, data: any): any;
+}
+
+export const urlToJSON: Middleware<Live2DFactoryContext> = async (context, next) => {
+    if (typeof context.source === 'string') {
+        const data = await Live2DLoader.load({
+            url: context.source,
+            type: 'json',
+            target: context.live2DModel,
+        });
+
+        data.url = context.source;
+
+        context.live2DModel.emit('settingsJSONLoaded', data);
     }
+
+    return next();
+};
+
+export const jsonToSettings: Middleware<Live2DFactoryContext> = async (context, next) => {
+    if (context.source instanceof ModelSettings) {
+        for (const platform of Live2DFactory.platforms) {
+            const settings = platform.createModelSettings(context.source);
+
+            if (settings) {
+                context.settings = settings;
+                context.live2DModel.emit('settingsLoaded', settings);
+
+                return next();
+            }
+        }
+    }
+
+    throw new TypeError('Unknown settings format.');
+};
+
+export const createInternalModel: Middleware<Live2DFactoryContext> = async (context, next) => {
+    const settings = context.settings;
+
+    if (settings) {
+        const platform = Live2DFactory.platforms.find(f => f.test(settings));
+
+        if (!platform) {
+            throw new TypeError('Unknown model settings.');
+        }
+
+        const modelData = await Live2DLoader.load({
+            url: settings.moc,
+            baseURL: settings.url,
+            type: 'arraybuffer',
+            target: context.live2DModel,
+        });
+
+        const coreModel = platform.createCoreModel(modelData);
+
+        context.internalModel = platform.createInternalModel(coreModel, settings, context.options);
+
+        return next();
+    }
+
+    throw new TypeError('Missing settings.');
+};
+
+export const setupOptionals: Middleware<Live2DFactoryContext> = (context, next) => {
+    const internalModel = context.internalModel;
+
+    if (internalModel) {
+        const settings = context.settings!;
+        const platform = Live2DFactory.platforms.find(f => f.test(settings));
+
+        if (platform) {
+            if (settings.pose) {
+                // no need to await the returned promise as the resources are optional
+                Live2DLoader.load({
+                        url: settings.pose,
+                        baseURL: settings.url,
+                        type: 'arraybuffer',
+                        target: internalModel,
+                    })
+                    .then((data: ArrayBuffer) => internalModel.pose = platform.createPose(internalModel.coreModel, data))
+                    .catch((e: Error) => logger.warn(TAG, 'Failed to load pose.\n', e));
+            }
+            if (settings.physics) {
+                Live2DLoader.load({
+                        url: settings.physics,
+                        baseURL: settings.url,
+                        type: 'arraybuffer',
+                        target: internalModel,
+                    })
+                    .then((data: ArrayBuffer) => internalModel.physics = platform.createPhysics(internalModel.coreModel, data))
+                    .catch((e: Error) => logger.warn(TAG, 'Failed to load physics.\n', e));
+            }
+        }
+    }
+
+    return next();
+};
+
+export const setupLive2DModel: Middleware<Live2DFactoryContext> = async (context, next) => {
+    if (context.internalModel) {
+        context.live2DModel.textures = context.settings!.textures.map(tex =>
+            Texture.from(tex, { resourceOptions: { crossorigin: context.options.crossOrigin } }),
+        );
+        context.live2DModel.internalModel = context.internalModel;
+        context.live2DModel.emit('modelLoaded');
+
+        return next();
+    }
+
+    throw new TypeError('Missing internal model.');
+};
+
+export class Live2DFactory {
+    static platforms: Live2DPlatform[] = [];
+
+    static live2DModelMiddlewares: Middleware<Live2DFactoryContext>[] = [
+        urlToJSON, jsonToSettings, createInternalModel, setupOptionals, setupLive2DModel,
+    ];
 
     /**
      * loading tasks of each motion. The structure of each value in this map is the same as {@link MotionManager#definitions}.
      */
-    motionTasksMap = new WeakMap<MotionManager, Partial<Record<string, (Promise<any> | undefined)[]>>>();
+    static motionTasksMap = new WeakMap<MotionManager, Record<string, Promise<any>[]>>();
 
-    expressionTasksMap = new WeakMap<ExpressionManager, (Promise<any> | undefined)[]>();
+    static expressionTasksMap = new WeakMap<ExpressionManager, Promise<any>[]>();
 
-    loader: Live2DLoader;
+    static registerPlatform(platform: Live2DPlatform) {
+        this.platforms.push(platform);
 
-    constructor(loader: Live2DLoader) {
-        this.loader = loader;
+        // higher version as higher priority
+        this.platforms.sort((a, b) => b.version - a.version);
     }
 
-    async initBySource<IM extends DerivedInternalModel>(model: Live2DModel<IM>, source: any, options?: Live2DFactoryOptions) {
-        if (typeof source === 'string') {
-            await this.initByURL(model, source);
-        }
+    static async createLive2DModel<IM extends DerivedInternalModel>(source: string | object | IM['settings'], options?: Live2DFactoryOptions): Promise<Live2DModel<IM>> {
+        const live2DModel = new Live2DModel<IM>(options);
 
-        if (source && typeof source === 'object') {
-            if (source instanceof ModelSettings) {
-                await this.initBySettings(model, source as DerivedInternalModel['settings']);
-            }
+        await runMiddlewares(this.live2DModelMiddlewares, {
+            live2DModel,
+            source,
+            options: options || {},
+        });
 
-            await this.initByJSON(model, source);
-        }
-
-        throw new TypeError('Unknown source.');
+        return live2DModel;
     }
 
-    async initByURL<IM extends DerivedInternalModel>(model: Live2DModel<IM>, url: string, options?: Live2DFactoryOptions) {
-        try {
-            const data = await this.loader.loadJSON(url, model);
-
-            data.url = url;
-
-            model.emit('settingsJSONLoaded', data);
-
-            return this.initByJSON(model, data, options);
-        } catch (e) {
-            logger.warn(TAG, 'Failed to initialize Live2DModel by URL:', url);
-            throw e;
-        }
-    }
-
-    async initByJSON<IM extends DerivedInternalModel>(model: Live2DModel<IM>, json: any, options?: Live2DFactoryOptions) {
-        try {
-            let settings: DerivedInternalModel['settings'] | undefined;
-
-            for (const subFactory of Live2DFactory.subFactories) {
-                settings = subFactory.createModelSettings(json);
-
-                if (settings) break;
-            }
-
-            if (!settings) {
-                throw new TypeError('Unknown settings format.');
-            }
-
-            model.emit('settingsLoaded', settings);
-
-            return this.initBySettings(model, settings, options);
-        } catch (e) {
-            logger.warn(TAG, 'Failed to initialize Live2DModel by JSON:', '\n', json);
-            throw e;
-        }
-    }
-
-    async initBySettings<IM extends DerivedInternalModel>(live2DModel: Live2DModel<IM>, settings: IM['settings'], options?: Live2DFactoryOptions) {
-        try {
-            live2DModel.textures = settings.textures.map(tex => Texture.from(tex, { resourceOptions: { crossorigin: options?.crossOrigin } }));
-
-            // emit event when all textures have been loaded
-            // TODO: possible memory leak?
-            live2DModel.textures.forEach(tex => tex.on('loaded', () => {
-                if (live2DModel.textures.every(tex => tex.valid)) {
-                    live2DModel.emit('textureLoaded');
-                }
-            }));
-
-            live2DModel.internalModel = await this.createInternalModel(live2DModel, settings, options);
-
-            live2DModel.emit('modelLoaded', settings);
-        } catch (e) {
-            logger.warn(TAG, 'Failed to initialize Live2DModel with settings.');
-            throw e;
-        }
-    }
-
-    async createInternalModel<IM extends DerivedInternalModel>(live2DModel: Live2DModel<IM>, settings: IM['settings'], options?: Live2DFactoryOptions): Promise<IM> {
-        const subFactory = Live2DFactory.subFactories.find(f => f.test(settings));
-
-        if (!subFactory) {
-            throw new TypeError('Unknown model settings.');
-        }
-
-        const [modelData, poseData, physicsData] = await Promise.all<any>([
-            this.loader.loadResArrayBuffer(settings.moc, settings.url, live2DModel),
-
-            // errors will be ignored while loading optional resources
-            settings.pose && this.loader.loadResArrayBuffer(settings.pose, settings.url, live2DModel).catch(noop),
-            settings.physics && this.loader.loadResArrayBuffer(settings.physics, settings.url, live2DModel).catch(noop),
-        ]) as [ArrayBuffer, any, any];
-
-        const coreModel = subFactory.createCoreModel(modelData);
-        const internalModel = subFactory.createInternalModel(coreModel, settings, options);
-
-        if (poseData) {
-            internalModel.pose = subFactory.createPose(coreModel, poseData);
-        }
-        if (physicsData) {
-            internalModel.physics = subFactory.createPhysics(coreModel, poseData);
-        }
-
-        return internalModel as IM;
-    }
-
-    loadMotion<Motion, MotionDef, Groups extends string>(motionManager: MotionManager<any, ModelSettings, any, Motion, MotionDef, Groups>, group: Groups, index: number): Promise<Motion | undefined> {
+    static loadMotion<Motion, MotionDef, Groups extends string>(motionManager: MotionManager<any, ModelSettings, any, Motion, MotionDef, Groups>, group: Groups, index: number): Promise<Motion | undefined> {
         try {
             const definition = motionManager.definitions[group] ?. [index];
 
             if (!definition) {
                 return Promise.resolve(undefined);
+            }
+
+            if (!motionManager.listeners('destroy').includes(this.releaseTasks)) {
+                motionManager.once('destroy', this.releaseTasks, this);
             }
 
             let tasks = this.motionTasksMap.get(motionManager);
@@ -186,17 +211,23 @@ export class Live2DFactory {
             }
 
             const path = motionManager.getMotionFile(definition);
-            const loadMethod = motionManager.motionDataType === 'json' ? this.loader.loadResJSON : this.loader.loadResArrayBuffer;
 
-            taskGroup[index] ??= loadMethod(path, motionManager.settings.url, motionManager)
+            taskGroup[index] ??= Live2DLoader.load({
+                    url: path,
+                    baseURL: motionManager.settings.url,
+                    type: motionManager.motionDataType,
+                    target: motionManager,
+                })
                 .then(data => {
-                    delete taskGroup![index];
+                    const taskGroup = this.motionTasksMap.get(motionManager)?.[group];
+
+                    if (taskGroup) {
+                        delete taskGroup[index];
+                    }
 
                     return motionManager.createMotion(data, definition);
                 })
-                .catch(e => {
-                    logger.warn(motionManager.tag, `Failed to load motion: ${path}\n`, e);
-                });
+                .catch(e => logger.warn(motionManager.tag, `Failed to load motion: ${path}\n`, e));
 
             return taskGroup[index]!;
         } catch (e) {
@@ -206,17 +237,16 @@ export class Live2DFactory {
         return Promise.resolve(undefined);
     }
 
-    releaseMotionManager(motionManager: MotionManager) {
-        this.loader.releaseTarget(motionManager);
-        this.motionTasksMap.delete(motionManager);
-    }
-
-    loadExpression<Expression>(expressionManager: ExpressionManager<any, ModelSettings, Expression>, index: number): Promise<Expression | undefined> {
+    static loadExpression<Expression>(expressionManager: ExpressionManager<any, ModelSettings, Expression>, index: number): Promise<Expression | undefined> {
         try {
             const definition = expressionManager.definitions[index];
 
             if (!definition) {
                 return Promise.resolve(undefined);
+            }
+
+            if (!expressionManager.listeners('destroy').includes(this.releaseTasks)) {
+                expressionManager.once('destroy', this.releaseTasks, this);
             }
 
             let tasks = this.expressionTasksMap.get(expressionManager);
@@ -228,15 +258,22 @@ export class Live2DFactory {
 
             const path = expressionManager.getExpressionFile(definition);
 
-            tasks[index] ??= this.loader.loadResJSON(path, expressionManager.settings.url, expressionManager)
+            tasks[index] ??= Live2DLoader.load({
+                    url: path,
+                    baseURL: expressionManager.settings.url,
+                    type: 'json',
+                    target: expressionManager,
+                })
                 .then(data => {
-                    delete tasks![index];
+                    const tasks = this.expressionTasksMap.get(expressionManager);
+
+                    if (tasks) {
+                        delete tasks[index];
+                    }
 
                     return expressionManager.createExpression(definition, data);
                 })
-                .catch(e => {
-                    logger.warn(expressionManager.tag, `Failed to load expression: ${path}\n`, e);
-                });
+                .catch(e => logger.warn(expressionManager.tag, `Failed to load expression: ${path}\n`, e));
 
             return tasks[index]!;
         } catch (e) {
@@ -246,8 +283,11 @@ export class Live2DFactory {
         return Promise.resolve(undefined);
     }
 
-    releaseExpressionManager(expressionManager: ExpressionManager) {
-        this.loader.releaseTarget(expressionManager);
-        this.expressionTasksMap.delete(expressionManager);
+    static releaseTasks(target: MotionManager | ExpressionManager) {
+        if (target instanceof MotionManager) {
+            this.motionTasksMap.delete(target);
+        } else {
+            this.expressionTasksMap.delete(target);
+        }
     }
 }

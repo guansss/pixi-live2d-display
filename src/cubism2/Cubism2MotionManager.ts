@@ -23,10 +23,10 @@ export class Cubism2MotionManager extends MotionManager<Live2DModelWebGL, Cubism
         super(settings, options);
 
         if (settings.expressions) {
-            this.expressionManager = new Cubism2ExpressionManager(settings);
+            this.expressionManager = new Cubism2ExpressionManager(settings, options);
         }
 
-        this.init(options);
+        this.init();
     }
 
     isFinished(): boolean {

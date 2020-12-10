@@ -17,7 +17,7 @@ export namespace interaction {
      * @param model
      * @param manager
      */
-    export function registerInteraction(model: Live2DModel, manager: InteractionManager): void {
+    export function registerInteraction(model: Live2DModel<any>, manager: InteractionManager): void {
         unregisterInteraction(model);
 
         model.interactionManager = manager;
@@ -35,7 +35,7 @@ export namespace interaction {
      * Unregisters interaction for a `Live2DModel`.
      * @param model
      */
-    export function unregisterInteraction(model: Live2DModel): void {
+    export function unregisterInteraction(model: Live2DModel<any>): void {
         model._unregisterInteraction?.();
         model._unregisterInteraction = undefined;
         model.interactionManager = undefined;

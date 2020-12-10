@@ -26,13 +26,13 @@ export class Cubism4MotionManager extends MotionManager<CubismModel, Cubism4Mode
         super(settings, options);
 
         if (settings.expressions) {
-            this.expressionManager = new Cubism4ExpressionManager(settings);
+            this.expressionManager = new Cubism4ExpressionManager(settings, options);
         }
 
         this.eyeBlinkIds = settings.getEyeBlinkParameters() || [];
         this.lipSyncIds = settings.getLipSyncParameters() || [];
 
-        this.init(options);
+        this.init();
     }
 
     isFinished(): boolean {

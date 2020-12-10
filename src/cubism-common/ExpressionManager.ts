@@ -1,10 +1,11 @@
 import { ModelSettings } from '@/cubism-common/ModelSettings';
 import { MotionManagerOptions } from '@/cubism-common/MotionManager';
-import { Live2DFactory } from '@/factory/Live2DFactory';
+import { Live2DFactory } from '@/factory';
 import { logger } from '@/utils';
 import { Loader, LoaderResource } from '@pixi/loaders';
+import { EventEmitter } from '@pixi/utils';
 
-export abstract class ExpressionManager<Model = any, Settings extends ModelSettings = ModelSettings, Expression = any, ExpressionDef = any> {
+export abstract class ExpressionManager<Model = any, Settings extends ModelSettings = ModelSettings, Expression = any, ExpressionDef = any> extends EventEmitter {
     /**
      * Tag for logging.
      */
@@ -34,14 +35,12 @@ export abstract class ExpressionManager<Model = any, Settings extends ModelSetti
 
     reserveExpressionIndex = -1;
 
-    factory: Live2DFactory;
-
     destroyed = false;
 
     protected constructor(settings: Settings, options?: MotionManagerOptions) {
+        super();
         this.settings = settings;
         this.tag = `ExpressionManager(${settings.name})`;
-        this.factory = options?.factory ?? Live2DFactory.instance;
     }
 
     protected init() {
@@ -103,7 +102,7 @@ export abstract class ExpressionManager<Model = any, Settings extends ModelSetti
             return this.expressions[index] as Expression;
         }
 
-        const expression = await this.factory.loadExpression(this, index);
+        const expression = await Live2DFactory.loadExpression(this, index);
 
         this.expressions[index] = expression;
 
@@ -186,10 +185,9 @@ export abstract class ExpressionManager<Model = any, Settings extends ModelSetti
 
     destroy() {
         this.destroyed = true;
-        this.factory.releaseExpressionManager(this);
+        this.emit('destroy');
 
         const self = this as Mutable<Partial<this>>;
-        self.factory = undefined;
         self.definitions = undefined;
         self.expressions = undefined;
     }

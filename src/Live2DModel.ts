@@ -1,6 +1,6 @@
 import { DerivedInternalModel, MotionManager, MotionPriority } from '@/cubism-common';
 import { Live2DModelOptions } from '@/cubism-common/defs';
-import type { Cubism4InternalModel } from '@/cubism4';
+import type { Live2DFactoryOptions } from '@/cubism4';
 import { Live2DFactory } from '@/factory/Live2DFactory';
 import { Renderer, Texture } from '@pixi/core';
 import { Container } from '@pixi/display';
@@ -11,15 +11,14 @@ import { interaction } from './interaction';
 import { Live2DTransform } from './Live2DTransform';
 import { clamp, logger } from './utils';
 
-const DEFAULT_OPTIONS: Pick<Required<Live2DModelOptions>, 'autoUpdate' | 'autoInteract' | 'factory'> = {
+const DEFAULT_OPTIONS: Pick<Required<Live2DModelOptions>, 'autoUpdate' | 'autoInteract'> = {
     autoUpdate: true,
     autoInteract: true,
-    factory: Live2DFactory.instance,
 };
 
 const tempPoint = new Point();
 
-// a reference to Ticker class, defaults to the one in window.PIXI (when loaded by script tag)
+// a reference to Ticker class, defaults to the one in window.PIXI (when loaded by a <script> tag)
 let TickerClass: typeof Ticker | undefined = (window as any).PIXI?.Ticker;
 
 /**
@@ -32,7 +31,11 @@ let TickerClass: typeof Ticker | undefined = (window as any).PIXI?.Ticker;
  *
  * @emits {@link Live2DModelEvents}
  */
-export class Live2DModel<IM extends DerivedInternalModel = Cubism4InternalModel> extends Container {
+export class Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel> extends Container {
+    static from<IM extends DerivedInternalModel = DerivedInternalModel>(source: string | object | IM['settings'], options?: Live2DFactoryOptions) {
+        return Live2DFactory.createLive2DModel<IM>(source, options);
+    }
+
     /**
      * Tag for logging.
      */
@@ -80,7 +83,7 @@ export class Live2DModel<IM extends DerivedInternalModel = Cubism4InternalModel>
         TickerClass = tickerClass;
     }
 
-    constructor(source: any, options?: Live2DModelOptions) {
+    constructor(options?: Live2DModelOptions) {
         super();
 
         const _options = Object.assign({}, DEFAULT_OPTIONS, options);
@@ -91,13 +94,6 @@ export class Live2DModel<IM extends DerivedInternalModel = Cubism4InternalModel>
         if (_options.autoInteract) {
             this.interactive = true;
         }
-
-        const factory = _options.factory ?? Live2DFactory.instance;
-
-        factory.initBySource(this, source).catch(e => {
-            logger.warn(this.tag, 'Failed to initialize Live2DModel:', e);
-            this.emit('error:init', e);
-        });
 
         this.on('modelLoaded', () => {
             this.tag = `Live2DModel(${this.internalModel!.settings.name})`;

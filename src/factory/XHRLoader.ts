@@ -1,27 +1,34 @@
-import { Live2DLoader, LoaderTarget } from '@/loader/loader';
+import { Live2DLoaderContext, Live2DLoaderTarget } from '@/factory/Live2DLoader';
 import { logger } from '@/utils';
+import { Middleware } from '@/utils/middleware';
 import { url } from '@pixi/utils';
 
 const TAG = 'XHRLoader';
 
-export class XHRLoader implements Live2DLoader {
-    static instance = new XHRLoader();
+export class XHRLoader {
+    static xhrMap = new WeakMap<Live2DLoaderTarget, Set<XMLHttpRequest>>();
+    static allXhrSet = new Set<XMLHttpRequest>();
 
-    xhrMap = new WeakMap<LoaderTarget, Set<XMLHttpRequest>>();
-
-    allXhrSet = new Set<XMLHttpRequest>();
-
-    loadJSON(url: string, target?: LoaderTarget): Promise<any> {
-        return new Promise((resolve, reject) => {
-            const xhr = this.createXHR(target, url, resolve, reject);
-            xhr.responseType = 'json';
+    static loader: Middleware<Live2DLoaderContext> = (context, next) => {
+        return new Promise<void>((resolve, reject) => {
+            const xhr = XHRLoader.createXHR(
+                context.target,
+                context.baseURL ? url.resolve(context.baseURL, context.url) : context.url,
+                context.type,
+                data => {
+                    context.result = data;
+                    resolve();
+                },
+                reject,
+            );
             xhr.send();
         });
-    }
+    };
 
-    createXHR<Data extends any>(
-        target: LoaderTarget | undefined,
+    static createXHR<Data extends any>(
+        target: Live2DLoaderTarget | undefined,
         url: string,
+        type: 'json' | 'arraybuffer',
         onload: (data: Data) => void,
         onerror: (e: Error) => void,
     ): XMLHttpRequest {
@@ -37,6 +44,10 @@ export class XHRLoader implements Live2DLoader {
                 this.xhrMap.set(target, xhrSet);
             } else {
                 xhrSet.add(xhr);
+            }
+
+            if (!target.listeners('destroy').includes(this.cancelXHRs)) {
+                target.once('destroy', this.cancelXHRs, this);
             }
         }
 
@@ -64,27 +75,7 @@ export class XHRLoader implements Live2DLoader {
         return xhr;
     }
 
-    resolveURL(path: string, baseURL: string): string {
-        return url.resolve(baseURL, path);
-    }
-
-    loadResJSON(path: string, baseURL: string, target: LoaderTarget): Promise<any> {
-        return new Promise((resolve, reject) => {
-            const xhr = this.createXHR(target, this.resolveURL(path, baseURL), resolve, reject);
-            xhr.responseType = 'json';
-            xhr.send();
-        });
-    }
-
-    loadResArrayBuffer(path: string, baseURL: string, target: LoaderTarget): Promise<ArrayBuffer> {
-        return new Promise((resolve, reject) => {
-            const xhr = this.createXHR(target, this.resolveURL(path, baseURL), resolve, reject);
-            xhr.responseType = 'arraybuffer';
-            xhr.send();
-        });
-    }
-
-    releaseTarget(target: LoaderTarget): void {
+    static cancelXHRs(target: Live2DLoaderTarget) {
         this.xhrMap.get(target)?.forEach(xhr => {
             xhr.abort();
             this.allXhrSet.delete(xhr);
@@ -92,7 +83,7 @@ export class XHRLoader implements Live2DLoader {
         this.xhrMap.delete(target);
     }
 
-    release() {
+    static release() {
         this.allXhrSet.forEach(xhr => xhr.abort());
         this.allXhrSet.clear();
         this.xhrMap = new WeakMap();

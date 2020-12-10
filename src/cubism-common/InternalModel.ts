@@ -5,6 +5,7 @@ import { MotionManager } from '@/cubism-common/MotionManager';
 import { Cubism2InternalModel } from '@/cubism2/Cubism2InternalModel';
 import { Cubism4InternalModel } from '@/cubism4/Cubism4InternalModel';
 import { Matrix } from '@pixi/math';
+import { EventEmitter } from '@pixi/utils';
 
 export interface LayoutDef {
     centerX?: number;
@@ -33,7 +34,7 @@ export interface DerivedInternalModelSet {
 
 export type DerivedInternalModel = DerivedInternalModelSet[keyof DerivedInternalModelSet]
 
-export abstract class InternalModel<Model = any, DerivedModelSettings extends ModelSettings = ModelSettings, DerivedMotionManager extends MotionManager<Model> = MotionManager<Model>> {
+export abstract class InternalModel<Model = any, DerivedModelSettings extends ModelSettings = ModelSettings, DerivedMotionManager extends MotionManager<Model> = MotionManager<Model>> extends EventEmitter {
     coreModel: Model;
 
     readonly settings: DerivedModelSettings;
@@ -70,6 +71,7 @@ export abstract class InternalModel<Model = any, DerivedModelSettings extends Mo
     hitAreas: Record<string, HitAreaDef> = {};
 
     protected constructor(model: Model, settings: DerivedModelSettings, motionManager: DerivedMotionManager) {
+        super();
         this.coreModel = model;
         this.settings = settings;
         this.motionManager = motionManager;
@@ -169,6 +171,7 @@ export abstract class InternalModel<Model = any, DerivedModelSettings extends Mo
     };
 
     destroy() {
+        this.emit('destroy');
         this.motionManager.destroy();
     }
 

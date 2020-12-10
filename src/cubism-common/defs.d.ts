@@ -1,5 +1,4 @@
 import { MotionManagerOptions } from '@/cubism-common/MotionManager';
-import { Live2DFactory } from '@/factory/Live2DFactory';
 
 export interface Live2DModelOptions extends MotionManagerOptions {
     /**
@@ -11,6 +10,4 @@ export interface Live2DModelOptions extends MotionManagerOptions {
      * Automatically listen for pointer events from `InteractionManager` to achieve interaction.
      */
     autoInteract?: boolean;
-
-    factory?: Live2DFactory;
 }
