@@ -10,12 +10,12 @@ export class Cubism4ModelSettings extends ModelSettings<CubismModelSettingsDef> 
     textures!: string[];
 
     static isValidJSON(json: any): json is CubismModelSettingsDef {
-        return !!json.FileReferences &&
+        return !!json?.FileReferences &&
             typeof json.FileReferences.Moc === 'string' &&
             Array.isArray(json.FileReferences.Textures) &&
 
-            // textures array must include at least one string
-            json.FileReferences.Textures.some((item: any) => typeof [0] === 'string');
+            // textures must be an array of strings
+            json.FileReferences.Textures.every((item: any) => typeof item === 'string');
     }
 
     constructor(json: CubismModelSettingsDef) {

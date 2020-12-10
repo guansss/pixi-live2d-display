@@ -40,8 +40,8 @@ export class Cubism2ModelSettings extends ModelSettings<Cubism2ModelSettingsDef>
             && typeof json.model === 'string'
             && Array.isArray(json.textures)
 
-            // textures array must include at least one string
-            && json.textures.some((item: any) => typeof item === 'string');
+            // textures must be an array of strings
+            && json.textures.every((item: any) => typeof item === 'string');
     }
 
     constructor(json: Cubism2ModelSettingsDef) {
