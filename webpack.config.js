@@ -1,6 +1,7 @@
 const path = require('path');
 const merge = require('lodash/merge');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = [
     // profile for module systems
@@ -15,6 +16,7 @@ module.exports = [
         },
         plugins: [
             new ForkTsCheckerWebpackPlugin(), // just check it once!
+            new BundleAnalyzerPlugin(),
         ],
         externals: [/* place holder for merging */ undefined, /lodash/],
     },
