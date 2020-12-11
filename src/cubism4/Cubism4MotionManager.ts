@@ -2,15 +2,17 @@ import { MotionManager, MotionManagerOptions } from '@/cubism-common/MotionManag
 import { Cubism4ExpressionManager } from '@/cubism4/Cubism4ExpressionManager';
 import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
 import { CubismModel } from '@cubism/model/cubismmodel';
+import { ACubismMotion } from '@cubism/motion/acubismmotion';
 import { CubismMotion } from '@cubism/motion/cubismmotion';
 import { CubismMotionQueueManager } from '@cubism/motion/cubismmotionqueuemanager';
-import { CubismMotionDef } from '@cubism/settings/defs';
+import Motion = CubismSpec.Motion;
+import Motion3 = CubismSpec.Motion3;
 
 export interface Cubism4MotionGroups {
     Idle: any;
 }
 
-export class Cubism4MotionManager extends MotionManager<CubismModel, Cubism4ModelSettings, Cubism4ExpressionManager, CubismMotion, CubismMotionDef, keyof Cubism4MotionGroups> {
+export class Cubism4MotionManager extends MotionManager<CubismModel, Cubism4ModelSettings, Cubism4ExpressionManager, CubismMotion, Motion, keyof Cubism4MotionGroups> {
     readonly groups = { idle: 'Idle' } as const;
 
     readonly motionDataType = 'json';
@@ -40,7 +42,7 @@ export class Cubism4MotionManager extends MotionManager<CubismModel, Cubism4Mode
     }
 
     protected _startMotion(motion: CubismMotion, onFinish?: (motion: CubismMotion) => void): number {
-        motion.setFinishedMotionHandler(onFinish);
+        motion.setFinishedMotionHandler(onFinish as (motion: ACubismMotion) => void);
 
         return this.queueManager.startMotion(motion, false, performance.now());
     }
@@ -49,8 +51,8 @@ export class Cubism4MotionManager extends MotionManager<CubismModel, Cubism4Mode
         this.queueManager.stopAllMotions();
     }
 
-    createMotion(data: JSONObject, definition: CubismMotionDef): CubismMotion {
-        const motion = CubismMotion.create(data);
+    createMotion(data: JSONObject, definition: Motion): CubismMotion {
+        const motion = CubismMotion.create(data as unknown as Motion3);
 
         if (definition.FadeInTime! >= 0) {
             motion.setFadeInTime(definition.FadeInTime!);
@@ -65,19 +67,19 @@ export class Cubism4MotionManager extends MotionManager<CubismModel, Cubism4Mode
         return motion;
     }
 
-    getMotionFile(definition: CubismMotionDef): string {
+    getMotionFile(definition: Motion): string {
         return this.settings.resolvePath(definition.File);
     }
 
-    protected getDefinitions(): Partial<Record<keyof Cubism4MotionGroups, CubismMotionDef[]>> {
+    protected getDefinitions(): Partial<Record<keyof Cubism4MotionGroups, Motion[]>> {
         return this.settings.motions ?? {};
     }
 
-    protected getMotionName(definition: CubismMotionDef): string {
+    protected getMotionName(definition: Motion): string {
         return definition.File;
     }
 
-    protected getSoundFile(definition: CubismMotionDef): string | undefined {
+    protected getSoundFile(definition: Motion): string | undefined {
         return definition.Sound;
     }
 

@@ -1,15 +1,15 @@
 import { ModelSettings } from '@/cubism-common/ModelSettings';
 import { applyMixins } from '@/utils';
 import { CubismModelSettingsJson } from '@cubism/settings/cubismmodelsettingsjson';
-import { CubismModelSettingsDef } from '@cubism/settings/defs';
+import Model3 = CubismSpec.Model3;
 
 export interface Cubism4ModelSettings extends CubismModelSettingsJson {}
 
-export class Cubism4ModelSettings extends ModelSettings<CubismModelSettingsDef> {
+export class Cubism4ModelSettings extends ModelSettings<Model3> {
     moc!: string;
     textures!: string[];
 
-    static isValidJSON(json: any): json is CubismModelSettingsDef {
+    static isValidJSON(json: any): json is Model3 {
         return !!json?.FileReferences &&
             typeof json.FileReferences.Moc === 'string' &&
             Array.isArray(json.FileReferences.Textures) &&
@@ -18,7 +18,7 @@ export class Cubism4ModelSettings extends ModelSettings<CubismModelSettingsDef> 
             json.FileReferences.Textures.every((item: any) => typeof item === 'string');
     }
 
-    constructor(json: CubismModelSettingsDef) {
+    constructor(json: Model3) {
         super(json);
 
         if (!Cubism4ModelSettings.isValidJSON(json)) {

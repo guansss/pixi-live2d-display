@@ -4,9 +4,11 @@ import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
 import { CubismModel } from '@cubism/model/cubismmodel';
 import { CubismExpressionMotion } from '@cubism/motion/cubismexpressionmotion';
 import { CubismMotionQueueManager } from '@cubism/motion/cubismmotionqueuemanager';
-import { CubismExpressionDef } from '@cubism/settings/defs';
+import Exp3 = CubismSpec.Exp3;
 
-export class Cubism4ExpressionManager extends ExpressionManager<CubismModel, Cubism4ModelSettings, CubismExpressionMotion, CubismExpressionDef> {
+type Expression = NonNullable<CubismSpec.Model3['FileReferences']['Expressions']>[number]
+
+export class Cubism4ExpressionManager extends ExpressionManager<CubismModel, Cubism4ModelSettings, CubismExpressionMotion, Expression> {
     readonly queueManager = new CubismMotionQueueManager();
 
     constructor(settings: Cubism4ModelSettings, options?: MotionManagerOptions) {
@@ -23,15 +25,15 @@ export class Cubism4ExpressionManager extends ExpressionManager<CubismModel, Cub
         return this.definitions.findIndex(def => def.Name === name);
     }
 
-    getExpressionFile(definition: CubismExpressionDef): string {
+    getExpressionFile(definition: Expression): string {
         return this.settings.resolvePath(definition.File);
     }
 
-    createExpression(data: JSONObject, definition: CubismExpressionDef | undefined) {
-        return CubismExpressionMotion.create(data);
+    createExpression(data: JSONObject, definition: Expression | undefined) {
+        return CubismExpressionMotion.create(data as unknown as Exp3);
     }
 
-    protected getDefinitions(): CubismExpressionDef[] {
+    protected getDefinitions(): Expression[] {
         return this.settings.expressions ?? [];
     }
 
