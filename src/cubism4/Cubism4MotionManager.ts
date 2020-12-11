@@ -6,7 +6,7 @@ import { ACubismMotion } from '@cubism/motion/acubismmotion';
 import { CubismMotion } from '@cubism/motion/cubismmotion';
 import { CubismMotionQueueManager } from '@cubism/motion/cubismmotionqueuemanager';
 import Motion = CubismSpec.Motion;
-import Motion3 = CubismSpec.Motion3;
+import MotionJSON = CubismSpec.MotionJSON;
 
 export interface Cubism4MotionGroups {
     Idle: any;
@@ -52,7 +52,7 @@ export class Cubism4MotionManager extends MotionManager<CubismModel, Cubism4Mode
     }
 
     createMotion(data: JSONObject, definition: Motion): CubismMotion {
-        const motion = CubismMotion.create(data as unknown as Motion3);
+        const motion = CubismMotion.create(data as unknown as MotionJSON);
 
         if (definition.FadeInTime! >= 0) {
             motion.setFadeInTime(definition.FadeInTime!);

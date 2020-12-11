@@ -4,9 +4,9 @@ import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
 import { CubismModel } from '@cubism/model/cubismmodel';
 import { CubismExpressionMotion } from '@cubism/motion/cubismexpressionmotion';
 import { CubismMotionQueueManager } from '@cubism/motion/cubismmotionqueuemanager';
-import Exp3 = CubismSpec.Exp3;
+import ExpressionJSON = CubismSpec.ExpressionJSON;
 
-type Expression = NonNullable<CubismSpec.Model3['FileReferences']['Expressions']>[number]
+type Expression = NonNullable<CubismSpec.ModelJSON['FileReferences']['Expressions']>[number]
 
 export class Cubism4ExpressionManager extends ExpressionManager<CubismModel, Cubism4ModelSettings, CubismExpressionMotion, Expression> {
     readonly queueManager = new CubismMotionQueueManager();
@@ -30,7 +30,7 @@ export class Cubism4ExpressionManager extends ExpressionManager<CubismModel, Cub
     }
 
     createExpression(data: JSONObject, definition: Expression | undefined) {
-        return CubismExpressionMotion.create(data as unknown as Exp3);
+        return CubismExpressionMotion.create(data as unknown as ExpressionJSON);
     }
 
     protected getDefinitions(): Expression[] {
