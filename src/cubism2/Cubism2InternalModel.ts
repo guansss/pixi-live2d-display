@@ -1,5 +1,5 @@
 import { MotionManagerOptions } from '@/cubism-common';
-import { HitAreaDef, InternalModel, LayoutDef } from '@/cubism-common/InternalModel';
+import { CommonHitArea, InternalModel, CommonLayout } from '@/cubism-common/InternalModel';
 import { Matrix } from '@pixi/math';
 import { Cubism2ModelSettings } from './Cubism2ModelSettings';
 import { Cubism2MotionManager } from './Cubism2MotionManager';
@@ -61,7 +61,7 @@ export class Cubism2InternalModel extends InternalModel<Live2DModelWebGL, Cubism
         return [this.coreModel.getCanvasWidth(), this.coreModel.getCanvasHeight()];
     }
 
-    protected getLayout(): LayoutDef {
+    protected getLayout(): CommonLayout {
         const layout = this.settings.layout || {};
 
         return {
@@ -97,7 +97,7 @@ export class Cubism2InternalModel extends InternalModel<Live2DModelWebGL, Cubism
         this.coreModel.setTexture(index, texture);
     }
 
-    protected getHitAreaDefs(): HitAreaDef[] {
+    protected getHitAreaDefs(): CommonHitArea[] {
         return this.settings.hitAreas?.map(hitArea => ({
             ...hitArea,
             index: this.coreModel.getDrawDataIndex(hitArea.id),

@@ -1,11 +1,5 @@
 import { clamp } from '@/utils';
-
-interface PartsDef {
-    group: {
-        id: string;
-        link?: string[];
-    }[];
-}
+import PoseJSON = Cubism2Spec.PoseJSON;
 
 class Live2DPartsParam {
     paramIndex = -1;
@@ -26,9 +20,9 @@ export class Live2DPose {
 
     partsGroups: Live2DPartsParam[][] = [];
 
-    constructor(readonly coreModel: Live2DModelWebGL, json: any) {
-        if (json['parts_visible']) {
-            this.partsGroups = (json['parts_visible'] as PartsDef[]).map(({ group }) =>
+    constructor(readonly coreModel: Live2DModelWebGL, json: PoseJSON) {
+        if (json.parts_visible) {
+            this.partsGroups = json.parts_visible.map(({ group }) =>
                 group.map(({ id, link }) => {
                     const parts = new Live2DPartsParam(id);
 
@@ -73,8 +67,7 @@ export class Live2DPose {
         );
 
         if (visibleIndex >= 0) {
-            const parts = partsGroup[visibleIndex];
-            const originalOpacity = model.getPartsOpacity(parts.partsIndex);
+            const originalOpacity = model.getPartsOpacity(partsGroup[visibleIndex]!.partsIndex);
 
             visibleOpacity = clamp(originalOpacity + dt / this.opacityAnimDuration, 0, 1);
         } else {

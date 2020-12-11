@@ -29,7 +29,7 @@ export function motionID(group: string, index: number): string {
     return group + '#' + index;
 }
 
-export abstract class MotionManager<Model = any, Settings extends ModelSettings = ModelSettings, ExpManager extends ExpressionManager<Model, Settings> = ExpressionManager<Model, Settings>, Motion = any, MotionDef = any, Groups extends string = string> extends EventEmitter {
+export abstract class MotionManager<Model = any, Settings extends ModelSettings = ModelSettings, ExpManager extends ExpressionManager<Model, Settings> = ExpressionManager<Model, Settings>, Motion = any, MotionSpec = any, Groups extends string = string> extends EventEmitter {
     /**
      * Tag for logging.
      */
@@ -49,7 +49,7 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
     /**
      * Motion definitions copied from {@link ModelSettings#motions};
      */
-    readonly definitions!: Partial<Record<Groups, MotionDef[]>>;
+    readonly definitions!: Partial<Record<Groups, MotionSpec[]>>;
 
     /**
      * Instances of `Live2DMotion`. The structure is the same as {@link MotionManager#definitions};
@@ -324,15 +324,15 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
 
     abstract isFinished(): boolean;
 
-    abstract createMotion(data: ArrayBuffer | JSONObject, definition: MotionDef): Motion;
+    abstract createMotion(data: ArrayBuffer | JSONObject, definition: MotionSpec): Motion;
 
-    abstract getMotionFile(definition: MotionDef): string;
+    abstract getMotionFile(definition: MotionSpec): string;
 
-    protected abstract getDefinitions(): Partial<Record<Groups, MotionDef[]>>;
+    protected abstract getDefinitions(): Partial<Record<Groups, MotionSpec[]>>;
 
-    protected abstract getMotionName(definition: MotionDef): string;
+    protected abstract getMotionName(definition: MotionSpec): string;
 
-    protected abstract getSoundFile(definition: MotionDef): string | undefined;
+    protected abstract getSoundFile(definition: MotionSpec): string | undefined;
 
     protected abstract _startMotion(motion: Motion, onFinish?: (motion: Motion) => void): number;
 

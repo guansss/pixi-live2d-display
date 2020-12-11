@@ -1,52 +1,31 @@
 import { EXPRESSION_FADING_DURATION } from '@/cubism-common/constants';
-
-const enum ParamCalcType {
-    Set = 'set',
-    Add = 'add',
-    Mult = 'mult',
-}
-
-interface Param {
-    id: string;
-    value: number;
-    type: ParamCalcType;
-}
+import ExpressionJSON = Cubism2Spec.ExpressionJSON;
 
 export class Live2DExpression extends AMotion {
-    readonly params: Param[] = [];
+    readonly params: NonNullable<ExpressionJSON['params']> = [];
 
-    constructor(json: JSONObject) {
+    constructor(json: ExpressionJSON) {
         super();
 
-        const fadeInTime = json.fade_in as number | undefined;
-        const fadeOutTime = json.fade_out as number | undefined;
-
-        this.setFadeIn(fadeInTime! > 0 ? fadeInTime! : EXPRESSION_FADING_DURATION);
-        this.setFadeOut(fadeOutTime! > 0 ? fadeOutTime! : EXPRESSION_FADING_DURATION);
+        this.setFadeIn(json.fade_in! > 0 ? json.fade_in! : EXPRESSION_FADING_DURATION);
+        this.setFadeOut(json.fade_out! > 0 ? json.fade_out! : EXPRESSION_FADING_DURATION);
 
         if (Array.isArray(json.params)) {
-            (json.params as JSONObject[]).forEach((paramDef: JSONObject) => {
-                let value = parseFloat(paramDef.val as string);
+            json.params.forEach(param => {
+                const calc = param.calc || 'add';
 
-                if (!paramDef.id || !value) {
-                    // skip if missing essential properties
-                    return;
-                }
-
-                const type = (paramDef.calc || ParamCalcType.Add) as ParamCalcType;
-
-                if (type === ParamCalcType.Add) {
-                    const defaultValue = parseFloat(paramDef.def as string) || 0;
-                    value -= defaultValue;
-                } else if (type === ParamCalcType.Mult) {
-                    const defaultValue = parseFloat(paramDef.def as string) || 1;
-                    value /= defaultValue;
+                if (calc === 'add') {
+                    const defaultValue = param.def || 0;
+                    param.val -= defaultValue;
+                } else if (calc === 'mult') {
+                    const defaultValue = param.def || 1;
+                    param.val /= defaultValue;
                 }
 
                 this.params.push({
-                    value,
-                    type,
-                    id: paramDef.id as string,
+                    calc,
+                    val: param.val,
+                    id: param.id,
                 });
             });
         }
@@ -70,7 +49,7 @@ export class Live2DExpression extends AMotion {
             // }
 
             // this works fine for any model
-            model.setParamFloat(param.id, param.value * weight);
+            model.setParamFloat(param.id, param.val * weight);
         });
     }
 }

@@ -1,8 +1,8 @@
 import { folderName } from '@/utils';
 import { url } from '@pixi/utils';
 
-export abstract class ModelSettings<ModelSettingsDef = any> {
-    json: ModelSettingsDef;
+export abstract class ModelSettings<ModelSettingsSpec = any> {
+    json: ModelSettingsSpec;
 
     /**
      * Model's name, typically for displaying or logging.
@@ -23,7 +23,7 @@ export abstract class ModelSettings<ModelSettingsDef = any> {
     /**
      * @param json - The raw JSON.
      */
-    protected constructor(json: ModelSettingsDef) {
+    protected constructor(json: ModelSettingsSpec) {
         this.json = json;
 
         let url = (json as any).url;

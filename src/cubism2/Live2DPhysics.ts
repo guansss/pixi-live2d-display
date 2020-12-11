@@ -1,46 +1,23 @@
-interface PhysicsHairDef {
-    label: string;
-    setup: {
-        length: number;
-        regist: number;
-        mass: number;
-    };
-    src: {
-        id: string;
-        ptype: string;
-        scale: number;
-        weight: number;
-    }[];
-    targets: {
-        id: string;
-        ptype: string;
-        scale: number;
-        weight: number;
-    }[];
-}
+import PhysicsJSON = Cubism2Spec.PhysicsJSON;
 
 const SRC_TYPE_MAP = {
     x: PhysicsHair.Src.SRC_TO_X,
     y: PhysicsHair.Src.SRC_TO_Y,
     angle: PhysicsHair.Src.SRC_TO_G_ANGLE,
-} as {
-    [key: string]: string;
 };
 
 const TARGET_TYPE_MAP = {
     x: PhysicsHair.Src.SRC_TO_X,
     y: PhysicsHair.Src.SRC_TO_Y,
     angle: PhysicsHair.Src.SRC_TO_G_ANGLE,
-} as {
-    [key: string]: string;
 };
 
 export class Live2DPhysics {
     physicsHairs: PhysicsHair[] = [];
 
-    constructor(readonly coreModel: Live2DModelWebGL, json: any) {
-        if (json['physics_hair']) {
-            this.physicsHairs = (json['physics_hair'] as PhysicsHairDef[]).map(definition => {
+    constructor(readonly coreModel: Live2DModelWebGL, json: PhysicsJSON) {
+        if (json.physics_hair) {
+            this.physicsHairs = json.physics_hair.map(definition => {
                 const physicsHair = new PhysicsHair();
 
                 physicsHair.setup(definition.setup.length, definition.setup.regist, definition.setup.mass);

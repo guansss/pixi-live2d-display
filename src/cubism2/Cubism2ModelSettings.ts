@@ -1,19 +1,17 @@
 import { ModelSettings } from '@/cubism-common/ModelSettings';
 import { copyArray, copyProperty } from '../utils';
-import {
-    Cubism2ExpressionDef,
-    Cubism2HitAreaDef,
-    Cubism2InitOpacitiesDef,
-    Cubism2InitParamsDef,
-    Cubism2LayoutDef,
-    Cubism2ModelSettingsDef,
-    Cubism2MotionDef,
-} from './defs';
+import ModelJSON = Cubism2Spec.ModelJSON;
+import Layout = Cubism2Spec.Layout;
+import HitArea = Cubism2Spec.HitArea;
+import InitParam = Cubism2Spec.InitParam;
+import InitOpacity = Cubism2Spec.InitOpacity;
+import Expression = Cubism2Spec.Expression;
+import Motion = Cubism2Spec.Motion;
 
 /**
  * Normalized Live2D model settings.
  */
-export class Cubism2ModelSettings extends ModelSettings<Cubism2ModelSettingsDef> {
+export class Cubism2ModelSettings extends ModelSettings<ModelJSON> {
     // files
     moc: string;
     textures!: string[];
@@ -21,20 +19,20 @@ export class Cubism2ModelSettings extends ModelSettings<Cubism2ModelSettingsDef>
     physics?: string;
 
     // metadata
-    layout?: Cubism2LayoutDef;
-    hitAreas?: Cubism2HitAreaDef[];
-    initParams?: Cubism2InitParamsDef[];
-    initOpacities?: Cubism2InitOpacitiesDef[];
+    layout?: Layout;
+    hitAreas?: HitArea[];
+    initParams?: InitParam[];
+    initOpacities?: InitOpacity[];
 
     // motions
-    expressions?: Cubism2ExpressionDef[];
-    motions: Record<string, Cubism2MotionDef[]> = {};
+    expressions?: Expression[];
+    motions: Record<string, Motion[]> = {};
 
     /**
      * Checks if a JSON object is valid model settings.
      * @param json
      */
-    static isValidJSON(json: any): json is Cubism2ModelSettingsDef {
+    static isValidJSON(json: any): json is ModelJSON {
         // should always return a boolean
         return !!json
             && typeof json.model === 'string'
@@ -44,7 +42,7 @@ export class Cubism2ModelSettings extends ModelSettings<Cubism2ModelSettingsDef>
             && json.textures.every((item: any) => typeof item === 'string');
     }
 
-    constructor(json: Cubism2ModelSettingsDef) {
+    constructor(json: ModelJSON) {
         super(json);
 
         if (!Cubism2ModelSettings.isValidJSON(json)) {
@@ -63,7 +61,7 @@ export class Cubism2ModelSettings extends ModelSettings<Cubism2ModelSettingsDef>
      * Validates and copies **optional** properties from raw JSON.
      * @param json
      */
-    protected copy(json: Cubism2ModelSettingsDef): void {
+    protected copy(json: ModelJSON): void {
         copyProperty('string', this, json, 'name', 'name');
         copyProperty('string', this, json, 'pose', 'pose');
         copyProperty('string', this, json, 'physics', 'physics');

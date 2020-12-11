@@ -7,7 +7,7 @@ import { Cubism4InternalModel } from '@/cubism4/Cubism4InternalModel';
 import { Matrix } from '@pixi/math';
 import { EventEmitter } from '@pixi/utils';
 
-export interface LayoutDef {
+export interface CommonLayout {
     centerX?: number;
     centerY?: number;
     x?: number;
@@ -20,7 +20,7 @@ export interface LayoutDef {
     right?: number;
 }
 
-export interface HitAreaDef {
+export interface CommonHitArea {
     id: string;
     name: string;
     index: number;
@@ -68,7 +68,7 @@ export abstract class InternalModel<Model = any, DerivedModelSettings extends Mo
 
     focusController = new FocusController();
 
-    hitAreas: Record<string, HitAreaDef> = {};
+    hitAreas: Record<string, CommonHitArea> = {};
 
     protected constructor(model: Model, settings: DerivedModelSettings, motionManager: DerivedMotionManager) {
         super();
@@ -137,7 +137,7 @@ export abstract class InternalModel<Model = any, DerivedModelSettings extends Mo
      * @param y - Position in model canvas.
      * @return The hit hit areas.
      */
-    hitTest(x: number, y: number): HitAreaDef[] {
+    hitTest(x: number, y: number): CommonHitArea[] {
         return Object.values(this.hitAreas).filter(hitArea => this.isHit(hitArea.id, x, y));
     }
 
@@ -194,9 +194,9 @@ export abstract class InternalModel<Model = any, DerivedModelSettings extends Mo
 
     abstract draw(matrix: Matrix): void;
 
-    protected abstract getHitAreaDefs(): HitAreaDef[];
+    protected abstract getHitAreaDefs(): CommonHitArea[];
 
     protected abstract getSize(): [number, number];
 
-    protected abstract getLayout(): LayoutDef;
+    protected abstract getLayout(): CommonLayout;
 }

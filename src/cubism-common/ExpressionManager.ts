@@ -5,7 +5,7 @@ import { logger } from '@/utils';
 import { Loader, LoaderResource } from '@pixi/loaders';
 import { EventEmitter } from '@pixi/utils';
 
-export abstract class ExpressionManager<Model = any, Settings extends ModelSettings = ModelSettings, Expression = any, ExpressionDef = any> extends EventEmitter {
+export abstract class ExpressionManager<Model = any, Settings extends ModelSettings = ModelSettings, Expression = any, ExpressionSpec = any> extends EventEmitter {
     /**
      * Tag for logging.
      */
@@ -16,7 +16,7 @@ export abstract class ExpressionManager<Model = any, Settings extends ModelSetti
     /**
      * Expression definitions copied from {@link ModelSettings#expressions};
      */
-    readonly definitions!: ExpressionDef[];
+    readonly definitions!: ExpressionSpec[];
 
     /**
      * Instances of `Live2DExpression`. The structure is the same as {@link ExpressionManager#definitions};
@@ -196,11 +196,11 @@ export abstract class ExpressionManager<Model = any, Settings extends ModelSetti
 
     abstract getExpressionIndex(name: string): number;
 
-    abstract getExpressionFile(definition: ExpressionDef): string;
+    abstract getExpressionFile(definition: ExpressionSpec): string;
 
-    abstract createExpression(data: JSONObject, definition: ExpressionDef | undefined): Expression;
+    abstract createExpression(data: JSONObject, definition: ExpressionSpec | undefined): Expression;
 
-    protected abstract getDefinitions(): ExpressionDef[];
+    protected abstract getDefinitions(): ExpressionSpec[];
 
     protected abstract startMotion(motion: Expression): number;
 
