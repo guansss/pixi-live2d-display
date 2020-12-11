@@ -307,7 +307,7 @@ export class Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel>
             renderer.gl.pixelStorei(WebGLRenderingContext.UNPACK_FLIP_Y_WEBGL, true);
 
             for (let i = 0; i < this.textures.length; i++) {
-                const baseTexture = this.textures[i].baseTexture;
+                const baseTexture = this.textures[i]!.baseTexture;
 
                 // let TextureSystem generate corresponding WebGLTexture. The binding location is not important
                 renderer.texture.bind(baseTexture, 0);

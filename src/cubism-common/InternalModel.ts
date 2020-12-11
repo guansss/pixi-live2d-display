@@ -142,11 +142,11 @@ export abstract class InternalModel<Model = any, DerivedModelSettings extends Mo
     }
 
     isHit(hitAreaName: string, x: number, y: number): boolean {
-        if (this.hitAreas[hitAreaName] === undefined) {
+        if (!this.hitAreas[hitAreaName]) {
             return false;
         }
 
-        const vertices = this.getHitArea(this.hitAreas[hitAreaName].index);
+        const vertices = this.getHitArea(this.hitAreas[hitAreaName]!.index);
 
         let left = this.originalWidth;
         let right = 0;
@@ -154,8 +154,8 @@ export abstract class InternalModel<Model = any, DerivedModelSettings extends Mo
         let bottom = 0;
 
         for (let i = 0; i < vertices.length; i += 2) {
-            const vx = vertices[i];
-            const vy = vertices[i + 1];
+            const vx = vertices[i]!;
+            const vy = vertices[i + 1]!;
 
             left = Math.min(vx, left);
             right = Math.max(vx, right);

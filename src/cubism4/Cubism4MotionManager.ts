@@ -70,7 +70,7 @@ export class Cubism4MotionManager extends MotionManager<CubismModel, Cubism4Mode
     }
 
     protected getDefinitions(): Partial<Record<keyof Cubism4MotionGroups, CubismMotionDef[]>> {
-        return this.settings.motions;
+        return this.settings.motions ?? {};
     }
 
     protected getMotionName(definition: CubismMotionDef): string {
