@@ -1,13 +1,12 @@
 import { DerivedInternalModel, MotionManager, MotionPriority } from '@/cubism-common';
 import { Live2DModelOptions } from '@/cubism-common/defs';
 import type { Live2DFactoryOptions } from '@/cubism4';
+import { applyMixins, InteractionMixin } from '@/cubism4';
 import { Live2DFactory } from '@/factory/Live2DFactory';
 import { Renderer, Texture } from '@pixi/core';
 import { Container } from '@pixi/display';
-import { InteractionEvent, InteractionManager } from '@pixi/interaction';
 import { ObservablePoint, Point } from '@pixi/math';
 import { Ticker } from '@pixi/ticker';
-import { interaction } from './interaction';
 import { Live2DTransform } from './Live2DTransform';
 import { clamp, logger } from './utils';
 
@@ -20,6 +19,8 @@ const tempPoint = new Point();
 
 // a reference to Ticker class, defaults to the one in window.PIXI (when loaded by a <script> tag)
 let TickerClass: typeof Ticker | undefined = (window as any).PIXI?.Ticker;
+
+export interface Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel> extends InteractionMixin {}
 
 /**
  * A wrapper that makes Live2D model possible to be used as a `DisplayObject` in PixiJS.
@@ -54,11 +55,6 @@ export class Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel>
      * Works like the one in `PIXI.Sprite`.
      */
     anchor = new ObservablePoint(this.onAnchorChange, this, 0, 0);
-
-    /**
-     * The `InteractionManager` is locally stored so we can on/off events anytime.
-     */
-    interactionManager?: InteractionManager;
 
     /**
      * An ID of Gl context that syncs with `renderer.CONTEXT_UID`.
@@ -102,29 +98,10 @@ export class Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel>
         });
     }
 
-    private _autoInteract = false;
-
-    /**
-     * Enabling automatic interaction. Will not take effect if the `InteractionManager` plugin is not registered in `Renderer`.
-     */
-    get autoInteract(): boolean {
-        return this._autoInteract;
-    }
-
-    set autoInteract(autoInteract: boolean) {
-        if (autoInteract) {
-            this.on('pointertap', this.onTap);
-        } else {
-            this.off('pointertap', this.onTap);
-        }
-
-        this._autoInteract = autoInteract;
-    }
-
     protected _autoUpdate = false;
 
     /**
-     * Enabling automatic updating. Requires {@link Live2DModel.registerTicker} or global `window.PIXI.Ticker`.
+     * Enables automatic updating. Requires {@link Live2DModel.registerTicker} or global `window.PIXI.Ticker`.
      */
     get autoUpdate() {
         return this._autoUpdate;
@@ -167,14 +144,6 @@ export class Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel>
         // see https://github.com/Microsoft/TypeScript/issues/30581
         return (this.internalModel?.motionManager as MotionManager<any, any, any, any, any, Parameters<this['motion']>[0]>)
             .startRandomMotion(group, priority) ?? Promise.resolve(false);
-    }
-
-    /**
-     * Handles `tap` event emitted by `InteractionManager`.
-     * @param event
-     */
-    onTap(event: InteractionEvent): void {
-        this.tap(event.data.global.x, event.data.global.y);
     }
 
     /**
@@ -288,9 +257,7 @@ export class Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel>
     protected _render(renderer: Renderer): void {
         if (!this.internalModel) return;
 
-        if (this._autoInteract && renderer.plugins.interaction !== this.interactionManager) {
-            interaction.registerInteraction(this, renderer.plugins.interaction);
-        }
+        this.registerInteraction(renderer.plugins.interaction);
 
         // reset certain systems in renderer to make Live2D's drawing system compatible with Pixi
         renderer.batch.reset();
@@ -339,12 +306,15 @@ export class Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel>
 
     /** @override */
     destroy(options?: { children?: boolean, texture?: boolean, baseTexture?: boolean }): void {
-        // the setter will do the cleanup
+        this.emit('destroy');
+
+        // the setters will do the cleanup
         this.autoUpdate = false;
 
-        this.autoInteract = false;
-        interaction.unregisterInteraction(this);
+        this.unregisterInteraction();
 
         super.destroy(options);
     }
 }
+
+applyMixins(Live2DModel, [InteractionMixin]);
