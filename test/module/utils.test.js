@@ -1,18 +1,42 @@
-import { cloneWithCamelCase, config, copyArray, copyObjectArray, copyProperty, folderName, logger } from '../../src';
+import { config } from '@/config';
+import { copyArray, copyProperty, folderName, logger } from '@/utils';
+import { runMiddlewares } from '@/utils/middleware';
 
 describe('Utils', () => {
-    before(() => {
-        sinon.stub(console, 'log');
-        sinon.stub(console, 'warn');
-        sinon.stub(console, 'error');
-    });
+    describe('middlewares', function() {
+        it('runMiddlewares', async function() {
+            const results = [];
 
-    after(() => {
-        sinon.restore();
+            await runMiddlewares([
+                async (ctx, next) => {
+                    expect(ctx.foo).to.equal(1);
+
+                    results.push(1);
+                    await next();
+                    results.push(4);
+                },
+                (ctx, next) => {
+                    results.push(2);
+                    return next();
+                },
+                () => results.push(3),
+            ], { foo: 1 });
+
+            expect(results).to.eql([1, 2, 3, 4]);
+
+            const err = new Error('wtf');
+            expect(runMiddlewares([async () => {throw err;}], {})).to.be.rejectedWith(err);
+            expect(runMiddlewares([() => {throw err;}], {})).to.be.rejectedWith(err);
+            expect(runMiddlewares([(ctx, next) => next(err)], {})).to.be.rejectedWith(err);
+        });
     });
 
     describe('logger', () => {
-        it('should obey log levels', function() {
+        it('should obey log level config', function() {
+            sinon.stub(console, 'log');
+            sinon.stub(console, 'warn');
+            sinon.stub(console, 'error');
+
             const originalLogLevel = config.logLevel;
 
             config.logLevel = config.LOG_LEVEL_ERROR;
@@ -33,26 +57,16 @@ describe('Utils', () => {
             expect(console.log).to.not.be.called;
 
             config.logLevel = originalLogLevel;
+
+            sinon.restore();
         });
     });
 
     describe('obj', function() {
-        it('cloneWithCamelCase', function() {
-            const clone = cloneWithCamelCase({
-                foo_bar: {
-                    foo_bar: [
-                        { foo_bar: 1 },
-                    ],
-                },
-            });
-
-            expect(clone).to.have.nested.property('fooBar.fooBar[0].fooBar', 1);
-        });
-
         it('copyProperty', function() {
             const clone = {};
 
-            copyProperty(clone, { num: 1 }, 'num', 'number');
+            copyProperty('number', { n: 1 }, clone, 'n', 'num');
 
             expect(clone).to.have.property('num', 1);
         });
@@ -60,17 +74,9 @@ describe('Utils', () => {
         it('copyArray', function() {
             const clone = {};
 
-            copyArray(clone, { arr: [1] }, 'arr', 'number');
+            copyArray('number', { a: [1] }, clone, 'a', 'arr');
 
             expect(clone).to.have.nested.property('arr[0]', 1);
-        });
-
-        it('copyObjectArray', function() {
-            const clone = {};
-
-            copyObjectArray(clone, { arr: [{ num: 1 }] }, 'arr', { num: 'number' });
-
-            expect(clone).to.have.nested.property('arr[0].num', 1);
         });
     });
 
