@@ -3,10 +3,10 @@ import { BatchRenderer, Renderer } from '@pixi/core';
 import { Graphics } from '@pixi/graphics';
 import { InteractionManager } from '@pixi/interaction';
 import { Ticker, TickerPlugin } from '@pixi/ticker';
-import { Live2DModel } from '../../src';
-import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from '../../src/live2d/Live2DInternalModel';
+import { Live2DModel } from '@/Live2DModel';
+import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from '@/cubism-common/constants';
 import { createApp } from '../utils';
-import { TEST_MODEL } from './../env';
+import { TEST_MODEL } from '../env';
 
 Application.registerPlugin(TickerPlugin);
 Renderer.registerPlugin('batch', BatchRenderer);
@@ -18,14 +18,15 @@ const modelBaseWidth = TEST_MODEL.width * (TEST_MODEL.json.layout.width || LOGIC
 const modelBaseHeight = TEST_MODEL.height * (TEST_MODEL.json.layout.height || LOGICAL_HEIGHT) / LOGICAL_HEIGHT;
 
 describe('Live2DModel', async () => {
-    let app;
+    /** @type {Live2DModel} */
     let model, model2;
+    let app;
 
     before(async () => {
-        model = await Live2DModel.fromModelSettingsFile(TEST_MODEL.file);
+        model = await Live2DModel.from(TEST_MODEL.file);
 
         // test multiple models
-        model2 = await Live2DModel.fromModelSettingsFile(TEST_MODEL.file);
+        model2 = await Live2DModel.from(TEST_MODEL.file);
         model2.scale.set(0.5, 0.5);
 
         app = createApp(Application);
@@ -39,8 +40,8 @@ describe('Live2DModel', async () => {
 
     after(function() {
         function hitHandler(hitAreas) {
-            hitAreas.includes('head') && this.internal.motionManager.expressionManager.setRandomExpression();
-            hitAreas.includes('body') && this.internal.motionManager.startRandomMotion('tapBody');
+            hitAreas.includes('head') && this.internalModel.motionManager.expressionManager.setRandomExpression();
+            hitAreas.includes('body') && this.internalModel.motionManager.startRandomMotion('tap_body');
         }
 
         // free to play!
@@ -56,8 +57,8 @@ describe('Live2DModel', async () => {
     });
 
     it('should have correct size', () => {
-        expect(model.internal.originalWidth).to.equal(TEST_MODEL.width);
-        expect(model.internal.originalHeight).to.equal(TEST_MODEL.height);
+        expect(model.internalModel.originalWidth).to.equal(TEST_MODEL.width);
+        expect(model.internalModel.originalHeight).to.equal(TEST_MODEL.height);
 
         expect(model.width).to.equal(modelBaseWidth);
         expect(model.height).to.equal(modelBaseHeight);
@@ -82,7 +83,7 @@ describe('Live2DModel', async () => {
     });
 
     it('should not break rendering of PIXI.Graphics', function() {
-        // https://github.com/guansss/pixi-live2d-display/issues/5
+        // test for https://github.com/guansss/pixi-live2d-display/issues/5
 
         const SIZE = 50;
 

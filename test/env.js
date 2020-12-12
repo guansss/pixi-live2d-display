@@ -16,6 +16,7 @@ export const TEST_MODEL = shizuku;
 
 // preload model settings JSON
 TEST_MODEL.json = remoteRequire(TEST_MODEL.file);
+TEST_MODEL.json.url = TEST_MODEL.file;
 
 // preload model data
 TEST_MODEL.modelData = readArrayBuffer(urlResolve(TEST_MODEL.file, TEST_MODEL.json.model));

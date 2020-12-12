@@ -17,9 +17,12 @@ const base = document.createElement('base');
 base.href = BASE_PATH;
 document.head.appendChild(base);
 
-// using require() will let this file be bundled by Webpack, which slows down the process,
+// using require() will let these files be bundled by Webpack, which slows down the process,
 // so here's an alternative to load the script
 eval(readText('../core/live2d.min.js'));
+eval(readText('../core/live2dcubismcore.js')
+    .replace('var Live2DCubismCore', 'window.Live2DCubismCore={}')
+    .replace('(Live2DCubismCore) {', '(Live2DCubismCore) {Live2DCubismCore.em=()=>_em;'));
 
 const { config } = require('@/config');
 

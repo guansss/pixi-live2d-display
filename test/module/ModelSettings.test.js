@@ -1,53 +1,45 @@
-import { ModelSettings } from '../../src';
+import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
 import { TEST_MODEL } from '../env';
 
-const baseModelSettingsJSON = {
+const basicCubism2SettingsJSON = {
     model: 'foo.moc',
     textures: ['foo.png'],
 };
 
 describe('ModelSettings', () => {
     it('should validate JSON format', function() {
-        expect(ModelSettings.isModelSettingsJSON(TEST_MODEL.json)).to.be.true;
-        expect(ModelSettings.isModelSettingsJSON(baseModelSettingsJSON)).to.be.true;
-        expect(ModelSettings.isModelSettingsJSON({})).to.be.false;
-        expect(ModelSettings.isModelSettingsJSON({ model: 'foo', textures: [1] })).to.be.false;
-        expect(ModelSettings.isModelSettingsJSON(undefined)).to.be.false;
+        expect(Cubism2ModelSettings.isValidJSON(TEST_MODEL.json)).to.be.true;
+        expect(Cubism2ModelSettings.isValidJSON(basicCubism2SettingsJSON)).to.be.true;
+        expect(Cubism2ModelSettings.isValidJSON({})).to.be.false;
+        expect(Cubism2ModelSettings.isValidJSON({ model: 'foo', textures: [1] })).to.be.false;
+        expect(Cubism2ModelSettings.isValidJSON(undefined)).to.be.false;
     });
 
-    it('should validate property types when copying', function() {
-        const settings = new ModelSettings({
-            ...baseModelSettingsJSON,
+    it('should copy and validate properties', function() {
+        const settings = new Cubism2ModelSettings({
+            ...basicCubism2SettingsJSON,
             pose: 1,
-            hitAreas: [
+            hit_areas: [
                 'string item',
-                { name: 'foo', id: 'ID' },
+                { name: 'foo' },
             ],
-        }, '');
+        });
 
+        expect(settings).to.have.property('moc').that.equals(basicCubism2SettingsJSON.model);
+        expect(settings).to.have.property('textures').that.eql(basicCubism2SettingsJSON.textures);
         expect(settings).to.not.have.property('pose');
         expect(settings).to.have.property('hitAreas')
             .that.is.an('array')
-            .with.deep.members([{ name: 'foo', id: 'ID' }]);
+            .with.deep.members([{ name: 'foo' }]);
     });
 
-    it('should copy properties as camelCase', function() {
-        const settings = new ModelSettings({
-            ...baseModelSettingsJSON,
-            hit_areas: [],
-            motions: {
-                tap_body: [],
-            },
-        }, '');
+    it('should handle URL', function() {
+        const settings = new Cubism2ModelSettings({
+            ...basicCubism2SettingsJSON,
+            url: 'foo/bar/baz.model.json',
+        });
 
-        expect(settings).to.have.deep.property('hitAreas', []);
-        expect(settings).to.have.deep.nested.property('motions.tapBody', []);
-    });
-
-    it('should resolve path', function() {
-        const settings = new ModelSettings(baseModelSettingsJSON, 'a/b/foo.model.json');
-
-        expect(settings.resolvePath('foo.json')).to.equal('a/b/foo.json');
-        expect(settings.resolvePath('../foo.json')).to.equal('a/foo.json');
+        expect(settings.url).to.equal('foo/bar/baz.model.json');
+        expect(settings.name).to.equal('bar');
     });
 });
