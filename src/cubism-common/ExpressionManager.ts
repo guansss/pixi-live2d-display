@@ -1,7 +1,6 @@
 import { ModelSettings } from '@/cubism-common/ModelSettings';
 import { MotionManagerOptions } from '@/cubism-common/MotionManager';
 import { logger } from '@/utils';
-import { Loader, LoaderResource } from '@pixi/loaders';
 import { EventEmitter } from '@pixi/utils';
 
 export abstract class ExpressionManager<Model = any, Settings extends ModelSettings = ModelSettings, Expression = any, ExpressionSpec = any> extends EventEmitter {
@@ -48,38 +47,7 @@ export abstract class ExpressionManager<Model = any, Settings extends ModelSetti
         this.defaultExpression = this.createExpression({}, undefined);
         this.currentExpression = this.defaultExpression;
 
-        this.loadExpressions().then();
         this.stopAllMotions();
-    }
-
-    /**
-     * Loads all expressions.
-     */
-    protected async loadExpressions(): Promise<void> {
-        return new Promise(resolve => {
-            const loader = new Loader();
-
-            for (const definition of this.definitions) {
-                loader.add(this.getExpressionFile(definition), { definition });
-            }
-
-            loader
-                .on('load', (loader: Loader, resource: LoaderResource) => {
-                    if (resource.type === LoaderResource.TYPE.JSON) {
-                        this.expressions.push(this.createExpression(resource.metadata.definition, resource.data));
-                    } else {
-                        logger.warn(this.tag, `Unexpected format of expression file "${resource.name}"`);
-                    }
-                })
-                .on('error', (error: Error, loader: Loader, resource: LoaderResource) => {
-                    logger.warn(this.tag, `Failed to load expression file "${resource.name}"`);
-                })
-                .load(() => {
-                    this.expressions.push(this.defaultExpression); // at least put a normal expression
-
-                    resolve();
-                });
-        });
     }
 
     /**
