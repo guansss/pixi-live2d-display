@@ -52,6 +52,7 @@ export class XHRLoader {
         }
 
         xhr.open('GET', url);
+        xhr.responseType = type;
         xhr.onload = () => {
             if ((xhr.status === 200 || xhr.status === 0) && xhr.response) {
                 onload(xhr.response);
