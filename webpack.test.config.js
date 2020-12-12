@@ -21,7 +21,7 @@ module.exports = {
                         options: {
                             transpileOnly: true,
                             compilerOptions: {
-                                target: 'esnext',
+                                target: 'es2019',
                             },
                         },
                     },
