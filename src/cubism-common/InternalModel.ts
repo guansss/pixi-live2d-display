@@ -137,8 +137,8 @@ export abstract class InternalModel<Model = any, DerivedModelSettings extends Mo
      * @param y - Position in model canvas.
      * @return The hit hit areas.
      */
-    hitTest(x: number, y: number): CommonHitArea[] {
-        return Object.values(this.hitAreas).filter(hitArea => this.isHit(hitArea.id, x, y));
+    hitTest(x: number, y: number): string[] {
+        return Object.keys(this.hitAreas).filter(hitAreaName => this.isHit(hitAreaName, x, y));
     }
 
     isHit(hitAreaName: string, x: number, y: number): boolean {
