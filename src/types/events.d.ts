@@ -1,4 +1,4 @@
-export interface Live2DModelEvents {
+declare interface Live2DModelEvents {
     /**
      * One or more hit areas are hit.
      * @event Live2DModel#hit
