@@ -52,6 +52,8 @@ export const urlToJSON: Middleware<Live2DFactoryContext> = async (context, next)
 
         data.url = context.source;
 
+        context.source = data;
+
         context.live2DModel.emit('settingsJSONLoaded', data);
     }
 
@@ -60,6 +62,10 @@ export const urlToJSON: Middleware<Live2DFactoryContext> = async (context, next)
 
 export const jsonToSettings: Middleware<Live2DFactoryContext> = async (context, next) => {
     if (context.source instanceof ModelSettings) {
+        context.settings = context.source;
+
+        return next();
+    } else if (typeof context.source === 'object') {
         for (const platform of Live2DFactory.platforms) {
             const settings = platform.createModelSettings(context.source);
 
@@ -78,7 +84,7 @@ export const jsonToSettings: Middleware<Live2DFactoryContext> = async (context, 
 export const createInternalModel: Middleware<Live2DFactoryContext> = async (context, next) => {
     const settings = context.settings;
 
-    if (settings) {
+    if (settings instanceof ModelSettings) {
         const platform = Live2DFactory.platforms.find(f => f.test(settings));
 
         if (!platform) {
