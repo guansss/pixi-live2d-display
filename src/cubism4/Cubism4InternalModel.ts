@@ -1,5 +1,5 @@
 import { MotionManagerOptions } from '@/cubism-common';
-import { InternalModel, CommonHitArea, CommonLayout } from '@/cubism-common/InternalModel';
+import { CommonHitArea, CommonLayout, InternalModel } from '@/cubism-common/InternalModel';
 import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
 import { Cubism4MotionManager } from '@/cubism4/Cubism4MotionManager';
 import {

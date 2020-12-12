@@ -1,6 +1,5 @@
 import { ModelSettings } from '@/cubism-common/ModelSettings';
 import { MotionManagerOptions } from '@/cubism-common/MotionManager';
-import { Live2DFactory } from '@/factory';
 import { logger } from '@/utils';
 import { Loader, LoaderResource } from '@pixi/loaders';
 import { EventEmitter } from '@pixi/utils';
@@ -102,11 +101,15 @@ export abstract class ExpressionManager<Model = any, Settings extends ModelSetti
             return this.expressions[index] as Expression;
         }
 
-        const expression = await Live2DFactory.loadExpression(this, index);
+        const expression = await this._loadExpression(index);
 
         this.expressions[index] = expression;
 
         return expression;
+    }
+
+    private _loadExpression(index: number): Promise<Expression | undefined> {
+        throw new Error('Not implemented.');
     }
 
     /**

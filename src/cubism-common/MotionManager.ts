@@ -13,7 +13,6 @@ import {
 import { ExpressionManager } from '@/cubism-common/ExpressionManager';
 import { ModelSettings } from '@/cubism-common/ModelSettings';
 import { SoundManager } from '@/cubism-common/SoundManager';
-import { Live2DFactory } from '@/factory';
 import { logger } from '@/utils';
 import { EventEmitter } from '@pixi/utils';
 import noop from 'lodash/noop';
@@ -146,11 +145,15 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
             return this.motionGroups[group]![index] as Motion;
         }
 
-        const motion = await Live2DFactory.loadMotion(this, group, index);
+        const motion = await this._loadMotion(group, index);
 
         this.motionGroups[group]![index] = motion ?? null;
 
         return motion;
+    }
+
+    private _loadMotion(group: Groups, index: number): Promise<Motion | undefined> {
+        throw new Error('Not implemented.');
     }
 
     /**
