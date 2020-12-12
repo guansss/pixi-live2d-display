@@ -37,7 +37,7 @@ export abstract class ModelSettings<ModelSettingsSpec = any> {
      * Resolves a relative path to be absolute using {@link ModelSettings.url}.
      * @param path
      */
-    resolvePath(path: string): string {
+    resolveURL(path: string): string {
         return url.resolve(this.url, path);
     }
 }

@@ -92,8 +92,8 @@ export const createInternalModel: Middleware<Live2DFactoryContext> = async (cont
         }
 
         const modelData = await Live2DLoader.load({
+            settings,
             url: settings.moc,
-            baseURL: settings.url,
             type: 'arraybuffer',
             target: context.live2DModel,
         });
@@ -119,9 +119,9 @@ export const setupOptionals: Middleware<Live2DFactoryContext> = (context, next) 
             if (settings.pose) {
                 // no need to await the returned promise as the resources are optional
                 Live2DLoader.load({
+                        settings,
                         url: settings.pose,
-                        baseURL: settings.url,
-                        type: 'arraybuffer',
+                        type: 'json',
                         target: internalModel,
                     })
                     .then((data: ArrayBuffer) => internalModel.pose = platform.createPose(internalModel.coreModel, data))
@@ -129,9 +129,9 @@ export const setupOptionals: Middleware<Live2DFactoryContext> = (context, next) 
             }
             if (settings.physics) {
                 Live2DLoader.load({
+                        settings,
                         url: settings.physics,
-                        baseURL: settings.url,
-                        type: 'arraybuffer',
+                        type: 'json',
                         target: internalModel,
                     })
                     .then((data: ArrayBuffer) => internalModel.physics = platform.createPhysics(internalModel.coreModel, data))
@@ -145,9 +145,10 @@ export const setupOptionals: Middleware<Live2DFactoryContext> = (context, next) 
 
 export const setupLive2DModel: Middleware<Live2DFactoryContext> = async (context, next) => {
     if (context.internalModel) {
-        context.live2DModel.textures = context.settings!.textures.map(tex =>
-            Texture.from(tex, { resourceOptions: { crossorigin: context.options.crossOrigin } }),
-        );
+        context.live2DModel.textures = context.settings!.textures.map(tex => {
+            const url = context.settings!.resolveURL(tex);
+            return Texture.from(url, { resourceOptions: { crossorigin: context.options.crossOrigin } });
+        });
         context.live2DModel.internalModel = context.internalModel;
         context.live2DModel.emit('modelLoaded');
 
@@ -220,7 +221,7 @@ export class Live2DFactory {
 
             taskGroup[index] ??= Live2DLoader.load({
                     url: path,
-                    baseURL: motionManager.settings.url,
+                    settings: motionManager.settings,
                     type: motionManager.motionDataType,
                     target: motionManager,
                 })
@@ -266,7 +267,7 @@ export class Live2DFactory {
 
             tasks[index] ??= Live2DLoader.load({
                     url: path,
-                    baseURL: expressionManager.settings.url,
+                    settings: expressionManager.settings,
                     type: 'json',
                     target: expressionManager,
                 })

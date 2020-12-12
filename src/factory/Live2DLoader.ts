@@ -1,4 +1,4 @@
-import { ExpressionManager, InternalModel, MotionManager } from '@/cubism-common';
+import { ExpressionManager, InternalModel, ModelSettings, MotionManager } from '@/cubism-common';
 import { XHRLoader } from '@/factory/XHRLoader';
 import { Live2DModel } from '@/Live2DModel';
 import { Middleware, runMiddlewares } from '@/utils/middleware';
@@ -8,7 +8,7 @@ export type Live2DLoaderTarget = Live2DModel | InternalModel | MotionManager | E
 export interface Live2DLoaderContext {
     type: 'json' | 'arraybuffer';
     url: string;
-    baseURL?: string;
+    settings?: ModelSettings;
     target?: Live2DLoaderTarget;
     result?: any;
 }

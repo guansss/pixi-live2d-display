@@ -13,7 +13,7 @@ export class XHRLoader {
         return new Promise<void>((resolve, reject) => {
             const xhr = XHRLoader.createXHR(
                 context.target,
-                context.baseURL ? url.resolve(context.baseURL, context.url) : context.url,
+                context.settings ? context.settings.resolveURL(context.url) : context.url,
                 context.type,
                 data => {
                     context.result = data;

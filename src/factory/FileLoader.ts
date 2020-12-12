@@ -19,10 +19,18 @@ export class FileLoader {
         }
     } = {};
 
-    static loader: Middleware<Live2DLoaderContext> = (context, next) => {
-        // replace the relative URL with corresponding object URL
-        if (context.baseURL) {
-            context.url = FileLoader.filesMap[context.baseURL]?.[context.url] ?? context.url;
+    static loader: Middleware<Live2DLoaderContext> = async (context, next) => {
+        if (context.url.startsWith('blob:') && context.settings) {
+            const resolveURLFn = context.settings.resolveURL;
+
+            // what the hack!
+            context.settings.resolveURL = function(url) {
+                return FileLoader.filesMap[this.url]?.[url] ?? url;
+            };
+
+            await next();
+
+            context.settings.resolveURL = resolveURLFn;
         }
 
         return next();
