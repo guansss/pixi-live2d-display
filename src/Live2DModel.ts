@@ -34,7 +34,7 @@ export interface Live2DModel<IM extends DerivedInternalModel = DerivedInternalMo
  */
 export class Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel> extends Container {
     static from<IM extends DerivedInternalModel = DerivedInternalModel>(source: string | object | IM['settings'], options?: Live2DFactoryOptions) {
-        return Live2DFactory.createLive2DModel<IM>(source, options);
+        return Live2DFactory.createLive2DModel<IM>(this, source, options);
     }
 
     /**

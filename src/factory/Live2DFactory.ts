@@ -179,8 +179,12 @@ export class Live2DFactory {
         this.platforms.sort((a, b) => b.version - a.version);
     }
 
-    static async createLive2DModel<IM extends DerivedInternalModel>(source: string | object | IM['settings'], options?: Live2DFactoryOptions): Promise<Live2DModel<IM>> {
-        const live2DModel = new Live2DModel<IM>(options);
+    static async createLive2DModel<IM extends DerivedInternalModel>(
+        Live2DModelConstructor: { new(...args: ConstructorParameters<typeof Live2DModel>): Live2DModel<IM> },
+        source: string | object | IM['settings'],
+        options?: Live2DFactoryOptions,
+    ): Promise<Live2DModel<IM>> {
+        const live2DModel = new Live2DModelConstructor(options);
 
         await runMiddlewares(this.live2DModelMiddlewares, {
             live2DModel,
