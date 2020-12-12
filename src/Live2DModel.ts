@@ -94,7 +94,7 @@ export class Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel>
         this.on('modelLoaded', () => {
             this.tag = `Live2DModel(${this.internalModel!.settings.name})`;
 
-            this.internalModel!.motionManager.onMotionStart = (group: string, index: number, audio?: HTMLAudioElement) => this.emit('motion', group, index, audio);
+            this.transform.internalModel = this.internalModel;
         });
     }
 
