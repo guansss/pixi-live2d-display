@@ -17,11 +17,11 @@ const base = document.createElement('base');
 base.href = BASE_PATH;
 document.head.appendChild(base);
 
-// using require() will let this file be bundled by Webpack, then the process will be slowed down,
+// using require() will let this file be bundled by Webpack, which slows down the process,
 // so here's an alternative to load the script
 eval(readText('../core/live2d.min.js'));
 
-const { config } = require('../src/config');
+const { config } = require('@/config');
 
 config.logLevel = config.LOG_LEVEL_WARNING;
 

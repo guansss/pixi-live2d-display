@@ -20,6 +20,9 @@ module.exports = {
                         loader: 'ts-loader',
                         options: {
                             transpileOnly: true,
+                            compilerOptions: {
+                                target: 'esnext',
+                            },
                         },
                     },
                 ],
