@@ -1,11 +1,11 @@
 import { ModelSettings } from '@/cubism-common/ModelSettings';
 import { copyArray, copyProperty } from '../utils';
-import ModelJSON = Cubism2Spec.ModelJSON;
-import Layout = Cubism2Spec.Layout;
-import HitArea = Cubism2Spec.HitArea;
-import InitParam = Cubism2Spec.InitParam;
-import InitOpacity = Cubism2Spec.InitOpacity;
 import Expression = Cubism2Spec.Expression;
+import HitArea = Cubism2Spec.HitArea;
+import InitOpacity = Cubism2Spec.InitOpacity;
+import InitParam = Cubism2Spec.InitParam;
+import Layout = Cubism2Spec.Layout;
+import ModelJSON = Cubism2Spec.ModelJSON;
 import Motion = Cubism2Spec.Motion;
 
 /**
@@ -52,7 +52,7 @@ export class Cubism2ModelSettings extends ModelSettings<ModelJSON> {
         this.moc = json.model;
 
         // copy textures array
-        copyArray('string', this, json, 'textures', 'textures');
+        copyArray('string', json, this, 'textures', 'textures');
 
         this.copy(json);
     }
@@ -62,16 +62,16 @@ export class Cubism2ModelSettings extends ModelSettings<ModelJSON> {
      * @param json
      */
     protected copy(json: ModelJSON): void {
-        copyProperty('string', this, json, 'name', 'name');
-        copyProperty('string', this, json, 'pose', 'pose');
-        copyProperty('string', this, json, 'physics', 'physics');
+        copyProperty('string', json, this, 'name', 'name');
+        copyProperty('string', json, this, 'pose', 'pose');
+        copyProperty('string', json, this, 'physics', 'physics');
 
-        copyProperty('object', this, json, 'layout', 'layout');
-        copyProperty('object', this, json, 'motions', 'motions');
+        copyProperty('object', json, this, 'layout', 'layout');
+        copyProperty('object', json, this, 'motions', 'motions');
 
-        copyArray('object', this, json, 'hitAreas', 'hit_areas');
-        copyArray('object', this, json, 'expressions', 'expressions');
-        copyArray('object', this, json, 'initParams', 'init_params');
-        copyArray('object', this, json, 'initOpacities', 'init_opacities');
+        copyArray('object', json, this, 'hit_areas', 'hitAreas');
+        copyArray('object', json, this, 'expressions', 'expressions');
+        copyArray('object', json, this, 'init_params', 'initParams');
+        copyArray('object', json, this, 'init_opacities', 'initOpacities');
     }
 }
