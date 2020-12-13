@@ -77,6 +77,8 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
 
     motionPreload: MotionPreloadStrategy = MOTION_PRELOAD_IDLE;
 
+    playing = false;
+
     destroyed = false;
 
     protected constructor(settings: Settings, options?: MotionManagerOptions) {
@@ -246,11 +248,13 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
 
         logger.log(this.tag, 'Start motion:', this.getMotionName(definition));
 
-        this.onMotionStart(group, index, audio);
+        this.emit('motionStart', group, index, audio);
 
         if (priority > MOTION_PRIORITY_IDLE) {
             this.expressionManager && this.expressionManager.resetExpression();
         }
+
+        this.playing = true;
 
         this._startMotion(motion);
 
@@ -296,6 +300,11 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
      */
     update(model: Model, now: DOMHighResTimeStamp): boolean {
         if (this.isFinished()) {
+            if (this.playing) {
+                this.playing = false;
+                this.emit('motionFinish');
+            }
+
             if (this.currentPriority > MOTION_PRIORITY_IDLE) {
                 this.expressionManager?.restoreExpression();
             }
@@ -345,12 +354,4 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
      * @return True if parameters are updated by any motion.
      */
     protected abstract updateMotion(model: Model, now: DOMHighResTimeStamp): boolean;
-
-    /**
-     * Called when a motion starts. Will be implemented when constructing {@link Live2DModel}.
-     * @param group
-     * @param index
-     * @param audio
-     */
-    onMotionStart(group: string, index: number, audio?: HTMLAudioElement): void {}
 }
