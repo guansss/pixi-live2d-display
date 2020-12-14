@@ -20,13 +20,17 @@ import { CubismModelUserData } from '@cubism/model/cubismmodeluserdata';
 import { CubismPhysics } from '@cubism/physics/cubismphysics';
 import { CubismRenderer_WebGL } from '@cubism/rendering/cubismrenderer_webgl';
 import { Matrix } from '@pixi/math';
-import pickBy from 'lodash/pickBy';
+import mapKeys from 'lodash/mapKeys';
 
 const tempMatrix = new CubismMatrix44();
 
 export const frameBufferMap = new WeakMap<WebGLRenderingContext, WebGLFramebuffer>();
 
-export class Cubism4InternalModel extends InternalModel<CubismModel, Cubism4ModelSettings, Cubism4MotionManager> {
+export class Cubism4InternalModel extends InternalModel {
+    settings: Cubism4ModelSettings;
+    coreModel: CubismModel;
+    motionManager: Cubism4MotionManager;
+
     lipSync = true;
 
     breath = CubismBreath.create();
@@ -47,17 +51,21 @@ export class Cubism4InternalModel extends InternalModel<CubismModel, Cubism4Mode
     idParamBodyAngleX = ParamBodyAngleX;
     idParamBreath = ParamBreath;
 
-    constructor(model: CubismModel, modelSettings: Cubism4ModelSettings, options?: MotionManagerOptions) {
-        super(model, modelSettings, new Cubism4MotionManager(modelSettings, options));
+    constructor(coreModel: CubismModel, settings: Cubism4ModelSettings, options?: MotionManagerOptions) {
+        super();
 
-        this.setup();
+        this.coreModel = coreModel;
+        this.settings = settings;
+        this.motionManager = new Cubism4MotionManager(settings, options);
+
+        this.init();
     }
 
-    protected setup() {
-        const settings = this.settings;
+    protected init() {
+        super.init();
 
-        if (settings.getEyeBlinkParameters()?.length! > 0) {
-            this.eyeBlink = CubismEyeBlink.create(settings);
+        if (this.settings.getEyeBlinkParameters()?.length! > 0) {
+            this.eyeBlink = CubismEyeBlink.create(this.settings);
         }
 
         this.breath.setParameters([
@@ -77,17 +85,8 @@ export class Cubism4InternalModel extends InternalModel<CubismModel, Cubism4Mode
     }
 
     protected getLayout(): CommonLayout {
-        const layout = this.settings.layout || {};
-
-        // exclude undefined properties
-        return pickBy({
-            centerX: layout.CenterX,
-            centerY: layout.CenterY,
-            x: layout.X,
-            y: layout.Y,
-            width: layout.Width,
-            height: layout.Height,
-        });
+        // capitalize each key to satisfy the common layout format
+        return mapKeys({ ...this.settings.layout }, (_, key) => key.charAt(0).toUpperCase() + key.slice(1));
     }
 
     protected setupLayout() {

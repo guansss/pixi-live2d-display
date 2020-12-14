@@ -10,23 +10,33 @@ export interface Cubism2MotionGroups {
     idle: any;
 }
 
-export class Cubism2MotionManager extends MotionManager<Live2DModelWebGL, Cubism2ModelSettings, Cubism2ExpressionManager, Live2DMotion, Motion, keyof Cubism2MotionGroups> {
+export class Cubism2MotionManager extends MotionManager<Live2DMotion, Motion, keyof Cubism2MotionGroups> {
+    readonly definitions: Partial<Record<keyof Cubism2MotionGroups, Cubism2Spec.Motion[]>>;
+
     readonly groups = { idle: 'idle' } as const;
 
     readonly motionDataType = LoaderResource.XHR_RESPONSE_TYPE.BUFFER;
 
     readonly queueManager = new MotionQueueManager();
 
+    readonly settings!: Cubism2ModelSettings;
+
     expressionManager?: Cubism2ExpressionManager;
 
     constructor(settings: Cubism2ModelSettings, options?: MotionManagerOptions) {
         super(settings, options);
 
-        if (settings.expressions) {
-            this.expressionManager = new Cubism2ExpressionManager(settings, options);
-        }
+        this.definitions = this.settings.motions;
 
         this.init();
+    }
+
+    protected init(options?: MotionManagerOptions) {
+        super.init();
+
+        if (this.settings.expressions) {
+            this.expressionManager = new Cubism2ExpressionManager(this.settings, options);
+        }
     }
 
     isFinished(): boolean {
@@ -44,10 +54,6 @@ export class Cubism2MotionManager extends MotionManager<Live2DModelWebGL, Cubism
 
     getMotionFile(definition: Motion): string {
         return definition.file;
-    }
-
-    protected getDefinitions(): Partial<Record<keyof Cubism2MotionGroups, Motion[]>> {
-        return this.settings.motions;
     }
 
     protected getMotionName(definition: Motion): string {

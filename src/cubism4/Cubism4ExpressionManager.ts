@@ -8,11 +8,15 @@ import ExpressionJSON = CubismSpec.ExpressionJSON;
 
 type Expression = NonNullable<CubismSpec.ModelJSON['FileReferences']['Expressions']>[number]
 
-export class Cubism4ExpressionManager extends ExpressionManager<CubismModel, Cubism4ModelSettings, CubismExpressionMotion, Expression> {
+export class Cubism4ExpressionManager extends ExpressionManager<CubismExpressionMotion, Expression> {
     readonly queueManager = new CubismMotionQueueManager();
+
+    readonly definitions: Expression[];
 
     constructor(settings: Cubism4ModelSettings, options?: MotionManagerOptions) {
         super(settings, options);
+
+        this.definitions = settings.expressions ?? [];
 
         this.init();
     }
@@ -29,12 +33,8 @@ export class Cubism4ExpressionManager extends ExpressionManager<CubismModel, Cub
         return definition.File;
     }
 
-    createExpression(data: JSONObject, definition: Expression | undefined) {
+    createExpression(data: object, definition: Expression | undefined) {
         return CubismExpressionMotion.create(data as unknown as ExpressionJSON);
-    }
-
-    protected getDefinitions(): Expression[] {
-        return this.settings.expressions ?? [];
     }
 
     protected startMotion(motion: CubismExpressionMotion): number {

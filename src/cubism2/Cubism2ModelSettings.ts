@@ -11,7 +11,9 @@ import Motion = Cubism2Spec.Motion;
 /**
  * Normalized Live2D model settings.
  */
-export class Cubism2ModelSettings extends ModelSettings<ModelJSON> {
+export class Cubism2ModelSettings extends ModelSettings {
+    json!: ModelJSON;
+
     // files
     moc: string;
     textures!: string[];

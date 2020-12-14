@@ -4,11 +4,17 @@ import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
 import { Live2DExpression } from './Live2DExpression';
 import Expression = Cubism2Spec.Expression;
 
-export class Cubism2ExpressionManager extends ExpressionManager<Live2DModelWebGL, Cubism2ModelSettings, Live2DExpression, Expression> {
+export class Cubism2ExpressionManager extends ExpressionManager<Live2DExpression> {
     readonly queueManager = new MotionQueueManager();
+
+    readonly definitions: Expression[];
+
+    readonly settings!: Cubism2ModelSettings;
 
     constructor(settings: Cubism2ModelSettings, options?: MotionManagerOptions) {
         super(settings, options);
+
+        this.definitions = this.settings.expressions ?? [];
 
         this.init();
     }
@@ -25,12 +31,8 @@ export class Cubism2ExpressionManager extends ExpressionManager<Live2DModelWebGL
         return definition.file;
     }
 
-    createExpression(data: JSONObject, definition: Expression | undefined): Live2DExpression {
+    createExpression(data: object, definition: Expression | undefined): Live2DExpression {
         return new Live2DExpression(data);
-    }
-
-    protected getDefinitions(): Expression[] {
-        return this.settings.expressions || [];
     }
 
     protected startMotion(motion: Live2DExpression): number {

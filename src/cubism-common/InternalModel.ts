@@ -2,8 +2,6 @@ import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from '@/cubism-common/constants';
 import { FocusController } from '@/cubism-common/FocusController';
 import { ModelSettings } from '@/cubism-common/ModelSettings';
 import { MotionManager } from '@/cubism-common/MotionManager';
-import { Cubism2InternalModel } from '@/cubism2/Cubism2InternalModel';
-import { Cubism4InternalModel } from '@/cubism4/Cubism4InternalModel';
 import { Matrix } from '@pixi/math';
 import { EventEmitter } from '@pixi/utils';
 
@@ -26,20 +24,15 @@ export interface CommonHitArea {
     index: number;
 }
 
-// just for convenience, by declaring this we can get rid of the hell of generics
-export interface DerivedInternalModelSet {
-    cubism2: Cubism2InternalModel;
-    cubism4: Cubism4InternalModel;
-}
+export abstract class InternalModel extends EventEmitter {
+    abstract readonly coreModel: object;
 
-export type DerivedInternalModel = DerivedInternalModelSet[keyof DerivedInternalModelSet]
+    abstract readonly motionManager: MotionManager;
 
-export abstract class InternalModel<Model = any, DerivedModelSettings extends ModelSettings = ModelSettings, DerivedMotionManager extends MotionManager<Model> = MotionManager<Model>> extends EventEmitter {
-    coreModel: Model;
+    abstract readonly settings: ModelSettings;
 
-    readonly settings: DerivedModelSettings;
-
-    readonly motionManager: DerivedMotionManager;
+    pose?: any;
+    physics?: any;
 
     /**
      * Original width of model canvas.
@@ -72,13 +65,8 @@ export abstract class InternalModel<Model = any, DerivedModelSettings extends Mo
 
     textureFlipY = false;
 
-    protected constructor(model: Model, settings: DerivedModelSettings, motionManager: DerivedMotionManager) {
+    protected constructor() {
         super();
-        this.coreModel = model;
-        this.settings = settings;
-        this.motionManager = motionManager;
-
-        this.init();
     }
 
     protected init() {

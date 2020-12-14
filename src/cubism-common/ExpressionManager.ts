@@ -3,18 +3,18 @@ import { MotionManagerOptions } from '@/cubism-common/MotionManager';
 import { logger } from '@/utils';
 import { EventEmitter } from '@pixi/utils';
 
-export abstract class ExpressionManager<Model = any, Settings extends ModelSettings = ModelSettings, Expression = any, ExpressionSpec = any> extends EventEmitter {
+export abstract class ExpressionManager<Expression = any, ExpressionSpec=any> extends EventEmitter {
     /**
      * Tag for logging.
      */
     tag: string;
 
-    readonly settings: Settings;
-
     /**
      * Expression definitions copied from {@link ModelSettings#expressions};
      */
-    readonly definitions!: ExpressionSpec[];
+    abstract readonly definitions: ExpressionSpec[];
+
+    readonly settings: ModelSettings;
 
     /**
      * Instances of `Live2DExpression`. The structure is the same as {@link ExpressionManager#definitions};
@@ -35,15 +35,13 @@ export abstract class ExpressionManager<Model = any, Settings extends ModelSetti
 
     destroyed = false;
 
-    protected constructor(settings: Settings, options?: MotionManagerOptions) {
+    protected constructor(settings: ModelSettings, options?: MotionManagerOptions) {
         super();
         this.settings = settings;
         this.tag = `ExpressionManager(${settings.name})`;
     }
 
     protected init() {
-        (this.definitions as this['definitions']) = this.getDefinitions();
-
         this.defaultExpression = this.createExpression({}, undefined);
         this.currentExpression = this.defaultExpression;
 
@@ -146,7 +144,7 @@ export abstract class ExpressionManager<Model = any, Settings extends ModelSetti
      * Update parameters of a core model.
      * @return True if the parameters are actually updated.
      */
-    update(model: Model, now: DOMHighResTimeStamp) {
+    update(model: object, now: DOMHighResTimeStamp) {
         if (!this.isFinished()) {
             return this.updateMotion(model, now);
         }
@@ -169,13 +167,11 @@ export abstract class ExpressionManager<Model = any, Settings extends ModelSetti
 
     abstract getExpressionFile(definition: ExpressionSpec): string;
 
-    abstract createExpression(data: JSONObject, definition: ExpressionSpec | undefined): Expression;
-
-    protected abstract getDefinitions(): ExpressionSpec[];
+    abstract createExpression(data: object, definition: ExpressionSpec | undefined): Expression;
 
     protected abstract startMotion(motion: Expression): number;
 
     protected abstract stopAllMotions(): void;
 
-    protected abstract updateMotion(model: Model, now: DOMHighResTimeStamp): boolean;
+    protected abstract updateMotion(model: object, now: DOMHighResTimeStamp): boolean;
 }

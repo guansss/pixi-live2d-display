@@ -7,6 +7,8 @@ import { Live2DEyeBlink } from './Live2DEyeBlink';
 import { Live2DPhysics } from './Live2DPhysics';
 import { Live2DPose } from './Live2DPose';
 
+export interface InternalModelOptions extends MotionManagerOptions {}
+
 // prettier-ignore
 const tempMatrixArray = new Float32Array([
     1, 0, 0, 0,
@@ -18,7 +20,12 @@ const tempMatrixArray = new Float32Array([
 /**
  * A wrapper of core model, which is `Live2DModelWebGL` from Live2D runtime library.
  */
-export class Cubism2InternalModel extends InternalModel<Live2DModelWebGL, Cubism2ModelSettings, Cubism2MotionManager> {
+export class Cubism2InternalModel extends InternalModel {
+    settings: Cubism2ModelSettings;
+
+    coreModel: Live2DModelWebGL;
+    motionManager: Cubism2MotionManager;
+
     eyeBlink: Live2DEyeBlink;
     physics?: Live2DPhysics;
     pose?: Live2DPose;
@@ -36,19 +43,13 @@ export class Cubism2InternalModel extends InternalModel<Live2DModelWebGL, Cubism
 
     textureFlipY = true;
 
-    constructor(coreModel: Live2DModelWebGL, modelSettings: Cubism2ModelSettings, options?: MotionManagerOptions) {
-        super(coreModel, modelSettings, new Cubism2MotionManager(modelSettings, options));
+    constructor(coreModel: Live2DModelWebGL, settings: Cubism2ModelSettings, options?: InternalModelOptions) {
+        super();
 
+        this.coreModel = coreModel;
+        this.settings = settings;
+        this.motionManager = new Cubism2MotionManager(settings, options);
         this.eyeBlink = new Live2DEyeBlink(coreModel);
-
-        if (modelSettings.initParams) {
-            modelSettings.initParams.forEach(({ id, value }) => coreModel.setParamFloat(id, value));
-        }
-        if (modelSettings.initOpacities) {
-            modelSettings.initOpacities.forEach(({ id, value }) => coreModel.setPartsOpacity(id, value));
-        }
-
-        coreModel.saveParam();
 
         this.eyeballXParamIndex = coreModel.getParamIndex('PARAM_EYE_BALL_X');
         this.eyeballYParamIndex = coreModel.getParamIndex('PARAM_EYE_BALL_Y');
@@ -57,6 +58,21 @@ export class Cubism2InternalModel extends InternalModel<Live2DModelWebGL, Cubism
         this.angleZParamIndex = coreModel.getParamIndex('PARAM_ANGLE_Z');
         this.bodyAngleXParamIndex = coreModel.getParamIndex('PARAM_BODY_ANGLE_X');
         this.breathParamIndex = coreModel.getParamIndex('PARAM_BREATH');
+
+        this.init();
+    }
+
+    protected init() {
+        super.init();
+
+        if (this.settings.initParams) {
+            this.settings.initParams.forEach(({ id, value }) => this.coreModel.setParamFloat(id, value));
+        }
+        if (this.settings.initOpacities) {
+            this.settings.initOpacities.forEach(({ id, value }) => this.coreModel.setPartsOpacity(id, value));
+        }
+
+        this.coreModel.saveParam();
     }
 
     protected getSize(): [number, number] {

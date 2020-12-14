@@ -1,4 +1,4 @@
-import { DerivedInternalModel, MotionManager, MotionPriority } from '@/cubism-common';
+import { InternalModel, MotionManager, MotionPriority } from '@/cubism-common';
 import { Live2DModelOptions } from '@/cubism-common/defs';
 import type { Live2DFactoryOptions } from '@/cubism4';
 import { applyMixins, InteractionMixin } from '@/cubism4';
@@ -20,7 +20,7 @@ const tempPoint = new Point();
 // a reference to Ticker class, defaults to the one in window.PIXI (when loaded by a <script> tag)
 let TickerClass: typeof Ticker | undefined = (window as any).PIXI?.Ticker;
 
-export interface Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel> extends InteractionMixin {}
+export interface Live2DModel<IM extends InternalModel = InternalModel> extends InteractionMixin {}
 
 /**
  * A wrapper that makes Live2D model possible to be used as a `DisplayObject` in PixiJS.
@@ -32,8 +32,8 @@ export interface Live2DModel<IM extends DerivedInternalModel = DerivedInternalMo
  *
  * @emits {@link Live2DModelEvents}
  */
-export class Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel> extends Container {
-    static from<IM extends DerivedInternalModel = DerivedInternalModel>(source: string | object | IM['settings'], options?: Live2DFactoryOptions) {
+export class Live2DModel<IM extends InternalModel = InternalModel> extends Container {
+    static from<IM extends InternalModel = InternalModel>(source: string | object | IM['settings'], options?: Live2DFactoryOptions) {
         return Live2DFactory.createLive2DModel<IM>(this, source, options);
     }
 
@@ -152,7 +152,7 @@ export class Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel>
         // because `startRandomMotion` is a union function, the types of its first parameter are
         // intersected and therefore collapsed to `never`, that's why we need to cast the type for it.
         // see https://github.com/Microsoft/TypeScript/issues/30581
-        return (this.internalModel?.motionManager as MotionManager<any, any, any, any, any, Parameters<this['motion']>[0]>)
+        return (this.internalModel?.motionManager as MotionManager<any, any, Parameters<this['motion']>[0]>)
             .startRandomMotion(group, priority) ?? Promise.resolve(false);
     }
 

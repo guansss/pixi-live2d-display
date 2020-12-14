@@ -5,7 +5,9 @@ import ModelJSON = CubismSpec.ModelJSON;
 
 export interface Cubism4ModelSettings extends CubismModelSettingsJson {}
 
-export class Cubism4ModelSettings extends ModelSettings<ModelJSON> {
+export class Cubism4ModelSettings extends ModelSettings {
+    json!: ModelJSON;
+
     moc!: string;
     textures!: string[];
 

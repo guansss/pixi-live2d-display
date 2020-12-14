@@ -1,6 +1,4 @@
-// Another nightmare of generics.
-
-import { DerivedInternalModel, ExpressionManager, ModelSettings, MotionManager } from '@/cubism-common';
+import { ExpressionManager, InternalModel, ModelSettings, MotionManager } from '@/cubism-common';
 import { Live2DModelOptions } from '@/cubism-common/defs';
 import { Live2DLoader } from '@/factory/Live2DLoader';
 import { Live2DModel } from '@/Live2DModel';
@@ -22,7 +20,7 @@ export interface Live2DFactoryContext {
     source: any,
     options: Live2DFactoryOptions;
     live2DModel: Live2DModel;
-    internalModel?: DerivedInternalModel;
+    internalModel?: InternalModel;
     settings?: ModelSettings;
 }
 
@@ -35,7 +33,7 @@ export interface Live2DPlatform {
 
     createCoreModel(data: ArrayBuffer): any;
 
-    createInternalModel(coreModel: any, settings: ModelSettings, options?: Live2DFactoryOptions): DerivedInternalModel;
+    createInternalModel(coreModel: any, settings: ModelSettings, options?: Live2DFactoryOptions): InternalModel;
 
     createPose(coreModel: any, data: any): any;
 
@@ -185,7 +183,7 @@ export class Live2DFactory {
         this.platforms.sort((a, b) => b.version - a.version);
     }
 
-    static async createLive2DModel<IM extends DerivedInternalModel>(
+    static async createLive2DModel<IM extends InternalModel>(
         Live2DModelConstructor: { new(...args: ConstructorParameters<typeof Live2DModel>): Live2DModel<IM> },
         source: string | object | IM['settings'],
         options?: Live2DFactoryOptions,
@@ -201,7 +199,7 @@ export class Live2DFactory {
         return live2DModel;
     }
 
-    static loadMotion<Motion, MotionSpec, Groups extends string>(motionManager: MotionManager<any, ModelSettings, any, Motion, MotionSpec, Groups>, group: Groups, index: number): Promise<Motion | undefined> {
+    static loadMotion<Motion, MotionSpec, Groups extends string>(motionManager: MotionManager<Motion, MotionSpec, Groups>, group: Groups, index: number): Promise<Motion | undefined> {
         try {
             const definition = motionManager.definitions[group] ?. [index];
 
@@ -254,7 +252,7 @@ export class Live2DFactory {
         return Promise.resolve(undefined);
     }
 
-    static loadExpression<Expression>(expressionManager: ExpressionManager<any, ModelSettings, Expression>, index: number): Promise<Expression | undefined> {
+    static loadExpression<Expression, ExpressionSpec>(expressionManager: ExpressionManager<Expression, ExpressionSpec>, index: number): Promise<Expression | undefined> {
         try {
             const definition = expressionManager.definitions[index];
 

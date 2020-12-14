@@ -28,11 +28,16 @@ export function motionID(group: string, index: number): string {
     return group + '#' + index;
 }
 
-export abstract class MotionManager<Model = any, Settings extends ModelSettings = ModelSettings, ExpManager extends ExpressionManager<Model, Settings> = ExpressionManager<Model, Settings>, Motion = any, MotionSpec = any, Groups extends string = string> extends EventEmitter {
+export abstract class MotionManager<Motion = any, MotionSpec = any, Groups extends string = string> extends EventEmitter {
     /**
      * Tag for logging.
      */
     tag: string;
+
+    /**
+     * Motion definitions copied from {@link ModelSettings#motions};
+     */
+    abstract readonly definitions: Partial<Record<Groups, MotionSpec[]>>;
 
     abstract readonly groups: { idle: Groups };
 
@@ -41,14 +46,9 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
     /**
      * Can be undefined if missing {@link ModelSettings#expressions}.
      */
-    abstract expressionManager?: ExpManager;
+    abstract expressionManager?: ExpressionManager;
 
-    readonly settings: Settings;
-
-    /**
-     * Motion definitions copied from {@link ModelSettings#motions};
-     */
-    readonly definitions!: Partial<Record<Groups, MotionSpec[]>>;
+    readonly settings: ModelSettings;
 
     /**
      * Instances of `Live2DMotion`. The structure is the same as {@link MotionManager#definitions};
@@ -81,7 +81,7 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
 
     destroyed = false;
 
-    protected constructor(settings: Settings, options?: MotionManagerOptions) {
+    protected constructor(settings: ModelSettings, options?: MotionManagerOptions) {
         super();
         this.settings = settings;
         this.tag = `MotionManager(${settings.name})`;
@@ -90,8 +90,6 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
     }
 
     protected init() {
-        (this as Mutable<this>).definitions = this.getDefinitions();
-
         this.setupMotions();
         this.stopAllMotions();
     }
@@ -144,7 +142,7 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
         }
 
         if (this.motionGroups[group]![index]) {
-            return this.motionGroups[group]![index] as Motion;
+            return this.motionGroups[group]![index]!;
         }
 
         const motion = await this._loadMotion(group, index);
@@ -298,7 +296,7 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
      * Updates parameters of core model.
      * @return True if the parameters have been actually updated.
      */
-    update(model: Model, now: DOMHighResTimeStamp): boolean {
+    update(model: object, now: DOMHighResTimeStamp): boolean {
         if (this.isFinished()) {
             if (this.playing) {
                 this.playing = false;
@@ -336,11 +334,9 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
 
     abstract isFinished(): boolean;
 
-    abstract createMotion(data: ArrayBuffer | JSONObject, definition: MotionSpec): Motion;
+    abstract createMotion(data: ArrayBuffer | object, definition: MotionSpec): Motion;
 
     abstract getMotionFile(definition: MotionSpec): string;
-
-    protected abstract getDefinitions(): Partial<Record<Groups, MotionSpec[]>>;
 
     protected abstract getMotionName(definition: MotionSpec): string;
 
@@ -353,5 +349,5 @@ export abstract class MotionManager<Model = any, Settings extends ModelSettings 
     /**
      * @return True if parameters are updated by any motion.
      */
-    protected abstract updateMotion(model: Model, now: DOMHighResTimeStamp): boolean;
+    protected abstract updateMotion(model: object, now: DOMHighResTimeStamp): boolean;
 }
