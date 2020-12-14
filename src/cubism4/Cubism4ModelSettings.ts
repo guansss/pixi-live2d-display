@@ -25,7 +25,12 @@ export class Cubism4ModelSettings extends ModelSettings<ModelJSON> {
             throw new TypeError('Invalid JSON.');
         }
 
-        CubismModelSettingsJson.call(this, json);
+        // this doesn't seem to be allowed in ES6 and above, calling it will throw an error:
+        // "Class constructor CubismModelSettingsJson cannot be invoked without 'new'"
+
+        // CubismModelSettingsJson.call(this, json);
+
+        Object.assign(this, new CubismModelSettingsJson(json));
     }
 }
 
