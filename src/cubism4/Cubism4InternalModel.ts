@@ -126,6 +126,7 @@ export class Cubism4InternalModel extends InternalModel<CubismModel, Cubism4Mode
 
     public update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {
         dt /= 1000;
+        now /= 1000;
 
         const model = this.coreModel;
 
