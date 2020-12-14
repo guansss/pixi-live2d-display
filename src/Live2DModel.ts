@@ -46,6 +46,8 @@ export class Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel>
 
     textures: Texture[] = [];
 
+    textureValid = false;
+
     /**
      * Custom transform.
      */
@@ -91,11 +93,19 @@ export class Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel>
             this.interactive = true;
         }
 
-        this.on('modelLoaded', () => {
-            this.tag = `Live2DModel(${this.internalModel!.settings.name})`;
+        this.on('textureAdded', (textures: Texture[]) => {
+                textures.forEach(texture => texture.on('update', () => {
+                    if (!this.textureValid && this.textures.every(tex => tex.valid)) {
+                        this.textureValid = true;
+                        this.emit('textureLoaded');
+                    }
+                }));
+            })
+            .on('modelLoaded', () => {
+                this.tag = `Live2DModel(${this.internalModel!.settings.name})`;
 
-            this.transform.internalModel = this.internalModel;
-        });
+                this.transform.internalModel = this.internalModel;
+            });
     }
 
     protected _autoUpdate = false;
@@ -255,7 +265,7 @@ export class Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel>
 
     /** @override */
     protected _render(renderer: Renderer): void {
-        if (!this.internalModel) return;
+        if (!this.internalModel || !this.textureValid) return;
 
         this.registerInteraction(renderer.plugins.interaction);
 
@@ -295,13 +305,9 @@ export class Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel>
 
         this.internalModel.draw(this.transform.getDrawingMatrix(renderer.gl));
 
-        // reset the active texture that has been changed by Live2D's drawing system
-        if (renderer.texture.currentLocation >= 0) {
-            renderer.gl.activeTexture(WebGLRenderingContext.TEXTURE0 + renderer.texture.currentLocation);
-        }
-
-        // reset WebGL state
+        // reset WebGL state and texture bindings
         renderer.state.reset();
+        renderer.texture.reset();
     }
 
     /** @override */
