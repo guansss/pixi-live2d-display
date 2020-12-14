@@ -121,7 +121,7 @@ export class Cubism4InternalModel extends InternalModel<CubismModel, Cubism4Mode
     }
 
     getHitArea(drawIndex: number): ArrayLike<number> {
-        return this.coreModel.getDrawableVertices(drawIndex).slice(0, this.coreModel.getDrawableVertexCount(drawIndex));
+        return this.coreModel.getDrawableVertices(drawIndex).slice(0);
     }
 
     public update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {

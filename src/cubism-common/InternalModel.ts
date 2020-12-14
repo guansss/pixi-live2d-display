@@ -150,10 +150,10 @@ export abstract class InternalModel<Model = any, DerivedModelSettings extends Mo
 
         const vertices = this.getHitArea(this.hitAreas[hitAreaName]!.index);
 
-        let left = this.originalWidth;
-        let right = 0;
-        let top = this.originalHeight;
-        let bottom = 0;
+        let left = vertices[0]!;
+        let right = vertices[0]!;
+        let top = vertices[1]!;
+        let bottom = vertices[1]!;
 
         for (let i = 0; i < vertices.length; i += 2) {
             const vx = vertices[i]!;
