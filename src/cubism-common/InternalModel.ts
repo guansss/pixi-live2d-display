@@ -70,6 +70,8 @@ export abstract class InternalModel<Model = any, DerivedModelSettings extends Mo
 
     hitAreas: Record<string, CommonHitArea> = {};
 
+    textureFlipY = false;
+
     protected constructor(model: Model, settings: DerivedModelSettings, motionManager: DerivedMotionManager) {
         super();
         this.coreModel = model;

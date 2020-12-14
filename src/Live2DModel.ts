@@ -281,7 +281,7 @@ export class Live2DModel<IM extends DerivedInternalModel = DerivedInternalModel>
 
             this.internalModel.updateWebGLContext(renderer.gl, this.glContextID);
 
-            renderer.gl.pixelStorei(WebGLRenderingContext.UNPACK_FLIP_Y_WEBGL, true);
+            renderer.gl.pixelStorei(WebGLRenderingContext.UNPACK_FLIP_Y_WEBGL, this.internalModel.textureFlipY);
 
             for (let i = 0; i < this.textures.length; i++) {
                 const baseTexture = this.textures[i]!.baseTexture;

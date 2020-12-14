@@ -1,5 +1,5 @@
 import { MotionManagerOptions } from '@/cubism-common';
-import { CommonHitArea, InternalModel, CommonLayout } from '@/cubism-common/InternalModel';
+import { CommonHitArea, CommonLayout, InternalModel } from '@/cubism-common/InternalModel';
 import { Matrix } from '@pixi/math';
 import { Cubism2ModelSettings } from './Cubism2ModelSettings';
 import { Cubism2MotionManager } from './Cubism2MotionManager';
@@ -33,6 +33,8 @@ export class Cubism2InternalModel extends InternalModel<Live2DModelWebGL, Cubism
     angleZParamIndex: number;
     bodyAngleXParamIndex: number;
     breathParamIndex: number;
+
+    textureFlipY = true;
 
     constructor(coreModel: Live2DModelWebGL, modelSettings: Cubism2ModelSettings, options?: MotionManagerOptions) {
         super(coreModel, modelSettings, new Cubism2MotionManager(modelSettings, options));

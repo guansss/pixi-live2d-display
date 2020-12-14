@@ -18,10 +18,13 @@ import { CubismMatrix44 } from '@cubism/math/cubismmatrix44';
 import { CubismModel } from '@cubism/model/cubismmodel';
 import { CubismModelUserData } from '@cubism/model/cubismmodeluserdata';
 import { CubismPhysics } from '@cubism/physics/cubismphysics';
-import { CubismRenderer_WebGL, CubismShader_WebGL } from '@cubism/rendering/cubismrenderer_webgl';
+import { CubismRenderer_WebGL } from '@cubism/rendering/cubismrenderer_webgl';
 import { Matrix } from '@pixi/math';
+import pickBy from 'lodash/pickBy';
 
 const tempMatrix = new CubismMatrix44();
+
+export const frameBufferMap = new WeakMap<WebGLRenderingContext, WebGLFramebuffer>();
 
 export class Cubism4InternalModel extends InternalModel<CubismModel, Cubism4ModelSettings, Cubism4MotionManager> {
     lipSync = true;
@@ -70,25 +73,38 @@ export class Cubism4InternalModel extends InternalModel<CubismModel, Cubism4Mode
     }
 
     protected getSize(): [width: number, height: number] {
-        return [this.coreModel.getCanvasWidth(), this.coreModel.getCanvasHeight()];
+        return [this.coreModel.getModel().canvasinfo.CanvasWidth, this.coreModel.getModel().canvasinfo.CanvasHeight];
     }
 
     protected getLayout(): CommonLayout {
         const layout = this.settings.layout || {};
 
-        return {
+        // exclude undefined properties
+        return pickBy({
             centerX: layout.CenterX,
             centerY: layout.CenterY,
             x: layout.X,
             y: layout.Y,
             width: layout.Width,
             height: layout.Height,
-        };
+        });
+    }
+
+    protected setupLayout() {
+        super.setupLayout();
+
+        const ppu = this.coreModel.getModel().canvasinfo.PixelsPerUnit;
+        this.matrix.scale(ppu, ppu);
+        this.matrix.translate(this.width * 0.5, this.height * 0.5);
     }
 
     updateWebGLContext(gl: WebGLRenderingContext, glContextID: number): void {
-        this.renderer._clippingManager.setGL(gl);
-        CubismShader_WebGL.getInstance().setGl(gl);
+        if (!frameBufferMap.has(gl)) {
+            frameBufferMap.set(gl, gl.getParameter(gl.FRAMEBUFFER_BINDING));
+        }
+
+        this.renderer.startUp(gl);
+        this.renderer.setRenderState(frameBufferMap.get(gl)!, [0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight]);
     }
 
     /** @override */
@@ -109,6 +125,8 @@ export class Cubism4InternalModel extends InternalModel<CubismModel, Cubism4Mode
     }
 
     public update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {
+        dt /= 1000;
+
         const model = this.coreModel;
 
         model.loadParameters();
@@ -150,16 +168,13 @@ export class Cubism4InternalModel extends InternalModel<CubismModel, Cubism4Mode
 
         // set given 3x3 matrix into a 4x4 matrix, with Y inverted
         array[0] = matrix.a;
-        array[1] = -matrix.c;
+        array[1] = matrix.c;
         array[4] = matrix.b;
-        array[5] = -matrix.d;
+        array[5] = matrix.d;
         array[12] = matrix.tx;
         array[13] = -matrix.ty;
 
         this.renderer.setMvpMatrix(tempMatrix);
-
-        // TODO: figure out if null is really a valid argument
-        this.renderer.setRenderState(null as any, [0, 0, innerWidth, innerHeight]);
         this.renderer.drawModel();
     }
 }
