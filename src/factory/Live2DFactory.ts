@@ -288,7 +288,7 @@ export class Live2DFactory {
                         delete tasks[index];
                     }
 
-                    return expressionManager.createExpression(definition, data);
+                    return expressionManager.createExpression(data, definition);
                 })
                 .catch(e => logger.warn(expressionManager.tag, `Failed to load expression: ${path}\n`, e));
 
