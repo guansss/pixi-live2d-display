@@ -26,7 +26,7 @@ export class Cubism4ExpressionManager extends ExpressionManager<CubismModel, Cub
     }
 
     getExpressionFile(definition: Expression): string {
-        return this.settings.resolvePath(definition.File);
+        return definition.File;
     }
 
     createExpression(data: JSONObject, definition: Expression | undefined) {

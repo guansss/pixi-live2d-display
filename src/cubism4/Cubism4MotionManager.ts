@@ -68,7 +68,7 @@ export class Cubism4MotionManager extends MotionManager<CubismModel, Cubism4Mode
     }
 
     getMotionFile(definition: Motion): string {
-        return this.settings.resolvePath(definition.File);
+        return definition.File;
     }
 
     protected getDefinitions(): Partial<Record<keyof Cubism4MotionGroups, Motion[]>> {
