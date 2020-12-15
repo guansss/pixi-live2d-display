@@ -1,3 +1,6 @@
+import { Texture } from '@pixi/core';
+import { Sprite } from '@pixi/sprite';
+
 const fs = require('electron').remote.require('fs');
 const { resolve } = require('electron').remote.require('url');
 
@@ -42,4 +45,29 @@ export function createApp(appClass) {
     window.addEventListener('resize', () => app.renderer.resize(innerWidth, 1000));
 
     return app;
+}
+
+export function addBackground(model) {
+    const foreground = Sprite.from(Texture.WHITE);
+    foreground.width = model.internalModel.width;
+    foreground.height = model.internalModel.height;
+    foreground.alpha = 0.2;
+    model.addChild(foreground);
+}
+
+export function draggable(model) {
+    model.on('pointerup', () => model.dragging = false);
+    model.on('pointerdown', e => {
+        model.dragging = true;
+        model._dragX = e.data.global.x;
+        model._dragY = e.data.global.y;
+    });
+    model.on('pointermove', e => {
+        if (model.dragging) {
+            model.position.x += e.data.global.x - model._dragX;
+            model.position.y += e.data.global.y - model._dragY;
+            model._dragX = e.data.global.x;
+            model._dragY = e.data.global.y;
+        }
+    });
 }

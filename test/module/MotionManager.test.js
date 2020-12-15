@@ -1,4 +1,5 @@
 import { config } from '@/config';
+import { MotionManager } from '@/cubism-common';
 import {
     MOTION_PRELOAD_ALL,
     MOTION_PRELOAD_IDLE,
@@ -10,73 +11,73 @@ import {
 } from '@/cubism-common/constants';
 import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
 import { Cubism2MotionManager } from '@/cubism2/Cubism2MotionManager';
+import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
+import { Cubism4MotionManager } from '@/cubism4/Cubism4MotionManager';
 import '@/factory';
 import sinon from 'sinon';
-import { TEST_MODEL } from '../env';
+import { TEST_MODEL, TEST_MODEL4 } from '../env';
 
 describe('MotionManager', function() {
-    /** @type {Cubism2MotionManager} */
-    let manager;
     let clock;
 
     const originalLogLevel = config.logLevel;
 
-    function expectMotionStartedInGroup(method, group) {
-        expect(method).to.be.calledWithMatch(sinon.match.in(manager.motionGroups[group]));
-        method.resetHistory();
+    function createManager2(options = { motionPreload: MOTION_PRELOAD_NONE }) {
+        return new Cubism2MotionManager(new Cubism2ModelSettings({
+            ...TEST_MODEL.json,
+
+            // exclude expression definitions to prevent creating ExpressionManager
+            expressions: undefined,
+        }), options);
     }
 
-    function updateManager() {
-        manager.update(TEST_MODEL.model, performance.now());
+    function createManager4(options = { motionPreload: MOTION_PRELOAD_NONE }) {
+        return new Cubism4MotionManager(new Cubism4ModelSettings(TEST_MODEL4.json), options);
+    }
+
+    function updateManager(manager) {
+        manager.update(TEST_MODEL.coreModel, performance.now());
+    }
+
+    function expectMotionStartedInGroup(manager, group) {
+        expect(manager._startMotion).to.be.calledWithMatch(sinon.match.in(manager.motionGroups[group]));
+        manager._startMotion.resetHistory();
     }
 
     before(() => {
+        config.sound = false;
         clock = sinon.useFakeTimers({ shouldAdvanceTime: true });
-
-        manager = new Cubism2MotionManager(new Cubism2ModelSettings(TEST_MODEL.json));
-
-        sinon.spy(manager);
     });
 
     after(function() {
+        config.sound = true;
         clock.restore();
     });
 
     afterEach(() => {
         config.logLevel = originalLogLevel;
-
-        manager.stopAllMotions();
-
-        // reset call history for each method
-        Object.keys(manager).forEach(member => typeof manager[member] === 'function' && manager[member].resetHistory());
     });
 
     it('should preload motions according to config', function() {
         const callRecord = [];
-        const loadMotionStub = sinon.stub(Cubism2MotionManager.prototype, 'loadMotion').callsFake((group, index) => {
+        const loadMotionStub = sinon.stub(MotionManager.prototype, 'loadMotion').callsFake((group, index) => {
             callRecord.push({ group, index });
             return Promise.resolve(undefined);
         });
 
-        // exclude expression definitions to prevent creating ExpressionManager
-        const settingsJSON = {
-            ...TEST_MODEL.json,
-            expressions: undefined,
-        };
-
-        manager = new Cubism2MotionManager(new Cubism2ModelSettings(settingsJSON), { motionPreload: MOTION_PRELOAD_NONE });
+        createManager2({ motionPreload: MOTION_PRELOAD_NONE });
 
         expect(callRecord).to.be.empty;
 
-        manager = new Cubism2MotionManager(new Cubism2ModelSettings(settingsJSON), { motionPreload: MOTION_PRELOAD_IDLE });
+        createManager2({ motionPreload: MOTION_PRELOAD_IDLE });
 
-        expect(callRecord).to.eql(settingsJSON.motions.idle.map((_, index) => ({ group: 'idle', index })));
+        expect(callRecord).to.eql(TEST_MODEL.json.motions.idle.map((_, index) => ({ group: 'idle', index })));
 
         callRecord.length = 0;
-        manager = new Cubism2MotionManager(new Cubism2ModelSettings(settingsJSON), { motionPreload: MOTION_PRELOAD_ALL });
+        createManager2({ motionPreload: MOTION_PRELOAD_ALL });
 
         const expectedRecord = [];
-        for (const [group, motions] of Object.entries(settingsJSON.motions)) {
+        for (const [group, motions] of Object.entries(TEST_MODEL.json.motions)) {
             expectedRecord.push(...motions.map((_, index) => ({ group, index })));
         }
         expect(callRecord).to.eql(expectedRecord);
@@ -85,6 +86,7 @@ describe('MotionManager', function() {
     });
 
     it('should load motions', async function() {
+        const manager = createManager2();
         const motion = await manager.loadMotion('tap_body', 0);
 
         expect(motion).to.be.instanceOf(Live2DMotion);
@@ -98,6 +100,8 @@ describe('MotionManager', function() {
     });
 
     it('should start idle motion when no motion is playing', function(done) {
+        const manager = createManager2();
+
         const startMotionStub = sinon.stub(manager, '_startMotion')
             .callsFake(motion => {
                 expect(motion).to.be.oneOf(manager.motionGroups['idle']);
@@ -107,45 +111,44 @@ describe('MotionManager', function() {
             });
 
         // should start an idle motion
-        updateManager();
+        updateManager(manager);
     });
 
     it('should start idle motion when current motion has finished', async function() {
+        const manager = createManager2();
+
         // start an idle motion
         await manager.startMotion('idle', 0);
-        updateManager();
+        updateManager(manager);
 
         // skip the motion
         clock.tick(30 * 1000);
 
-        updateManager();
+        updateManager(manager);
         expect(manager.isFinished()).to.be.true;
 
         this.timeout(500);
 
-        const startMotionStub = sinon.stub(manager, '_startMotion');
         const startMotionCalled = new Promise(resolve => {
-            startMotionStub.callsFake(motion => {
-                expect(motion).to.be.oneOf(manager.motionGroups['idle']);
-                resolve();
-            });
-        }).finally(() => startMotionStub.restore());
+            sinon.stub(manager, '_startMotion')
+                .callsFake(motion => {
+                    expect(motion).to.be.oneOf(manager.motionGroups['idle']);
+                    resolve();
+                });
+        });
 
         // should start another idle motion
-        updateManager();
+        updateManager(manager);
         await startMotionCalled;
     });
 
-    it('should ', function() {
-
-    });
-
     it('should start specific motion as given priority', async function() {
+        const manager = createManager2();
         const startMotionStub = sinon.stub(manager, '_startMotion');
 
         // start an idle motion
         await manager.startMotion('idle', 0);
-        updateManager();
+        updateManager(manager);
 
         let result = await manager.startMotion('tap_body', 0, MOTION_PRIORITY_NONE);
 
@@ -158,23 +161,24 @@ describe('MotionManager', function() {
         result = await manager.startMotion('tap_body', 2, MOTION_PRIORITY_NORMAL);
 
         expect(result).to.be.true;
-        expectMotionStartedInGroup(startMotionStub, 'tap_body');
+        expectMotionStartedInGroup(manager, 'tap_body');
 
         result = await manager.startMotion('tap_body', 0, MOTION_PRIORITY_FORCE);
 
         expect(result).to.be.true;
-        expectMotionStartedInGroup(startMotionStub, 'tap_body');
+        expectMotionStartedInGroup(manager, 'tap_body');
 
         startMotionStub.restore();
     });
 
     it('should start random motion', async function() {
+        const manager = createManager2();
         const startMotionStub = sinon.stub(manager, '_startMotion');
 
         const result = await manager.startRandomMotion('tap_body');
 
         expect(result).to.be.true;
-        expectMotionStartedInGroup(startMotionStub, 'tap_body');
+        expectMotionStartedInGroup(manager, 'tap_body');
 
         startMotionStub.restore();
     });

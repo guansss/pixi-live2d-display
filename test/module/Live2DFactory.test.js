@@ -1,20 +1,20 @@
-import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
-import '@/factory';
-import '@/factory/cubism2';
-import { Live2DModel } from '@/Live2DModel';
-import { TEST_MODEL } from '../env';
+import { Cubism2ModelSettings, Cubism4ModelSettings, Live2DModel, MOTION_PRELOAD_NONE } from '@';
+import { TEST_MODEL, TEST_MODEL4 } from '../env';
 
 describe('Live2DFactory', () => {
-    const options = { autoUpdate: false };
+    const options = { autoUpdate: false, motionPreload: MOTION_PRELOAD_NONE };
 
     it('should create Live2DModel', async function() {
-        await expect(Live2DModel.from(TEST_MODEL.file, options))
-            .to.eventually.be.instanceOf(Live2DModel);
-
-        await expect(Live2DModel.from(TEST_MODEL.json, options))
-            .to.eventually.be.instanceOf(Live2DModel);
-
+        // cubism2
+        await expect(Live2DModel.from(TEST_MODEL.file, options)).to.eventually.be.instanceOf(Live2DModel);
+        await expect(Live2DModel.from(TEST_MODEL.json, options)).to.eventually.be.instanceOf(Live2DModel);
         await expect(Live2DModel.from(new Cubism2ModelSettings(TEST_MODEL.json), options))
+            .to.eventually.be.instanceOf(Live2DModel);
+
+        // cubism4
+        await expect(Live2DModel.from(TEST_MODEL4.file, options)).to.eventually.be.instanceOf(Live2DModel);
+        await expect(Live2DModel.from(TEST_MODEL4.json, options)).to.eventually.be.instanceOf(Live2DModel);
+        await expect(Live2DModel.from(new Cubism4ModelSettings(TEST_MODEL4.json), options))
             .to.eventually.be.instanceOf(Live2DModel);
     });
 

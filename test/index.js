@@ -29,7 +29,11 @@ const { config } = require('@/config');
 config.logLevel = config.LOG_LEVEL_WARNING;
 
 // wait for re-opened devtools to prepare network recording
-before(done => setTimeout(done, 500));
+before(done => setTimeout(() => {
+    require('@/cubism4/setup').startUpCubism4();
+    require('./env').setupENV();
+    done();
+}, 500));
 
 after(() => config.logLevel = config.LOG_LEVEL_VERBOSE);
 
