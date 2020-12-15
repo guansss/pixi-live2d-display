@@ -13,12 +13,14 @@ export interface Live2DFactoryOptions extends Live2DModelOptions {
      * @default undefined
      */
     crossOrigin?: string;
+
+    onFinish?(): void;
 }
 
 export interface Live2DFactoryContext {
     source: any,
     options: Live2DFactoryOptions;
-    live2DModel: Live2DModel;
+    live2dModel: Live2DModel;
     internalModel?: InternalModel;
     settings?: ModelSettings;
 }
@@ -44,14 +46,14 @@ export const urlToJSON: Middleware<Live2DFactoryContext> = async (context, next)
         const data = await Live2DLoader.load({
             url: context.source,
             type: 'json',
-            target: context.live2DModel,
+            target: context.live2dModel,
         });
 
         data.url = context.source;
 
         context.source = data;
 
-        context.live2DModel.emit('settingsJSONLoaded', data);
+        context.live2dModel.emit('settingsJSONLoaded', data);
     }
 
     return next();
@@ -68,7 +70,7 @@ export const jsonToSettings: Middleware<Live2DFactoryContext> = async (context, 
 
             if (settings) {
                 context.settings = settings;
-                context.live2DModel.emit('settingsLoaded', settings);
+                context.live2dModel.emit('settingsLoaded', settings);
 
                 return next();
             }
@@ -92,7 +94,7 @@ export const createInternalModel: Middleware<Live2DFactoryContext> = async (cont
             settings,
             url: settings.moc,
             type: 'arraybuffer',
-            target: context.live2DModel,
+            target: context.live2dModel,
         });
 
         const coreModel = platform.createCoreModel(modelData);
@@ -121,7 +123,10 @@ export const setupOptionals: Middleware<Live2DFactoryContext> = (context, next) 
                         type: 'json',
                         target: internalModel,
                     })
-                    .then((data: ArrayBuffer) => internalModel.pose = platform.createPose(internalModel.coreModel, data))
+                    .then((data: ArrayBuffer) => {
+                        internalModel.pose = platform.createPose(internalModel.coreModel, data);
+                        context.live2dModel.emit('poseLoaded', internalModel.pose);
+                    })
                     .catch((e: Error) => logger.warn(TAG, 'Failed to load pose.\n', e));
             }
             if (settings.physics) {
@@ -131,7 +136,10 @@ export const setupOptionals: Middleware<Live2DFactoryContext> = (context, next) 
                         type: 'json',
                         target: internalModel,
                     })
-                    .then((data: ArrayBuffer) => internalModel.physics = platform.createPhysics(internalModel.coreModel, data))
+                    .then((data: ArrayBuffer) => {
+                        internalModel.physics = platform.createPhysics(internalModel.coreModel, data);
+                        context.live2dModel.emit('physicsLoaded', internalModel.physics);
+                    })
                     .catch((e: Error) => logger.warn(TAG, 'Failed to load physics.\n', e));
             }
         }
@@ -142,7 +150,7 @@ export const setupOptionals: Middleware<Live2DFactoryContext> = (context, next) 
 
 export const setupLive2DModel: Middleware<Live2DFactoryContext> = async (context, next) => {
     if (context.settings) {
-        const live2DModel = context.live2DModel;
+        const live2DModel = context.live2dModel;
 
         live2DModel.textures = context.settings.textures.map(tex => {
             const url = context.settings!.resolveURL(tex);
@@ -202,20 +210,12 @@ export class Live2DFactory {
         this.platforms.sort((a, b) => b.version - a.version);
     }
 
-    static async createLive2DModel<IM extends InternalModel>(
-        Live2DModelConstructor: { new(...args: ConstructorParameters<typeof Live2DModel>): Live2DModel<IM> },
-        source: string | object | IM['settings'],
-        options?: Live2DFactoryOptions,
-    ): Promise<Live2DModel<IM>> {
-        const live2DModel = new Live2DModelConstructor(options);
-
+    static async setupLive2DModel<IM extends InternalModel>(live2dModel: Live2DModel<IM>, source: string | object | IM['settings'], options?: Live2DFactoryOptions): Promise<void> {
         await runMiddlewares(this.live2DModelMiddlewares, {
-            live2DModel,
+            live2dModel,
             source,
             options: options || {},
         });
-
-        return live2DModel;
     }
 
     static loadMotion<Motion, MotionSpec, Groups extends string>(motionManager: MotionManager<Motion, MotionSpec, Groups>, group: Groups, index: number): Promise<Motion | undefined> {

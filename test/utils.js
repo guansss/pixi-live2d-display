@@ -33,14 +33,15 @@ export function readText(url) {
     return fs.readFileSync(resolve(process.cwd() + '/test/', url), 'utf-8');
 }
 
-export function createApp(appClass) {
+export function createApp(appClass, visible = true) {
     const app = new appClass({
         width: innerWidth,
         height: 1000,
         autoStart: true,
         autoDensity: true,
     });
-    document.body.appendChild(app.view);
+
+    visible && document.body.appendChild(app.view);
 
     window.addEventListener('resize', () => app.renderer.resize(innerWidth, 1000));
 

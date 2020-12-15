@@ -45,8 +45,18 @@ export interface Live2DModel<IM extends InternalModel = InternalModel> extends I
  * @emits {@link Live2DModelEvents}
  */
 export class Live2DModel<IM extends InternalModel = InternalModel> extends Container {
-    static from<IM extends InternalModel = InternalModel>(source: string | object | IM['settings'], options?: Live2DFactoryOptions) {
-        return Live2DFactory.createLive2DModel<IM>(this, source, options);
+    static from<IM extends InternalModel = InternalModel>(source: string | object | IM['settings'], options?: Live2DFactoryOptions): Promise<Live2DModel<IM>> {
+        const model = new this<IM>(options);
+
+        return Live2DFactory.setupLive2DModel(model, source, options).then(() => model);
+    }
+
+    static fromSync<IM extends InternalModel = InternalModel>(source: string | object | IM['settings'], options?: Live2DFactoryOptions) {
+        const model = new this<IM>(options);
+
+        Live2DFactory.setupLive2DModel(model, source, options).then(options?.onFinish);
+
+        return model;
     }
 
     /**
