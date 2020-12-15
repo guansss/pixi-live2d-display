@@ -142,17 +142,37 @@ export const setupOptionals: Middleware<Live2DFactoryContext> = (context, next) 
 
 export const setupLive2DModel: Middleware<Live2DFactoryContext> = async (context, next) => {
     if (context.settings) {
-        context.live2DModel.textures = context.settings.textures.map(tex => {
+        const live2DModel = context.live2DModel;
+
+        live2DModel.textures = context.settings.textures.map(tex => {
             const url = context.settings!.resolveURL(tex);
             return Texture.from(url, { resourceOptions: { crossorigin: context.options.crossOrigin } });
         });
-        context.live2DModel.emit('textureAdded', context.live2DModel.textures);
+        live2DModel.emit('textureAdded', live2DModel.textures);
+
+        let allTexturesValid = true;
+
+        const onUpdate = () => {
+            if (!live2DModel.textureValid && live2DModel.textures.every(tex => tex.valid)) {
+                live2DModel.textureValid = true;
+                live2DModel.emit('textureLoaded');
+            }
+        };
+
+        live2DModel.textures.forEach(texture => {
+            if (!texture.valid) {
+                allTexturesValid = false;
+                texture.on('update', onUpdate);
+            }
+        });
+
+        allTexturesValid && onUpdate();
 
         await next();
 
         if (context.internalModel) {
-            context.live2DModel.internalModel = context.internalModel;
-            context.live2DModel.emit('modelLoaded');
+            live2DModel.internalModel = context.internalModel;
+            live2DModel.emit('modelLoaded', context.internalModel);
         } else {
             throw new TypeError('Missing internal model.');
         }

@@ -105,19 +105,15 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
             this.interactive = true;
         }
 
-        this.on('textureAdded', (textures: Texture[]) => {
-                textures.forEach(texture => texture.on('update', () => {
-                    if (!this.textureValid && this.textures.every(tex => tex.valid)) {
-                        this.textureValid = true;
-                        this.emit('textureLoaded');
-                    }
-                }));
-            })
-            .on('modelLoaded', () => {
-                this.tag = `Live2DModel(${this.internalModel!.settings.name})`;
+        this.init();
+    }
 
-                this.transform.internalModel = this.internalModel;
-            });
+    protected init() {
+        this.on('modelLoaded', () => {
+            this.tag = `Live2DModel(${this.internalModel!.settings.name})`;
+
+            this.transform.internalModel = this.internalModel;
+        });
     }
 
     protected _autoUpdate = false;
