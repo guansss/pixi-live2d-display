@@ -51,7 +51,7 @@ declare class Live2DModelWebGL {
 
     getDrawDataIndex(id: string): number;
 
-    getTransformedPoints(index: number): number[];
+    getTransformedPoints(index: number): Float32Array;
 
     loadParam(): void;
 

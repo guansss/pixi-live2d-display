@@ -51,6 +51,8 @@ export class Cubism4InternalModel extends InternalModel {
     idParamBodyAngleX = ParamBodyAngleX;
     idParamBreath = ParamBreath;
 
+    pixelsPerUnit = 1;
+
     constructor(coreModel: CubismModel, settings: Cubism4ModelSettings, options?: MotionManagerOptions) {
         super();
 
@@ -92,9 +94,8 @@ export class Cubism4InternalModel extends InternalModel {
     protected setupLayout() {
         super.setupLayout();
 
-        const ppu = this.coreModel.getModel().canvasinfo.PixelsPerUnit;
-        this.matrix.scale(ppu, ppu);
         this.matrix.translate(this.width * 0.5, this.height * 0.5);
+        this.pixelsPerUnit = this.coreModel.getModel().canvasinfo.PixelsPerUnit;
     }
 
     updateWebGLContext(gl: WebGLRenderingContext, glContextID: number): void {
@@ -167,10 +168,10 @@ export class Cubism4InternalModel extends InternalModel {
         const array = tempMatrix.getArray();
 
         // set given 3x3 matrix into a 4x4 matrix, with Y inverted
-        array[0] = matrix.a;
-        array[1] = matrix.c;
-        array[4] = matrix.b;
-        array[5] = matrix.d;
+        array[0] = matrix.a * this.pixelsPerUnit;
+        array[1] = matrix.c * this.pixelsPerUnit;
+        array[4] = matrix.b * this.pixelsPerUnit;
+        array[5] = matrix.d * this.pixelsPerUnit;
         array[12] = matrix.tx;
         array[13] = -matrix.ty;
 
