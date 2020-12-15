@@ -94,9 +94,7 @@ export class SoundManager {
     static destroy(): void {
         // dispose() removes given audio from the array, so the loop must be done backwards
         for (let i = this.audios.length - 1; i >= 0; i--) {
-            this.dispose(this.audios[i]);
+            this.dispose(this.audios[i]!);
         }
     }
-
-    private constructor() {}
 }

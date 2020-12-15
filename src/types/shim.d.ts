@@ -6,14 +6,9 @@ declare module '@pixi/core' {
     export { Renderer, Texture, BaseTexture } from 'pixi.js';
 }
 
-declare module '@pixi/loaders' {
-    export { Loader, LoaderResource, ILoaderOptions } from 'pixi.js';
-}
-
 declare module '@pixi/utils' {
     import { utils } from 'pixi.js';
     export import EventEmitter = utils.EventEmitter;
-    export import TextureCache = utils.TextureCache;
     export import url = utils.url;
 }
 

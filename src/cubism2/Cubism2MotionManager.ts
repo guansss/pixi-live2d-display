@@ -2,7 +2,6 @@ import { MOTION_FADING_DURATION } from '@/cubism-common/constants';
 import { MotionManager, MotionManagerOptions } from '@/cubism-common/MotionManager';
 import { Cubism2ExpressionManager } from '@/cubism2/Cubism2ExpressionManager';
 import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
-import { LoaderResource } from '@pixi/loaders';
 import './patch-motion';
 import Motion = Cubism2Spec.Motion;
 
@@ -15,7 +14,7 @@ export class Cubism2MotionManager extends MotionManager<Live2DMotion, Motion, ke
 
     readonly groups = { idle: 'idle' } as const;
 
-    readonly motionDataType = LoaderResource.XHR_RESPONSE_TYPE.BUFFER;
+    readonly motionDataType = 'arraybuffer';
 
     readonly queueManager = new MotionQueueManager();
 

@@ -1,7 +1,6 @@
 import { Live2DLoaderContext, Live2DLoaderTarget } from '@/factory/Live2DLoader';
 import { logger } from '@/utils';
 import { Middleware } from '@/utils/middleware';
-import { url } from '@pixi/utils';
 
 const TAG = 'XHRLoader';
 
