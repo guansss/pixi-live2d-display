@@ -60,7 +60,7 @@ export class Cubism2MotionManager extends MotionManager<Live2DMotion, Motion, ke
     }
 
     protected getSoundFile(definition: Motion): string | undefined {
-        return definition.sound && this.settings.resolveURL(definition.sound);
+        return definition.sound;
     }
 
     protected _startMotion(motion: Live2DMotion, onFinish?: (motion: Live2DMotion) => void): number {

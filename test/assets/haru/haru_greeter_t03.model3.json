@@ -23,10 +23,12 @@
 			],
 			"Tap": [
 				{
-					"File": "motion/haru_g_m14.motion3.json"
+					"File": "motion/haru_g_m14.motion3.json",
+                    "Sound": "../shizuku/sounds/flickHead_00.mp3"
 				},
 				{
-					"File": "motion/haru_g_m05.motion3.json"
+					"File": "motion/haru_g_m05.motion3.json",
+                    "Sound": "../shizuku/sounds/flickHead_01.mp3"
 				}
 			]
 		}

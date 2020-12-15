@@ -1,3 +1,4 @@
+import { ModelSettings } from '@/cubism-common';
 import { Live2DFactoryContext } from '@/factory';
 import { Live2DLoaderContext } from '@/factory/Live2DLoader';
 import { Middleware } from '@/utils/middleware';
@@ -8,29 +9,31 @@ declare global {
     }
 }
 
+function overrideResolveURL(settings: ModelSettings) {
+    if (!(settings.resolveURL as any).overridden) {
+        const originalResolveURL = settings.resolveURL;
+
+        settings.resolveURL = function(url) {
+            return FileLoader.filesMap[this.url]?.[url] ?? originalResolveURL.call(this, url);
+        };
+
+        (settings.resolveURL as any).overridden = true;
+    }
+}
+
 /**
  * Experimental loader to load resources from uploaded files.
  */
-
 export class FileLoader {
     static filesMap: {
-        [settingsFile: string]: {
-            [file: string]: string
+        [settingsFileURL: string]: {
+            [resourceFileURL: string]: string
         }
     } = {};
 
     static loader: Middleware<Live2DLoaderContext> = async (context, next) => {
         if (context.url.startsWith('blob:') && context.settings) {
-            const resolveURLFn = context.settings.resolveURL;
-
-            // what the hack!
-            context.settings.resolveURL = function(url) {
-                return FileLoader.filesMap[this.url]?.[url] ?? url;
-            };
-
-            await next();
-
-            context.settings.resolveURL = resolveURLFn;
+            overrideResolveURL(context.settings);
         }
 
         return next();
@@ -70,3 +73,5 @@ export class FileLoader {
         return settingsFileURL;
     }
 }
+
+

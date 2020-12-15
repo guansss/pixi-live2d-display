@@ -207,7 +207,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
             if (soundURL) {
                 // start to load the audio
                 audio = SoundManager.add(
-                    soundURL,
+                    this.settings.resolveURL(soundURL),
                     () => this.currentAudio = undefined,
                     () => this.currentAudio = undefined,
                 );
