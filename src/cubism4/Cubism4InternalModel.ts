@@ -163,7 +163,7 @@ export class Cubism4InternalModel extends InternalModel {
         model.update();
     }
 
-    public draw(matrix: Matrix): void {
+    public draw(gl: WebGLRenderingContext, matrix: Matrix): void {
         const array = tempMatrix.getArray();
 
         // set given 3x3 matrix into a 4x4 matrix, with Y inverted
@@ -175,6 +175,7 @@ export class Cubism4InternalModel extends InternalModel {
         array[13] = -matrix.ty;
 
         this.renderer.setMvpMatrix(tempMatrix);
+        this.renderer.setRenderState(frameBufferMap.get(gl)!, [0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight]);
         this.renderer.drawModel();
     }
 }

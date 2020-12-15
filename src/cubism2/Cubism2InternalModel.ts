@@ -157,7 +157,7 @@ export class Cubism2InternalModel extends InternalModel {
         model.update();
     }
 
-    draw(matrix: Matrix): void {
+    draw(gl:WebGLRenderingContext, matrix: Matrix): void {
         // set given 3x3 matrix into a 4x4 matrix, with Y inverted
         tempMatrixArray[0] = matrix.a;
         tempMatrixArray[1] = -matrix.c;

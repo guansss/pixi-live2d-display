@@ -182,7 +182,7 @@ export abstract class InternalModel extends EventEmitter {
      */
     abstract bindTexture(index: number, texture: WebGLTexture): void;
 
-    abstract draw(matrix: Matrix): void;
+    abstract draw(gl:WebGLRenderingContext, matrix: Matrix): void;
 
     protected abstract getHitAreaDefs(): CommonHitArea[];
 

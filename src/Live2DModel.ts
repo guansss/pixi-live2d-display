@@ -303,7 +303,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         this.internalModel.update(this.deltaTime, this.elapsedTime);
         this.deltaTime = 0;
 
-        this.internalModel.draw(this.transform.getDrawingMatrix(renderer.gl));
+        this.internalModel.draw(renderer.gl, this.transform.getDrawingMatrix(renderer.gl));
 
         // reset WebGL state and texture bindings
         renderer.state.reset();
