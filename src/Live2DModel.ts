@@ -1,14 +1,14 @@
 import { InternalModel, MotionManager, MotionPriority } from '@/cubism-common';
 import { Live2DModelOptions } from '@/cubism-common/defs';
-import type { Live2DFactoryOptions } from '@/cubism4';
-import { applyMixins, InteractionMixin } from '@/cubism4';
+import type { Live2DFactoryOptions } from '@/factory/Live2DFactory';
 import { Live2DFactory } from '@/factory/Live2DFactory';
 import { Renderer, Texture } from '@pixi/core';
 import { Container } from '@pixi/display';
 import { ObservablePoint, Point } from '@pixi/math';
 import { Ticker } from '@pixi/ticker';
+import { InteractionMixin } from './InteractionMixin';
 import { Live2DTransform } from './Live2DTransform';
-import { clamp, logger } from './utils';
+import { applyMixins, clamp, logger } from './utils';
 
 const DEFAULT_OPTIONS: Pick<Required<Live2DModelOptions>, 'autoUpdate' | 'autoInteract'> = {
     autoUpdate: true,
