@@ -1,14 +1,11 @@
-import { CubismFramework, LogLevel } from '@cubism/live2dcubismframework';
+import { CubismFramework, LogLevel, Option } from '@cubism/live2dcubismframework';
 
-const onload = window.onload;
-
-window.onload = (e: Event) => {
-    onload?.call(window, e);
-
-    CubismFramework.startUp({
+export function startUpCubism4(options?: Option) {
+    options = Object.assign({
         logFunction: console.log,
         loggingLevel: LogLevel.LogLevel_Verbose,
-    });
+    }, options);
 
+    CubismFramework.startUp(options);
     CubismFramework.initialize();
-};
+}
