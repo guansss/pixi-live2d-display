@@ -29,6 +29,10 @@ declare module '@pixi/display' {
     export { DisplayObject, Container } from 'pixi.js';
 }
 
+declare module '@pixi/graphics' {
+    export { Graphics } from 'pixi.js';
+}
+
 declare module '@pixi/interaction' {
     import { interaction } from 'pixi.js';
     export import InteractionEvent = interaction.InteractionEvent;

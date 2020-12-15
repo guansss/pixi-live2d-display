@@ -122,7 +122,7 @@ export class Cubism2InternalModel extends InternalModel {
         })) || [];
     }
 
-    getHitArea(drawIndex: number): ArrayLike<number> {
+    getHitAreaVertices(drawIndex: number): Float32Array {
         return this.coreModel.getTransformedPoints(drawIndex);
     }
 

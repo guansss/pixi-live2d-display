@@ -129,8 +129,15 @@ export class Cubism4InternalModel extends InternalModel {
         })) ?? [];
     }
 
-    getHitArea(drawIndex: number): ArrayLike<number> {
-        return this.coreModel.getDrawableVertices(drawIndex).slice(0);
+    getHitAreaVertices(drawIndex: number): Float32Array {
+        const arr = this.coreModel.getDrawableVertices(drawIndex).slice(0);
+
+        for (let i = 0; i < arr.length; i += 2) {
+            arr[i] *= this.pixelsPerUnit;
+            arr[i + 1] *= -this.pixelsPerUnit;
+        }
+
+        return arr;
     }
 
     public update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {

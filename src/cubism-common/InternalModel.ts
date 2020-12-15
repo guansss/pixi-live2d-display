@@ -24,6 +24,13 @@ export interface CommonHitArea {
     index: number;
 }
 
+export interface Bounds {
+    left: number
+    right: number
+    top: number
+    bottom: number
+}
+
 export abstract class InternalModel extends EventEmitter {
     abstract readonly coreModel: object;
 
@@ -136,7 +143,13 @@ export abstract class InternalModel extends EventEmitter {
             return false;
         }
 
-        const vertices = this.getHitArea(this.hitAreas[hitAreaName]!.index);
+        const bounds = this.getHitArea(hitAreaName);
+
+        return bounds.left <= x && x <= bounds.right && bounds.top <= y && y <= bounds.bottom;
+    }
+
+    getHitArea(hitAreaName: string): Bounds {
+        const vertices = this.getHitAreaVertices(this.hitAreas[hitAreaName]!.index);
 
         let left = vertices[0]!;
         let right = vertices[0]!;
@@ -153,7 +166,7 @@ export abstract class InternalModel extends EventEmitter {
             bottom = Math.max(vy, bottom);
         }
 
-        return left <= x && x <= right && top <= y && y <= bottom;
+        return { left, right, top, bottom };
     }
 
     update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {
@@ -165,7 +178,7 @@ export abstract class InternalModel extends EventEmitter {
         this.motionManager.destroy();
     }
 
-    abstract getHitArea(drawIndex: number): ArrayLike<number>;
+    abstract getHitAreaVertices(drawIndex: number): Float32Array;
 
     /**
      * Updates GL context when it's changed.
