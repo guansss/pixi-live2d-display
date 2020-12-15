@@ -1,7 +1,6 @@
 import { ExpressionManager, InternalModel, ModelSettings, MotionManager } from '@/cubism-common';
-import { Live2DModelOptions } from '@/cubism-common/defs';
 import { Live2DLoader } from '@/factory/Live2DLoader';
-import { Live2DModel } from '@/Live2DModel';
+import { Live2DModel, Live2DModelOptions } from '@/Live2DModel';
 import { logger } from '@/utils';
 import { Middleware, runMiddlewares } from '@/utils/middleware';
 import { Texture } from '@pixi/core';

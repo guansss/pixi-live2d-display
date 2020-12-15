@@ -1,2 +1,2 @@
-export * from './cubism2';
-export * from './cubism4';
+export * from './csm2';
+export * from './csm4';

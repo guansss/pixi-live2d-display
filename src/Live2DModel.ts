@@ -1,5 +1,5 @@
 import { InternalModel, MotionManager, MotionPriority } from '@/cubism-common';
-import { Live2DModelOptions } from '@/cubism-common/defs';
+import { MotionManagerOptions } from '@/cubism-common/MotionManager';
 import type { Live2DFactoryOptions } from '@/factory/Live2DFactory';
 import { Live2DFactory } from '@/factory/Live2DFactory';
 import { Renderer, Texture } from '@pixi/core';
@@ -9,6 +9,18 @@ import { Ticker } from '@pixi/ticker';
 import { InteractionMixin } from './InteractionMixin';
 import { Live2DTransform } from './Live2DTransform';
 import { applyMixins, clamp, logger } from './utils';
+
+export interface Live2DModelOptions extends MotionManagerOptions {
+    /**
+     * Automatically update internal model by `Ticker.shared`.
+     */
+    autoUpdate?: boolean;
+
+    /**
+     * Automatically listen for pointer events from `InteractionManager` to achieve interaction.
+     */
+    autoInteract?: boolean;
+}
 
 const DEFAULT_OPTIONS: Pick<Required<Live2DModelOptions>, 'autoUpdate' | 'autoInteract'> = {
     autoUpdate: true,
