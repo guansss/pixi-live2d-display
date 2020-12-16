@@ -3,15 +3,14 @@ import {
     MOTION_PRELOAD_ALL,
     MOTION_PRELOAD_IDLE,
     MOTION_PRELOAD_NONE,
-    MOTION_PRIORITY_FORCE,
     MOTION_PRIORITY_IDLE,
-    MOTION_PRIORITY_NONE,
     MOTION_PRIORITY_NORMAL,
     MotionPreloadStrategy,
     MotionPriority,
 } from '@/cubism-common/constants';
 import { ExpressionManager } from '@/cubism-common/ExpressionManager';
 import { ModelSettings } from '@/cubism-common/ModelSettings';
+import { MotionState } from '@/cubism-common/MotionState';
 import { SoundManager } from '@/cubism-common/SoundManager';
 import { logger } from '@/utils';
 import { EventEmitter } from '@pixi/utils';
@@ -19,13 +18,6 @@ import noop from 'lodash/noop';
 
 export interface MotionManagerOptions {
     motionPreload?: MotionPreloadStrategy;
-}
-
-/**
- * Creates an ID from given group and index.
- */
-export function motionID(group: string, index: number): string {
-    return group + '#' + index;
 }
 
 export abstract class MotionManager<Motion = any, MotionSpec = any, Groups extends string = string> extends EventEmitter {
@@ -55,20 +47,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
      */
     motionGroups: Partial<Record<Groups, (Motion | undefined | null)[]>> = {};
 
-    /**
-     * Priority of currently playing motion.
-     */
-    currentPriority: MotionPriority = MOTION_PRIORITY_NONE;
-
-    /**
-     * Priority of reserved motion, i.e. the motion that will play subsequently.
-     */
-    reservePriority: MotionPriority = MOTION_PRIORITY_NONE;
-
-    /**
-     * ID of motion that is still loading and will be played once loaded.
-     */
-    reserveMotionID?: string;
+    state = new MotionState();
 
     /**
      * Audio element of currently playing motion.
@@ -85,6 +64,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
         super();
         this.settings = settings;
         this.tag = `MotionManager(${settings.name})`;
+        this.state.tag = this.tag;
 
         this.motionPreload = options?.motionPreload ?? this.motionPreload;
     }
@@ -130,7 +110,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
      * @param group
      * @param index
      */
-    protected async loadMotion(group: Groups, index: number): Promise<Motion | undefined> {
+    async loadMotion(group: Groups, index: number): Promise<Motion | undefined> {
         if (!this.definitions[group] ?. [index]) {
             logger.warn(this.tag, `Undefined motion at "${group}"[${index}]`);
             return undefined;
@@ -164,28 +144,8 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
      * @return Promise that resolves with true if the motion is successfully started.
      */
     async startMotion(group: Groups, index: number, priority: MotionPriority = MOTION_PRIORITY_NORMAL): Promise<boolean> {
-        if (!(
-            priority === MOTION_PRIORITY_FORCE
-
-            // keep on starting idle motions even when there is a reserved motion
-            || (priority === MOTION_PRIORITY_IDLE && this.currentPriority === MOTION_PRIORITY_NONE)
-
-            || (priority > this.currentPriority && priority > this.reservePriority)
-        )) {
-            logger.log(this.tag, 'Cannot start motion because another motion is running as same or higher priority.');
+        if (!this.state.reserve(group, index, priority)) {
             return false;
-        }
-
-        this.reservePriority = priority;
-
-        let id;
-
-        // update reserved motion only if this motion is not idle priority
-        if (priority > MOTION_PRIORITY_IDLE) {
-            id = motionID(group, index);
-
-            // set this motion as reserved motion
-            this.reserveMotionID = id;
         }
 
         const definition = this.definitions[group]?.[index];
@@ -216,7 +176,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
             }
         }
 
-        let motion = this.motionGroups[group]![index] || (await this.loadMotion(group, index));
+        let motion = await this.loadMotion(group, index);
 
         if (audio) {
             if (config.motionSync) {
@@ -227,34 +187,21 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
             }
         }
 
-        if (priority > MOTION_PRIORITY_IDLE) {
-            if (!motion || this.reserveMotionID !== id) {
-                return false;
-            }
-
-            // clear reserved motion
-            this.reserveMotionID = undefined;
-        } else if (!motion) {
+        if (!this.state.start(motion, group, index, priority)) {
             return false;
         }
-
-        if (priority === this.reservePriority) {
-            this.reservePriority = MOTION_PRIORITY_NONE;
-        }
-
-        this.currentPriority = priority;
 
         logger.log(this.tag, 'Start motion:', this.getMotionName(definition));
 
         this.emit('motionStart', group, index, audio);
 
-        if (priority > MOTION_PRIORITY_IDLE) {
+        if (this.state.shouldOverrideExpression()) {
             this.expressionManager && this.expressionManager.resetExpression();
         }
 
         this.playing = true;
 
-        this._startMotion(motion);
+        this._startMotion(motion!);
 
         return true;
     }
@@ -280,11 +227,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
     stopAllMotions(): void {
         this._stopAllMotions();
 
-        this.currentPriority = MOTION_PRIORITY_NONE;
-        this.reservePriority = MOTION_PRIORITY_NONE;
-
-        // make sure the reserved motion (if existing) won't start when it's loaded
-        this.reserveMotionID = undefined;
+        this.state.clear();
 
         if (this.currentAudio) {
             SoundManager.dispose(this.currentAudio);
@@ -303,11 +246,11 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
                 this.emit('motionFinish');
             }
 
-            if (this.currentPriority > MOTION_PRIORITY_IDLE) {
+            if (this.state.shouldOverrideExpression()) {
                 this.expressionManager?.restoreExpression();
             }
 
-            this.currentPriority = MOTION_PRIORITY_NONE;
+            this.state.complete();
 
             // noinspection JSIgnoredPromiseFromCall
             this.startRandomMotion(this.groups.idle, MOTION_PRIORITY_IDLE);
