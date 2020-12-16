@@ -48,6 +48,7 @@
     "floss": "^3.0.0",
     "fork-ts-checker-webpack-plugin": "^4.1.0",
     "glob": "^7.1.6",
+    "handlebars": "^4.7.6",
     "lodash": "latest",
     "pixi.js": "^5.2.1",
     "rimraf": "^3.0.2",

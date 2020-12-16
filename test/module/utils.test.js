@@ -41,15 +41,15 @@ describe('Utils', () => {
 
             config.logLevel = config.LOG_LEVEL_ERROR;
             logger.error('foo', 'bar');
-            expect(console.error).to.be.calledWith('[foo]', 'bar');
+            expect(console.error).to.be.calledOnceWith('[foo]', 'bar');
 
             config.logLevel = config.LOG_LEVEL_WARNING;
             logger.warn('foo', 'bar');
-            expect(console.warn).to.be.calledWith('[foo]', 'bar');
+            expect(console.warn).to.be.calledOnceWith('[foo]', 'bar');
 
             config.logLevel = config.LOG_LEVEL_VERBOSE;
             logger.log('foo', 'bar');
-            expect(console.log).to.be.calledWith('[foo]', 'bar');
+            expect(console.log).to.be.calledOnceWith('[foo]', 'bar');
 
             console.log.resetHistory();
             config.logLevel = config.LOG_LEVEL_NONE;

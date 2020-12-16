@@ -1,7 +1,17 @@
-// prefer devtools at right!
-const webContents = require('electron').remote.getCurrentWindow().webContents;
-webContents.closeDevTools();
-webContents.openDevTools({ mode: 'right' });
+const { getData, setData } = require('./utils').remoteRequire('./local');
+
+if (!getData().initialized) {
+    window.onbeforeunload = () => {
+        setData({ initialized: true });
+    };
+
+    // prefer devtools at right!
+    const webContents = require('electron').remote.getCurrentWebContents();
+    webContents.closeDevTools();
+    webContents.openDevTools({ mode: 'right' });
+}
+
+console.log(getData());
 
 const chai = require('chai');
 
@@ -24,16 +34,19 @@ eval(readText('../core/live2dcubismcore.js')
     .replace('var Live2DCubismCore', 'window.Live2DCubismCore={}')
     .replace('(Live2DCubismCore) {', '(Live2DCubismCore) {Live2DCubismCore.em=()=>_em;'));
 
-const { config } = require('@/config');
-
-config.logLevel = config.LOG_LEVEL_WARNING;
-
-// wait for re-opened devtools to prepare network recording
-before(done => setTimeout(() => {
+function startUp() {
     require('@/cubism4/setup').startUpCubism4();
     require('./env').setupENV();
-    done();
-}, 500));
+}
+
+before(function(done) {
+    // wait for re-opened devtools to prepare network recording
+    const timeout = getData().initialized ? 0 : 300;
+
+    setTimeout(() => startUp() & done(), timeout);
+});
+
+const { config } = require('@/config');
 
 after(() => config.logLevel = config.LOG_LEVEL_VERBOSE);
 

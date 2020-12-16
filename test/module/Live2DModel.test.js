@@ -120,12 +120,12 @@ describe('Live2DModel', async () => {
 
                 for (const { hitArea, x, y } of platform.definition.hitTests) {
                     platform.model1.tap(x, y);
-                    expect(listener).to.be.calledWith(hitArea);
+                    expect(listener).to.be.calledOnceWith(hitArea);
                     listener.resetHistory();
 
                     // mimic an InteractionEvent
                     platform.model1.emit('pointertap', { data: { global: { x, y } } });
-                    expect(listener).to.be.calledWith(hitArea);
+                    expect(listener).to.be.calledOnceWith(hitArea);
                     listener.resetHistory();
                 }
             });
