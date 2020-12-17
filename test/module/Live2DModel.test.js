@@ -40,6 +40,8 @@ describe('Live2DModel', async () => {
 
     before(async () => {
         app = createApp(Application);
+        // app.stage.interactive = true;
+        app.stage.on('pointerup', e => console.log(e.data.global.x, e.data.global.y));
 
         await platforms.each(async platform => {
             platform.model1 = await createModel(platform.definition, { app });

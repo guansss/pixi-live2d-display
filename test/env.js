@@ -23,7 +23,10 @@ export const haru = {
     file: './assets/haru/haru_greeter_t03.model3.json',
     width: 2400,
     height: 4500,
-    hitTests: [],
+    hitTests: [
+        { x: 1166, y: 834, hitArea: ['Head'] },
+        { x: 910, y: 981, hitArea: ['Body'] },
+    ],
     interaction: {
         exp: 'Head',
         tap: {
