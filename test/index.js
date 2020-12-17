@@ -1,17 +1,22 @@
 const { getData, setData } = require('./utils').remoteRequire('./local');
+const isHeadful = console.log.toString().includes('native code');
 
-if (!getData().initialized) {
-    window.onbeforeunload = () => {
-        setData({ initialized: true });
-    };
+if (isHeadful) {
+    if (!getData().initialized) {
+        window.onbeforeunload = () => {
+            setData({ initialized: true });
+        };
 
-    // prefer devtools at right!
-    const webContents = require('electron').remote.getCurrentWebContents();
-    webContents.closeDevTools();
-    webContents.openDevTools({ mode: 'right' });
+        // prefer devtools at right!
+        const webContents = require('electron').remote.getCurrentWebContents();
+        webContents.closeDevTools();
+        webContents.openDevTools({ mode: 'right' });
+    }
+
+    console.log(getData());
+} else {
+    // console.log = () => {};
 }
-
-console.log(getData());
 
 const chai = require('chai');
 
@@ -41,7 +46,7 @@ function startUp() {
 
 before(function(done) {
     // wait for re-opened devtools to prepare network recording
-    const timeout = getData().initialized ? 0 : 300;
+    const timeout = !isHeadful || getData().initialized ? 0 : 300;
 
     setTimeout(() => startUp() & done(), timeout);
 });
