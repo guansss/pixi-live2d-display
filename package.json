@@ -13,7 +13,7 @@
     "test": "webpack --config=webpack.test.config.js && node node_modules/floss/bin/floss.js --path=build.test",
     "test:debug": "webpack --config=webpack.test.config.js && node node_modules/floss/bin/floss.js --path=build.test -d",
     "build": "rimraf lib && webpack --mode=production",
-    "type": "rimraf types && dts-bundle-generator src/index.ts --no-check -o=types/index.d.ts && node scripts/patch-types.js",
+    "type": "rimraf types && dts-bundle-generator src/index.ts --no-check --project=tsconfig.build.json -o=types/index.d.ts && node scripts/patch-types.js",
     "doc": "rimraf \"docs/!(.git|.nojekyll)\" && typedoc src --out docs --mode file --disableOutputCheck --excludeNotExported && node scripts/patch-docs.js",
     "deploy": "cd docs && git add -A && git commit -m \"Update docs\" && git push",
     "prepublishOnly": "yarn build && yarn test && yarn type && yarn doc && yarn deploy"
@@ -43,7 +43,7 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "chalk": "^4.0.0",
-    "dts-bundle-generator": "^4.0.0",
+    "dts-bundle-generator": "^5.5.0",
     "electron": "^8.1.1",
     "floss": "^3.0.0",
     "fork-ts-checker-webpack-plugin": "^4.1.0",

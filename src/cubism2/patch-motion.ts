@@ -1,5 +1,5 @@
 // subclassing is impossible because it will be instantiated by `Live2DMotion.create()`
-interface Live2DMotion {
+declare interface Live2DMotion {
     onFinishHandler?(motion: this): void
 }
 

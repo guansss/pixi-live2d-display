@@ -82,7 +82,7 @@ export class Cubism4InternalModel extends InternalModel {
         this.renderer.setIsPremultipliedAlpha(true);
     }
 
-    protected getSize(): [width: number, height: number] {
+    protected getSize(): [number, number] {
         return [this.coreModel.getModel().canvasinfo.CanvasWidth, this.coreModel.getModel().canvasinfo.CanvasHeight];
     }
 

@@ -14,8 +14,9 @@ tsdContent = tsdContent.slice(0, secondLineIndex) +
     // import types from main package
     '\n///<reference types="pixi.js"/>\n' +
 
-    // dts-bundle-generator will somehow miss this import statement
+    // dts-bundle-generator currently doesn't support `import x = y` statements
     '\nimport { InteractionEvent, InteractionManager } from \'@pixi/interaction\';' +
+    '\nimport { EventEmitter, url } from \'@pixi/utils\';' +
 
     tsdContent.slice(secondLineIndex);
 
@@ -32,4 +33,25 @@ tsdContent = tsdContent.replace(
     },
 );
 
+// correct the declaration merging
+tsdContent = tsdContent.replace('export declare interface Live2DMotion', 'declare interface Live2DMotion');
+
 fs.writeFileSync(tsdFile, tsdContent);
+
+// put these code to the end of `getDeclarationFiles()`
+// in "node_modules/dts-bundle-generator/dist/compile-dts.js"
+// before generating types to prevent type errors
+function fixPathAlias() {
+    declarations.forEach((data, fileName) => {
+        if (data.startsWith('/// <reference')) {
+            data = data.replace(/\/\/\/ <[\s\S]+\/>/m,
+                `/// <reference path="../core/live2d.d.ts"/>
+/// <reference path="../core/live2dcubismcore.d.ts"/>
+/// <reference path="../cubism/src/CubismSpec.d.ts"/>
+/// <reference path="types/Cubism2Spec.d.ts"/>
+/// <reference path="types/helpers.d.ts"/>
+/// <reference path="types/shim.d.ts"/>`);
+            declarations.set(fileName, data);
+        }
+    });
+}
