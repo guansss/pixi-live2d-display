@@ -4,14 +4,11 @@ import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
 import { CubismModel } from '@cubism/model/cubismmodel';
 import { CubismExpressionMotion } from '@cubism/motion/cubismexpressionmotion';
 import { CubismMotionQueueManager } from '@cubism/motion/cubismmotionqueuemanager';
-import ExpressionJSON = CubismSpec.ExpressionJSON;
 
-type Expression = NonNullable<CubismSpec.ModelJSON['FileReferences']['Expressions']>[number]
-
-export class Cubism4ExpressionManager extends ExpressionManager<CubismExpressionMotion, Expression> {
+export class Cubism4ExpressionManager extends ExpressionManager<CubismExpressionMotion, CubismSpec.Expression> {
     readonly queueManager = new CubismMotionQueueManager();
 
-    readonly definitions: Expression[];
+    readonly definitions: CubismSpec.Expression[];
 
     constructor(settings: Cubism4ModelSettings, options?: MotionManagerOptions) {
         super(settings, options);
@@ -29,12 +26,12 @@ export class Cubism4ExpressionManager extends ExpressionManager<CubismExpression
         return this.definitions.findIndex(def => def.Name === name);
     }
 
-    getExpressionFile(definition: Expression): string {
+    getExpressionFile(definition: CubismSpec.Expression): string {
         return definition.File;
     }
 
-    createExpression(data: object, definition: Expression | undefined) {
-        return CubismExpressionMotion.create(data as unknown as ExpressionJSON);
+    createExpression(data: object, definition: CubismSpec.Expression | undefined) {
+        return CubismExpressionMotion.create(data as unknown as CubismSpec.ExpressionJSON);
     }
 
     protected startMotion(motion: CubismExpressionMotion): number {

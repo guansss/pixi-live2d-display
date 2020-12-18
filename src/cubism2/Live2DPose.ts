@@ -1,5 +1,4 @@
 import { clamp } from '@/utils';
-import PoseJSON = Cubism2Spec.PoseJSON;
 
 class Live2DPartsParam {
     paramIndex = -1;
@@ -20,7 +19,7 @@ export class Live2DPose {
 
     partsGroups: Live2DPartsParam[][] = [];
 
-    constructor(readonly coreModel: Live2DModelWebGL, json: PoseJSON) {
+    constructor(readonly coreModel: Live2DModelWebGL, json: Cubism2Spec.PoseJSON) {
         if (json.parts_visible) {
             this.partsGroups = json.parts_visible.map(({ group }) =>
                 group.map(({ id, link }) => {

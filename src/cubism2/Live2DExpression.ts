@@ -1,10 +1,9 @@
 import { EXPRESSION_FADING_DURATION } from '@/cubism-common/constants';
-import ExpressionJSON = Cubism2Spec.ExpressionJSON;
 
 export class Live2DExpression extends AMotion {
-    readonly params: NonNullable<ExpressionJSON['params']> = [];
+    readonly params: NonNullable<Cubism2Spec.ExpressionJSON['params']> = [];
 
-    constructor(json: ExpressionJSON) {
+    constructor(json: Cubism2Spec.ExpressionJSON) {
         super();
 
         this.setFadeIn(json.fade_in! > 0 ? json.fade_in! : EXPRESSION_FADING_DURATION);

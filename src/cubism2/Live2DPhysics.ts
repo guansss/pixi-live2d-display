@@ -1,5 +1,3 @@
-import PhysicsJSON = Cubism2Spec.PhysicsJSON;
-
 const SRC_TYPE_MAP = {
     x: PhysicsHair.Src.SRC_TO_X,
     y: PhysicsHair.Src.SRC_TO_Y,
@@ -15,7 +13,7 @@ const TARGET_TYPE_MAP = {
 export class Live2DPhysics {
     physicsHairs: PhysicsHair[] = [];
 
-    constructor(readonly coreModel: Live2DModelWebGL, json: PhysicsJSON) {
+    constructor(readonly coreModel: Live2DModelWebGL, json: Cubism2Spec.PhysicsJSON) {
         if (json.physics_hair) {
             this.physicsHairs = json.physics_hair.map(definition => {
                 const physicsHair = new PhysicsHair();

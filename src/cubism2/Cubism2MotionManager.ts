@@ -3,13 +3,12 @@ import { MotionManager, MotionManagerOptions } from '@/cubism-common/MotionManag
 import { Cubism2ExpressionManager } from '@/cubism2/Cubism2ExpressionManager';
 import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
 import './patch-motion';
-import Motion = Cubism2Spec.Motion;
 
 export interface Cubism2MotionGroups {
     idle: any;
 }
 
-export class Cubism2MotionManager extends MotionManager<Live2DMotion, Motion, keyof Cubism2MotionGroups> {
+export class Cubism2MotionManager extends MotionManager<Live2DMotion, Cubism2Spec.Motion, keyof Cubism2MotionGroups> {
     readonly definitions: Partial<Record<keyof Cubism2MotionGroups, Cubism2Spec.Motion[]>>;
 
     readonly groups = { idle: 'idle' } as const;
@@ -42,7 +41,7 @@ export class Cubism2MotionManager extends MotionManager<Live2DMotion, Motion, ke
         return this.queueManager.isFinished();
     }
 
-    createMotion(data: ArrayBuffer, definition: Motion): Live2DMotion {
+    createMotion(data: ArrayBuffer, definition: Cubism2Spec.Motion): Live2DMotion {
         const motion = Live2DMotion.loadMotion(data);
 
         motion.setFadeIn(definition.fade_in! > 0 ? definition.fade_in! : MOTION_FADING_DURATION);
@@ -51,15 +50,15 @@ export class Cubism2MotionManager extends MotionManager<Live2DMotion, Motion, ke
         return motion;
     }
 
-    getMotionFile(definition: Motion): string {
+    getMotionFile(definition: Cubism2Spec.Motion): string {
         return definition.file;
     }
 
-    protected getMotionName(definition: Motion): string {
+    protected getMotionName(definition: Cubism2Spec.Motion): string {
         return definition.file;
     }
 
-    protected getSoundFile(definition: Motion): string | undefined {
+    protected getSoundFile(definition: Cubism2Spec.Motion): string | undefined {
         return definition.sound;
     }
 

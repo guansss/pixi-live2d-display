@@ -2,12 +2,11 @@ import { MotionManagerOptions } from '@/cubism-common';
 import { ExpressionManager } from '@/cubism-common/ExpressionManager';
 import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
 import { Live2DExpression } from './Live2DExpression';
-import Expression = Cubism2Spec.Expression;
 
 export class Cubism2ExpressionManager extends ExpressionManager<Live2DExpression> {
     readonly queueManager = new MotionQueueManager();
 
-    readonly definitions: Expression[];
+    readonly definitions: Cubism2Spec.Expression[];
 
     readonly settings!: Cubism2ModelSettings;
 
@@ -27,11 +26,11 @@ export class Cubism2ExpressionManager extends ExpressionManager<Live2DExpression
         return this.definitions.findIndex(def => def.name === name);
     }
 
-    getExpressionFile(definition: Expression): string {
+    getExpressionFile(definition: Cubism2Spec.Expression): string {
         return definition.file;
     }
 
-    createExpression(data: object, definition: Expression | undefined): Live2DExpression {
+    createExpression(data: object, definition: Cubism2Spec.Expression | undefined): Live2DExpression {
         return new Live2DExpression(data);
     }
 

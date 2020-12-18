@@ -1,18 +1,11 @@
 import { ModelSettings } from '@/cubism-common/ModelSettings';
 import { copyArray, copyProperty } from '../utils';
-import Expression = Cubism2Spec.Expression;
-import HitArea = Cubism2Spec.HitArea;
-import InitOpacity = Cubism2Spec.InitOpacity;
-import InitParam = Cubism2Spec.InitParam;
-import Layout = Cubism2Spec.Layout;
-import ModelJSON = Cubism2Spec.ModelJSON;
-import Motion = Cubism2Spec.Motion;
 
 /**
  * Normalized Live2D model settings.
  */
 export class Cubism2ModelSettings extends ModelSettings {
-    json!: ModelJSON;
+    json!: Cubism2Spec.ModelJSON;
 
     // files
     moc: string;
@@ -21,20 +14,20 @@ export class Cubism2ModelSettings extends ModelSettings {
     physics?: string;
 
     // metadata
-    layout?: Layout;
-    hitAreas?: HitArea[];
-    initParams?: InitParam[];
-    initOpacities?: InitOpacity[];
+    layout?: Cubism2Spec.Layout;
+    hitAreas?: Cubism2Spec.HitArea[];
+    initParams?: Cubism2Spec.InitParam[];
+    initOpacities?: Cubism2Spec.InitOpacity[];
 
     // motions
-    expressions?: Expression[];
-    motions: Record<string, Motion[]> = {};
+    expressions?: Cubism2Spec.Expression[];
+    motions: Record<string, Cubism2Spec.Motion[]> = {};
 
     /**
      * Checks if a JSON object is valid model settings.
      * @param json
      */
-    static isValidJSON(json: any): json is ModelJSON {
+    static isValidJSON(json: any): json is Cubism2Spec.ModelJSON {
         // should always return a boolean
         return !!json
             && typeof json.model === 'string'
@@ -44,7 +37,7 @@ export class Cubism2ModelSettings extends ModelSettings {
             && json.textures.every((item: any) => typeof item === 'string');
     }
 
-    constructor(json: ModelJSON) {
+    constructor(json: Cubism2Spec.ModelJSON) {
         super(json);
 
         if (!Cubism2ModelSettings.isValidJSON(json)) {
@@ -63,7 +56,7 @@ export class Cubism2ModelSettings extends ModelSettings {
      * Validates and copies **optional** properties from raw JSON.
      * @param json
      */
-    protected copy(json: ModelJSON): void {
+    protected copy(json: Cubism2Spec.ModelJSON): void {
         copyProperty('string', json, this, 'name', 'name');
         copyProperty('string', json, this, 'pose', 'pose');
         copyProperty('string', json, this, 'physics', 'physics');

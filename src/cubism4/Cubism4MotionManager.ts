@@ -5,14 +5,12 @@ import { CubismModel } from '@cubism/model/cubismmodel';
 import { ACubismMotion } from '@cubism/motion/acubismmotion';
 import { CubismMotion } from '@cubism/motion/cubismmotion';
 import { CubismMotionQueueManager } from '@cubism/motion/cubismmotionqueuemanager';
-import Motion = CubismSpec.Motion;
-import MotionJSON = CubismSpec.MotionJSON;
 
 export interface Cubism4MotionGroups {
     Idle: any;
 }
 
-export class Cubism4MotionManager extends MotionManager<CubismMotion, Motion, keyof Cubism4MotionGroups> {
+export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec.Motion, keyof Cubism4MotionGroups> {
     readonly definitions: Partial<Record<keyof Cubism4MotionGroups, CubismSpec.Motion[]>>;
 
     readonly groups = { idle: 'Idle' } as const;
@@ -60,8 +58,8 @@ export class Cubism4MotionManager extends MotionManager<CubismMotion, Motion, ke
         this.queueManager.stopAllMotions();
     }
 
-    createMotion(data: object, definition: Motion): CubismMotion {
-        const motion = CubismMotion.create(data as unknown as MotionJSON);
+    createMotion(data: object, definition: CubismSpec.Motion): CubismMotion {
+        const motion = CubismMotion.create(data as unknown as CubismSpec.MotionJSON);
 
         if (definition.FadeInTime! >= 0) {
             motion.setFadeInTime(definition.FadeInTime!);
@@ -76,15 +74,15 @@ export class Cubism4MotionManager extends MotionManager<CubismMotion, Motion, ke
         return motion;
     }
 
-    getMotionFile(definition: Motion): string {
+    getMotionFile(definition: CubismSpec.Motion): string {
         return definition.File;
     }
 
-    protected getMotionName(definition: Motion): string {
+    protected getMotionName(definition: CubismSpec.Motion): string {
         return definition.File;
     }
 
-    protected getSoundFile(definition: Motion): string | undefined {
+    protected getSoundFile(definition: CubismSpec.Motion): string | undefined {
         return definition.Sound;
     }
 
