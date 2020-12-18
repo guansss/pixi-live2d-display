@@ -1,6 +1,6 @@
 import { clamp, rand } from '@/utils';
 
-enum EyeState {
+const enum EyeState {
     Idle,
     Closing,
     Closed,
