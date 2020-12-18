@@ -6,6 +6,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 module.exports = [
     // profile for module systems
     {
+        entry: './src/index.ts',
         output: {
             filename: 'index.js',
             library: {
@@ -23,13 +24,17 @@ module.exports = [
 
     // profile for browser, Lodash is bundled
     {
+        entry: {
+            index:'./src/index.ts',
+            cubism2:'./src/csm2.ts',
+            cubism4:'./src/csm4.ts'
+        },
         output: {
-            filename: 'browser.js',
+            filename: '[name].browser.js',
             library: ['PIXI', 'live2d'],
         },
     },
 ].map(override => merge({
-    entry: './src/index.ts',
     devtool: 'source-map', // issue related: https://bugs.chromium.org/p/chromium/issues/detail?id=1052872
     output: {
         path: path.resolve(__dirname, 'lib'),
