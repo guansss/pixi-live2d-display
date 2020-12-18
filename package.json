@@ -14,7 +14,7 @@
     "test:debug": "webpack --config=webpack.test.config.js && node node_modules/floss/bin/floss.js --path=build.test -d",
     "build": "rimraf lib && webpack --mode=production",
     "type": "rimraf types && dts-bundle-generator src/index.ts --no-check --project=tsconfig.build.json -o=types/index.d.ts && node scripts/patch-types.js",
-    "doc": "rimraf \"docs/!(.git|.nojekyll)\" && typedoc src --out docs --mode file --disableOutputCheck --excludeNotExported && node scripts/patch-docs.js",
+    "doc": "rimraf \"docs/!(.git|.nojekyll)\" && node scripts/gen-docs.js",
     "deploy": "cd docs && git add -A && git commit -m \"Update docs\" && git push",
     "prepublishOnly": "yarn build && yarn test && yarn type && yarn doc && yarn deploy"
   },
@@ -55,7 +55,7 @@
     "sinon": "^9.0.1",
     "sinon-chai": "^3.5.0",
     "ts-loader": "^8.0.12",
-    "typedoc": "^0.17.4",
+    "typedoc": "0.20.0-beta.27",
     "typescript": "^4.1.2",
     "webpack": "^4.42.0",
     "webpack-bundle-analyzer": "^3.7.0",
