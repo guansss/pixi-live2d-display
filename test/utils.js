@@ -37,7 +37,7 @@ export function createApp(appClass, visible = true) {
     const app = new appClass({
         width: innerWidth,
         height: 1000,
-        autoStart: true,
+        autoStart: false,
         autoDensity: true,
     });
 
@@ -56,8 +56,9 @@ export function addBackground(model) {
     model.addChild(foreground);
 }
 
-export function draggable(model) {
-    model.on('pointerup', () => model.dragging = false);
+export function draggable(app, model) {
+    app.stage.interactive = true;
+    app.stage.on('pointerup', () => model.dragging = false);
     model.on('pointerdown', e => {
         model.dragging = true;
         model._dragX = e.data.global.x;

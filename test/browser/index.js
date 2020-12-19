@@ -15,7 +15,7 @@ describe('Browser <script> tag', () => {
         await loadScript('https://cdn.jsdelivr.net/npm/pixi.js@5.1.3/dist/pixi.min.js');
 
         // a production build is required!!
-        await loadScript('../lib/browser.js');
+        await loadScript('../dist/index.js');
 
         // load original, non-bundled source
         await loadScript('./browser/BrowserTest.js');

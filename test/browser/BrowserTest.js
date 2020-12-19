@@ -5,6 +5,8 @@
 
     const app = createApp(PIXI.Application);
 
+    app.ticker.start();
+
     PIXI.live2d.config.logLevel = PIXI.live2d.config.LOG_LEVEL_VERBOSE;
 
     async function loadModel() {

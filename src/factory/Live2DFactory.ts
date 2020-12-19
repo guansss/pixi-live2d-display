@@ -9,12 +9,14 @@ const TAG = 'Live2DFactory';
 
 export interface Live2DFactoryOptions extends Live2DModelOptions {
     /**
-     * String to use for crossOrigin properties on `<img>` elements.
+     * String to use for crossOrigin properties on `<img>` elements when loading textures.
      * @default undefined
      */
     crossOrigin?: string;
 
-    onFinish?(): void;
+    onLoad?(): void;
+
+    onError?(e: Error): void;
 }
 
 export interface Live2DFactoryContext {
@@ -80,6 +82,91 @@ export const jsonToSettings: Middleware<Live2DFactoryContext> = async (context, 
     throw new TypeError('Unknown settings format.');
 };
 
+export const setupOptionals: Middleware<Live2DFactoryContext> = async (context, next) => {
+    // wait until all has finished
+    await next();
+
+    const internalModel = context.internalModel;
+
+    if (internalModel) {
+        const settings = context.settings!;
+        const platform = Live2DFactory.platforms.find(f => f.test(settings));
+
+        if (platform) {
+            if (settings.pose) {
+                await Live2DLoader.load({
+                        settings,
+                        url: settings.pose,
+                        type: 'json',
+                        target: internalModel,
+                    })
+                    .then((data: ArrayBuffer) => {
+                        internalModel.pose = platform.createPose(internalModel.coreModel, data);
+                        context.live2dModel.emit('poseLoaded', internalModel.pose);
+                    })
+                    .catch((e: Error) => logger.warn(TAG, 'Failed to load pose.\n', e));
+            }
+            if (settings.physics) {
+                await Live2DLoader.load({
+                        settings,
+                        url: settings.physics,
+                        type: 'json',
+                        target: internalModel,
+                    })
+                    .then((data: ArrayBuffer) => {
+                        internalModel.physics = platform.createPhysics(internalModel.coreModel, data);
+                        context.live2dModel.emit('physicsLoaded', internalModel.physics);
+                    })
+                    .catch((e: Error) => logger.warn(TAG, 'Failed to load physics.\n', e));
+            }
+        }
+    }
+};
+
+export const setupLive2DModel: Middleware<Live2DFactoryContext> = async (context, next) => {
+    if (context.settings) {
+        const live2DModel = context.live2dModel;
+
+        live2DModel.textures = context.settings.textures.map(tex => {
+            const url = context.settings!.resolveURL(tex);
+            return Texture.from(url, { resourceOptions: { crossorigin: context.options.crossOrigin } });
+        });
+        live2DModel.emit('textureAdded', live2DModel.textures);
+
+        let allTexturesValid = true;
+
+        const onTextureUpdate = () => {
+            if (!live2DModel.textureValid && live2DModel.textures.every(tex => tex.valid)) {
+                live2DModel.textureValid = true;
+                live2DModel.emit('textureLoaded', live2DModel.textures);
+            }
+        };
+
+        live2DModel.textures.forEach(texture => {
+            if (!texture.valid) {
+                allTexturesValid = false;
+                texture.on('update', onTextureUpdate);
+            }
+        });
+
+        if (allTexturesValid) {
+            onTextureUpdate();
+        }
+
+        // wait for the internal model to be created
+        await next();
+
+        if (context.internalModel) {
+            live2DModel.internalModel = context.internalModel;
+            live2DModel.emit('modelLoaded', context.internalModel);
+        } else {
+            throw new TypeError('Missing internal model.');
+        }
+    } else {
+        throw new TypeError('Missing settings.');
+    }
+};
+
 export const createInternalModel: Middleware<Live2DFactoryContext> = async (context, next) => {
     const settings = context.settings;
 
@@ -107,93 +194,11 @@ export const createInternalModel: Middleware<Live2DFactoryContext> = async (cont
     throw new TypeError('Missing settings.');
 };
 
-export const setupOptionals: Middleware<Live2DFactoryContext> = (context, next) => {
-    const internalModel = context.internalModel;
-
-    if (internalModel) {
-        const settings = context.settings!;
-        const platform = Live2DFactory.platforms.find(f => f.test(settings));
-
-        if (platform) {
-            if (settings.pose) {
-                // no need to await the returned promise as the resources are optional
-                Live2DLoader.load({
-                        settings,
-                        url: settings.pose,
-                        type: 'json',
-                        target: internalModel,
-                    })
-                    .then((data: ArrayBuffer) => {
-                        internalModel.pose = platform.createPose(internalModel.coreModel, data);
-                        context.live2dModel.emit('poseLoaded', internalModel.pose);
-                    })
-                    .catch((e: Error) => logger.warn(TAG, 'Failed to load pose.\n', e));
-            }
-            if (settings.physics) {
-                Live2DLoader.load({
-                        settings,
-                        url: settings.physics,
-                        type: 'json',
-                        target: internalModel,
-                    })
-                    .then((data: ArrayBuffer) => {
-                        internalModel.physics = platform.createPhysics(internalModel.coreModel, data);
-                        context.live2dModel.emit('physicsLoaded', internalModel.physics);
-                    })
-                    .catch((e: Error) => logger.warn(TAG, 'Failed to load physics.\n', e));
-            }
-        }
-    }
-
-    return next();
-};
-
-export const setupLive2DModel: Middleware<Live2DFactoryContext> = async (context, next) => {
-    if (context.settings) {
-        const live2DModel = context.live2dModel;
-
-        live2DModel.textures = context.settings.textures.map(tex => {
-            const url = context.settings!.resolveURL(tex);
-            return Texture.from(url, { resourceOptions: { crossorigin: context.options.crossOrigin } });
-        });
-        live2DModel.emit('textureAdded', live2DModel.textures);
-
-        let allTexturesValid = true;
-
-        const onUpdate = () => {
-            if (!live2DModel.textureValid && live2DModel.textures.every(tex => tex.valid)) {
-                live2DModel.textureValid = true;
-                live2DModel.emit('textureLoaded');
-            }
-        };
-
-        live2DModel.textures.forEach(texture => {
-            if (!texture.valid) {
-                allTexturesValid = false;
-                texture.on('update', onUpdate);
-            }
-        });
-
-        allTexturesValid && onUpdate();
-
-        await next();
-
-        if (context.internalModel) {
-            live2DModel.internalModel = context.internalModel;
-            live2DModel.emit('modelLoaded', context.internalModel);
-        } else {
-            throw new TypeError('Missing internal model.');
-        }
-    } else {
-        throw new TypeError('Missing settings.');
-    }
-};
-
 export class Live2DFactory {
     static platforms: Live2DPlatform[] = [];
 
     static live2DModelMiddlewares: Middleware<Live2DFactoryContext>[] = [
-        urlToJSON, jsonToSettings, setupLive2DModel, createInternalModel, setupOptionals,
+        urlToJSON, jsonToSettings, setupOptionals, setupLive2DModel, createInternalModel,
     ];
 
     /**
@@ -211,11 +216,35 @@ export class Live2DFactory {
     }
 
     static async setupLive2DModel<IM extends InternalModel>(live2dModel: Live2DModel<IM>, source: string | object | IM['settings'], options?: Live2DFactoryOptions): Promise<void> {
+        const readyEventEmitted = new Promise<void>(resolve => {
+            const beforeReadyEvents = new Set(['modelLoaded', 'textureLoaded']);
+
+            beforeReadyEvents.forEach(event => {
+                live2dModel.once(event, () => {
+                    beforeReadyEvents.delete(event);
+
+                    if (beforeReadyEvents.size === 0) {
+                        // because the "ready" event is supposed to be emitted after each of the events in `beforeReadyEvents`,
+                        // we should here wait for all the handlers of those events to be executed
+                        setTimeout(() => {
+                            live2dModel.emit('ready');
+                            resolve();
+                        }, 0);
+                    }
+                });
+            });
+        });
+
         await runMiddlewares(this.live2DModelMiddlewares, {
             live2dModel,
             source,
             options: options || {},
         });
+
+        // the "load" event should be emitted after "ready"
+        await readyEventEmitted;
+
+        live2dModel.emit('load');
     }
 
     static loadMotion<Motion, MotionSpec, Groups extends string>(motionManager: MotionManager<Motion, MotionSpec, Groups>, group: Groups, index: number): Promise<Motion | undefined> {

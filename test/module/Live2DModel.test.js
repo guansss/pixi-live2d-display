@@ -40,8 +40,8 @@ describe('Live2DModel', async () => {
 
     before(async () => {
         app = createApp(Application);
-        // app.stage.interactive = true;
-        app.stage.on('pointerup', e => console.log(e.data.global.x, e.data.global.y));
+        app.stage.interactive = true;
+        // app.stage.on('pointerup', e => console.log(e.data.global.x, e.data.global.y));
 
         await platforms.each(async platform => {
             platform.model1 = await createModel(platform.definition, { app });
@@ -54,26 +54,26 @@ describe('Live2DModel', async () => {
     });
 
     after(function() {
-        function hitHandler(hitAreas) {
-            hitAreas.includes(this.interaction.tap.head) && this.internalModel.motionManager.expressionManager.setRandomExpression();
-            Object.keys(this.interaction.tap).forEach(area => hitAreas.includes(area) && this.internalModel.motionManager.startRandomMotion(this.interaction.tap[area]));
-        }
-
         platforms.each(platform => {
             platform.model1.scale.set(0.5, 0.5);
             platform.model2.scale.set(0.125, 0.125);
 
             [platform.model1, platform.model2].forEach(model => {
                 addBackground(model);
-                draggable(model);
+                draggable(app, model);
                 model.addChild(new HitAreaFrames());
 
                 model.interaction = platform.definition.interaction;
 
                 // free to play!
-                model.on('hit', hitHandler);
+                model.on('hit', function(hitAreas) {
+                    hitAreas.includes(this.interaction.tap.head) && this.internalModel.motionManager.expressionManager.setRandomExpression();
+                    Object.keys(this.interaction.tap).forEach(area => hitAreas.includes(area) && this.internalModel.motionManager.startRandomMotion(this.interaction.tap[area]));
+                });
             });
         });
+
+        app.ticker.start();
     });
 
     platforms.each((platform, name) => {

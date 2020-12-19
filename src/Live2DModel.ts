@@ -54,7 +54,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     static fromSync<IM extends InternalModel = InternalModel>(source: string | object | IM['settings'], options?: Live2DFactoryOptions) {
         const model = new this<IM>(options);
 
-        Live2DFactory.setupLive2DModel(model, source, options).then(options?.onFinish);
+        Live2DFactory.setupLive2DModel(model, source, options).then(options?.onLoad).catch(options?.onError);
 
         return model;
     }
