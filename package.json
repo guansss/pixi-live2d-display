@@ -12,7 +12,7 @@
   "scripts": {
     "test": "webpack --config=webpack.test.config.js && node node_modules/floss/bin/floss.js --path=build.test",
     "test:debug": "webpack --config=webpack.test.config.js && node node_modules/floss/bin/floss.js --path=build.test -d",
-    "build": "rimraf lib && webpack --mode=production",
+    "build": "rimraf lib && rimraf dist && webpack --mode=production",
     "type": "rimraf types && dts-bundle-generator src/index.ts --no-check --project=tsconfig.build.json -o=types/index.d.ts && node scripts/patch-types.js",
     "doc": "rimraf \"docs/!(.git|.nojekyll)\" && node scripts/gen-docs.js",
     "deploy": "cd docs && git add -A && git commit -m \"Update docs\" && git push",
@@ -20,6 +20,7 @@
   },
   "files": [
     "lib",
+    "dist",
     "src",
     "types"
   ],

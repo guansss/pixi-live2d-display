@@ -6,9 +6,9 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 module.exports = [
     // profile for module systems
     {
-        entry: './src/index.ts',
         output: {
-            filename: 'index.js',
+            filename: '[name].js',
+            path: path.resolve(__dirname, 'lib'),
             library: {
                 commonjs: 'pixi-live2d-display',
                 amd: 'pixi-live2d-display',
@@ -16,28 +16,46 @@ module.exports = [
             },
         },
         plugins: [
-            new ForkTsCheckerWebpackPlugin(), // just check it once!
+            // just check it once!
+            new ForkTsCheckerWebpackPlugin({
+                typescript: {
+                    configFile: 'tsconfig.build.json',
+                },
+            }),
             new BundleAnalyzerPlugin(),
         ],
         externals: [/* place holder for merging */ undefined, /lodash/],
+        optimization: {
+            minimize: false,
+        },
     },
 
-    // profile for browser, Lodash is bundled
+    // profiles for browser, Lodash is bundled
     {
-        entry: {
-            index:'./src/index.ts',
-            cubism2:'./src/csm2.ts',
-            cubism4:'./src/csm4.ts'
-        },
         output: {
-            filename: '[name].browser.js',
+            filename: '[name].js',
+            path: path.resolve(__dirname, 'dist'),
+            library: ['PIXI', 'live2d'],
+        },
+        optimization: {
+            minimize: false,
+        },
+    },
+    {
+        output: {
+            filename: '[name].min.js',
+            path: path.resolve(__dirname, 'dist'),
             library: ['PIXI', 'live2d'],
         },
     },
 ].map(override => merge({
+    entry: {
+        index: './src/index.ts',
+        cubism2: './src/csm2.ts',
+        cubism4: './src/csm4.ts',
+    },
     devtool: 'source-map', // issue related: https://bugs.chromium.org/p/chromium/issues/detail?id=1052872
     output: {
-        path: path.resolve(__dirname, 'lib'),
         libraryTarget: 'umd',
     },
     module: {
@@ -49,6 +67,7 @@ module.exports = [
                         loader: 'ts-loader',
                         options: {
                             transpileOnly: true,
+                            configFile: 'tsconfig.build.json',
                         },
                     },
                 ],
