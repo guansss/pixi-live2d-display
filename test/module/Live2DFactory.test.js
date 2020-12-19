@@ -1,9 +1,10 @@
 import { Cubism2ModelSettings, Cubism4ModelSettings, Live2DModel, MOTION_PRELOAD_NONE } from '@';
 import { Application } from '@pixi/app';
+import merge from 'lodash/merge';
 import { TEST_MODEL, TEST_MODEL4 } from '../env';
 import { createApp } from '../utils';
 
-describe('Live2DFactory', function() {
+describe.only('Live2DFactory', function() {
     const options = { autoUpdate: false, motionPreload: MOTION_PRELOAD_NONE };
 
     this.timeout(1000);
@@ -92,17 +93,17 @@ describe('Live2DFactory', function() {
 
             fakeXHR.onCreate = xhr => {
                 requests.push(xhr);
-                setTimeout(() => console.log('XHR Created ' + xhr.url), 0);
+                // setTimeout(() => console.log('XHR Created ' + xhr.url), 0);
             };
 
             try {
                 await new Promise((resolve, reject) => {
                     Live2DModel.fromSync({
                         ...TEST_MODEL.json,
-                        model: 'fake',
+                        model: 'fakeModel',
                     }, {
                         onLoad: () => reject(new Error('Unexpected onLoad() call.')),
-                        onError: e => {
+                        onError(e) {
                             try {
                                 expect(e).to.be.an('error');
                                 resolve();
@@ -116,6 +117,23 @@ describe('Live2DFactory', function() {
 
                     requests[0].respond(404);
                     requests.length = 0;
+                });
+
+                await new Promise((resolve, reject) => {
+                    Live2DModel.fromSync(
+                        merge({}, TEST_MODEL.json, { textures: ['fakeTexture'] }),
+                        {
+                            onLoad: () => reject(new Error('Unexpected onLoad() call.')),
+                            onError(e) {
+                                try {
+                                    expect(e).to.be.an('error');
+                                    resolve();
+                                } catch (e) {
+                                    reject(e);
+                                }
+                            },
+                        },
+                    );
                 });
             } finally {
                 fakeXHR.restore();

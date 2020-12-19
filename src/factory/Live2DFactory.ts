@@ -25,6 +25,8 @@ export interface Live2DFactoryContext {
     live2dModel: Live2DModel;
     internalModel?: InternalModel;
     settings?: ModelSettings;
+
+    onTextureError?(texture: Texture, error: Error): void;
 }
 
 export interface Live2DPlatform {
@@ -145,12 +147,21 @@ export const setupLive2DModel: Middleware<Live2DFactoryContext> = async (context
         live2DModel.textures.forEach(texture => {
             if (!texture.valid) {
                 allTexturesValid = false;
-                texture.on('update', onTextureUpdate);
+                texture.once('update', onTextureUpdate);
             }
         });
 
         if (allTexturesValid) {
             onTextureUpdate();
+        } else {
+            live2DModel.textures.forEach(texture => {
+                texture.baseTexture.once('error', (tex: any/* PIXI.BaseTexture */, ev: ErrorEvent) => {
+                    const err = new Error('Texture loading error');
+                    (err as any).event = ev;
+
+                    context.onTextureError?.(texture, err);
+                });
+            });
         }
 
         // wait for the internal model to be created
@@ -216,32 +227,32 @@ export class Live2DFactory {
     }
 
     static async setupLive2DModel<IM extends InternalModel>(live2dModel: Live2DModel<IM>, source: string | object | IM['settings'], options?: Live2DFactoryOptions): Promise<void> {
-        const readyEventEmitted = new Promise<void>(resolve => {
-            const beforeReadyEvents = new Set(['modelLoaded', 'textureLoaded']);
+        let onTextureError;
 
-            beforeReadyEvents.forEach(event => {
-                live2dModel.once(event, () => {
-                    beforeReadyEvents.delete(event);
+        const textureLoaded = new Promise((resolve, reject) => {
+            live2dModel.once('textureLoaded', resolve);
 
-                    if (beforeReadyEvents.size === 0) {
-                        // because the "ready" event is supposed to be emitted after each of the events in `beforeReadyEvents`,
-                        // we should here wait for all the handlers of those events to be executed
-                        setTimeout(() => {
-                            live2dModel.emit('ready');
-                            resolve();
-                        }, 0);
-                    }
-                });
-            });
+            onTextureError = (texture: Texture, error: Error) => reject(error);
         });
+
+        const modelLoaded = new Promise(resolve => {
+            live2dModel.once('modelLoaded', resolve);
+        });
+
+        // because the "ready" event is supposed to be emitted after
+        // both the internal model and textures have been loaded,
+        // we should here wrap the emit() in a then() so it'll
+        // be executed after all the handlers of "modelLoaded" and "textureLoaded"
+        const readyEventEmitted = Promise.all([textureLoaded, modelLoaded]).then(() => live2dModel.emit('ready'));
 
         await runMiddlewares(this.live2DModelMiddlewares, {
             live2dModel,
             source,
+            onTextureError,
             options: options || {},
         });
 
-        // the "load" event should be emitted after "ready"
+        // the "load" event should NOT be emitted before "ready"
         await readyEventEmitted;
 
         live2dModel.emit('load');
