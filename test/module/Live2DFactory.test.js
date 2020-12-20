@@ -1,5 +1,7 @@
 import { config, Cubism2ModelSettings, Cubism4ModelSettings, Live2DModel, MOTION_PRELOAD_NONE } from '@';
+import { createTexture } from '@/texture';
 import { Application } from '@pixi/app';
+import { Texture } from '@pixi/core';
 import merge from 'lodash/merge';
 import sinon from 'sinon';
 import { TEST_MODEL, TEST_MODEL4 } from '../env';
@@ -37,6 +39,11 @@ describe('Live2DFactory', function() {
     afterEach(function() {
         config.logLevel = originalLogLevel;
         fakeXHRs.length = 0;
+    });
+
+    it('should create Texture', async function() {
+        await expect(createTexture('assets/circle.png')).to.eventually.be.instanceOf(Texture);
+        await expect(createTexture('fakeTexture')).to.be.rejected;
     });
 
     it('should create Live2DModel', async function() {
