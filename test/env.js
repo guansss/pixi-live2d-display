@@ -6,6 +6,11 @@ export const shizuku = {
     file: './assets/shizuku/shizuku.model.json',
     width: 1280,
     height: 1380,
+    layout: {
+        center_x: 0,
+        y: 1.2,
+        width: 2.4,
+    },
     hitTests: [
         { x: 620, y: 200, hitArea: ['head'] },
         { x: 620, y: 350, hitArea: ['head', 'mouth'] },
@@ -13,7 +18,7 @@ export const shizuku = {
     ],
     interaction: {
         exp: 'head',
-        tap: {
+        motion: {
             body: 'tap_body',
         },
     },
@@ -23,13 +28,17 @@ export const haru = {
     file: './assets/haru/haru_greeter_t03.model3.json',
     width: 2400,
     height: 4500,
+    Layout: {
+        Width: 1.8,
+        X: 0.9,
+    },
     hitTests: [
         { x: 1166, y: 834, hitArea: ['Head'] },
         { x: 910, y: 981, hitArea: ['Body'] },
     ],
     interaction: {
         exp: 'Head',
-        tap: {
+        motion: {
             Body: 'Tap',
         },
     },
@@ -42,9 +51,11 @@ export const TEST_MODEL4 = haru;
 
 TEST_MODEL.json = remoteRequire(TEST_MODEL.file);
 TEST_MODEL.json.url = TEST_MODEL.file;
+TEST_MODEL.json.layout = TEST_MODEL.layout;
 
 TEST_MODEL4.json = remoteRequire(TEST_MODEL4.file);
 TEST_MODEL4.json.url = TEST_MODEL4.file;
+TEST_MODEL4.json.Layout = TEST_MODEL4.Layout;
 
 // preload model data
 

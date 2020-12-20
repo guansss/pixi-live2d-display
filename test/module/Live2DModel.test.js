@@ -1,4 +1,4 @@
-import { Live2DModel, LOGICAL_HEIGHT, LOGICAL_WIDTH } from '@';
+import { InternalModel, Live2DModel, LOGICAL_HEIGHT, LOGICAL_WIDTH } from '@';
 import { HitAreaFrames } from '@/tools/HitAreaFrames';
 import { Application } from '@pixi/app';
 import { BatchRenderer, Renderer } from '@pixi/core';
@@ -6,7 +6,7 @@ import { InteractionManager } from '@pixi/interaction';
 import { Ticker, TickerPlugin } from '@pixi/ticker';
 import merge from 'lodash/merge';
 import { PLATFORMS, TEST_MODEL, TEST_MODEL4 } from '../env';
-import { addBackground, createApp, draggable } from '../utils';
+import { addBackground, callBefore, createApp, draggable } from '../utils';
 
 Application.registerPlugin(TickerPlugin);
 Renderer.registerPlugin('batch', BatchRenderer);
@@ -24,27 +24,40 @@ describe('Live2DModel', async () => {
         cubism4: {
             model1: undefined,
             model2: undefined,
-            nonScaledWidth: TEST_MODEL4.width,
-            nonScaledHeight: TEST_MODEL4.height,
+            nonScaledWidth: TEST_MODEL4.width * (TEST_MODEL4.json.Layout.Width || LOGICAL_WIDTH) / LOGICAL_WIDTH,
+            nonScaledHeight: TEST_MODEL4.height * (TEST_MODEL4.json.Layout.Height || LOGICAL_HEIGHT) / LOGICAL_HEIGHT,
         },
+    });
+
+    callBefore(InternalModel.prototype, 'init', function() {
+        platforms.each(platform => {
+            const modelDef = platform.definition;
+            if (this.settings.url === modelDef.file) {
+                this.settings.layout = modelDef.layout || modelDef.Layout;
+            }
+        });
     });
 
     let app;
 
     async function createModel(modelDef, options = {}) {
         const model = await Live2DModel.from(modelDef.file);
+        model.zIndex = options.zIndex || 0;
         options.app && options.app.stage.addChild(model);
         return model;
     }
 
     before(async function() {
         window.app = app = createApp(Application);
+        app.stage.sortableChildren = true;
         app.stage.interactive = true;
         // app.stage.on('pointerup', e => console.log(e.data.global.x, e.data.global.y));
 
+        let modelLayer = 0;
+
         await platforms.each(async platform => {
-            platform.model1 = await createModel(platform.definition, { app });
-            platform.model2 = await createModel(platform.definition, { app });
+            platform.model1 = await createModel(platform.definition, { app, zIndex: modelLayer-- });
+            platform.model2 = await createModel(platform.definition, { app, zIndex: platform.model1.zIndex + 1 });
         });
 
         // at least render the models once, otherwise hit testing will always fail
@@ -66,11 +79,14 @@ describe('Live2DModel', async () => {
 
                 // free to play!
                 model.on('hit', function(hitAreas) {
-                    hitAreas.includes(this.interaction.tap.head) && this.internalModel.motionManager.expressionManager.setRandomExpression();
-                    Object.keys(this.interaction.tap).forEach(area => hitAreas.includes(area) && this.internalModel.motionManager.startRandomMotion(this.interaction.tap[area]));
+                    hitAreas.includes(this.interaction.exp) && this.internalModel.motionManager.expressionManager?.setRandomExpression();
+                    Object.keys(this.interaction.motion).forEach(area => hitAreas.includes(area) && this.internalModel.motionManager.startRandomMotion(this.interaction.motion[area]));
                 });
             });
         });
+
+        platforms.cubism4.model1.x = 550;
+        platforms.cubism4.model2.x = platforms.cubism2.model1.width;
 
         app.ticker.start();
     });

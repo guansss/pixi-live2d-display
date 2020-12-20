@@ -11,9 +11,12 @@
 
     async function loadModel() {
         model = await PIXI.live2d.Live2DModel.from(TEST_MODEL.file);
-        app.stage.addChild(model);
+
+        model.y = -100;
 
         model.on('hit', hitAreas => hitAreas.includes('body') && model.motion('tap_body'));
+
+        app.stage.addChild(model);
     }
 
     window.BrowserTest = {

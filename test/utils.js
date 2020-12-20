@@ -73,3 +73,12 @@ export function draggable(app, model) {
         }
     });
 }
+
+export function callBefore(obj, method, fn) {
+    const originalMethod = obj[method];
+
+    obj[method] = function() {
+        fn.apply(this, arguments);
+        originalMethod.apply(this, arguments);
+    };
+}
