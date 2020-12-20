@@ -38,7 +38,7 @@ export function createTexture(url: string, options: { crossOrigin?: string } = {
 
         (resource.source as HTMLImageElement).addEventListener('error', errorHandler);
 
-        (resource.load() as Promise<Texture>).then(resolve).catch(errorHandler);
+        (resource.load() as Promise<unknown>).then(() => resolve(texture)).catch(errorHandler);
     });
 
     return resource._live2d_load;
