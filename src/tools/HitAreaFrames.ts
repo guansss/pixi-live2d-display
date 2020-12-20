@@ -14,10 +14,10 @@ export class HitAreaFrames extends Graphics {
             Object.keys(internalModel.hitAreas).forEach(name => {
                 const bounds = internalModel.getHitArea(name);
 
-                bounds.left = (bounds.left + internalModel.matrix.tx) * internalModel.matrix.a;
-                bounds.right = (bounds.right + internalModel.matrix.tx) * internalModel.matrix.a;
-                bounds.top = (bounds.top + internalModel.matrix.ty) * internalModel.matrix.d;
-                bounds.bottom = (bounds.bottom + internalModel.matrix.ty) * internalModel.matrix.d;
+                bounds.left = bounds.left * internalModel.matrix.a + internalModel.matrix.tx;
+                bounds.right = bounds.right * internalModel.matrix.a + internalModel.matrix.tx;
+                bounds.top = bounds.top * internalModel.matrix.d + internalModel.matrix.ty;
+                bounds.bottom = bounds.bottom * internalModel.matrix.d + internalModel.matrix.ty;
 
                 this.moveTo(bounds.left, bounds.top);
                 this.lineTo(bounds.right, bounds.top);

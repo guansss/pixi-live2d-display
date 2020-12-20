@@ -87,8 +87,8 @@ export class Cubism4InternalModel extends InternalModel {
     }
 
     protected getLayout(): CommonLayout {
-        // capitalize each key to satisfy the common layout format
-        return mapKeys({ ...this.settings.layout }, (_, key) => key.charAt(0).toUpperCase() + key.slice(1));
+        // un-capitalize each key to satisfy the common layout format
+        return mapKeys({ ...this.settings.layout }, (_, key) => key.charAt(0).toLowerCase() + key.slice(1));
     }
 
     protected setupLayout() {
