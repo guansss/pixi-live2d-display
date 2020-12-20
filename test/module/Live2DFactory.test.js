@@ -1,13 +1,43 @@
-import { Cubism2ModelSettings, Cubism4ModelSettings, Live2DModel, MOTION_PRELOAD_NONE } from '@';
+import { config, Cubism2ModelSettings, Cubism4ModelSettings, Live2DModel, MOTION_PRELOAD_NONE } from '@';
 import { Application } from '@pixi/app';
 import merge from 'lodash/merge';
+import sinon from 'sinon';
 import { TEST_MODEL, TEST_MODEL4 } from '../env';
 import { createApp } from '../utils';
 
-describe.only('Live2DFactory', function() {
+describe('Live2DFactory', function() {
     const options = { autoUpdate: false, motionPreload: MOTION_PRELOAD_NONE };
+    const originalLogLevel = config.logLevel;
+    const fakeXHRs = [];
 
     this.timeout(1000);
+
+    before(function() {
+        this.fakeXHR = sinon.useFakeXMLHttpRequest();
+
+        const matchesFake = url => url.match(/fake/);
+
+        XMLHttpRequest.useFilters = true;
+        XMLHttpRequest.addFilter((method, url) => !matchesFake(url));
+
+        this.fakeXHR.onCreate = xhr => {
+            xhr.addEventListener('readystatechange', () => {
+                if (xhr.readyState === XMLHttpRequest.OPENED && matchesFake(xhr.url)) {
+                    // console.log('XHR faked: ', xhr.url, xhr);
+                    fakeXHRs.push(xhr);
+                }
+            });
+        };
+    });
+
+    after(function() {
+        this.fakeXHR.restore();
+    });
+
+    afterEach(function() {
+        config.logLevel = originalLogLevel;
+        fakeXHRs.length = 0;
+    });
 
     it('should create Live2DModel', async function() {
         // cubism2
@@ -26,14 +56,33 @@ describe.only('Live2DFactory', function() {
     it('should create derived Live2DModel', async () => {
         class DerivedLive2DModel extends Live2DModel {}
 
-        await expect(DerivedLive2DModel.from(TEST_MODEL.file), options)
+        await expect(DerivedLive2DModel.from(TEST_MODEL.file, options))
             .to.eventually.be.instanceOf(DerivedLive2DModel).and.instanceOf(Live2DModel);
+    });
+
+    it('should handle error', async function() {
+        config.logLevel = config.LOG_LEVEL_ERROR;
+
+        const creation = Live2DModel.from({ ...TEST_MODEL.json, model: 'fakeModel' }, options);
+
+        expect(fakeXHRs.length).to.equal(1);
+        fakeXHRs[0].respond(404);
+
+        try {
+            await creation;
+
+            throw new Error('The expected error was not thrown.');
+        } catch (e) {
+            expect(e).to.have.property('status', 404);
+        }
+
+        await expect(Live2DModel.from(merge({}, TEST_MODEL.json, { textures: ['fakeTexture'] }), options)).to.be.rejected;
     });
 
     describe('Synchronous creation', function() {
         it('should create Live2DModel', async function() {
             await new Promise(resolve => {
-                const model = Live2DModel.fromSync(TEST_MODEL.file, { onLoad: resolve });
+                const model = Live2DModel.fromSync(TEST_MODEL.file, { ...options, onLoad: resolve });
 
                 expect(model).to.be.instanceOf(Live2DModel);
 
@@ -57,10 +106,10 @@ describe.only('Live2DFactory', function() {
                 load: undefined,
             };
 
-            const model = Live2DModel.fromSync(TEST_MODEL.file, { onLoad, onError: done });
+            const model = Live2DModel.fromSync(TEST_MODEL.file, { ...options, onLoad, onError: done });
 
             Object.keys(events).forEach(event => {
-                // create a named function for spy to prettify the printed message
+                // create a named function for spy to prettify the print message
                 events[event] = sinon.spy(new Function('return function ' + event + '(){}')());
 
                 model.on(event, events[event]);
@@ -85,23 +134,35 @@ describe.only('Live2DFactory', function() {
         });
 
         it('should handle error', async function() {
-            const fakeXHR = sinon.useFakeXMLHttpRequest();
-            const requests = [];
+            config.logLevel = config.LOG_LEVEL_ERROR;
 
-            XMLHttpRequest.useFilters = true;
-            XMLHttpRequest.addFilter((method, url) => !/fake/.test(url));
+            await new Promise((resolve, reject) => {
+                Live2DModel.fromSync({
+                    ...TEST_MODEL.json,
+                    model: 'fakeModel',
+                }, {
+                    ...options,
+                    onLoad: () => reject(new Error('Unexpected onLoad() call.')),
+                    onError(e) {
+                        try {
+                            expect(e).to.be.an('error').with.property('status', 404);
+                            resolve();
+                        } catch (e) {
+                            reject(e);
+                        }
+                    },
+                });
 
-            fakeXHR.onCreate = xhr => {
-                requests.push(xhr);
-                // setTimeout(() => console.log('XHR Created ' + xhr.url), 0);
-            };
+                expect(fakeXHRs.length).to.equal(1);
 
-            try {
-                await new Promise((resolve, reject) => {
-                    Live2DModel.fromSync({
-                        ...TEST_MODEL.json,
-                        model: 'fakeModel',
-                    }, {
+                fakeXHRs[0].respond(404);
+            });
+
+            await new Promise((resolve, reject) => {
+                Live2DModel.fromSync(
+                    merge({}, TEST_MODEL.json, { textures: ['fakeTexture'] }),
+                    {
+                        ...options,
                         onLoad: () => reject(new Error('Unexpected onLoad() call.')),
                         onError(e) {
                             try {
@@ -111,33 +172,9 @@ describe.only('Live2DFactory', function() {
                                 reject(e);
                             }
                         },
-                    });
-
-                    expect(requests.length).to.equal(1);
-
-                    requests[0].respond(404);
-                    requests.length = 0;
-                });
-
-                await new Promise((resolve, reject) => {
-                    Live2DModel.fromSync(
-                        merge({}, TEST_MODEL.json, { textures: ['fakeTexture'] }),
-                        {
-                            onLoad: () => reject(new Error('Unexpected onLoad() call.')),
-                            onError(e) {
-                                try {
-                                    expect(e).to.be.an('error');
-                                    resolve();
-                                } catch (e) {
-                                    reject(e);
-                                }
-                            },
-                        },
-                    );
-                });
-            } finally {
-                fakeXHR.restore();
-            }
+                    },
+                );
+            });
         });
     });
 });

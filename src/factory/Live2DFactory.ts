@@ -1,6 +1,7 @@
 import { ExpressionManager, InternalModel, ModelSettings, MotionManager } from '@/cubism-common';
 import { Live2DLoader } from '@/factory/Live2DLoader';
 import { Live2DModel, Live2DModelOptions } from '@/Live2DModel';
+import { createTexture } from '@/texture';
 import { logger } from '@/utils';
 import { Middleware, runMiddlewares } from '@/utils/middleware';
 import { Texture } from '@pixi/core';
@@ -25,8 +26,6 @@ export interface Live2DFactoryContext {
     live2dModel: Live2DModel;
     internalModel?: InternalModel;
     settings?: ModelSettings;
-
-    onTextureError?(texture: Texture, error: Error): void;
 }
 
 export interface Live2DPlatform {
@@ -129,40 +128,10 @@ export const setupLive2DModel: Middleware<Live2DFactoryContext> = async (context
     if (context.settings) {
         const live2DModel = context.live2dModel;
 
-        live2DModel.textures = context.settings.textures.map(tex => {
+        const textureLoadings = context.settings.textures.map(tex => {
             const url = context.settings!.resolveURL(tex);
-            return Texture.from(url, { resourceOptions: { crossorigin: context.options.crossOrigin } });
+            return createTexture(url, { crossOrigin: context.options.crossOrigin });
         });
-        live2DModel.emit('textureAdded', live2DModel.textures);
-
-        let allTexturesValid = true;
-
-        const onTextureUpdate = () => {
-            if (!live2DModel.textureValid && live2DModel.textures.every(tex => tex.valid)) {
-                live2DModel.textureValid = true;
-                live2DModel.emit('textureLoaded', live2DModel.textures);
-            }
-        };
-
-        live2DModel.textures.forEach(texture => {
-            if (!texture.valid) {
-                allTexturesValid = false;
-                texture.once('update', onTextureUpdate);
-            }
-        });
-
-        if (allTexturesValid) {
-            onTextureUpdate();
-        } else {
-            live2DModel.textures.forEach(texture => {
-                texture.baseTexture.once('error', (tex: any/* PIXI.BaseTexture */, ev: ErrorEvent) => {
-                    const err = new Error('Texture loading error');
-                    (err as any).event = ev;
-
-                    context.onTextureError?.(texture, err);
-                });
-            });
-        }
 
         // wait for the internal model to be created
         await next();
@@ -173,6 +142,9 @@ export const setupLive2DModel: Middleware<Live2DFactoryContext> = async (context
         } else {
             throw new TypeError('Missing internal model.');
         }
+
+        live2DModel.textures = await Promise.all(textureLoadings);
+        live2DModel.emit('textureLoaded', live2DModel.textures);
     } else {
         throw new TypeError('Missing settings.');
     }
@@ -227,17 +199,8 @@ export class Live2DFactory {
     }
 
     static async setupLive2DModel<IM extends InternalModel>(live2dModel: Live2DModel<IM>, source: string | object | IM['settings'], options?: Live2DFactoryOptions): Promise<void> {
-        let onTextureError;
-
-        const textureLoaded = new Promise((resolve, reject) => {
-            live2dModel.once('textureLoaded', resolve);
-
-            onTextureError = (texture: Texture, error: Error) => reject(error);
-        });
-
-        const modelLoaded = new Promise(resolve => {
-            live2dModel.once('modelLoaded', resolve);
-        });
+        const textureLoaded = new Promise(resolve => live2dModel.once('textureLoaded', resolve));
+        const modelLoaded = new Promise(resolve => live2dModel.once('modelLoaded', resolve));
 
         // because the "ready" event is supposed to be emitted after
         // both the internal model and textures have been loaded,
@@ -248,11 +211,10 @@ export class Live2DFactory {
         await runMiddlewares(this.live2DModelMiddlewares, {
             live2dModel,
             source,
-            onTextureError,
             options: options || {},
         });
 
-        // the "load" event should NOT be emitted before "ready"
+        // the "load" event should never be emitted before "ready"
         await readyEventEmitted;
 
         live2dModel.emit('load');

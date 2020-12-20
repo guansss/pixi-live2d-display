@@ -4,6 +4,15 @@ import { Middleware } from '@/utils/middleware';
 
 const TAG = 'XHRLoader';
 
+function createNetworkError(message: string, url: string, status: number, aborted = false): Error {
+    const err = new Error(message);
+    (err as any).url = status;
+    (err as any).status = status;
+    (err as any).aborted = aborted;
+
+    return err;
+}
+
 export class XHRLoader {
     static xhrMap = new WeakMap<Live2DLoaderTarget, Set<XMLHttpRequest>>();
     static allXhrSet = new Set<XMLHttpRequest>();
@@ -56,14 +65,14 @@ export class XHRLoader {
             if ((xhr.status === 200 || xhr.status === 0) && xhr.response) {
                 onload(xhr.response);
             } else {
-                (xhr.onerror as () => {})();
+                (xhr.onerror as any)();
             }
         };
         xhr.onerror = () => {
             logger.warn(TAG, `Failed to load resource as ${xhr.responseType} (Status ${xhr.status}): ${url}`);
-            onerror(new Error('Network error.'));
+            onerror(createNetworkError('Network error.', url, xhr.status));
         };
-        xhr.onabort = () => onerror(new Error('Aborted.'));
+        xhr.onabort = () => onerror(createNetworkError('Aborted.', url, xhr.status, true));
         xhr.onloadend = () => {
             this.allXhrSet.delete(xhr);
 
