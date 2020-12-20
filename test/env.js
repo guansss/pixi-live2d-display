@@ -57,6 +57,7 @@ export function setupENV() {
 }
 
 export const TEST_SOUND = './assets/shizuku/sounds/shake_00.mp3';
+export const TEST_TEXTURE = './assets/circle.png';
 
 export const PLATFORMS = {
     cubism2: {

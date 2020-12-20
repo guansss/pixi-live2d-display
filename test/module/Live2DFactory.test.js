@@ -4,7 +4,7 @@ import { Application } from '@pixi/app';
 import { Texture } from '@pixi/core';
 import merge from 'lodash/merge';
 import sinon from 'sinon';
-import { TEST_MODEL, TEST_MODEL4 } from '../env';
+import { TEST_MODEL, TEST_MODEL4, TEST_TEXTURE } from '../env';
 import { createApp } from '../utils';
 
 describe('Live2DFactory', function() {
@@ -42,7 +42,7 @@ describe('Live2DFactory', function() {
     });
 
     it('should create Texture', async function() {
-        await expect(createTexture('assets/circle.png')).to.eventually.be.instanceOf(Texture);
+        await expect(createTexture(TEST_TEXTURE)).to.eventually.be.instanceOf(Texture);
         await expect(createTexture('fakeTexture')).to.be.rejected;
     });
 

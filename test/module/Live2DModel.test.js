@@ -2,7 +2,6 @@ import { Live2DModel, LOGICAL_HEIGHT, LOGICAL_WIDTH } from '@';
 import { HitAreaFrames } from '@/tools/HitAreaFrames';
 import { Application } from '@pixi/app';
 import { BatchRenderer, Renderer } from '@pixi/core';
-import { Graphics } from '@pixi/graphics';
 import { InteractionManager } from '@pixi/interaction';
 import { Ticker, TickerPlugin } from '@pixi/ticker';
 import merge from 'lodash/merge';
@@ -38,8 +37,8 @@ describe('Live2DModel', async () => {
         return model;
     }
 
-    before(async () => {
-        app = createApp(Application);
+    before(async function() {
+        window.app = app = createApp(Application);
         app.stage.interactive = true;
         // app.stage.on('pointerup', e => console.log(e.data.global.x, e.data.global.y));
 
@@ -134,56 +133,5 @@ describe('Live2DModel', async () => {
         });
     });
 
-    it('should not break rendering of PIXI.Graphics', function() {
-        // test for https://github.com/guansss/pixi-live2d-display/issues/5
-
-        const SIZE = 50;
-
-        const graphics = new Graphics();
-        graphics.beginFill(0xff0000);
-        graphics.drawRect(0, 0, SIZE, SIZE);
-        app.stage.addChild(graphics);
-        app.render();
-
-        const offscreenCanvas = document.createElement('canvas');
-        offscreenCanvas.width = app.view.width;
-        offscreenCanvas.height = app.view.height;
-
-        const context = offscreenCanvas.getContext('2d');
-        context.drawImage(app.view, 0, 0);
-
-        const pixels = context.getImageData(0, 0, SIZE, SIZE).data;
-
-        // detect the red square
-        expect(pixels).to.satisfy(() => {
-            for (let i = 0; i < pixels.length; i += 4) {
-                if (pixels[i] !== 255 ||
-                    pixels[i + 1] !== 0 ||
-                    pixels[i + 2] !== 0 ||
-                    pixels[i + 3] !== 255) {
-                    return false;
-                }
-            }
-            return true;
-        });
-    });
-
-    it('should work after losing and restoring WebGL context', function(done) {
-        setTimeout(() => {
-            console.log('==============WebGL lose context==============');
-            const ext = app.renderer.gl.getExtension('WEBGL_lose_context');
-            ext.loseContext();
-
-            setTimeout(() => {
-                console.log('==============WebGL restore context==============');
-                ext.restoreContext();
-
-                setTimeout(() => {
-                    expect(() => app.render()).to.not.throw();
-
-                    done();
-                }, 100);
-            }, 100);
-        }, 200);
-    });
+    require('./compat.test');
 });

@@ -4,7 +4,6 @@ import { Live2DModel, Live2DModelOptions } from '@/Live2DModel';
 import { createTexture } from '@/texture';
 import { logger } from '@/utils';
 import { Middleware, runMiddlewares } from '@/utils/middleware';
-import { Texture } from '@pixi/core';
 
 const TAG = 'Live2DFactory';
 
