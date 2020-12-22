@@ -1,7 +1,7 @@
 import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from '@/cubism-common/constants';
 import { FocusController } from '@/cubism-common/FocusController';
 import { ModelSettings } from '@/cubism-common/ModelSettings';
-import { MotionManager } from '@/cubism-common/MotionManager';
+import { MotionManager, MotionManagerOptions } from '@/cubism-common/MotionManager';
 import { Matrix } from '@pixi/math';
 import { EventEmitter } from '@pixi/utils';
 
@@ -30,6 +30,8 @@ export interface Bounds {
     top: number
     bottom: number
 }
+
+export interface InternalModelOptions extends MotionManagerOptions {}
 
 export abstract class InternalModel extends EventEmitter {
     abstract readonly coreModel: object;
@@ -73,10 +75,6 @@ export abstract class InternalModel extends EventEmitter {
     hitAreas: Record<string, CommonHitArea> = {};
 
     textureFlipY = false;
-
-    protected constructor() {
-        super();
-    }
 
     protected init() {
         this.setupLayout();

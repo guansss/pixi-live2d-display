@@ -1,4 +1,4 @@
-import { MotionManagerOptions } from '@/cubism-common';
+import { InternalModelOptions } from '@/cubism-common';
 import { CommonHitArea, CommonLayout, InternalModel } from '@/cubism-common/InternalModel';
 import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
 import { Cubism4MotionManager } from '@/cubism4/Cubism4MotionManager';
@@ -24,9 +24,9 @@ import mapKeys from 'lodash/mapKeys';
 
 const tempMatrix = new CubismMatrix44();
 
-export const frameBufferMap = new WeakMap<WebGLRenderingContext, WebGLFramebuffer>();
-
 export class Cubism4InternalModel extends InternalModel {
+    static frameBufferMap = new WeakMap<WebGLRenderingContext, WebGLFramebuffer>();
+
     settings: Cubism4ModelSettings;
     coreModel: CubismModel;
     motionManager: Cubism4MotionManager;
@@ -53,7 +53,7 @@ export class Cubism4InternalModel extends InternalModel {
 
     pixelsPerUnit = 1;
 
-    constructor(coreModel: CubismModel, settings: Cubism4ModelSettings, options?: MotionManagerOptions) {
+    constructor(coreModel: CubismModel, settings: Cubism4ModelSettings, options?: InternalModelOptions) {
         super();
 
         this.coreModel = coreModel;
@@ -98,8 +98,8 @@ export class Cubism4InternalModel extends InternalModel {
     }
 
     updateWebGLContext(gl: WebGLRenderingContext, glContextID: number): void {
-        if (!frameBufferMap.has(gl)) {
-            frameBufferMap.set(gl, gl.getParameter(gl.FRAMEBUFFER_BINDING));
+        if (!Cubism4InternalModel.frameBufferMap.has(gl)) {
+            Cubism4InternalModel.frameBufferMap.set(gl, gl.getParameter(gl.FRAMEBUFFER_BINDING));
         }
 
         // reset resources that were bound to previous WebGL context
@@ -202,7 +202,7 @@ export class Cubism4InternalModel extends InternalModel {
         array[13] = -matrix.ty;
 
         this.renderer.setMvpMatrix(tempMatrix);
-        this.renderer.setRenderState(frameBufferMap.get(gl)!, [0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight]);
+        this.renderer.setRenderState(Cubism4InternalModel.frameBufferMap.get(gl)!, [0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight]);
         this.renderer.drawModel();
     }
 }

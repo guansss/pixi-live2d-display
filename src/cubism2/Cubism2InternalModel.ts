@@ -1,12 +1,10 @@
-import { MotionManagerOptions } from '@/cubism-common';
+import { InternalModelOptions } from '@/cubism-common';
 import { CommonHitArea, CommonLayout, InternalModel } from '@/cubism-common/InternalModel';
 import { Cubism2ModelSettings } from './Cubism2ModelSettings';
 import { Cubism2MotionManager } from './Cubism2MotionManager';
 import { Live2DEyeBlink } from './Live2DEyeBlink';
 import { Live2DPhysics } from './Live2DPhysics';
 import { Live2DPose } from './Live2DPose';
-
-export interface InternalModelOptions extends MotionManagerOptions {}
 
 // prettier-ignore
 const tempMatrixArray = new Float32Array([
@@ -116,7 +114,8 @@ export class Cubism2InternalModel extends InternalModel {
 
     protected getHitAreaDefs(): CommonHitArea[] {
         return this.settings.hitAreas?.map(hitArea => ({
-            ...hitArea,
+            id: hitArea.id,
+            name: hitArea.name,
             index: this.coreModel.getDrawDataIndex(hitArea.id),
         })) || [];
     }

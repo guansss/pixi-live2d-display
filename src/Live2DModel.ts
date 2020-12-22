@@ -60,6 +60,14 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     }
 
     /**
+     * Registers the class of `Ticker` for auto updating.
+     * @param tickerClass
+     */
+    static registerTicker(tickerClass: typeof Ticker): void {
+        TickerClass = tickerClass;
+    }
+
+    /**
      * Tag for logging.
      */
     tag = 'Live2DModel(uninitialized)';
@@ -93,35 +101,6 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      */
     deltaTime: DOMHighResTimeStamp = 0;
 
-    /**
-     * Registers the class of `Ticker` for auto updating.
-     * @param tickerClass
-     */
-    static registerTicker(tickerClass: typeof Ticker): void {
-        TickerClass = tickerClass;
-    }
-
-    constructor(options?: Live2DModelOptions) {
-        super();
-
-        const _options = Object.assign({}, DEFAULT_OPTIONS, options);
-
-        this.autoInteract = _options.autoInteract;
-        this.autoUpdate = _options.autoUpdate;
-
-        if (_options.autoInteract) {
-            this.interactive = true;
-        }
-
-        this.init();
-    }
-
-    protected init() {
-        this.on('modelLoaded', () => {
-            this.tag = `Live2DModel(${this.internalModel!.settings.name})`;
-        });
-    }
-
     protected _autoUpdate = false;
 
     /**
@@ -147,6 +126,27 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
 
             this._autoUpdate = false;
         }
+    }
+
+    constructor(options?: Live2DModelOptions) {
+        super();
+
+        const _options = Object.assign({}, DEFAULT_OPTIONS, options);
+
+        this.autoInteract = _options.autoInteract;
+        this.autoUpdate = _options.autoUpdate;
+
+        if (_options.autoInteract) {
+            this.interactive = true;
+        }
+
+        this.init();
+    }
+
+    protected init() {
+        this.on('modelLoaded', () => {
+            this.tag = `Live2DModel(${this.internalModel!.settings.name})`;
+        });
     }
 
     /**
