@@ -6,12 +6,8 @@ import { ACubismMotion } from '@cubism/motion/acubismmotion';
 import { CubismMotion } from '@cubism/motion/cubismmotion';
 import { CubismMotionQueueManager } from '@cubism/motion/cubismmotionqueuemanager';
 
-export interface Cubism4MotionGroups {
-    Idle: any;
-}
-
-export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec.Motion, keyof Cubism4MotionGroups> {
-    readonly definitions: Partial<Record<keyof Cubism4MotionGroups, CubismSpec.Motion[]>>;
+export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec.Motion> {
+    readonly definitions: Partial<Record<string, CubismSpec.Motion[]>>;
 
     readonly groups = { idle: 'Idle' } as const;
 

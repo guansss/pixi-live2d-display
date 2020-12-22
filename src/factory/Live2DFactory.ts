@@ -219,7 +219,7 @@ export class Live2DFactory {
         live2dModel.emit('load');
     }
 
-    static loadMotion<Motion, MotionSpec, Groups extends string>(motionManager: MotionManager<Motion, MotionSpec, Groups>, group: Groups, index: number): Promise<Motion | undefined> {
+    static loadMotion<Motion, MotionSpec>(motionManager: MotionManager<Motion, MotionSpec>, group: string, index: number): Promise<Motion | undefined> {
         try {
             const definition = motionManager.definitions[group] ?. [index];
 

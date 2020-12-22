@@ -4,12 +4,8 @@ import { Cubism2ExpressionManager } from '@/cubism2/Cubism2ExpressionManager';
 import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
 import './patch-motion';
 
-export interface Cubism2MotionGroups {
-    idle: any;
-}
-
-export class Cubism2MotionManager extends MotionManager<Live2DMotion, Cubism2Spec.Motion, keyof Cubism2MotionGroups> {
-    readonly definitions: Partial<Record<keyof Cubism2MotionGroups, Cubism2Spec.Motion[]>>;
+export class Cubism2MotionManager extends MotionManager<Live2DMotion, Cubism2Spec.Motion> {
+    readonly definitions: Partial<Record<string, Cubism2Spec.Motion[]>>;
 
     readonly groups = { idle: 'idle' } as const;
 

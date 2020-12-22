@@ -160,14 +160,12 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
 
     /**
      * Shorthand of {@link MotionManager#startRandomMotion}.
-     * The types may look ugly but it WORKS!
      */
-    motion(group: NonNullable<this['internalModel']>['motionManager']['groups']['idle'], priority?: MotionPriority): Promise<boolean> {
+    motion(group: string, priority?: MotionPriority): Promise<boolean> {
         // because `startRandomMotion` is a union function, the types of its first parameter are
         // intersected and therefore collapsed to `never`, that's why we need to cast the type for it.
         // see https://github.com/Microsoft/TypeScript/issues/30581
-        return (this.internalModel?.motionManager as MotionManager<any, any, Parameters<this['motion']>[0]>)
-            .startRandomMotion(group, priority) ?? Promise.resolve(false);
+        return this.internalModel?.motionManager.startRandomMotion(group, priority) ?? Promise.resolve(false);
     }
 
     /**

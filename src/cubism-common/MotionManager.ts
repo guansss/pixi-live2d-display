@@ -20,7 +20,7 @@ export interface MotionManagerOptions {
     motionPreload?: MotionPreloadStrategy;
 }
 
-export abstract class MotionManager<Motion = any, MotionSpec = any, Groups extends string = string> extends EventEmitter {
+export abstract class MotionManager<Motion = any, MotionSpec = any> extends EventEmitter {
     /**
      * Tag for logging.
      */
@@ -29,9 +29,9 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
     /**
      * Motion definitions copied from {@link ModelSettings#motions};
      */
-    abstract readonly definitions: Partial<Record<Groups, MotionSpec[]>>;
+    abstract readonly definitions: Partial<Record<string, MotionSpec[]>>;
 
-    abstract readonly groups: { idle: Groups };
+    abstract readonly groups: { idle: string };
 
     abstract readonly motionDataType: 'json' | 'arraybuffer';
 
@@ -45,7 +45,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
     /**
      * Instances of `Live2DMotion`. The structure is the same as {@link MotionManager#definitions};
      */
-    motionGroups: Partial<Record<Groups, (Motion | undefined | null)[]>> = {};
+    motionGroups: Partial<Record<string, (Motion | undefined | null)[]>> = {};
 
     state = new MotionState();
 
@@ -75,7 +75,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
     }
 
     protected setupMotions(): void {
-        for (const group of Object.keys(this.definitions) as Groups[]) {
+        for (const group of Object.keys(this.definitions)) {
             // init with the same structure of definitions
             this.motionGroups[group] = [];
         }
@@ -98,7 +98,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
                 break;
         }
 
-        for (const group of groups as Groups[]) {
+        for (const group of groups) {
             for (let i = 0; i < this.definitions[group]!.length; i++) {
                 this.loadMotion(group, i).then();
             }
@@ -110,7 +110,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
      * @param group
      * @param index
      */
-    async loadMotion(group: Groups, index: number): Promise<Motion | undefined> {
+    async loadMotion(group: string, index: number): Promise<Motion | undefined> {
         if (!this.definitions[group] ?. [index]) {
             logger.warn(this.tag, `Undefined motion at "${group}"[${index}]`);
             return undefined;
@@ -132,7 +132,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
         return motion;
     }
 
-    private _loadMotion(group: Groups, index: number): Promise<Motion | undefined> {
+    private _loadMotion(group: string, index: number): Promise<Motion | undefined> {
         throw new Error('Not implemented.');
     }
 
@@ -143,7 +143,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
      * @param priority
      * @return Promise that resolves with true if the motion is successfully started.
      */
-    async startMotion(group: Groups, index: number, priority: MotionPriority = MOTION_PRIORITY_NORMAL): Promise<boolean> {
+    async startMotion(group: string, index: number, priority: MotionPriority = MOTION_PRIORITY_NORMAL): Promise<boolean> {
         if (!this.state.reserve(group, index, priority)) {
             return false;
         }
@@ -212,7 +212,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any, Groups exten
      * @param priority
      * @return Promise that resolves with true if the motion is successfully started.
      */
-    startRandomMotion(group: Groups, priority?: MotionPriority): Promise<boolean> {
+    startRandomMotion(group: string, priority?: MotionPriority): Promise<boolean> {
         const groupDefs = this.definitions[group];
 
         if (groupDefs?.length) {
