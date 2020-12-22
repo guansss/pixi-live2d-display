@@ -51,6 +51,8 @@ export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec
     protected _startMotion(motion: CubismMotion, onFinish?: (motion: CubismMotion) => void): number {
         motion.setFinishedMotionHandler(onFinish as (motion: ACubismMotion) => void);
 
+        this.queueManager.stopAllMotions();
+
         return this.queueManager.startMotion(motion, false, performance.now());
     }
 

@@ -65,6 +65,8 @@ export class Cubism2MotionManager extends MotionManager<Live2DMotion, Cubism2Spe
     protected _startMotion(motion: Live2DMotion, onFinish?: (motion: Live2DMotion) => void): number {
         motion.onFinishHandler = onFinish;
 
+        this.queueManager.stopAllMotions();
+
         return this.queueManager.startMotion(motion);
     }
 
