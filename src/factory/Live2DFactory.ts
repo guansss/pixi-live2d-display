@@ -27,7 +27,7 @@ export interface Live2DFactoryContext {
     settings?: ModelSettings;
 }
 
-export interface Live2DPlatform {
+export interface Live2DRuntime {
     version: number;
 
     createModelSettings(json: any): ModelSettings | undefined;
@@ -67,8 +67,8 @@ export const jsonToSettings: Middleware<Live2DFactoryContext> = async (context, 
 
         return next();
     } else if (typeof context.source === 'object') {
-        for (const platform of Live2DFactory.platforms) {
-            const settings = platform.createModelSettings(context.source);
+        for (const runtime of Live2DFactory.runtimes) {
+            const settings = runtime.createModelSettings(context.source);
 
             if (settings) {
                 context.settings = settings;
@@ -90,9 +90,9 @@ export const setupOptionals: Middleware<Live2DFactoryContext> = async (context, 
 
     if (internalModel) {
         const settings = context.settings!;
-        const platform = Live2DFactory.platforms.find(f => f.test(settings));
+        const runtime = Live2DFactory.runtimes.find(f => f.test(settings));
 
-        if (platform) {
+        if (runtime) {
             if (settings.pose) {
                 await Live2DLoader.load({
                         settings,
@@ -101,7 +101,7 @@ export const setupOptionals: Middleware<Live2DFactoryContext> = async (context, 
                         target: internalModel,
                     })
                     .then((data: ArrayBuffer) => {
-                        internalModel.pose = platform.createPose(internalModel.coreModel, data);
+                        internalModel.pose = runtime.createPose(internalModel.coreModel, data);
                         context.live2dModel.emit('poseLoaded', internalModel.pose);
                     })
                     .catch((e: Error) => logger.warn(TAG, 'Failed to load pose.\n', e));
@@ -114,7 +114,7 @@ export const setupOptionals: Middleware<Live2DFactoryContext> = async (context, 
                         target: internalModel,
                     })
                     .then((data: ArrayBuffer) => {
-                        internalModel.physics = platform.createPhysics(internalModel.coreModel, data);
+                        internalModel.physics = runtime.createPhysics(internalModel.coreModel, data);
                         context.live2dModel.emit('physicsLoaded', internalModel.physics);
                     })
                     .catch((e: Error) => logger.warn(TAG, 'Failed to load physics.\n', e));
@@ -153,9 +153,9 @@ export const createInternalModel: Middleware<Live2DFactoryContext> = async (cont
     const settings = context.settings;
 
     if (settings instanceof ModelSettings) {
-        const platform = Live2DFactory.platforms.find(f => f.test(settings));
+        const runtime = Live2DFactory.runtimes.find(f => f.test(settings));
 
-        if (!platform) {
+        if (!runtime) {
             throw new TypeError('Unknown model settings.');
         }
 
@@ -166,9 +166,9 @@ export const createInternalModel: Middleware<Live2DFactoryContext> = async (cont
             target: context.live2dModel,
         });
 
-        const coreModel = platform.createCoreModel(modelData);
+        const coreModel = runtime.createCoreModel(modelData);
 
-        context.internalModel = platform.createInternalModel(coreModel, settings, context.options);
+        context.internalModel = runtime.createInternalModel(coreModel, settings, context.options);
 
         return next();
     }
@@ -177,7 +177,7 @@ export const createInternalModel: Middleware<Live2DFactoryContext> = async (cont
 };
 
 export class Live2DFactory {
-    static platforms: Live2DPlatform[] = [];
+    static runtimes: Live2DRuntime[] = [];
 
     static live2DModelMiddlewares: Middleware<Live2DFactoryContext>[] = [
         urlToJSON, jsonToSettings, setupOptionals, setupLive2DModel, createInternalModel,
@@ -190,11 +190,11 @@ export class Live2DFactory {
 
     static expressionTasksMap = new WeakMap<ExpressionManager, Promise<any>[]>();
 
-    static registerPlatform(platform: Live2DPlatform) {
-        this.platforms.push(platform);
+    static registerRuntime(runtime: Live2DRuntime) {
+        this.runtimes.push(runtime);
 
         // higher version as higher priority
-        this.platforms.sort((a, b) => b.version - a.version);
+        this.runtimes.sort((a, b) => b.version - a.version);
     }
 
     static async setupLive2DModel<IM extends InternalModel>(live2dModel: Live2DModel<IM>, source: string | object | IM['settings'], options?: Live2DFactoryOptions): Promise<void> {
