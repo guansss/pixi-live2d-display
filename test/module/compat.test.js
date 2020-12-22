@@ -1,4 +1,4 @@
-import { createTexture } from '@/texture';
+import { createTexture } from '@/factory/texture';
 import { Graphics } from '@pixi/graphics';
 import { Sprite } from '@pixi/sprite';
 import chunk from 'lodash/chunk';

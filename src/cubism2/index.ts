@@ -1,10 +1,11 @@
-export * from '@/cubism2/Cubism2ExpressionManager';
-export * from '@/cubism2/Cubism2InternalModel';
-export * from '@/cubism2/Cubism2ModelSettings';
-export * from '@/cubism2/Cubism2MotionManager';
-export * from '@/cubism2/Live2DExpression';
-export * from '@/cubism2/Live2DEyeBlink';
-export * from '@/cubism2/Live2DPhysics';
-export * from '@/cubism2/Live2DPose';
+export * from './Cubism2ExpressionManager';
+export * from './Cubism2InternalModel';
+export * from './Cubism2ModelSettings';
+export * from './Cubism2MotionManager';
+export * from './Live2DExpression';
+export * from './Live2DEyeBlink';
+export * from './Live2DPhysics';
+export * from './Live2DPose';
+export * from './factory';
 
-import '@/cubism2/patch-motion';
+import './patch-motion';

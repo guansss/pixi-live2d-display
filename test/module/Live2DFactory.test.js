@@ -1,5 +1,5 @@
 import { config, Cubism2ModelSettings, Cubism4ModelSettings, Live2DModel, MOTION_PRELOAD_NONE } from '@';
-import { createTexture } from '@/texture';
+import { createTexture } from '@/factory/texture';
 import { Application } from '@pixi/app';
 import { Texture } from '@pixi/core';
 import merge from 'lodash/merge';
