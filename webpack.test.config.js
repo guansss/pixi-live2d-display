@@ -37,5 +37,8 @@ module.exports = {
         },
         extensions: ['.ts', '.js'],
     },
+    optimization: {
+        minimize: false,
+    },
     externals: [/@pixi.*/, /lodash/],
 };

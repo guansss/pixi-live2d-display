@@ -2,6 +2,15 @@ const path = require('path');
 const merge = require('lodash/merge');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const webpack = require('webpack');
+
+// add browser-specific tools
+const addBrowserTools = new webpack.NormalModuleReplacementPlugin(/\/common/, function(resource) {
+    if (!resource.contextInfo.issuer.includes('common-browser')) {
+        resource.request = resource.request.replace('common', `common-browser`);
+        console.log(resource.contextInfo.issuer, resource.request);
+    }
+});
 
 module.exports = [
     // profile for module systems
@@ -22,7 +31,7 @@ module.exports = [
                     configFile: 'tsconfig.build.json',
                 },
             }),
-            new BundleAnalyzerPlugin(),
+            // new BundleAnalyzerPlugin(),
         ],
         externals: [/* place holder for merging */ undefined, /lodash/],
         optimization: {
@@ -30,13 +39,14 @@ module.exports = [
         },
     },
 
-    // profiles for browser, Lodash is bundled
+    // profiles for browser, Lodash and browser-specific tools are bundled
     {
         output: {
             filename: '[name].js',
             path: path.resolve(__dirname, 'dist'),
             library: ['PIXI', 'live2d'],
         },
+        plugins: [addBrowserTools],
         optimization: {
             minimize: false,
         },
@@ -47,6 +57,7 @@ module.exports = [
             path: path.resolve(__dirname, 'dist'),
             library: ['PIXI', 'live2d'],
         },
+        plugins: [addBrowserTools],
     },
 ].map(override => merge({
     entry: {
