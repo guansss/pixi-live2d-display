@@ -276,7 +276,9 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
 
     /** @override */
     protected _render(renderer: Renderer): void {
-        if (!this.internalModel) return;
+        if (!this.internalModel) {
+            return;
+        }
 
         this.registerInteraction(renderer.plugins.interaction);
 
@@ -300,17 +302,24 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         for (let i = 0; i < this.textures.length; i++) {
             const texture = this.textures[i]!;
 
-            if (texture.valid && (shouldUpdateTexture || !(texture.baseTexture as any)._glTextures[this.glContextID])) {
+            if (!texture.valid) {
+                continue;
+            }
+
+            if (shouldUpdateTexture || !(texture.baseTexture as any)._glTextures[this.glContextID]) {
                 renderer.gl.pixelStorei(WebGLRenderingContext.UNPACK_FLIP_Y_WEBGL, this.internalModel.textureFlipY);
 
                 // let the TextureSystem generate corresponding WebGLTexture, and bind to an arbitrary location
                 renderer.texture.bind(texture.baseTexture, 0);
-
-                // bind the WebGLTexture into Live2D core
-                this.internalModel.bindTexture(i, (texture.baseTexture as any)._glTextures[this.glContextID].texture);
             }
 
-            // manually update the GC counter so they won't be GCed
+            // bind the WebGLTexture into Live2D core.
+            // because the Texture in Pixi can be shared between multiple DisplayObjects,
+            // it's unable to know if the WebGLTexture in this Texture has been destroyed (GCed) and regenerated,
+            // and therefore we always bind the texture here no matter what
+            this.internalModel.bindTexture(i, (texture.baseTexture as any)._glTextures[this.glContextID].texture);
+
+            // manually update the GC counter so they won't be GCed while using this model
             (texture.baseTexture as any).touched = renderer.textureGC.count;
         }
 

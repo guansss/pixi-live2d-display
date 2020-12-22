@@ -149,5 +149,15 @@ describe('Live2DModel', async () => {
         });
     });
 
+    it('should handle GCed textures', function() {
+        app.render();
+
+        // all textures would be destroyed
+        app.renderer.textureGC.count = 100000;
+        app.renderer.textureGC.run();
+
+        app.render();
+    });
+
     require('./compat.test');
 });
