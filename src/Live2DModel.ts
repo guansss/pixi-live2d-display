@@ -1,4 +1,4 @@
-import { InternalModel, MotionManager, MotionPriority } from '@/cubism-common';
+import { InternalModel, MotionPriority } from '@/cubism-common';
 import { MotionManagerOptions } from '@/cubism-common/MotionManager';
 import type { Live2DFactoryOptions } from '@/factory/Live2DFactory';
 import { Live2DFactory } from '@/factory/Live2DFactory';
@@ -159,13 +159,28 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     }
 
     /**
-     * Shorthand of {@link MotionManager#startRandomMotion}.
+     * Shorthand to start a motion.
      */
-    motion(group: string, priority?: MotionPriority): Promise<boolean> {
-        // because `startRandomMotion` is a union function, the types of its first parameter are
-        // intersected and therefore collapsed to `never`, that's why we need to cast the type for it.
-        // see https://github.com/Microsoft/TypeScript/issues/30581
-        return this.internalModel?.motionManager.startRandomMotion(group, priority) ?? Promise.resolve(false);
+    motion(group: string, index?: number, priority?: MotionPriority): Promise<boolean> {
+        if (this.internalModel) {
+            return index === undefined
+                ? this.internalModel.motionManager.startRandomMotion(group, priority)
+                : this.internalModel.motionManager.startMotion(group, index, priority);
+        }
+        return Promise.resolve(false);
+    }
+
+    /**
+     * Shorthand to set an expression.
+     * @param id
+     */
+    expression(id?: number | string): Promise<boolean> {
+        if (this.internalModel?.motionManager.expressionManager) {
+            return id === undefined
+                ? this.internalModel.motionManager.expressionManager.setRandomExpression()
+                : this.internalModel.motionManager.expressionManager.setExpression(id);
+        }
+        return Promise.resolve(false);
     }
 
     /**
