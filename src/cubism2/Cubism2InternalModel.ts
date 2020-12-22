@@ -1,6 +1,5 @@
 import { MotionManagerOptions } from '@/cubism-common';
 import { CommonHitArea, CommonLayout, InternalModel } from '@/cubism-common/InternalModel';
-import { Matrix } from '@pixi/math';
 import { Cubism2ModelSettings } from './Cubism2ModelSettings';
 import { Cubism2MotionManager } from './Cubism2MotionManager';
 import { Live2DEyeBlink } from './Live2DEyeBlink';
@@ -123,7 +122,7 @@ export class Cubism2InternalModel extends InternalModel {
     }
 
     getHitAreaVertices(drawIndex: number): Float32Array {
-        return this.coreModel.getTransformedPoints(drawIndex);
+        return this.coreModel.getTransformedPoints(drawIndex).slice(0);
     }
 
     update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {
@@ -157,7 +156,9 @@ export class Cubism2InternalModel extends InternalModel {
         model.update();
     }
 
-    draw(gl:WebGLRenderingContext, matrix: Matrix): void {
+    draw(gl: WebGLRenderingContext): void {
+        const matrix = this.drawingMatrix;
+
         // set given 3x3 matrix into a 4x4 matrix, with Y inverted
         tempMatrixArray[0] = matrix.a;
         tempMatrixArray[1] = -matrix.c;

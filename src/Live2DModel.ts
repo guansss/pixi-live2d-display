@@ -8,7 +8,7 @@ import { ObservablePoint, Point } from '@pixi/math';
 import { Ticker } from '@pixi/ticker';
 import { InteractionMixin } from './InteractionMixin';
 import { Live2DTransform } from './Live2DTransform';
-import { applyMixins, clamp, logger } from './utils';
+import { applyMixins, logger } from './utils';
 
 export interface Live2DModelOptions extends MotionManagerOptions {
     /**
@@ -119,8 +119,6 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     protected init() {
         this.on('modelLoaded', () => {
             this.tag = `Live2DModel(${this.internalModel!.settings.name})`;
-
-            this.transform.internalModel = this.internalModel;
         });
     }
 
@@ -181,14 +179,14 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         tempPoint.x = x;
         tempPoint.y = y;
 
-        // we can pass `true` as third argument to skip the update transform
+        // we can pass `true` as the third argument to skip the update transform
         // because focus won't take effect until the model is rendered,
         // and a model being rendered will always get transform updated
         this.toModelPosition(tempPoint, tempPoint, true);
 
         this.internalModel?.focusController.focus(
-            clamp((tempPoint.x / this.internalModel.originalWidth) * 2 - 1, -1, 1),
-            -clamp((tempPoint.y / this.internalModel.originalHeight) * 2 - 1, -1, 1),
+            (tempPoint.x / this.internalModel.originalWidth) * 2 - 1,
+            -((tempPoint.y / this.internalModel.originalHeight) * 2 - 1),
         );
     }
 
@@ -217,11 +215,11 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     /**
      * Gets the position in original (unscaled) Live2D model.
      * @param position - The point in world space.
-     * @param point - The point to store new value.
+     * @param result - The point to store new value.
      * @param skipUpdate - True to skip the update transform.
      * @return The point in Live2D model.
      */
-    toModelPosition(position: Point, point = new Point(), skipUpdate?: boolean): Point {
+    toModelPosition(position: Point, result: Point = position.clone(), skipUpdate?: boolean): Point {
         if (this.internalModel) {
             if (!skipUpdate) {
                 this._recursivePostUpdateTransform();
@@ -235,14 +233,11 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
                 }
             }
 
-            const transform = this.transform.worldTransform;
-            const model1 = this.internalModel;
-
-            point.x = ((position.x - transform.tx) / transform.a - model1.matrix.tx) / model1.matrix.a;
-            point.y = ((position.y - transform.ty) / transform.d - model1.matrix.ty) / model1.matrix.d;
+            this.transform.worldTransform.applyInverse(position, result);
+            this.internalModel.localTransform.applyInverse(result, result);
         }
 
-        return point;
+        return result;
     }
 
     /**
@@ -322,7 +317,8 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         this.internalModel.update(this.deltaTime, this.elapsedTime);
         this.deltaTime = 0;
 
-        this.internalModel.draw(renderer.gl, this.transform.getDrawingMatrix(renderer.gl));
+        this.transform.applyTransform(this.internalModel, renderer.gl);
+        this.internalModel.draw(renderer.gl);
 
         // reset WebGL state and texture bindings
         renderer.state.reset();

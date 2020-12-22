@@ -62,9 +62,11 @@ export abstract class InternalModel extends EventEmitter {
     readonly height: number = 0;
 
     /**
-     * Transformation matrix, calculated from the model's layout.
+     * Local transformation, calculated from the model's layout.
      */
-    matrix = new Matrix();
+    localTransform = new Matrix();
+
+    drawingMatrix = new Matrix();
 
     focusController = new FocusController();
 
@@ -98,26 +100,25 @@ export abstract class InternalModel extends EventEmitter {
             this.getLayout(),
         );
 
-        this.matrix.scale(layout.width / LOGICAL_WIDTH, layout.height / LOGICAL_HEIGHT);
+        this.localTransform.scale(layout.width / LOGICAL_WIDTH, layout.height / LOGICAL_HEIGHT);
 
-        self.width = this.originalWidth * this.matrix.a;
-        self.height = this.originalHeight * this.matrix.d;
+        self.width = this.originalWidth * this.localTransform.a;
+        self.height = this.originalHeight * this.localTransform.d;
 
-        // multiply the offset by model's width and height, this calculation differs from Live2D SDK
-        this.matrix.translate(
-            this.width *
-            ((layout.x !== undefined && layout.x - layout.width / 2) ||
-                (layout.centerX !== undefined && layout.centerX) ||
-                (layout.left !== undefined && layout.left - layout.width / 2) ||
-                (layout.right !== undefined && layout.right + layout.width / 2) ||
-                0),
-            -this.height *
-            ((layout.y !== undefined && layout.y - layout.height / 2) ||
-                (layout.centerY !== undefined && layout.centerY) ||
-                (layout.top !== undefined && layout.top - layout.height / 2) ||
-                (layout.bottom !== undefined && layout.bottom + layout.height / 2) ||
-                0),
-        );
+        // this calculation differs from Live2D SDK...
+        const offsetX = (layout.x !== undefined && layout.x - layout.width / 2)
+            || (layout.centerX !== undefined && layout.centerX)
+            || (layout.left !== undefined && layout.left - layout.width / 2)
+            || (layout.right !== undefined && layout.right + layout.width / 2)
+            || 0;
+
+        const offsetY = (layout.y !== undefined && layout.y - layout.height / 2)
+            || (layout.centerY !== undefined && layout.centerY)
+            || (layout.top !== undefined && layout.top - layout.height / 2)
+            || (layout.bottom !== undefined && layout.bottom + layout.height / 2)
+            || 0;
+
+        this.localTransform.translate(this.width * offsetX, -this.height * offsetY);
     }
 
     protected setupHitAreas() {
@@ -169,6 +170,10 @@ export abstract class InternalModel extends EventEmitter {
         return { left, right, top, bottom };
     }
 
+    updateTransform(transform: Matrix) {
+        this.drawingMatrix.copyFrom(transform).append(this.localTransform);
+    }
+
     update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {
         this.focusController.update(dt);
     };
@@ -195,7 +200,7 @@ export abstract class InternalModel extends EventEmitter {
      */
     abstract bindTexture(index: number, texture: WebGLTexture): void;
 
-    abstract draw(gl:WebGLRenderingContext, matrix: Matrix): void;
+    abstract draw(gl: WebGLRenderingContext): void;
 
     protected abstract getHitAreaDefs(): CommonHitArea[];
 

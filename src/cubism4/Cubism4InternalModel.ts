@@ -94,7 +94,6 @@ export class Cubism4InternalModel extends InternalModel {
     protected setupLayout() {
         super.setupLayout();
 
-        this.matrix.translate(this.width * 0.5, this.height * 0.5);
         this.pixelsPerUnit = this.coreModel.getModel().canvasinfo.PixelsPerUnit;
     }
 
@@ -103,7 +102,7 @@ export class Cubism4InternalModel extends InternalModel {
             frameBufferMap.set(gl, gl.getParameter(gl.FRAMEBUFFER_BINDING));
         }
 
-        // reset resources bound to previous WebGL context
+        // reset resources that were bound to previous WebGL context
         this.renderer.firstDraw = true;
         this.renderer._bufferData = {
             vertex: null,
@@ -133,14 +132,24 @@ export class Cubism4InternalModel extends InternalModel {
         const arr = this.coreModel.getDrawableVertices(drawIndex).slice(0);
 
         for (let i = 0; i < arr.length; i += 2) {
-            arr[i] *= this.pixelsPerUnit;
-            arr[i + 1] *= -this.pixelsPerUnit;
+            arr[i] = arr[i]! * this.pixelsPerUnit + this.originalWidth / 2;
+            arr[i + 1] = -arr[i + 1]! * this.pixelsPerUnit + this.originalHeight / 2;
         }
 
         return arr;
     }
 
+    updateTransform(transform: Matrix) {
+        super.updateTransform(transform);
+
+        this.drawingMatrix.translate(this.width * transform.a / 2, this.height * transform.d / 2);
+        this.drawingMatrix.a *= this.pixelsPerUnit;
+        this.drawingMatrix.d *= this.pixelsPerUnit;
+    }
+
     public update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {
+        super.update(dt, now);
+
         dt /= 1000;
         now /= 1000;
 
@@ -180,14 +189,15 @@ export class Cubism4InternalModel extends InternalModel {
         model.update();
     }
 
-    public draw(gl: WebGLRenderingContext, matrix: Matrix): void {
+    public draw(gl: WebGLRenderingContext): void {
+        const matrix = this.drawingMatrix;
         const array = tempMatrix.getArray();
 
         // set given 3x3 matrix into a 4x4 matrix, with Y inverted
-        array[0] = matrix.a * this.pixelsPerUnit;
-        array[1] = matrix.c * this.pixelsPerUnit;
-        array[4] = matrix.b * this.pixelsPerUnit;
-        array[5] = matrix.d * this.pixelsPerUnit;
+        array[0] = matrix.a;
+        array[1] = matrix.c;
+        array[4] = matrix.b;
+        array[5] = matrix.d;
         array[12] = matrix.tx;
         array[13] = -matrix.ty;
 

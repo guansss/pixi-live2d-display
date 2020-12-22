@@ -1,3 +1,5 @@
+import { clamp } from '@/utils';
+
 const EPSILON = 0.01; // Minimum distance to respond
 
 const MAX_SPEED = 40 / 7.5;
@@ -16,8 +18,8 @@ export class FocusController {
      * Focus in range [-1, 1].
      */
     focus(x: number, y: number) {
-        this.targetX = x;
-        this.targetY = y;
+        this.targetX = clamp(x, -1, 1);
+        this.targetY = clamp(y, -1, 1);
     }
 
     update(dt: DOMHighResTimeStamp) {
