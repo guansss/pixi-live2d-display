@@ -72,7 +72,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      */
     tag = 'Live2DModel(uninitialized)';
 
-    internalModel?: IM;
+    internalModel!: IM;
 
     textures: Texture[] = [];
 
@@ -153,21 +153,16 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * Called when the values of {@link Live2DModel#anchor} are changed.
      */
     protected onAnchorChange(): void {
-        if (this.internalModel) {
-            this.pivot.set(this.anchor.x * this.internalModel.width, this.anchor.y * this.internalModel.height);
-        }
+        this.pivot.set(this.anchor.x * this.internalModel.width, this.anchor.y * this.internalModel.height);
     }
 
     /**
      * Shorthand to start a motion.
      */
     motion(group: string, index?: number, priority?: MotionPriority): Promise<boolean> {
-        if (this.internalModel) {
-            return index === undefined
-                ? this.internalModel.motionManager.startRandomMotion(group, priority)
-                : this.internalModel.motionManager.startMotion(group, index, priority);
-        }
-        return Promise.resolve(false);
+        return index === undefined
+            ? this.internalModel.motionManager.startRandomMotion(group, priority)
+            : this.internalModel.motionManager.startMotion(group, index, priority);
     }
 
     /**
@@ -175,7 +170,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * @param id
      */
     expression(id?: number | string): Promise<boolean> {
-        if (this.internalModel?.motionManager.expressionManager) {
+        if (this.internalModel.motionManager.expressionManager) {
             return id === undefined
                 ? this.internalModel.motionManager.expressionManager.setRandomExpression()
                 : this.internalModel.motionManager.expressionManager.setExpression(id);
@@ -197,7 +192,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         // and a model being rendered will always get transform updated
         this.toModelPosition(tempPoint, tempPoint, true);
 
-        this.internalModel?.focusController.focus(
+        this.internalModel.focusController.focus(
             (tempPoint.x / this.internalModel.originalWidth) * 2 - 1,
             -((tempPoint.y / this.internalModel.originalHeight) * 2 - 1),
         );
@@ -210,18 +205,16 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * @emits {@link Live2DModelEvents.hit}
      */
     tap(x: number, y: number): void {
-        if (this.internalModel) {
-            tempPoint.x = x;
-            tempPoint.y = y;
-            this.toModelPosition(tempPoint, tempPoint);
+        tempPoint.x = x;
+        tempPoint.y = y;
+        this.toModelPosition(tempPoint, tempPoint);
 
-            const hitAreaNames = this.internalModel.hitTest(tempPoint.x, tempPoint.y);
+        const hitAreaNames = this.internalModel.hitTest(tempPoint.x, tempPoint.y);
 
-            if (hitAreaNames.length) {
-                logger.log(this.tag, `Hit`, hitAreaNames);
+        if (hitAreaNames.length) {
+            logger.log(this.tag, `Hit`, hitAreaNames);
 
-                this.emit('hit', hitAreaNames);
-            }
+            this.emit('hit', hitAreaNames);
         }
     }
 
@@ -233,22 +226,20 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * @return The point in Live2D model.
      */
     toModelPosition(position: Point, result: Point = position.clone(), skipUpdate?: boolean): Point {
-        if (this.internalModel) {
-            if (!skipUpdate) {
-                this._recursivePostUpdateTransform();
+        if (!skipUpdate) {
+            this._recursivePostUpdateTransform();
 
-                if (!this.parent) {
-                    (this.parent as any) = this._tempDisplayObjectParent;
-                    this.displayObjectUpdateTransform();
-                    (this.parent as any) = null;
-                } else {
-                    this.displayObjectUpdateTransform();
-                }
+            if (!this.parent) {
+                (this.parent as any) = this._tempDisplayObjectParent;
+                this.displayObjectUpdateTransform();
+                (this.parent as any) = null;
+            } else {
+                this.displayObjectUpdateTransform();
             }
-
-            this.transform.worldTransform.applyInverse(position, result);
-            this.internalModel.localTransform.applyInverse(result, result);
         }
+
+        this.transform.worldTransform.applyInverse(position, result);
+        this.internalModel.localTransform.applyInverse(result, result);
 
         return result;
     }
@@ -264,9 +255,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
 
     /** @override */
     protected _calculateBounds(): void {
-        if (this.internalModel) {
-            this._bounds.addFrame(this.transform, 0, 0, this.internalModel.width, this.internalModel.height);
-        }
+        this._bounds.addFrame(this.transform, 0, 0, this.internalModel.width, this.internalModel.height);
     }
 
     /**
@@ -289,10 +278,6 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
 
     /** @override */
     protected _render(renderer: Renderer): void {
-        if (!this.internalModel) {
-            return;
-        }
-
         this.registerInteraction(renderer.plugins.interaction);
 
         // reset certain systems in renderer to make Live2D's drawing system compatible with Pixi
