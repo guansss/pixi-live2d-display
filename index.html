@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for pixi-live2d-display">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -49,12 +50,7 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
-			<h1>pixi-live2d-display</h1>
+			<h1>Project pixi-live2d-display</h1>
 		</div>
 	</div>
 </header>
@@ -84,175 +80,183 @@
 				<a href="#basic" id="basic" style="color: inherit; text-decoration: none;">
 					<h3>Basic</h3>
 				</a>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> PIXI <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi.js'</span>;
-<span class="hljs-built_in">window</span>.PIXI = PIXI;
-<span class="hljs-keyword">import</span> { Live2DModel } <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi-live2d-display'</span>;
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #0000FF">*</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #001080">PIXI</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;pixi.js&#039;</span><span style="color: #000000">;</span>
+<span style="color: #001080">window</span><span style="color: #000000">.</span><span style="color: #0070C1">PIXI</span><span style="color: #000000"> = </span><span style="color: #0070C1">PIXI</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Live2DModel</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;pixi-live2d-display&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span class="hljs-string">'my-model.model.json'</span>);
+<span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">main</span><span style="color: #000000">() {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">model</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Live2DModel</span><span style="color: #000000">.</span><span style="color: #795E26">fromModelSettingsFile</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;my-model.model.json&#039;</span><span style="color: #000000">);</span>
 
-    <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> PIXI.Application({ <span class="hljs-attr">autoStart</span>: <span class="hljs-literal">true</span> });
-    app.stage.addChild(model);
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">app</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">PIXI</span><span style="color: #000000">.</span><span style="color: #267F99">Application</span><span style="color: #000000">({ </span><span style="color: #001080">autoStart:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> });</span>
+<span style="color: #000000">    </span><span style="color: #001080">app</span><span style="color: #000000">.</span><span style="color: #001080">stage</span><span style="color: #000000">.</span><span style="color: #795E26">addChild</span><span style="color: #000000">(</span><span style="color: #001080">model</span><span style="color: #000000">);</span>
 
-    <span class="hljs-comment">// transformation</span>
-    model.position.set(<span class="hljs-number">100</span>, <span class="hljs-number">100</span>);
-    model.scale.set(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>);
-    model.anchor.set(<span class="hljs-number">0.5</span>, <span class="hljs-number">0.5</span>);
+<span style="color: #000000">    </span><span style="color: #008000">// transformation</span>
+<span style="color: #000000">    </span><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #001080">position</span><span style="color: #000000">.</span><span style="color: #795E26">set</span><span style="color: #000000">(</span><span style="color: #098658">100</span><span style="color: #000000">, </span><span style="color: #098658">100</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #001080">scale</span><span style="color: #000000">.</span><span style="color: #795E26">set</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #001080">anchor</span><span style="color: #000000">.</span><span style="color: #795E26">set</span><span style="color: #000000">(</span><span style="color: #098658">0.5</span><span style="color: #000000">, </span><span style="color: #098658">0.5</span><span style="color: #000000">);</span>
 
-    <span class="hljs-comment">// motion</span>
-    model.on(<span class="hljs-string">'hit'</span>, hitAreas =&gt; {
-        <span class="hljs-keyword">if</span>(hitAreas.includes(<span class="hljs-string">'body'</span>)) {
-            model.motion(<span class="hljs-string">'tapBody'</span>);
-        }
-    });
-}</code></pre>
+<span style="color: #000000">    </span><span style="color: #008000">// motion</span>
+<span style="color: #000000">    </span><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;hit&#039;</span><span style="color: #000000">, </span><span style="color: #001080">hitAreas</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">if</span><span style="color: #000000">(</span><span style="color: #001080">hitAreas</span><span style="color: #000000">.</span><span style="color: #795E26">includes</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;body&#039;</span><span style="color: #000000">)) {</span>
+<span style="color: #000000">            </span><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #795E26">motion</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tapBody&#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">        }</span>
+<span style="color: #000000">    });</span>
+<span style="color: #000000">}</span>
+</code></pre>
 				<a href="#modules" id="modules" style="color: inherit; text-decoration: none;">
 					<h3>Modules</h3>
 				</a>
 				<p>It&#39;s possible to import only the necessary modules rather than a full build of PixiJS.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Application } <span class="hljs-keyword">from</span> <span class="hljs-string">'@pixi/app'</span>;
-<span class="hljs-keyword">import</span> { Live2DModel } <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi-live2d-display'</span>;
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Application</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@pixi/app&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Live2DModel</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;pixi-live2d-display&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span class="hljs-string">'my-model.model.json'</span>);
+<span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">main</span><span style="color: #000000">() {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">model</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Live2DModel</span><span style="color: #000000">.</span><span style="color: #795E26">fromModelSettingsFile</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;my-model.model.json&#039;</span><span style="color: #000000">);</span>
 
-    <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Application();
-    app.stage.addChild(model);
-}</code></pre>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">app</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Application</span><span style="color: #000000">();</span>
+<span style="color: #000000">    </span><span style="color: #001080">app</span><span style="color: #000000">.</span><span style="color: #001080">stage</span><span style="color: #000000">.</span><span style="color: #795E26">addChild</span><span style="color: #000000">(</span><span style="color: #001080">model</span><span style="color: #000000">);</span>
+<span style="color: #000000">}</span>
+</code></pre>
 				<a href="#prebuilt-files" id="prebuilt-files" style="color: inherit; text-decoration: none;">
 					<h3>Prebuilt Files</h3>
 				</a>
 				<p>When including <a href="https://github.com/guansss/pixi-live2d-display/releases">prebuilt files</a> by script tag, all exported members are available in <code>PIXI.live2d</code> namespace. For example <code>import { Live2DModel } from &#39;pixi-live2d-display&#39;</code> becomes <code>PIXI.live2d.Live2DModel</code>.</p>
-				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"pixi.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"pixi-live2d-display.browser.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
-				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> PIXI.Application({ <span class="hljs-attr">autoStart</span>: <span class="hljs-literal">true</span> });
+				<pre><code class="language-html"><span style="color: #800000">&lt;script</span><span style="color: #000000FF"> </span><span style="color: #FF0000">src</span><span style="color: #000000FF">=</span><span style="color: #0000FF">&quot;pixi.min.js&quot;</span><span style="color: #800000">&gt;&lt;/script&gt;</span>
+<span style="color: #800000">&lt;script</span><span style="color: #000000FF"> </span><span style="color: #FF0000">src</span><span style="color: #000000FF">=</span><span style="color: #0000FF">&quot;pixi-live2d-display.browser.js&quot;</span><span style="color: #800000">&gt;&lt;/script&gt;</span>
+</code></pre>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">app</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">PIXI</span><span style="color: #000000">.</span><span style="color: #267F99">Application</span><span style="color: #000000">({ </span><span style="color: #001080">autoStart:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> });</span>
 
-PIXI.live2d.Live2DModel.fromModelSettingsFile(<span class="hljs-string">'my-model.model.json'</span>).then(<span class="hljs-function"><span class="hljs-params">model</span> =&gt;</span> {
-    app.stage.addChild(model);
-})</code></pre>
+<span style="color: #0070C1">PIXI</span><span style="color: #000000">.</span><span style="color: #001080">live2d</span><span style="color: #000000">.</span><span style="color: #001080">Live2DModel</span><span style="color: #000000">.</span><span style="color: #795E26">fromModelSettingsFile</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;my-model.model.json&#039;</span><span style="color: #000000">).</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">model</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">app</span><span style="color: #000000">.</span><span style="color: #001080">stage</span><span style="color: #000000">.</span><span style="color: #795E26">addChild</span><span style="color: #000000">(</span><span style="color: #001080">model</span><span style="color: #000000">);</span>
+<span style="color: #000000">})</span>
+</code></pre>
 				<a href="#updating" id="updating" style="color: inherit; text-decoration: none;">
 					<h3>Updating</h3>
 				</a>
 				<p>To make a Live2D model &quot;live&quot;, it should be updated with delta time, which is the time elapsed from last frame to this frame, in milliseconds.</p>
 				<p>When a full build of PixiJS is imported, each model will be automatically updated using <code>window.PIXI.Ticker.shared</code>.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> PIXI <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi.js'</span>;
-<span class="hljs-built_in">window</span>.PIXI = PIXI;</code></pre>
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #0000FF">*</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #001080">PIXI</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;pixi.js&#039;</span><span style="color: #000000">;</span>
+<span style="color: #001080">window</span><span style="color: #000000">.</span><span style="color: #0070C1">PIXI</span><span style="color: #000000"> = </span><span style="color: #0070C1">PIXI</span><span style="color: #000000">;</span>
+</code></pre>
 				<p>Otherwise you need to register the <code>Ticker</code> to <code>Live2DModel</code>.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Application } <span class="hljs-keyword">from</span> <span class="hljs-string">'@pixi/app'</span>;
-<span class="hljs-keyword">import</span> { Ticker, TickerPlugin } <span class="hljs-keyword">from</span> <span class="hljs-string">'@pixi/ticker'</span>;
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Application</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@pixi/app&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Ticker</span><span style="color: #000000">, </span><span style="color: #001080">TickerPlugin</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@pixi/ticker&#039;</span><span style="color: #000000">;</span>
 
-Application.registerPlugin(TickerPlugin);
-Live2DModel.registerTicker(Ticker);</code></pre>
+<span style="color: #001080">Application</span><span style="color: #000000">.</span><span style="color: #795E26">registerPlugin</span><span style="color: #000000">(</span><span style="color: #001080">TickerPlugin</span><span style="color: #000000">);</span>
+<span style="color: #001080">Live2DModel</span><span style="color: #000000">.</span><span style="color: #795E26">registerTicker</span><span style="color: #000000">(</span><span style="color: #001080">Ticker</span><span style="color: #000000">);</span>
+</code></pre>
 				<p>Or you may want to do it yourself:</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Ticker } <span class="hljs-keyword">from</span> <span class="hljs-string">'@pixi/ticker'</span>;
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Ticker</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@pixi/ticker&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span class="hljs-string">'my-model.model.json'</span>, { <span class="hljs-attr">autoUpdate</span>: <span class="hljs-literal">false</span> });
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">model</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Live2DModel</span><span style="color: #000000">.</span><span style="color: #795E26">fromModelSettingsFile</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;my-model.model.json&#039;</span><span style="color: #000000">, { </span><span style="color: #001080">autoUpdate:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
 
-<span class="hljs-keyword">new</span> Ticker().add(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span> model.update(Ticker.shared.elapsedMS));</code></pre>
+<span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Ticker</span><span style="color: #000000">().</span><span style="color: #795E26">add</span><span style="color: #000000">(()</span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #795E26">update</span><span style="color: #000000">(</span><span style="color: #001080">Ticker</span><span style="color: #000000">.</span><span style="color: #001080">shared</span><span style="color: #000000">.</span><span style="color: #001080">elapsedMS</span><span style="color: #000000">));</span>
+</code></pre>
 				<p>Or without <code>Ticker</code>:</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span class="hljs-string">'my-model.model.json'</span>, { <span class="hljs-attr">autoUpdate</span>: <span class="hljs-literal">false</span> });
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">model</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Live2DModel</span><span style="color: #000000">.</span><span style="color: #795E26">fromModelSettingsFile</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;my-model.model.json&#039;</span><span style="color: #000000">, { </span><span style="color: #001080">autoUpdate:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
 
-<span class="hljs-keyword">let</span> then = performance.now();
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">then</span><span style="color: #000000"> = </span><span style="color: #001080">performance</span><span style="color: #000000">.</span><span style="color: #795E26">now</span><span style="color: #000000">();</span>
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">tick</span>(<span class="hljs-params">now</span>) </span>{
-    model.update(now - then);
-    then = now;
+<span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">tick</span><span style="color: #000000">(</span><span style="color: #001080">now</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #795E26">update</span><span style="color: #000000">(</span><span style="color: #001080">now</span><span style="color: #000000"> - </span><span style="color: #001080">then</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #001080">then</span><span style="color: #000000"> = </span><span style="color: #001080">now</span><span style="color: #000000">;</span>
 
-    requestAnimationFrame(tick)
-}
+<span style="color: #000000">    </span><span style="color: #795E26">requestAnimationFrame</span><span style="color: #000000">(</span><span style="color: #001080">tick</span><span style="color: #000000">)</span>
+<span style="color: #000000">}</span>
 
-requestAnimationFrame(tick)</code></pre>
+<span style="color: #795E26">requestAnimationFrame</span><span style="color: #000000">(</span><span style="color: #001080">tick</span><span style="color: #000000">)</span>
+</code></pre>
 				<a href="#interaction" id="interaction" style="color: inherit; text-decoration: none;">
 					<h3>Interaction</h3>
 				</a>
 				<p>Interaction will be automatically set up for each model if <code>Renderer</code> has an <code>InteractionManager</code> plugin, which happens when a full build of PixiJS is imported:</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> PIXI <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi.js'</span>;
-<span class="hljs-built_in">window</span>.PIXI = PIXI;</code></pre>
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #0000FF">*</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #001080">PIXI</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;pixi.js&#039;</span><span style="color: #000000">;</span>
+<span style="color: #001080">window</span><span style="color: #000000">.</span><span style="color: #0070C1">PIXI</span><span style="color: #000000"> = </span><span style="color: #0070C1">PIXI</span><span style="color: #000000">;</span>
+</code></pre>
 				<p>Or when the plugin is manually registered using modules:</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Renderer } <span class="hljs-keyword">from</span> <span class="hljs-string">'@pixi/core'</span>;
-<span class="hljs-keyword">import</span> { InteractionManager } <span class="hljs-keyword">from</span> <span class="hljs-string">'@pixi/interaction'</span>;
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Renderer</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@pixi/core&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">InteractionManager</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@pixi/interaction&#039;</span><span style="color: #000000">;</span>
 
-Renderer.registerPlugin(<span class="hljs-string">'interaction'</span>, InteractionManager);</code></pre>
+<span style="color: #001080">Renderer</span><span style="color: #000000">.</span><span style="color: #795E26">registerPlugin</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;interaction&#039;</span><span style="color: #000000">, </span><span style="color: #001080">InteractionManager</span><span style="color: #000000">);</span>
+</code></pre>
 				<p>If you don&#39;t want the default behaviour, you can disable it by setting <code>autoInteract</code> to <code>false</code>, then play with corresponding interaction methods.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> model = <span class="hljs-keyword">await</span> Live2DModel.fromModelSettingsFile(<span class="hljs-string">'my-model.model.json'</span>, { <span class="hljs-attr">autoInteract</span>: <span class="hljs-literal">false</span> });
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">model</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Live2DModel</span><span style="color: #000000">.</span><span style="color: #795E26">fromModelSettingsFile</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;my-model.model.json&#039;</span><span style="color: #000000">, { </span><span style="color: #001080">autoInteract:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
 
-<span class="hljs-comment">// focusing</span>
-canvasElement.addEventListener(<span class="hljs-string">'mousemove'</span>, event =&gt; model.focus(event.clientX, event.clientY));
+<span style="color: #008000">// focusing</span>
+<span style="color: #001080">canvasElement</span><span style="color: #000000">.</span><span style="color: #795E26">addEventListener</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;mousemove&#039;</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #795E26">focus</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">clientX</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">clientY</span><span style="color: #000000">));</span>
 
-<span class="hljs-comment">// tapping</span>
-canvasElement.addEventListener(<span class="hljs-string">'mousedown'</span>, event =&gt; model.tap(event.clientX, event.clientY));</code></pre>
+<span style="color: #008000">// tapping</span>
+<span style="color: #001080">canvasElement</span><span style="color: #000000">.</span><span style="color: #795E26">addEventListener</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;mousedown&#039;</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #795E26">tap</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">clientX</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">clientY</span><span style="color: #000000">));</span>
+</code></pre>
 				<p>When any hit area (also called <a href="http://sites.cybernoids.jp/cubism_e/modeler/models/collision/placement">Collision Detection</a>) is hit on tapping, a <code>hit</code> event will be emitted with an array of the names of hit hit areas.</p>
-				<pre><code class="language-javascript">model.on(<span class="hljs-string">'hit'</span>, hitAreas =&gt; {
-    <span class="hljs-keyword">if</span>(hitAreas.includes(<span class="hljs-string">'body'</span>)) {
-        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'hit body'</span>)
-    }
-});</code></pre>
+				<pre><code class="language-javascript"><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;hit&#039;</span><span style="color: #000000">, </span><span style="color: #001080">hitAreas</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">if</span><span style="color: #000000">(</span><span style="color: #001080">hitAreas</span><span style="color: #000000">.</span><span style="color: #795E26">includes</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;body&#039;</span><span style="color: #000000">)) {</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;hit body&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">});</span>
+</code></pre>
 				<a href="#motion" id="motion" style="color: inherit; text-decoration: none;">
 					<h3>Motion</h3>
 				</a>
 				<p>Motions are managed by <code>MotionManager</code> of each model.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Priority } <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi-live2d-display'</span>;
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Priority</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;pixi-live2d-display&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// start a random motion in "tap_body" group, note that it's camelCased into "tapBody" when using in the code</span>
-model.internal.motionManager.startRandomMotion(<span class="hljs-string">'tapBody'</span>);
+<span style="color: #008000">// start a random motion in &quot;tap_body&quot; group, note that it&#039;s camelCased into &quot;tapBody&quot; when using in the code</span>
+<span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #001080">internal</span><span style="color: #000000">.</span><span style="color: #001080">motionManager</span><span style="color: #000000">.</span><span style="color: #795E26">startRandomMotion</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tapBody&#039;</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// start an explicit motion as normal priority</span>
-model.internal.motionManager.startMotionByPriority(<span class="hljs-string">'tapBody'</span>, <span class="hljs-number">0</span>, Priority.Normal);
+<span style="color: #008000">// start an explicit motion as normal priority</span>
+<span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #001080">internal</span><span style="color: #000000">.</span><span style="color: #001080">motionManager</span><span style="color: #000000">.</span><span style="color: #795E26">startMotionByPriority</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tapBody&#039;</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #001080">Priority</span><span style="color: #000000">.</span><span style="color: #001080">Normal</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// a shorthand of startRandomMotion()</span>
-model.motion(<span class="hljs-string">'tapBody'</span>);</code></pre>
+<span style="color: #008000">// a shorthand of startRandomMotion()</span>
+<span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #795E26">motion</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tapBody&#039;</span><span style="color: #000000">);</span>
+</code></pre>
 				<p>When a motion starts, the sound will be played (if there is), and a <code>motion</code> event will be emitted.</p>
-				<pre><code class="language-javascript">model.on(<span class="hljs-string">'motion'</span>, (group, index, audio) =&gt; {
-    <span class="hljs-keyword">if</span>(audio) {
-        audio.addEventListener(<span class="hljs-string">'ended'</span>, () =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'finished'</span>));    
-    }
-});</code></pre>
+				<pre><code class="language-javascript"><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;motion&#039;</span><span style="color: #000000">, (</span><span style="color: #001080">group</span><span style="color: #000000">, </span><span style="color: #001080">index</span><span style="color: #000000">, </span><span style="color: #001080">audio</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">if</span><span style="color: #000000">(</span><span style="color: #001080">audio</span><span style="color: #000000">) {</span>
+<span style="color: #000000">        </span><span style="color: #001080">audio</span><span style="color: #000000">.</span><span style="color: #795E26">addEventListener</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;ended&#039;</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;finished&#039;</span><span style="color: #000000">));    </span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">});</span>
+</code></pre>
 				<a href="#expression" id="expression" style="color: inherit; text-decoration: none;">
 					<h3>Expression</h3>
 				</a>
 				<p>Expressions are managed by <code>ExpressionManager</code> in <code>MotionManager</code>.</p>
-				<pre><code class="language-javascript">model.internal.motionManager.expressionManager.setRandomExpression();</code></pre>
+				<pre><code class="language-javascript"><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #001080">internal</span><span style="color: #000000">.</span><span style="color: #001080">motionManager</span><span style="color: #000000">.</span><span style="color: #001080">expressionManager</span><span style="color: #000000">.</span><span style="color: #795E26">setRandomExpression</span><span style="color: #000000">();</span>
+</code></pre>
 				<a href="#sound" id="sound" style="color: inherit; text-decoration: none;">
 					<h3>Sound</h3>
 				</a>
 				<p>Sounds are managed by static <code>SoundManager</code>.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { SoundManager } <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi-live2d-display'</span>;
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">SoundManager</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;pixi-live2d-display&#039;</span><span style="color: #000000">;</span>
 
-SoundManager.volume = <span class="hljs-number">0.5</span>;</code></pre>
+<span style="color: #001080">SoundManager</span><span style="color: #000000">.</span><span style="color: #001080">volume</span><span style="color: #000000"> = </span><span style="color: #098658">0.5</span><span style="color: #000000">;</span>
+</code></pre>
 				<a href="#global-config" id="global-config" style="color: inherit; text-decoration: none;">
 					<h3>Global Config</h3>
 				</a>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { config } <span class="hljs-keyword">from</span> <span class="hljs-string">'pixi-live2d-display'</span>;
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">config</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;pixi-live2d-display&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// log level</span>
-config.logLevel = config.LOG_LEVEL_WARNING;
+<span style="color: #008000">// log level</span>
+<span style="color: #001080">config</span><span style="color: #000000">.</span><span style="color: #001080">logLevel</span><span style="color: #000000"> = </span><span style="color: #001080">config</span><span style="color: #000000">.</span><span style="color: #0070C1">LOG_LEVEL_WARNING</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// play sound for motions</span>
-config.sound = <span class="hljs-literal">true</span>;
+<span style="color: #008000">// play sound for motions</span>
+<span style="color: #001080">config</span><span style="color: #000000">.</span><span style="color: #001080">sound</span><span style="color: #000000"> = </span><span style="color: #0000FF">true</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// defer motion and corresponding sound until both are loaded </span>
-config.motionSync = <span class="hljs-literal">true</span>;</code></pre>
+<span style="color: #008000">// defer motion and corresponding sound until both are loaded </span>
+<span style="color: #001080">config</span><span style="color: #000000">.</span><span style="color: #001080">motionSync</span><span style="color: #000000"> = </span><span style="color: #0000FF">true</span><span style="color: #000000">;</span>
+</code></pre>
 				<hr>
-				<p>The testing Live2D model, Shizuku, is distributed under Live2D&#39;s <a href="https://www.live2d.com/eula/live2d-free-material-license-agreement_en.html">Free Material License</a>.</p>
+				<p>The testing Live2D model, Shizuku, is redistributed under Live2D&#39;s <a href="https://www.live2d.com/eula/live2d-free-material-license-agreement_en.html">Free Material License</a>.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/___live2dmodel_.html">&quot;./<wbr>Live2DModel&quot;</a>
-					</li>
-					<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
-						<a href="modules/___live2dmodel_.live2dmodel.html">&quot;./<wbr>Live2DModel&quot;.<wbr>Live2DModel</a>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
 					</li>
 					<li class=" tsd-kind-namespace">
 						<a href="modules/config.html">config</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/interaction.html">interaction</a>
 					</li>
 					<li class=" tsd-kind-namespace">
 						<a href="modules/logger.html">logger</a>
@@ -261,23 +265,41 @@ config.motionSync = <span class="hljs-literal">true</span>;</code></pre>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum">
-						<a href="enums/eyestate.html" class="tsd-kind-icon">Eye<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-enum">
-						<a href="enums/group.html" class="tsd-kind-icon">Group</a>
-					</li>
-					<li class=" tsd-kind-enum">
-						<a href="enums/paramcalctype.html" class="tsd-kind-icon">Param<wbr>Calc<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-enum">
-						<a href="enums/priority.html" class="tsd-kind-icon">Priority</a>
+					<li class=" tsd-kind-class">
+						<a href="classes/cubism2expressionmanager.html" class="tsd-kind-icon">Cubism2<wbr>Expression<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="classes/cubism2internalmodel.html" class="tsd-kind-icon">Cubism2<wbr>Internal<wbr>Model</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/cubism2modelsettings.html" class="tsd-kind-icon">Cubism2<wbr>Model<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/cubism2motionmanager.html" class="tsd-kind-icon">Cubism2<wbr>Motion<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/cubism4expressionmanager.html" class="tsd-kind-icon">Cubism4<wbr>Expression<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/cubism4internalmodel.html" class="tsd-kind-icon">Cubism4<wbr>Internal<wbr>Model</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/cubism4modelsettings.html" class="tsd-kind-icon">Cubism4<wbr>Model<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/cubism4motionmanager.html" class="tsd-kind-icon">Cubism4<wbr>Motion<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/expressionmanager.html" class="tsd-kind-icon">Expression<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/focuscontroller.html" class="tsd-kind-icon">Focus<wbr>Controller</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/interactionmixin.html" class="tsd-kind-icon">Interaction<wbr>Mixin</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/internalmodel.html" class="tsd-kind-icon">Internal<wbr>Model</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/live2dexpression.html" class="tsd-kind-icon">Live2DExpression</a>
@@ -286,13 +308,13 @@ config.motionSync = <span class="hljs-literal">true</span>;</code></pre>
 						<a href="classes/live2deyeblink.html" class="tsd-kind-icon">Live2DEye<wbr>Blink</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/live2dinternalmodel.html" class="tsd-kind-icon">Live2DInternal<wbr>Model</a>
+						<a href="classes/live2dfactory.html" class="tsd-kind-icon">Live2DFactory</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="classes/live2dloader.html" class="tsd-kind-icon">Live2DLoader</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/live2dmodel.html" class="tsd-kind-icon">Live2DModel</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/live2dpartsparam.html" class="tsd-kind-icon">Live2DParts<wbr>Param</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/live2dphysics.html" class="tsd-kind-icon">Live2DPhysics</a>
@@ -306,116 +328,128 @@ config.motionSync = <span class="hljs-literal">true</span>;</code></pre>
 					<li class=" tsd-kind-class">
 						<a href="classes/modelsettings.html" class="tsd-kind-icon">Model<wbr>Settings</a>
 					</li>
-					<li class=" tsd-kind-class">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/motionmanager.html" class="tsd-kind-icon">Motion<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/soundmanager.html" class="tsd-kind-icon">Sound<wbr>Manager</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/expressiondefinition.html" class="tsd-kind-icon">Expression<wbr>Definition</a>
+					<li class=" tsd-kind-class">
+						<a href="classes/xhrloader.html" class="tsd-kind-icon">XHRLoader</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/factoryoptions.html" class="tsd-kind-icon">Factory<wbr>Options</a>
+						<a href="interfaces/bounds.html" class="tsd-kind-icon">Bounds</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/layout.html" class="tsd-kind-icon">Layout</a>
+						<a href="interfaces/commonhitarea.html" class="tsd-kind-icon">Common<wbr>Hit<wbr>Area</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/live2dmodelevents.html" class="tsd-kind-icon">Live2DModel<wbr>Events</a>
+						<a href="interfaces/commonlayout.html" class="tsd-kind-icon">Common<wbr>Layout</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/internalmodeloptions.html" class="tsd-kind-icon">Internal<wbr>Model<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/live2dfactorycontext.html" class="tsd-kind-icon">Live2DFactory<wbr>Context</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/live2dfactoryoptions.html" class="tsd-kind-icon">Live2DFactory<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/live2dloadercontext.html" class="tsd-kind-icon">Live2DLoader<wbr>Context</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/live2dmodeloptions.html" class="tsd-kind-icon">Live2DModel<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/live2dresources.html" class="tsd-kind-icon">Live2DResources</a>
+						<a href="interfaces/live2druntime.html" class="tsd-kind-icon">Live2DRuntime</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/modelsettingsjson.html" class="tsd-kind-icon">Model<wbr>SettingsJSON</a>
+						<a href="interfaces/motionmanageroptions.html" class="tsd-kind-icon">Motion<wbr>Manager<wbr>Options</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/motiondefinition.html" class="tsd-kind-icon">Motion<wbr>Definition</a>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#live2dloadertarget" class="tsd-kind-icon">Live2DLoader<wbr>Target</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/param.html" class="tsd-kind-icon">Param</a>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#motionpreloadstrategy" class="tsd-kind-icon">Motion<wbr>Preload<wbr>Strategy</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/partsdefinition.html" class="tsd-kind-icon">Parts<wbr>Definition</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/physicshairdefinition.html" class="tsd-kind-icon">Physics<wbr>Hair<wbr>Definition</a>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#motionpriority" class="tsd-kind-icon">Motion<wbr>Priority</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#acceleration_time" class="tsd-kind-icon">ACCELERATION_<wbr>TIME</a>
+						<a href="modules.html#expression_fading_duration" class="tsd-kind-icon">EXPRESSION_<wbr>FADING_<wbr>DURATION</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#default_fade_timeout" class="tsd-kind-icon">DEFAULT_<wbr>FADE_<wbr>TIMEOUT</a>
+						<a href="modules.html#logical_height" class="tsd-kind-icon">LOGICAL_<wbr>HEIGHT</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#default_fading_duration" class="tsd-kind-icon">DEFAULT_<wbr>FADING_<wbr>DURATION</a>
+						<a href="modules.html#logical_width" class="tsd-kind-icon">LOGICAL_<wbr>WIDTH</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#epsilon" class="tsd-kind-icon">EPSILON</a>
+						<a href="modules.html#motion_fading_duration" class="tsd-kind-icon">MOTION_<wbr>FADING_<wbr>DURATION</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#logical_height" class="tsd-kind-icon">LOGICAL_<wbr>HEIGHT</a>
+						<a href="modules.html#motion_preload_all" class="tsd-kind-icon">MOTION_<wbr>PRELOAD_<wbr>ALL</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#logical_width" class="tsd-kind-icon">LOGICAL_<wbr>WIDTH</a>
+						<a href="modules.html#motion_preload_idle" class="tsd-kind-icon">MOTION_<wbr>PRELOAD_<wbr>IDLE</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#max_speed" class="tsd-kind-icon">MAX_<wbr>SPEED</a>
+						<a href="modules.html#motion_preload_none" class="tsd-kind-icon">MOTION_<wbr>PRELOAD_<wbr>NONE</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#model_data_cache" class="tsd-kind-icon">MODEL_<wbr>DATA_<wbr>CACHE</a>
+						<a href="modules.html#motion_priority_force" class="tsd-kind-icon">MOTION_<wbr>PRIORITY_<wbr>FORCE</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#src_type_map" class="tsd-kind-icon">SRC_<wbr>TYPE_<wbr>MAP</a>
+						<a href="modules.html#motion_priority_idle" class="tsd-kind-icon">MOTION_<wbr>PRIORITY_<wbr>IDLE</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#tag" class="tsd-kind-icon">TAG</a>
+						<a href="modules.html#motion_priority_none" class="tsd-kind-icon">MOTION_<wbr>PRIORITY_<wbr>NONE</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#target_type_map" class="tsd-kind-icon">TARGET_<wbr>TYPE_<wbr>MAP</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#tickerclass" class="tsd-kind-icon">Ticker<wbr>Class</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#volume" class="tsd-kind-icon">VOLUME</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#tempmatrixarray" class="tsd-kind-icon">temp<wbr>Matrix<wbr>Array</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#temppoint" class="tsd-kind-icon">temp<wbr>Point</a>
+						<a href="modules.html#motion_priority_normal" class="tsd-kind-icon">MOTION_<wbr>PRIORITY_<wbr>NORMAL</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#clamp" class="tsd-kind-icon">clamp</a>
+						<a href="modules.html#applymixins" class="tsd-kind-icon">apply<wbr>Mixins</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#clonewithcamelcase" class="tsd-kind-icon">clone<wbr>With<wbr>Camel<wbr>Case</a>
+						<a href="modules.html#clamp" class="tsd-kind-icon">clamp</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#copyarray" class="tsd-kind-icon">copy<wbr>Array</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#copyproperty" class="tsd-kind-icon">copy<wbr>Property</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#copyarray" class="tsd-kind-icon">copy<wbr>Array</a>
+						<a href="modules.html#createinternalmodel" class="tsd-kind-icon">create<wbr>Internal<wbr>Model</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#copyobjectarray" class="tsd-kind-icon">copy<wbr>Object<wbr>Array</a>
+						<a href="modules.html#cubism4ready" class="tsd-kind-icon">cubism4<wbr>Ready</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#copyproperty" class="tsd-kind-icon">copy<wbr>Property</a>
+						<a href="modules.html#foldername" class="tsd-kind-icon">folder<wbr>Name</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#foldername" class="tsd-kind-icon">folder<wbr>Name</a>
+						<a href="modules.html#jsontosettings" class="tsd-kind-icon">json<wbr>ToSettings</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#motionid" class="tsd-kind-icon">motionID</a>
+						<a href="modules.html#rand" class="tsd-kind-icon">rand</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#rand" class="tsd-kind-icon">rand</a>
+						<a href="modules.html#setuplive2dmodel" class="tsd-kind-icon">setup<wbr>Live2DModel</a>
 					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#default_options" class="tsd-kind-icon">DEFAULT_<wbr>OPTIONS</a>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#setupoptionals" class="tsd-kind-icon">setup<wbr>Optionals</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#startupcubism4" class="tsd-kind-icon">start<wbr>UpCubism4</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#urltojson" class="tsd-kind-icon">url<wbr>ToJSON</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#waituntilready" class="tsd-kind-icon">wait<wbr>Until<wbr>Ready</a>
 					</li>
 				</ul>
 			</nav>
@@ -433,8 +467,14 @@ config.motionSync = <span class="hljs-literal">true</span>;</code></pre>
 				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
@@ -444,12 +484,6 @@ config.motionSync = <span class="hljs-literal">true</span>;</code></pre>
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-			</ul>
 		</div>
 	</div>
 </footer>
@@ -458,6 +492,5 @@ config.motionSync = <span class="hljs-literal">true</span>;</code></pre>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

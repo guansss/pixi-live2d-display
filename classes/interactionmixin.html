@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Live2DExpression | pixi-live2d-display</title>
+	<title>InteractionMixin | pixi-live2d-display</title>
 	<meta name="description" content="Documentation for pixi-live2d-display">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">pixi-live2d-display</a>
 				</li>
 				<li>
-					<a href="live2dexpression.html">Live2DExpression</a>
+					<a href="interactionmixin.html">InteractionMixin</a>
 				</li>
 			</ul>
-			<h1>Class Live2DExpression</h1>
+			<h1>Class InteractionMixin</h1>
 		</div>
 	</div>
 </header>
@@ -69,10 +69,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="tsd-signature-type">AMotion</span>
+						<span class="target">InteractionMixin</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">Live2DExpression</span>
+								<a href="live2dmodel.html" class="tsd-signature-type">Live2DModel</a>
 							</li>
 						</ul>
 					</li>
@@ -85,22 +85,26 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="live2dexpression.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="interactionmixin.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="live2dexpression.html#params" class="tsd-kind-icon">params</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="interactionmixin.html#interactionmanager" class="tsd-kind-icon">interaction<wbr>Manager</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="interactionmixin.html#autointeract" class="tsd-kind-icon">auto<wbr>Interact</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="live2dexpression.html#setfadein" class="tsd-kind-icon">set<wbr>Fade<wbr>In</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="live2dexpression.html#setfadeout" class="tsd-kind-icon">set<wbr>Fade<wbr>Out</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="live2dexpression.html#updateparam" class="tsd-kind-icon">update<wbr>Param</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="live2dexpression.html#updateparamexe" class="tsd-kind-icon">update<wbr>Param<wbr>Exe</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="interactionmixin.html#registerinteraction" class="tsd-kind-icon">register<wbr>Interaction</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="interactionmixin.html#unregisterinteraction" class="tsd-kind-icon">unregister<wbr>Interaction</a></li>
 							</ul>
 						</section>
 					</div>
@@ -112,22 +116,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Live2DExpression<span class="tsd-signature-symbol">(</span>json<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Cubism2Spec.ExpressionJSON</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="live2dexpression.html" class="tsd-signature-type">Live2DExpression</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Interaction<wbr>Mixin<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interactionmixin.html" class="tsd-signature-type">InteractionMixin</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/cubism2/Live2DExpression.ts#L4">src/cubism2/Live2DExpression.ts:4</a></li>
-								</ul>
 							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>json: <span class="tsd-signature-type">Cubism2Spec.ExpressionJSON</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="live2dexpression.html" class="tsd-signature-type">Live2DExpression</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="interactionmixin.html" class="tsd-signature-type">InteractionMixin</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -135,84 +130,92 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="params" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> params</h3>
-					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">NonNullable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Cubism2Spec.ExpressionJSON</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;params&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = []</span></div>
+					<a name="interactionmanager" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> interaction<wbr>Manager</h3>
+					<div class="tsd-signature tsd-kind-icon">interaction<wbr>Manager<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">InteractionManager</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/cubism2/Live2DExpression.ts#L4">src/cubism2/Live2DExpression.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/InteractionMixin.ts#L29">src/InteractionMixin.ts:29</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The <code>InteractionManager</code> is locally stored so we can on/off events anytime.</p>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+					<a name="autointeract" class="tsd-anchor"></a>
+					<h3>auto<wbr>Interact</h3>
+					<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> autoInteract<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> autoInteract<span class="tsd-signature-symbol">(</span>autoInteract<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/InteractionMixin.ts#L10">src/InteractionMixin.ts:10</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Enables automatic interaction. Only takes effect if Pixi&#39;s interaction feature has been enabled (by registering the <code>InteractionManager</code> plugin in <code>PIXI.Renderer</code>).</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/InteractionMixin.ts#L14">src/InteractionMixin.ts:14</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Enables automatic interaction. Only takes effect if Pixi&#39;s interaction feature has been enabled (by registering the <code>InteractionManager</code> plugin in <code>PIXI.Renderer</code>).</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>autoInteract: <span class="tsd-signature-type">boolean</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="setfadein" class="tsd-anchor"></a>
-					<h3>set<wbr>Fade<wbr>In</h3>
+					<a name="registerinteraction" class="tsd-anchor"></a>
+					<h3>register<wbr>Interaction</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Fade<wbr>In<span class="tsd-signature-symbol">(</span>time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+						<li class="tsd-signature tsd-kind-icon">register<wbr>Interaction<span class="tsd-signature-symbol">(</span>manager<span class="tsd-signature-symbol">?: </span><a href="live2dmodel.html" class="tsd-signature-type">Live2DModel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/core/live2d.d.ts#L66">core/live2d.d.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/InteractionMixin.ts#L35">src/InteractionMixin.ts:35</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Registers interaction by subscribing to the <code>InteractionManager</code>.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>time: <span class="tsd-signature-type">number</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="setfadeout" class="tsd-anchor"></a>
-					<h3>set<wbr>Fade<wbr>Out</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Fade<wbr>Out<span class="tsd-signature-symbol">(</span>time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/core/live2d.d.ts#L68">core/live2d.d.ts:68</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>time: <span class="tsd-signature-type">number</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="updateparam" class="tsd-anchor"></a>
-					<h3>update<wbr>Param</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Param<span class="tsd-signature-symbol">(</span>model<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Live2DModelWebGL</span>, entry<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">MotionQueueEnt</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/core/live2d.d.ts#L70">core/live2d.d.ts:70</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>model: <span class="tsd-signature-type">Live2DModelWebGL</span></h5>
-								</li>
-								<li>
-									<h5>entry: <span class="tsd-signature-type">MotionQueueEnt</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> manager: <a href="live2dmodel.html" class="tsd-signature-type">Live2DModel</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -220,39 +223,23 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="updateparamexe" class="tsd-anchor"></a>
-					<h3>update<wbr>Param<wbr>Exe</h3>
+					<a name="unregisterinteraction" class="tsd-anchor"></a>
+					<h3>unregister<wbr>Interaction</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Param<wbr>Exe<span class="tsd-signature-symbol">(</span>model<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Live2DModelWebGL</span>, time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DOMTimeStamp</span>, weight<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, motionQueueEnt<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">unregister<wbr>Interaction<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/cubism2/Live2DExpression.ts#L34">src/cubism2/Live2DExpression.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/InteractionMixin.ts#L50">src/InteractionMixin.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>override</dt>
-									<dd></dd>
-								</dl>
+								<div class="lead">
+									<p>Unregisters interaction.</p>
+								</div>
 							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>model: <span class="tsd-signature-type">Live2DModelWebGL</span></h5>
-								</li>
-								<li>
-									<h5>time: <span class="tsd-signature-type">DOMTimeStamp</span></h5>
-								</li>
-								<li>
-									<h5>weight: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>motionQueueEnt: <span class="tsd-signature-type">unknown</span></h5>
-								</li>
-							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -272,25 +259,22 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="live2dexpression.html" class="tsd-kind-icon">Live2DExpression</a>
+						<a href="interactionmixin.html" class="tsd-kind-icon">Interaction<wbr>Mixin</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="live2dexpression.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="interactionmixin.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="live2dexpression.html#params" class="tsd-kind-icon">params</a>
+								<a href="interactionmixin.html#interactionmanager" class="tsd-kind-icon">interaction<wbr>Manager</a>
+							</li>
+							<li class=" tsd-kind-accessor tsd-parent-kind-class">
+								<a href="interactionmixin.html#autointeract" class="tsd-kind-icon">auto<wbr>Interact</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="live2dexpression.html#setfadein" class="tsd-kind-icon">set<wbr>Fade<wbr>In</a>
+								<a href="interactionmixin.html#registerinteraction" class="tsd-kind-icon">register<wbr>Interaction</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="live2dexpression.html#setfadeout" class="tsd-kind-icon">set<wbr>Fade<wbr>Out</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="live2dexpression.html#updateparam" class="tsd-kind-icon">update<wbr>Param</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="live2dexpression.html#updateparamexe" class="tsd-kind-icon">update<wbr>Param<wbr>Exe</a>
+								<a href="interactionmixin.html#unregisterinteraction" class="tsd-kind-icon">unregister<wbr>Interaction</a>
 							</li>
 						</ul>
 					</li>

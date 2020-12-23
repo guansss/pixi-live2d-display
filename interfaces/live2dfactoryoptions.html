@@ -3,10 +3,11 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>FactoryOptions | pixi-live2d-display</title>
+	<title>Live2DFactoryOptions | pixi-live2d-display</title>
 	<meta name="description" content="Documentation for pixi-live2d-display">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -51,13 +52,13 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">Globals</a>
+					<a href="../modules.html">pixi-live2d-display</a>
 				</li>
 				<li>
-					<a href="factoryoptions.html">FactoryOptions</a>
+					<a href="live2dfactoryoptions.html">Live2DFactoryOptions</a>
 				</li>
 			</ul>
-			<h1>Interface FactoryOptions</h1>
+			<h1>Interface Live2DFactoryOptions</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +72,7 @@
 						<a href="live2dmodeloptions.html" class="tsd-signature-type">Live2DModelOptions</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">FactoryOptions</span>
+								<span class="target">Live2DFactoryOptions</span>
 							</li>
 						</ul>
 					</li>
@@ -84,11 +85,17 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="factoryoptions.html#autointeract" class="tsd-kind-icon">auto<wbr>Interact</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="factoryoptions.html#autoupdate" class="tsd-kind-icon">auto<wbr>Update</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="factoryoptions.html#loaderoptions" class="tsd-kind-icon">loader<wbr>Options</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="factoryoptions.html#modeldatacache" class="tsd-kind-icon">model<wbr>Data<wbr>Cache</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="factoryoptions.html#texturecache" class="tsd-kind-icon">texture<wbr>Cache</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="live2dfactoryoptions.html#autointeract" class="tsd-kind-icon">auto<wbr>Interact</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="live2dfactoryoptions.html#autoupdate" class="tsd-kind-icon">auto<wbr>Update</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="live2dfactoryoptions.html#crossorigin" class="tsd-kind-icon">cross<wbr>Origin</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="live2dfactoryoptions.html#motionpreload" class="tsd-kind-icon">motion<wbr>Preload</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="live2dfactoryoptions.html#onerror" class="tsd-kind-icon">on<wbr>Error</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="live2dfactoryoptions.html#onload" class="tsd-kind-icon">on<wbr>Load</a></li>
 							</ul>
 						</section>
 					</div>
@@ -99,11 +106,11 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="autointeract" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> auto<wbr>Interact</h3>
-					<div class="tsd-signature tsd-kind-icon">auto<wbr>Interact<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
+					<div class="tsd-signature tsd-kind-icon">auto<wbr>Interact<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="live2dmodeloptions.html">Live2DModelOptions</a>.<a href="live2dmodeloptions.html#autointeract">autoInteract</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/Live2DModel.ts#L20">src/Live2DModel.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/Live2DModel.ts#L22">src/Live2DModel.ts:22</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -115,11 +122,11 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="autoupdate" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> auto<wbr>Update</h3>
-					<div class="tsd-signature tsd-kind-icon">auto<wbr>Update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
+					<div class="tsd-signature tsd-kind-icon">auto<wbr>Update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="live2dmodeloptions.html">Live2DModelOptions</a>.<a href="live2dmodeloptions.html#autoupdate">autoUpdate</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/Live2DModel.ts#L15">src/Live2DModel.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/Live2DModel.ts#L17">src/Live2DModel.ts:17</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -129,17 +136,17 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="loaderoptions" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> loader<wbr>Options</h3>
-					<div class="tsd-signature tsd-kind-icon">loader<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ILoaderOptions</span></div>
+					<a name="crossorigin" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> cross<wbr>Origin</h3>
+					<div class="tsd-signature tsd-kind-icon">cross<wbr>Origin<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/factory.ts#L15">src/factory.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/factory/Live2DFactory.ts#L15">src/factory/Live2DFactory.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Options that will be passed to <code>PIXI.Loader#add</code>.</p>
+							<p>String to use for crossOrigin properties on <code>&lt;img&gt;</code> elements when loading textures.</p>
 						</div>
 						<dl class="tsd-comment-tags">
 							<dt>default</dt>
@@ -148,53 +155,41 @@
 						</dl>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="modeldatacache" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> model<wbr>Data<wbr>Cache</h3>
-					<div class="tsd-signature tsd-kind-icon">model<wbr>Data<wbr>Cache<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="motionpreload" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> motion<wbr>Preload</h3>
+					<div class="tsd-signature tsd-kind-icon">motion<wbr>Preload<span class="tsd-signature-symbol">:</span> <a href="../modules.html#motionpreloadstrategy" class="tsd-signature-type">MotionPreloadStrategy</a></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="live2dmodeloptions.html">Live2DModelOptions</a>.<a href="live2dmodeloptions.html#motionpreload">motionPreload</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/factory.ts#L21">src/factory.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/cubism-common/MotionManager.ts#L20">src/cubism-common/MotionManager.ts:20</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Use cache when loading model data.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>default</dt>
-							<dd><p>true</p>
-							</dd>
-						</dl>
-					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="texturecache" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> texture<wbr>Cache</h3>
-					<div class="tsd-signature tsd-kind-icon">texture<wbr>Cache<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="onerror" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Error</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Error<span class="tsd-signature-symbol">:</span></div>
 					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/factory.ts#L27">src/factory.ts:27</a></li>
-						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Use cache when loading textures.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>default</dt>
-							<dd><p>true</p>
-							</dd>
-						</dl>
-					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="onload" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Load</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Load<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+					</aside>
 				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
 					</li>
 				</ul>
 			</nav>
@@ -203,22 +198,25 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="factoryoptions.html" class="tsd-kind-icon">Factory<wbr>Options</a>
+						<a href="live2dfactoryoptions.html" class="tsd-kind-icon">Live2DFactory<wbr>Options</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="factoryoptions.html#autointeract" class="tsd-kind-icon">auto<wbr>Interact</a>
+								<a href="live2dfactoryoptions.html#autointeract" class="tsd-kind-icon">auto<wbr>Interact</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="factoryoptions.html#autoupdate" class="tsd-kind-icon">auto<wbr>Update</a>
+								<a href="live2dfactoryoptions.html#autoupdate" class="tsd-kind-icon">auto<wbr>Update</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="factoryoptions.html#loaderoptions" class="tsd-kind-icon">loader<wbr>Options</a>
+								<a href="live2dfactoryoptions.html#crossorigin" class="tsd-kind-icon">cross<wbr>Origin</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="factoryoptions.html#modeldatacache" class="tsd-kind-icon">model<wbr>Data<wbr>Cache</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="live2dfactoryoptions.html#motionpreload" class="tsd-kind-icon">motion<wbr>Preload</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="factoryoptions.html#texturecache" class="tsd-kind-icon">texture<wbr>Cache</a>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="live2dfactoryoptions.html#onerror" class="tsd-kind-icon">on<wbr>Error</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="live2dfactoryoptions.html#onload" class="tsd-kind-icon">on<wbr>Load</a>
 							</li>
 						</ul>
 					</li>
@@ -240,8 +238,14 @@
 				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
@@ -251,12 +255,6 @@
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-			</ul>
 		</div>
 	</div>
 </footer>
@@ -265,6 +263,5 @@
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

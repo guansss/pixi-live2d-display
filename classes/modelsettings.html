@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for pixi-live2d-display">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -51,7 +52,7 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">Globals</a>
+					<a href="../modules.html">pixi-live2d-display</a>
 				</li>
 				<li>
 					<a href="modelsettings.html">ModelSettings</a>
@@ -64,27 +65,19 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>The container of Live2D model settings.</p>
-					</div>
-					<p>The structure of properties is the same as a raw model settings JSON,
-					but <strong>all the keys are converted into camelCase</strong>.</p>
-					<pre><code class="language-js"><span class="hljs-keyword">let</span> settings = <span class="hljs-keyword">new</span> ModelSettings({
-    <span class="hljs-string">"motions"</span>: {
-        <span class="hljs-string">"tap_body"</span>: []
-    }
-}, <span class="hljs-string">'path/to/my-model.model.json'</span>);
-
-<span class="hljs-keyword">let</span> tapBodyMotions = settings.motion.tapBody;</code></pre>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
 						<span class="target">ModelSettings</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<a href="cubism2modelsettings.html" class="tsd-signature-type">Cubism2ModelSettings</a>
+							</li>
+							<li>
+								<a href="cubism4modelsettings.html" class="tsd-signature-type">Cubism4ModelSettings</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -101,27 +94,19 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="modelsettings.html#expressions" class="tsd-kind-icon">expressions</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="modelsettings.html#hitareas" class="tsd-kind-icon">hit<wbr>Areas</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="modelsettings.html#initopacities" class="tsd-kind-icon">init<wbr>Opacities</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="modelsettings.html#initparams" class="tsd-kind-icon">init<wbr>Params</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="modelsettings.html#json" class="tsd-kind-icon">json</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="modelsettings.html#layout" class="tsd-kind-icon">layout</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="modelsettings.html#model" class="tsd-kind-icon">model</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="modelsettings.html#motions" class="tsd-kind-icon">motions</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="modelsettings.html#moc" class="tsd-kind-icon">moc</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="modelsettings.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="modelsettings.html#path" class="tsd-kind-icon">path</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="modelsettings.html#physics" class="tsd-kind-icon">physics</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="modelsettings.html#pose" class="tsd-kind-icon">pose</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="modelsettings.html#textures" class="tsd-kind-icon">textures</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="modelsettings.html#url" class="tsd-kind-icon">url</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="modelsettings.html#copy" class="tsd-kind-icon">copy</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="modelsettings.html#resolvepath" class="tsd-kind-icon">resolve<wbr>Path</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="modelsettings.html#ismodelsettingsjson" class="tsd-kind-icon">is<wbr>Model<wbr>SettingsJSON</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="modelsettings.html#resolveurl" class="tsd-kind-icon">resolveURL</a></li>
 							</ul>
 						</section>
 					</div>
@@ -133,13 +118,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Model<wbr>Settings<span class="tsd-signature-symbol">(</span>json<span class="tsd-signature-symbol">: </span><a href="../interfaces/modelsettingsjson.html" class="tsd-signature-type">ModelSettingsJSON</a>, path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="modelsettings.html" class="tsd-signature-type">ModelSettings</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Model<wbr>Settings<span class="tsd-signature-symbol">(</span>json<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="modelsettings.html" class="tsd-signature-type">ModelSettings</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L52">src/live2d/ModelSettings.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/cubism-common/ModelSettings.ts#L21">src/cubism-common/ModelSettings.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -147,19 +132,9 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>json: <a href="../interfaces/modelsettingsjson.html" class="tsd-signature-type">ModelSettingsJSON</a></h5>
+									<h5>json: <span class="tsd-signature-type">object</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>The model settings JSON.</p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<h5>path: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>Path of the model settings file, used to resolve paths of resources defined in settings.</p>
-										</div>
+										<p>The raw JSON.</p>
 									</div>
 								</li>
 							</ul>
@@ -171,115 +146,77 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="expressions" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> expressions</h3>
-					<div class="tsd-signature tsd-kind-icon">expressions<span class="tsd-signature-symbol">:</span> <a href="../interfaces/expressiondefinition.html" class="tsd-signature-type">ExpressionDefinition</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L37">src/live2d/ModelSettings.ts:37</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="hitareas" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> hit<wbr>Areas</h3>
-					<div class="tsd-signature tsd-kind-icon">hit<wbr>Areas<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L32">src/live2d/ModelSettings.ts:32</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="initopacities" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> init<wbr>Opacities</h3>
-					<div class="tsd-signature tsd-kind-icon">init<wbr>Opacities<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L34">src/live2d/ModelSettings.ts:34</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="initparams" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> init<wbr>Params</h3>
-					<div class="tsd-signature tsd-kind-icon">init<wbr>Params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L33">src/live2d/ModelSettings.ts:33</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="json" class="tsd-anchor"></a>
 					<h3>json</h3>
-					<div class="tsd-signature tsd-kind-icon">json<span class="tsd-signature-symbol">:</span> <a href="../interfaces/modelsettingsjson.html" class="tsd-signature-type">ModelSettingsJSON</a></div>
+					<div class="tsd-signature tsd-kind-icon">json<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L58">src/live2d/ModelSettings.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/cubism-common/ModelSettings.ts#L5">src/cubism-common/ModelSettings.ts:5</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="moc" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> moc</h3>
+					<div class="tsd-signature tsd-kind-icon">moc<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/cubism-common/ModelSettings.ts#L18">src/cubism-common/ModelSettings.ts:18</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/cubism-common/ModelSettings.ts#L10">src/cubism-common/ModelSettings.ts:10</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The model settings JSON.</p>
+							<p>Model&#39;s name, typically for displaying or logging.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="layout" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> layout</h3>
-					<div class="tsd-signature tsd-kind-icon">layout<span class="tsd-signature-symbol">:</span> <a href="../interfaces/layout.html" class="tsd-signature-type">Layout</a></div>
+					<a name="physics" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> physics</h3>
+					<div class="tsd-signature tsd-kind-icon">physics<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L31">src/live2d/ModelSettings.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/cubism-common/ModelSettings.ts#L21">src/cubism-common/ModelSettings.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="model" class="tsd-anchor"></a>
-					<h3>model</h3>
-					<div class="tsd-signature tsd-kind-icon">model<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></div>
+					<a name="pose" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> pose</h3>
+					<div class="tsd-signature tsd-kind-icon">pose<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L25">src/live2d/ModelSettings.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/cubism-common/ModelSettings.ts#L20">src/cubism-common/ModelSettings.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="motions" class="tsd-anchor"></a>
-					<h3>motions</h3>
-					<div class="tsd-signature tsd-kind-icon">motions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<a name="textures" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> textures</h3>
+					<div class="tsd-signature tsd-kind-icon">textures<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L38">src/live2d/ModelSettings.ts:38</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>group: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="../interfaces/motiondefinition.html" class="tsd-signature-type">MotionDefinition</a><span class="tsd-signature-symbol">[]</span></h5>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="name" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L22">src/live2d/ModelSettings.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/cubism-common/ModelSettings.ts#L19">src/cubism-common/ModelSettings.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="path" class="tsd-anchor"></a>
-					<h3>path</h3>
-					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="url" class="tsd-anchor"></a>
+					<h3>url</h3>
+					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L58">src/live2d/ModelSettings.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/cubism-common/ModelSettings.ts#L15">src/cubism-common/ModelSettings.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -288,85 +225,25 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="physics" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> physics</h3>
-					<div class="tsd-signature tsd-kind-icon">physics<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L27">src/live2d/ModelSettings.ts:27</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="pose" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> pose</h3>
-					<div class="tsd-signature tsd-kind-icon">pose<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L26">src/live2d/ModelSettings.ts:26</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="textures" class="tsd-anchor"></a>
-					<h3>textures</h3>
-					<div class="tsd-signature tsd-kind-icon">textures<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L28">src/live2d/ModelSettings.ts:28</a></li>
-						</ul>
-					</aside>
-				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-					<a name="copy" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> copy</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">copy<span class="tsd-signature-symbol">(</span>json<span class="tsd-signature-symbol">: </span><a href="../interfaces/modelsettingsjson.html" class="tsd-signature-type">ModelSettingsJSON</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L81">src/live2d/ModelSettings.ts:81</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Validates and copies properties from raw JSON.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>json: <a href="../interfaces/modelsettingsjson.html" class="tsd-signature-type">ModelSettingsJSON</a></h5>
-									<div class="tsd-comment tsd-typography">
-									</div>
-								</li>
-							</ul>
-							
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="resolvepath" class="tsd-anchor"></a>
-					<h3>resolve<wbr>Path</h3>
+					<a name="resolveurl" class="tsd-anchor"></a>
+					<h3>resolveURL</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">resolve<wbr>Path<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon">resolveURL<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L73">src/live2d/ModelSettings.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/cubism-common/ModelSettings.ts#L40">src/cubism-common/ModelSettings.ts:40</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Resolves a relative path to be absolute using <a href="modelsettings.html#path">ModelSettings.path</a>.</p>
+									<p>Resolves a relative path to be absolute using <a href="modelsettings.html#url">ModelSettings.url</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -381,43 +258,13 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="ismodelsettingsjson" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> is<wbr>Model<wbr>SettingsJSON</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Model<wbr>SettingsJSON<span class="tsd-signature-symbol">(</span>json<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">json</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">ModelSettingsJSON</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/live2d/ModelSettings.ts#L44">src/live2d/ModelSettings.ts:44</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Checks if a JSON object is valid model settings.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>json: <span class="tsd-signature-type">any</span></h5>
-									<div class="tsd-comment tsd-typography">
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">json</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">ModelSettingsJSON</span></h4>
-						</li>
-					</ul>
-				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
 					</li>
 				</ul>
 			</nav>
@@ -432,34 +279,13 @@
 								<a href="modelsettings.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="modelsettings.html#expressions" class="tsd-kind-icon">expressions</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="modelsettings.html#hitareas" class="tsd-kind-icon">hit<wbr>Areas</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="modelsettings.html#initopacities" class="tsd-kind-icon">init<wbr>Opacities</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="modelsettings.html#initparams" class="tsd-kind-icon">init<wbr>Params</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="modelsettings.html#json" class="tsd-kind-icon">json</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="modelsettings.html#layout" class="tsd-kind-icon">layout</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="modelsettings.html#model" class="tsd-kind-icon">model</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="modelsettings.html#motions" class="tsd-kind-icon">motions</a>
+								<a href="modelsettings.html#moc" class="tsd-kind-icon">moc</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="modelsettings.html#name" class="tsd-kind-icon">name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="modelsettings.html#path" class="tsd-kind-icon">path</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="modelsettings.html#physics" class="tsd-kind-icon">physics</a>
@@ -470,14 +296,11 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="modelsettings.html#textures" class="tsd-kind-icon">textures</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-								<a href="modelsettings.html#copy" class="tsd-kind-icon">copy</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="modelsettings.html#url" class="tsd-kind-icon">url</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="modelsettings.html#resolvepath" class="tsd-kind-icon">resolve<wbr>Path</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="modelsettings.html#ismodelsettingsjson" class="tsd-kind-icon">is<wbr>Model<wbr>SettingsJSON</a>
+								<a href="modelsettings.html#resolveurl" class="tsd-kind-icon">resolveURL</a>
 							</li>
 						</ul>
 					</li>
@@ -499,8 +322,14 @@
 				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
@@ -510,12 +339,6 @@
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-			</ul>
 		</div>
 	</div>
 </footer>
@@ -524,6 +347,5 @@
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

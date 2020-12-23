@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Live2DPhysics | pixi-live2d-display</title>
+	<title>Live2DLoader | pixi-live2d-display</title>
 	<meta name="description" content="Documentation for pixi-live2d-display">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">pixi-live2d-display</a>
 				</li>
 				<li>
-					<a href="live2dphysics.html">Live2DPhysics</a>
+					<a href="live2dloader.html">Live2DLoader</a>
 				</li>
 			</ul>
-			<h1>Class Live2DPhysics</h1>
+			<h1>Class Live2DLoader</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Live2DPhysics</span>
+						<span class="target">Live2DLoader</span>
 					</li>
 				</ul>
 			</section>
@@ -80,20 +80,19 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="live2dphysics.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="live2dloader.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="live2dphysics.html#coremodel" class="tsd-kind-icon">core<wbr>Model</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="live2dphysics.html#physicshairs" class="tsd-kind-icon">physics<wbr>Hairs</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="live2dloader.html#middlewares" class="tsd-kind-icon">middlewares</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="live2dphysics.html#update" class="tsd-kind-icon">update</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="live2dloader.html#load" class="tsd-kind-icon">load</a></li>
 							</ul>
 						</section>
 					</div>
@@ -105,71 +104,58 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Live2DPhysics<span class="tsd-signature-symbol">(</span>coreModel<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Live2DModelWebGL</span>, json<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Cubism2Spec.PhysicsJSON</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="live2dphysics.html" class="tsd-signature-type">Live2DPhysics</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Live2DLoader<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="live2dloader.html" class="tsd-signature-type">Live2DLoader</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/cubism2/Live2DPhysics.ts#L14">src/cubism2/Live2DPhysics.ts:14</a></li>
-								</ul>
 							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>coreModel: <span class="tsd-signature-type">Live2DModelWebGL</span></h5>
-								</li>
-								<li>
-									<h5>json: <span class="tsd-signature-type">Cubism2Spec.PhysicsJSON</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="live2dphysics.html" class="tsd-signature-type">Live2DPhysics</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="live2dloader.html" class="tsd-signature-type">Live2DLoader</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="coremodel" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> core<wbr>Model</h3>
-					<div class="tsd-signature tsd-kind-icon">core<wbr>Model<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Live2DModelWebGL</span></div>
-					<aside class="tsd-sources">
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="physicshairs" class="tsd-anchor"></a>
-					<h3>physics<wbr>Hairs</h3>
-					<div class="tsd-signature tsd-kind-icon">physics<wbr>Hairs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PhysicsHair</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="middlewares" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> middlewares</h3>
+					<div class="tsd-signature tsd-kind-icon">middlewares<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/live2dloadercontext.html" class="tsd-signature-type">Live2DLoaderContext</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [XHRLoader.loader]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/cubism2/Live2DPhysics.ts#L14">src/cubism2/Live2DPhysics.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/factory/Live2DLoader.ts#L17">src/factory/Live2DLoader.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="update" class="tsd-anchor"></a>
-					<h3>update</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">(</span>elapsed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DOMHighResTimeStamp</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="load" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> load</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">load&lt;T&gt;<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="../interfaces/live2dloadercontext.html" class="tsd-signature-type">Live2DLoaderContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/cubism2/Live2DPhysics.ts#L44">src/cubism2/Live2DPhysics.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/factory/Live2DLoader.ts#L19">src/factory/Live2DLoader.ts:19</a></li>
 								</ul>
 							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T = <span class="tsd-signature-type">any</span></h4>
+								</li>
+							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>elapsed: <span class="tsd-signature-type">DOMHighResTimeStamp</span></h5>
+									<h5>context: <a href="../interfaces/live2dloadercontext.html" class="tsd-signature-type">Live2DLoaderContext</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -188,19 +174,16 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="live2dphysics.html" class="tsd-kind-icon">Live2DPhysics</a>
+						<a href="live2dloader.html" class="tsd-kind-icon">Live2DLoader</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="live2dphysics.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="live2dloader.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="live2dphysics.html#coremodel" class="tsd-kind-icon">core<wbr>Model</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="live2dloader.html#middlewares" class="tsd-kind-icon">middlewares</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="live2dphysics.html#physicshairs" class="tsd-kind-icon">physics<wbr>Hairs</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="live2dphysics.html#update" class="tsd-kind-icon">update</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="live2dloader.html#load" class="tsd-kind-icon">load</a>
 							</li>
 						</ul>
 					</li>

@@ -3,10 +3,11 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Live2DResources | pixi-live2d-display</title>
+	<title>Live2DLoaderContext | pixi-live2d-display</title>
 	<meta name="description" content="Documentation for pixi-live2d-display">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -51,31 +52,24 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">Globals</a>
+					<a href="../modules.html">pixi-live2d-display</a>
 				</li>
 				<li>
-					<a href="live2dresources.html">Live2DResources</a>
+					<a href="live2dloadercontext.html">Live2DLoaderContext</a>
 				</li>
 			</ul>
-			<h1>Interface Live2DResources</h1>
+			<h1>Interface Live2DLoaderContext</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Bundled resources for creating a <code>Live2DModel</code>. Either <code>model</code> or <code>modelData</code> must be provided.</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Live2DResources</span>
+						<span class="target">Live2DLoaderContext</span>
 					</li>
 				</ul>
 			</section>
@@ -86,12 +80,11 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="live2dresources.html#model" class="tsd-kind-icon">model</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="live2dresources.html#modeldata" class="tsd-kind-icon">model<wbr>Data</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="live2dresources.html#physics" class="tsd-kind-icon">physics</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="live2dresources.html#pose" class="tsd-kind-icon">pose</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="live2dresources.html#settings" class="tsd-kind-icon">settings</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="live2dresources.html#textures" class="tsd-kind-icon">textures</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="live2dloadercontext.html#result" class="tsd-kind-icon">result</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="live2dloadercontext.html#settings" class="tsd-kind-icon">settings</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="live2dloadercontext.html#target" class="tsd-kind-icon">target</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="live2dloadercontext.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="live2dloadercontext.html#url" class="tsd-kind-icon">url</a></li>
 							</ul>
 						</section>
 					</div>
@@ -100,102 +93,62 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="model" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> model</h3>
-					<div class="tsd-signature tsd-kind-icon">model<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Live2DModelWebGL</span></div>
+					<a name="result" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> result</h3>
+					<div class="tsd-signature tsd-kind-icon">result<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/factory.ts#L47">src/factory.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/factory/Live2DLoader.ts#L13">src/factory/Live2DLoader.ts:13</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Instance of core model.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="modeldata" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> model<wbr>Data</h3>
-					<div class="tsd-signature tsd-kind-icon">model<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ArrayBuffer</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/factory.ts#L42">src/factory.ts:42</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Loaded model data.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="physics" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> physics</h3>
-					<div class="tsd-signature tsd-kind-icon">physics<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/factory.ts#L62">src/factory.ts:62</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Loaded pose JSON.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="pose" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> pose</h3>
-					<div class="tsd-signature tsd-kind-icon">pose<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/factory.ts#L57">src/factory.ts:57</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Loaded pose JSON.</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="settings" class="tsd-anchor"></a>
-					<h3>settings</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> settings</h3>
 					<div class="tsd-signature tsd-kind-icon">settings<span class="tsd-signature-symbol">:</span> <a href="../classes/modelsettings.html" class="tsd-signature-type">ModelSettings</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/factory.ts#L37">src/factory.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/factory/Live2DLoader.ts#L11">src/factory/Live2DLoader.ts:11</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Created ModelSettings.</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="textures" class="tsd-anchor"></a>
-					<h3>textures</h3>
-					<div class="tsd-signature tsd-kind-icon">textures<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Texture</span><span class="tsd-signature-symbol">[]</span></div>
+					<a name="target" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> target</h3>
+					<div class="tsd-signature tsd-kind-icon">target<span class="tsd-signature-symbol">:</span> <a href="../modules.html#live2dloadertarget" class="tsd-signature-type">Live2DLoaderTarget</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/f65f1c8/src/factory.ts#L52">src/factory.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/factory/Live2DLoader.ts#L12">src/factory/Live2DLoader.ts:12</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Loaded textures.</p>
-						</div>
-					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="type" class="tsd-anchor"></a>
+					<h3>type</h3>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;json&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;arraybuffer&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/factory/Live2DLoader.ts#L9">src/factory/Live2DLoader.ts:9</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="url" class="tsd-anchor"></a>
+					<h3>url</h3>
+					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/dd206c6/src/factory/Live2DLoader.ts#L10">src/factory/Live2DLoader.ts:10</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
 					</li>
 				</ul>
 			</nav>
@@ -204,25 +157,22 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="live2dresources.html" class="tsd-kind-icon">Live2DResources</a>
+						<a href="live2dloadercontext.html" class="tsd-kind-icon">Live2DLoader<wbr>Context</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="live2dresources.html#model" class="tsd-kind-icon">model</a>
+								<a href="live2dloadercontext.html#result" class="tsd-kind-icon">result</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="live2dresources.html#modeldata" class="tsd-kind-icon">model<wbr>Data</a>
+								<a href="live2dloadercontext.html#settings" class="tsd-kind-icon">settings</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="live2dresources.html#physics" class="tsd-kind-icon">physics</a>
+								<a href="live2dloadercontext.html#target" class="tsd-kind-icon">target</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="live2dresources.html#pose" class="tsd-kind-icon">pose</a>
+								<a href="live2dloadercontext.html#type" class="tsd-kind-icon">type</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="live2dresources.html#settings" class="tsd-kind-icon">settings</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="live2dresources.html#textures" class="tsd-kind-icon">textures</a>
+								<a href="live2dloadercontext.html#url" class="tsd-kind-icon">url</a>
 							</li>
 						</ul>
 					</li>
@@ -244,8 +194,14 @@
 				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
@@ -255,12 +211,6 @@
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-			</ul>
 		</div>
 	</div>
 </footer>
@@ -269,6 +219,5 @@
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
