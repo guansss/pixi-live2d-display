@@ -87,18 +87,49 @@ describe('Live2DFactory', function() {
     });
 
     describe('Synchronous creation', function() {
+        let app;
+
+        before(function() {
+            app = createApp(Application, false);
+        });
+
+        after(function() {
+            app.destroy();
+        });
+
         it('should create Live2DModel', async function() {
-            await new Promise(resolve => {
-                const model = Live2DModel.fromSync(TEST_MODEL.file, { ...options, onLoad: resolve });
+            const modelOptions = { ...options };
 
-                expect(model).to.be.instanceOf(Live2DModel);
-
-                const app = createApp(Application, false);
-                app.stage.addChild(model);
-                model.update(100);
-                app.render();
-                app.destroy();
+            const onLoadCalled = new Promise((resolve1, reject1) => {
+                modelOptions.onLoad = resolve1;
+                modelOptions.onError = reject1;
             });
+
+            const model = Live2DModel.fromSync(TEST_MODEL.file, modelOptions);
+
+            expect(model).to.be.instanceOf(Live2DModel);
+
+            const eventEmitted = new Promise((resolve2, reject2) => {
+                model.on('ready', () => {
+                        try {
+                            app.stage.addChild(model);
+                            model.update(100);
+                            app.render();
+                        } catch (e) {
+                            reject2(e);
+                        }
+                    })
+                    .on('load', () => {
+                        try {
+                            app.render();
+                            resolve2();
+                        } catch (e) {
+                            reject2(e);
+                        }
+                    });
+            });
+
+            return Promise.all([onLoadCalled, eventEmitted]);
         });
 
         it('should emit events', function(done) {
