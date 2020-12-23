@@ -205,17 +205,21 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * @emits {@link Live2DModelEvents.hit}
      */
     tap(x: number, y: number): void {
-        tempPoint.x = x;
-        tempPoint.y = y;
-        this.toModelPosition(tempPoint, tempPoint);
-
-        const hitAreaNames = this.internalModel.hitTest(tempPoint.x, tempPoint.y);
+        const hitAreaNames = this.hitTest(x, y);
 
         if (hitAreaNames.length) {
             logger.log(this.tag, `Hit`, hitAreaNames);
 
             this.emit('hit', hitAreaNames);
         }
+    }
+
+    hitTest(x: number, y: number): string[] {
+        tempPoint.x = x;
+        tempPoint.y = y;
+        this.toModelPosition(tempPoint, tempPoint);
+
+        return this.internalModel.hitTest(tempPoint.x, tempPoint.y);
     }
 
     /**
