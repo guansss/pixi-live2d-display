@@ -18,6 +18,10 @@ Live2DFactory.registerRuntime({
         return settings instanceof Cubism2ModelSettings;
     },
 
+    ready(): Promise<void> {
+        return Promise.resolve();
+    },
+
     createCoreModel(data: ArrayBuffer): Live2DModelWebGL {
         const model = Live2DModelWebGL.loadModel(data);
 

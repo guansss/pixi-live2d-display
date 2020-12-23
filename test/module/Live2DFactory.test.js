@@ -5,7 +5,7 @@ import { Texture } from '@pixi/core';
 import merge from 'lodash/merge';
 import sinon from 'sinon';
 import { TEST_MODEL, TEST_MODEL4, TEST_TEXTURE } from '../env';
-import { createApp } from '../utils';
+import { createApp, delay } from '../utils';
 
 describe('Live2DFactory', function() {
     const options = { autoUpdate: false, motionPreload: MOTION_PRELOAD_NONE };
@@ -71,6 +71,9 @@ describe('Live2DFactory', function() {
         config.logLevel = config.LOG_LEVEL_ERROR;
 
         const creation = Live2DModel.from({ ...TEST_MODEL.json, model: 'fakeModel' }, options);
+
+        // wait for runtime.ready()
+        await delay(10);
 
         expect(fakeXHRs.length).to.equal(1);
         fakeXHRs[0].respond(404);
@@ -174,7 +177,7 @@ describe('Live2DFactory', function() {
         it('should handle error', async function() {
             config.logLevel = config.LOG_LEVEL_ERROR;
 
-            await new Promise((resolve, reject) => {
+            await new Promise(async (resolve, reject) => {
                 Live2DModel.fromSync({
                     ...TEST_MODEL.json,
                     model: 'fakeModel',
@@ -190,6 +193,9 @@ describe('Live2DFactory', function() {
                         }
                     },
                 });
+
+                // wait for runtime.ready()
+                await delay(10);
 
                 expect(fakeXHRs.length).to.equal(1);
 

@@ -32,7 +32,9 @@ export interface Live2DRuntime {
 
     createModelSettings(json: any): ModelSettings | undefined;
 
-    test(settings: ModelSettings): settings is ModelSettings;
+    test(settings: ModelSettings): boolean;
+
+    ready(): Promise<void>;
 
     createCoreModel(data: ArrayBuffer): any;
 
@@ -80,6 +82,17 @@ export const jsonToSettings: Middleware<Live2DFactoryContext> = async (context, 
     }
 
     throw new TypeError('Unknown settings format.');
+};
+
+export const waitUntilReady: Middleware<Live2DFactoryContext> = (context, next) => {
+    if (context.settings) {
+        const runtime = Live2DFactory.runtimes.find(f => f.test(context.settings!));
+
+        if (runtime) {
+            return runtime.ready().then(next);
+        }
+    }
+    return next();
 };
 
 export const setupOptionals: Middleware<Live2DFactoryContext> = async (context, next) => {
@@ -180,7 +193,7 @@ export class Live2DFactory {
     static runtimes: Live2DRuntime[] = [];
 
     static live2DModelMiddlewares: Middleware<Live2DFactoryContext>[] = [
-        urlToJSON, jsonToSettings, setupOptionals, setupLive2DModel, createInternalModel,
+        urlToJSON, jsonToSettings, waitUntilReady, setupOptionals, setupLive2DModel, createInternalModel,
     ];
 
     /**

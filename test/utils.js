@@ -10,6 +10,10 @@ export function remoteRequire(path) {
     return require('electron').remote.require(resolve(BASE_PATH, path));
 }
 
+export function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export function loadScript(url) {
     return new Promise((resolve, reject) => {
         const script = document.createElement('script');

@@ -39,8 +39,8 @@ eval(readText('../core/live2dcubismcore.js')
     .replace('var Live2DCubismCore', 'window.Live2DCubismCore={}')
     .replace('(Live2DCubismCore) {', '(Live2DCubismCore) {Live2DCubismCore.em=()=>_em;'));
 
-function startUp() {
-    require('@/cubism4/setup').startUpCubism4();
+async function startUp() {
+    await require('@/cubism4/setup').cubism4Ready();
     require('./env').setupENV();
 }
 
@@ -48,7 +48,7 @@ before(function(done) {
     // wait for re-opened devtools to prepare network recording
     const timeout = !isHeadful || getData().initialized ? 0 : 300;
 
-    setTimeout(() => startUp() & done(), timeout);
+    setTimeout(() => startUp().then(done), timeout);
 });
 
 const { config } = require('@/config');

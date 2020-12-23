@@ -1,6 +1,7 @@
 import { ModelSettings } from '@/cubism-common';
 import { Cubism4InternalModel } from '@/cubism4/Cubism4InternalModel';
 import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
+import { cubism4Ready } from '@/cubism4/setup';
 import { Live2DFactory, Live2DFactoryOptions } from '@/factory/Live2DFactory';
 import { CubismPose } from '@cubism/effect/cubismpose';
 import { CubismMoc } from '@cubism/model/cubismmoc';
@@ -9,6 +10,8 @@ import { CubismPhysics } from '@cubism/physics/cubismphysics';
 
 Live2DFactory.registerRuntime({
     version: 4,
+
+    ready: cubism4Ready,
 
     createModelSettings(json: any): Cubism4ModelSettings | undefined {
         if (Cubism4ModelSettings.isValidJSON(json)) {
