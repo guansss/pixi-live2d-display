@@ -43,11 +43,13 @@ export function createApp(appClass, visible = true) {
         height: 1000,
         autoStart: false,
         autoDensity: true,
+        antialias: visible,
     });
 
-    visible && document.body.appendChild(app.view);
-
-    window.addEventListener('resize', () => app.renderer.resize(innerWidth, 1000));
+    if (visible) {
+        document.body.appendChild(app.view);
+        window.addEventListener('resize', () => app.renderer.resize(innerWidth, 1000));
+    }
 
     return app;
 }
