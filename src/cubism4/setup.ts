@@ -1,5 +1,5 @@
 import { logger } from '@/utils';
-import { CubismFramework, LogLevel, Option as Cubism4StartupOption } from '@cubism/live2dcubismframework';
+import { CubismFramework, CubismStartupOption, LogLevel } from '@cubism/live2dcubismframework';
 
 let startupPromise: Promise<void>;
 let startupRetries = 20;
@@ -23,10 +23,10 @@ export function cubism4Ready(): Promise<void> {
                     (err as any).cause = e;
 
                     reject(err);
-                    return
+                    return;
                 }
 
-                logger.log('Cubism4', 'Startup failed, retrying 10ms later...')
+                logger.log('Cubism4', 'Startup failed, retrying 10ms later...');
 
                 setTimeout(startUpWithRetry, 10);
             }
@@ -38,7 +38,7 @@ export function cubism4Ready(): Promise<void> {
     return startupPromise;
 }
 
-export function startUpCubism4(options?: Cubism4StartupOption) {
+export function startUpCubism4(options?: CubismStartupOption) {
     options = Object.assign({
         logFunction: console.log,
         loggingLevel: LogLevel.LogLevel_Verbose,
