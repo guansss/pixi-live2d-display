@@ -169,4 +169,13 @@ export class Cubism2InternalModel extends InternalModel {
         this.coreModel.setMatrix(tempMatrixArray);
         this.coreModel.draw();
     }
+
+    release() {
+        this.motionManager.release();
+
+        (this as Partial<this>).motionManager = undefined;
+
+        // cubism2 core has a super dumb memory management so there's basically nothing much to do to release the model
+        (this as Partial<this>).coreModel = undefined;
+    }
 }

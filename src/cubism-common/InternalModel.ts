@@ -205,4 +205,6 @@ export abstract class InternalModel extends EventEmitter {
     protected abstract getSize(): [number, number];
 
     protected abstract getLayout(): CommonLayout;
+
+    abstract release(): void;
 }

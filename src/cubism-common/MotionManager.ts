@@ -275,6 +275,10 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         self.motionGroups = undefined;
     }
 
+    release() {
+        this.stopAllMotions();
+    }
+
     abstract isFinished(): boolean;
 
     abstract createMotion(data: ArrayBuffer | object, definition: MotionSpec): Motion;

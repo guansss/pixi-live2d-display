@@ -205,4 +205,14 @@ export class Cubism4InternalModel extends InternalModel {
         this.renderer.setRenderState(Cubism4InternalModel.frameBufferMap.get(gl)!, [0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight]);
         this.renderer.drawModel();
     }
+
+    release() {
+        this.motionManager.release();
+        this.renderer.release();
+        this.coreModel.release();
+
+        (this as Partial<this>).motionManager = undefined;
+        (this as Partial<this>).renderer = undefined;
+        (this as Partial<this>).coreModel = undefined;
+    }
 }

@@ -145,7 +145,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
 
     protected init() {
         this.on('modelLoaded', () => {
-            this.tag = `Live2DModel(${this.internalModel!.settings.name})`;
+            this.tag = `Live2DModel(${this.internalModel.settings.name})`;
         });
     }
 
@@ -344,6 +344,8 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         if (options?.texture) {
             this.textures.forEach(texture => texture.destroy(options.baseTexture));
         }
+
+        this.internalModel.release();
 
         super.destroy(options);
     }

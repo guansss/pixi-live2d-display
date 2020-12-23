@@ -21,11 +21,13 @@ Live2DFactory.registerRuntime({
     },
 
     createCoreModel(data: ArrayBuffer): CubismModel {
-        const model = CubismMoc.create(data)?.createModel();
+        const moc = CubismMoc.create(data);
 
-        if (!model) throw new Error('Unknown error.');
-
-        return model;
+        try {
+            return moc.createModel();
+        } finally {
+            moc.release();
+        }
     },
 
     createInternalModel(coreModel: CubismModel, settings: Cubism4ModelSettings, options?: Live2DFactoryOptions): Cubism4InternalModel {
