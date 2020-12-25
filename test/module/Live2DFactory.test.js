@@ -1,4 +1,4 @@
-import { config, Cubism2ModelSettings, Cubism4ModelSettings, Live2DModel, MOTION_PRELOAD_NONE } from '@';
+import { config, Cubism2ModelSettings, Cubism4ModelSettings, Live2DModel, MotionPreloadStrategy } from '@';
 import { createTexture } from '@/factory/texture';
 import { Application } from '@pixi/app';
 import { Texture } from '@pixi/core';
@@ -8,7 +8,7 @@ import { TEST_MODEL, TEST_MODEL4, TEST_TEXTURE } from '../env';
 import { createApp, delay } from '../utils';
 
 describe('Live2DFactory', function() {
-    const options = { autoUpdate: false, motionPreload: MOTION_PRELOAD_NONE };
+    const options = { autoUpdate: false, motionPreload: MotionPreloadStrategy.NONE };
     const originalLogLevel = config.logLevel;
     const fakeXHRs = [];
 

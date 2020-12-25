@@ -1,10 +1,8 @@
-import {
-    MOTION_PRIORITY_FORCE,
-    MOTION_PRIORITY_IDLE,
-    MOTION_PRIORITY_NONE,
-    MotionPriority,
-} from '@/cubism-common/constants';
 import { logger } from '@/utils';
+
+export enum MotionPriority {
+    NONE, IDLE, NORMAL, FORCE
+}
 
 export class MotionState {
     tag!: string;
@@ -14,12 +12,12 @@ export class MotionState {
     /**
      * Priority of currently playing motion.
      */
-    currentPriority: MotionPriority = MOTION_PRIORITY_NONE;
+    currentPriority = MotionPriority.NONE;
 
     /**
      * Priority of reserved motion, i.e. the motion that will play subsequently.
      */
-    reservePriority: MotionPriority = MOTION_PRIORITY_NONE;
+    reservePriority = MotionPriority.NONE;
 
     /**
      * ID of currently playing motion.
@@ -37,8 +35,8 @@ export class MotionState {
     reservedIdleIndex?: number;
 
     reserve(group: string, index: number, priority: MotionPriority): boolean {
-        if (priority <= MOTION_PRIORITY_NONE) {
-            logger.log(this.tag, `Cannot start a motion with MOTION_PRIORITY_NONE.`);
+        if (priority <= MotionPriority.NONE) {
+            logger.log(this.tag, `Cannot start a motion with MotionPriority.NONE.`);
             return false;
         }
 
@@ -52,8 +50,8 @@ export class MotionState {
             return false;
         }
 
-        if (priority === MOTION_PRIORITY_IDLE) {
-            if (this.currentPriority !== MOTION_PRIORITY_NONE) {
+        if (priority === MotionPriority.IDLE) {
+            if (this.currentPriority !== MotionPriority.NONE) {
                 logger.log(this.tag, `Cannot start idle motion because another motion is playing.`, this.dump(group, index));
                 return false;
             }
@@ -65,7 +63,7 @@ export class MotionState {
 
             this.setReservedIdle(group, index);
         } else {
-            if (priority < MOTION_PRIORITY_FORCE) {
+            if (priority < MotionPriority.FORCE) {
                 if (priority <= this.currentPriority) {
                     logger.log(this.tag, 'Cannot start motion because another motion is playing as an equivalent or higher priority.', this.dump(group, index));
                     return false;
@@ -84,10 +82,10 @@ export class MotionState {
     }
 
     start(motion: any, group: string, index: number, priority: MotionPriority): boolean {
-        if (priority === MOTION_PRIORITY_IDLE) {
+        if (priority === MotionPriority.IDLE) {
             this.setReservedIdle(undefined, undefined);
 
-            if (this.currentPriority !== MOTION_PRIORITY_NONE) {
+            if (this.currentPriority !== MotionPriority.NONE) {
                 logger.log(this.tag, 'Cannot start idle motion because another motion is playing.', this.dump(group, index));
                 return false;
             }
@@ -97,7 +95,7 @@ export class MotionState {
                 return false;
             }
 
-            this.setReserved(undefined, undefined, MOTION_PRIORITY_NONE);
+            this.setReserved(undefined, undefined, MotionPriority.NONE);
         }
 
         if (!motion) {
@@ -110,7 +108,7 @@ export class MotionState {
     }
 
     complete() {
-        this.setCurrent(undefined, undefined, MOTION_PRIORITY_NONE);
+        this.setCurrent(undefined, undefined, MotionPriority.NONE);
     }
 
     setCurrent(group: string | undefined, index: number | undefined, priority: MotionPriority) {
@@ -131,15 +129,15 @@ export class MotionState {
     }
 
     clear() {
-        this.setCurrent(undefined, undefined, MOTION_PRIORITY_NONE);
+        this.setCurrent(undefined, undefined, MotionPriority.NONE);
 
         // make sure the reserved motions (if existing) won't start when they are loaded
-        this.setReserved(undefined, undefined, MOTION_PRIORITY_NONE);
+        this.setReserved(undefined, undefined, MotionPriority.NONE);
         this.setReservedIdle(undefined, undefined);
     }
 
     shouldOverrideExpression(): boolean {
-        return this.currentPriority > MOTION_PRIORITY_IDLE;
+        return this.currentPriority > MotionPriority.IDLE;
     }
 
     dump(requestedGroup?: string, requestedIndex?: number): string {

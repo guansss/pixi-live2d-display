@@ -1,16 +1,7 @@
 import { config } from '@/config';
-import {
-    MOTION_PRELOAD_ALL,
-    MOTION_PRELOAD_IDLE,
-    MOTION_PRELOAD_NONE,
-    MOTION_PRIORITY_IDLE,
-    MOTION_PRIORITY_NORMAL,
-    MotionPreloadStrategy,
-    MotionPriority,
-} from '@/cubism-common/constants';
 import { ExpressionManager } from '@/cubism-common/ExpressionManager';
 import { ModelSettings } from '@/cubism-common/ModelSettings';
-import { MotionState } from '@/cubism-common/MotionState';
+import { MotionPriority, MotionState } from '@/cubism-common/MotionState';
 import { SoundManager } from '@/cubism-common/SoundManager';
 import { logger } from '@/utils';
 import { EventEmitter } from '@pixi/utils';
@@ -18,6 +9,12 @@ import noop from 'lodash/noop';
 
 export interface MotionManagerOptions {
     motionPreload?: MotionPreloadStrategy;
+}
+
+export enum MotionPreloadStrategy {
+    ALL = 'ALL',
+    IDLE = 'IDLE',
+    NONE = 'NONE',
 }
 
 export abstract class MotionManager<Motion = any, MotionSpec = any> extends EventEmitter {
@@ -54,7 +51,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      */
     currentAudio?: HTMLAudioElement;
 
-    motionPreload: MotionPreloadStrategy = MOTION_PRELOAD_IDLE;
+    motionPreload: MotionPreloadStrategy = MotionPreloadStrategy.IDLE;
 
     playing = false;
 
@@ -85,14 +82,14 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         let groups;
 
         switch (this.motionPreload) {
-            case MOTION_PRELOAD_NONE:
+            case MotionPreloadStrategy.NONE:
                 return;
 
-            case MOTION_PRELOAD_ALL:
+            case MotionPreloadStrategy.ALL:
                 groups = Object.keys(this.definitions);
                 break;
 
-            case MOTION_PRELOAD_IDLE:
+            case MotionPreloadStrategy.IDLE:
             default:
                 groups = [this.groups.idle];
                 break;
@@ -143,7 +140,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * @param priority
      * @return Promise that resolves with true if the motion is successfully started.
      */
-    async startMotion(group: string, index: number, priority: MotionPriority = MOTION_PRIORITY_NORMAL): Promise<boolean> {
+    async startMotion(group: string, index: number, priority = MotionPriority.NORMAL): Promise<boolean> {
         if (!this.state.reserve(group, index, priority)) {
             return false;
         }
@@ -253,7 +250,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             this.state.complete();
 
             // noinspection JSIgnoredPromiseFromCall
-            this.startRandomMotion(this.groups.idle, MOTION_PRIORITY_IDLE);
+            this.startRandomMotion(this.groups.idle, MotionPriority.IDLE);
         }
 
         let updated = this.updateMotion(model, now);

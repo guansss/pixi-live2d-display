@@ -1,14 +1,5 @@
 import { config } from '@/config';
-import { MotionManager } from '@/cubism-common';
-import {
-    MOTION_PRELOAD_ALL,
-    MOTION_PRELOAD_IDLE,
-    MOTION_PRELOAD_NONE,
-    MOTION_PRIORITY_FORCE,
-    MOTION_PRIORITY_IDLE,
-    MOTION_PRIORITY_NONE,
-    MOTION_PRIORITY_NORMAL,
-} from '@/cubism-common/constants';
+import { MotionManager, MotionPreloadStrategy, MotionPriority } from '@/cubism-common';
 import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
 import { Cubism2MotionManager } from '@/cubism2/Cubism2MotionManager';
 import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
@@ -16,8 +7,8 @@ import { Cubism4MotionManager } from '@/cubism4/Cubism4MotionManager';
 import '@/factory';
 import fromPairs from 'lodash/fromPairs';
 import sinon from 'sinon';
+import { STT } from '../../scripts/motion-stt';
 import { TEST_MODEL, TEST_MODEL4 } from '../env';
-import { STT } from '../motion-STT';
 
 describe('MotionManager', function() {
     let clock;
@@ -26,7 +17,7 @@ describe('MotionManager', function() {
 
     this.timeout(2000);
 
-    function createManager2(options = { motionPreload: MOTION_PRELOAD_NONE }) {
+    function createManager2(options = { motionPreload: MotionPreloadStrategy.NONE }) {
         return new Cubism2MotionManager(new Cubism2ModelSettings({
             ...TEST_MODEL.json,
 
@@ -35,7 +26,7 @@ describe('MotionManager', function() {
         }), options);
     }
 
-    function createManager4(options = { motionPreload: MOTION_PRELOAD_NONE }) {
+    function createManager4(options = { motionPreload: MotionPreloadStrategy.NONE }) {
         return new Cubism4MotionManager(new Cubism4ModelSettings(TEST_MODEL4.json), options);
     }
 
@@ -64,16 +55,16 @@ describe('MotionManager', function() {
             return Promise.resolve(undefined);
         });
 
-        createManager2({ motionPreload: MOTION_PRELOAD_NONE });
+        createManager2({ motionPreload: MotionPreloadStrategy.NONE });
 
         expect(callRecord).to.be.empty;
 
-        createManager2({ motionPreload: MOTION_PRELOAD_IDLE });
+        createManager2({ motionPreload: MotionPreloadStrategy.IDLE });
 
         expect(callRecord).to.eql(TEST_MODEL.json.motions.idle.map((_, index) => ({ group: 'idle', index })));
 
         callRecord.length = 0;
-        createManager2({ motionPreload: MOTION_PRELOAD_ALL });
+        createManager2({ motionPreload: MotionPreloadStrategy.ALL });
 
         const expectedRecord = [];
         for (const [group, motions] of Object.entries(TEST_MODEL.json.motions)) {
@@ -115,7 +106,7 @@ describe('MotionManager', function() {
     it('should start idle motion when current motion has finished', async function() {
         const manager = createManager2();
 
-        await manager.startMotion('idle', 0, MOTION_PRIORITY_IDLE);
+        await manager.startMotion('idle', 0, MotionPriority.IDLE);
         updateManager(manager);
 
         // skip the motion
@@ -155,12 +146,6 @@ describe('MotionManager', function() {
         });
 
         const indexMap = fromPairs(settings.motions.test.map((def, index) => [def.file, index]));
-        const priorMap = {
-            NONE: MOTION_PRIORITY_NONE,
-            IDLE: MOTION_PRIORITY_IDLE,
-            NORMAL: MOTION_PRIORITY_NORMAL,
-            FORCE: MOTION_PRIORITY_FORCE,
-        };
 
         for (let x = 0; x < STT.inputPriorities.length; x++) {
             for (let y = 0; y < STT.currentStates.length; y++) {
@@ -170,7 +155,7 @@ describe('MotionManager', function() {
                 const reservedPriority = STT.currentStates[y].reservedPriority;
                 const expectedResult = STT.results[y * STT.inputPriorities.length + x];
 
-                const manager = new Cubism2MotionManager(settings, { motionPreload: MOTION_PRELOAD_NONE });
+                const manager = new Cubism2MotionManager(settings, { motionPreload: MotionPreloadStrategy.NONE });
                 const startMotionStub = sinon.stub(manager, '_startMotion');
                 const loadMotionStub = sinon.stub(manager, 'loadMotion').callsFake(
                     (group, index) => Promise.resolve({ group, index }),
@@ -185,18 +170,18 @@ describe('MotionManager', function() {
                     ', expecting ' + (expectedResult || 'none');
 
                 if (playingMotion) {
-                    const result = await manager.startMotion('test', indexMap[playingMotion], priorMap[playingPriority]);
+                    const result = await manager.startMotion('test', indexMap[playingMotion], MotionPriority[playingPriority]);
                     expect(result, msg + ' @playing ' + playingMotion).to.be.true;
                 }
 
                 let startReservedMotion;
 
                 if (reservedMotion) {
-                    startReservedMotion = manager.startMotion('test', indexMap[reservedMotion], priorMap[reservedPriority]).then();
+                    startReservedMotion = manager.startMotion('test', indexMap[reservedMotion], MotionPriority[reservedPriority]).then();
                     expect(loadMotionStub.lastCall, msg + ' @reserved ' + reservedMotion).to.be.calledWith('test', indexMap[reservedMotion]);
                 }
 
-                const result = await manager.startMotion('test', indexMap['C'], priorMap[STT.inputPriorities[x]]);
+                const result = await manager.startMotion('test', indexMap['C'], MotionPriority[STT.inputPriorities[x]]);
 
                 expect(result, msg + ' @starting C').to.equal(expectedResult === 'C');
 
@@ -227,11 +212,11 @@ describe('MotionManager', function() {
                 : new Promise(resolve => resumeLoadMotion = () => resolve({ group, index })),
         );
 
-        await manager.startMotion('idle', 0, MOTION_PRIORITY_IDLE);
+        await manager.startMotion('idle', 0, MotionPriority.IDLE);
 
         expect(startMotionStub).to.be.calledWithMatch({ group: 'idle', index: 0 });
 
-        const suspendedStartMotion = manager.startMotion('tap_body', 0, MOTION_PRIORITY_NORMAL);
+        const suspendedStartMotion = manager.startMotion('tap_body', 0, MotionPriority.NORMAL);
 
         // skip the idle motion
         clock.tick(30 * 1000);
@@ -267,15 +252,15 @@ describe('MotionManager', function() {
 
         sinon.stub(manager, '_startMotion');
 
-        expect(await manager.startMotion('idle', 0, MOTION_PRIORITY_IDLE)).to.be.true;
-        expect(await manager.startMotion('idle', 0, MOTION_PRIORITY_IDLE)).to.be.false;
-        expect(await manager.startMotion('idle', 0, MOTION_PRIORITY_NORMAL)).to.be.false;
-        expect(await manager.startMotion('idle', 0, MOTION_PRIORITY_FORCE)).to.be.false;
+        expect(await manager.startMotion('idle', 0, MotionPriority.IDLE)).to.be.true;
+        expect(await manager.startMotion('idle', 0, MotionPriority.IDLE)).to.be.false;
+        expect(await manager.startMotion('idle', 0, MotionPriority.NORMAL)).to.be.false;
+        expect(await manager.startMotion('idle', 0, MotionPriority.FORCE)).to.be.false;
 
-        expect(await manager.startMotion('idle', 1, MOTION_PRIORITY_NORMAL)).to.be.true;
-        expect(await manager.startMotion('idle', 1, MOTION_PRIORITY_NORMAL)).to.be.false;
-        expect(await manager.startMotion('idle', 2, MOTION_PRIORITY_FORCE)).to.be.true;
-        expect(await manager.startMotion('idle', 2, MOTION_PRIORITY_FORCE)).to.be.false;
+        expect(await manager.startMotion('idle', 1, MotionPriority.NORMAL)).to.be.true;
+        expect(await manager.startMotion('idle', 1, MotionPriority.NORMAL)).to.be.false;
+        expect(await manager.startMotion('idle', 2, MotionPriority.FORCE)).to.be.true;
+        expect(await manager.startMotion('idle', 2, MotionPriority.FORCE)).to.be.false;
 
         manager.stopAllMotions();
 
@@ -292,20 +277,20 @@ describe('MotionManager', function() {
             };
         }));
 
-        let suspendedStartMotion = manager.startMotion('idle', 0, MOTION_PRIORITY_IDLE);
-        expect(await manager.startMotion('idle', 0, MOTION_PRIORITY_IDLE)).to.be.false;
-        expect(await manager.startMotion('idle', 0, MOTION_PRIORITY_NORMAL)).to.be.false;
-        expect(await manager.startMotion('idle', 0, MOTION_PRIORITY_FORCE)).to.be.false;
+        let suspendedStartMotion = manager.startMotion('idle', 0, MotionPriority.IDLE);
+        expect(await manager.startMotion('idle', 0, MotionPriority.IDLE)).to.be.false;
+        expect(await manager.startMotion('idle', 0, MotionPriority.NORMAL)).to.be.false;
+        expect(await manager.startMotion('idle', 0, MotionPriority.FORCE)).to.be.false;
         resumeLoadMotion();
         expect(await suspendedStartMotion).to.be.true;
 
-        suspendedStartMotion = manager.startMotion('idle', 1, MOTION_PRIORITY_NORMAL);
-        expect(await manager.startMotion('idle', 1, MOTION_PRIORITY_NORMAL)).to.be.false;
+        suspendedStartMotion = manager.startMotion('idle', 1, MotionPriority.NORMAL);
+        expect(await manager.startMotion('idle', 1, MotionPriority.NORMAL)).to.be.false;
         resumeLoadMotion();
         expect(await suspendedStartMotion).to.be.true;
 
-        suspendedStartMotion = manager.startMotion('idle', 2, MOTION_PRIORITY_FORCE);
-        expect(await manager.startMotion('idle', 2, MOTION_PRIORITY_FORCE)).to.be.false;
+        suspendedStartMotion = manager.startMotion('idle', 2, MotionPriority.FORCE);
+        expect(await manager.startMotion('idle', 2, MotionPriority.FORCE)).to.be.false;
         resumeLoadMotion();
         expect(await suspendedStartMotion).to.be.true;
     });
@@ -323,8 +308,8 @@ describe('MotionManager', function() {
         }));
 
         {
-            const idle = manager.startMotion('idle', 0, MOTION_PRIORITY_IDLE);
-            const normal = manager.startMotion('tap_body', 0, MOTION_PRIORITY_NORMAL);
+            const idle = manager.startMotion('idle', 0, MotionPriority.IDLE);
+            const normal = manager.startMotion('tap_body', 0, MotionPriority.NORMAL);
             tasks.tap_body0();
             expect(await normal).to.be.true;
             tasks.idle0();
@@ -335,8 +320,8 @@ describe('MotionManager', function() {
             manager.stopAllMotions();
         }
         {
-            const normal = manager.startMotion('tap_body', 0, MOTION_PRIORITY_NORMAL);
-            const force = manager.startMotion('tap_body', 1, MOTION_PRIORITY_FORCE);
+            const normal = manager.startMotion('tap_body', 0, MotionPriority.NORMAL);
+            const force = manager.startMotion('tap_body', 1, MotionPriority.FORCE);
             tasks.tap_body1();
             expect(await force).to.be.true;
             tasks.tap_body0();
@@ -347,8 +332,8 @@ describe('MotionManager', function() {
             manager.stopAllMotions();
         }
         {
-            const suspendedForce0 = manager.startMotion('tap_body', 0, MOTION_PRIORITY_FORCE);
-            const suspendedForce1 = manager.startMotion('tap_body', 1, MOTION_PRIORITY_FORCE);
+            const suspendedForce0 = manager.startMotion('tap_body', 0, MotionPriority.FORCE);
+            const suspendedForce1 = manager.startMotion('tap_body', 1, MotionPriority.FORCE);
             tasks.tap_body1();
             expect(await suspendedForce1).to.be.true;
             tasks.tap_body0();
