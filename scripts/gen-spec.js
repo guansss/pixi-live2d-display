@@ -1,5 +1,6 @@
 const { inputPriorities, currentStates, results } = require('../test/motion-STT').STT;
 const Handlebars = require('handlebars');
+const fs = require('fs');
 
 Handlebars.registerHelper('default', (a, b) => a || b);
 
@@ -15,7 +16,7 @@ Handlebars.registerHelper('resultRow', function(rowIndex, options) {
 
 const template = Handlebars.compile(`
 <table>
-<tr><td rowspan="2">When: 👇</td><th colspan="4">Start motion C as:</th></tr>
+<tr><td rowspan="2">When: :point_down:</td><th colspan="4">Start motion C as:</th></tr>
 <tr>
 {{#each inputPriorities}}
 <th><code>{{this}}</code></th>
@@ -32,3 +33,5 @@ const template = Handlebars.compile(`
 `);
 
 const table = template({ inputPriorities, currentStates, results });
+
+fs.writeFileSync('STT.md', table, { encoding: 'utf8' });
