@@ -96,8 +96,10 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         }
 
         for (const group of groups) {
-            for (let i = 0; i < this.definitions[group]!.length; i++) {
-                this.loadMotion(group, i).then();
+            if (this.definitions[group]) {
+                for (let i = 0; i < this.definitions[group]!.length; i++) {
+                    this.loadMotion(group, i).then();
+                }
             }
         }
     }
