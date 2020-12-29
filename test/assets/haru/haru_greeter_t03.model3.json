@@ -9,6 +9,40 @@
     "Physics": "haru_greeter_t03.physics3.json",
     "Pose": "haru_greeter_t03.pose3.json",
     "DisplayInfo": "haru_greeter_t03.cdi3.json",
+    "Expressions": [
+      {
+        "Name": "f00",
+        "File": "expressions/F01.exp3.json"
+      },
+      {
+        "Name": "f01",
+        "File": "expressions/F02.exp3.json"
+      },
+      {
+        "Name": "f02",
+        "File": "expressions/F03.exp3.json"
+      },
+      {
+        "Name": "f03",
+        "File": "expressions/F04.exp3.json"
+      },
+      {
+        "Name": "f04",
+        "File": "expressions/F05.exp3.json"
+      },
+      {
+        "Name": "f05",
+        "File": "expressions/F06.exp3.json"
+      },
+      {
+        "Name": "f06",
+        "File": "expressions/F07.exp3.json"
+      },
+      {
+        "Name": "f07",
+        "File": "expressions/F08.exp3.json"
+      }
+    ],
     "Motions": {
       "Idle": [
         {
