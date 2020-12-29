@@ -1,4 +1,4 @@
-import { InternalModel, MotionPriority } from '@/cubism-common';
+import { InternalModel, ModelSettings, MotionPriority } from '@/cubism-common';
 import { MotionManagerOptions } from '@/cubism-common/MotionManager';
 import type { Live2DFactoryOptions } from '@/factory/Live2DFactory';
 import { Live2DFactory } from '@/factory/Live2DFactory';
@@ -32,7 +32,8 @@ const tempPoint = new Point();
 // a reference to Ticker class, defaults to the one in window.PIXI (when loaded by a <script> tag)
 let TickerClass: typeof Ticker | undefined = (window as any).PIXI?.Ticker;
 
-export interface Live2DModel<IM extends InternalModel = InternalModel> extends InteractionMixin {}
+export interface Live2DModel<IM extends InternalModel = InternalModel> extends InteractionMixin {
+}
 
 /**
  * A wrapper that makes Live2D model possible to be used as a `DisplayObject` in PixiJS.
@@ -45,14 +46,14 @@ export interface Live2DModel<IM extends InternalModel = InternalModel> extends I
  * @emits {@link Live2DModelEvents}
  */
 export class Live2DModel<IM extends InternalModel = InternalModel> extends Container {
-    static from<IM extends InternalModel = InternalModel>(source: string | object | IM['settings'], options?: Live2DFactoryOptions): Promise<Live2DModel<IM>> {
-        const model = new this<IM>(options);
+    static from<M extends { new(options?: Live2DFactoryOptions): Live2DModel } = typeof Live2DModel>(this: M, source: string | object | ModelSettings, options?: Live2DFactoryOptions): Promise<InstanceType<M>> {
+        const model = new this(options) as InstanceType<M>;
 
         return Live2DFactory.setupLive2DModel(model, source, options).then(() => model);
     }
 
-    static fromSync<IM extends InternalModel = InternalModel>(source: string | object | IM['settings'], options?: Live2DFactoryOptions) {
-        const model = new this<IM>(options);
+    static fromSync<M extends { new(options?: Live2DFactoryOptions): Live2DModel } = typeof Live2DModel>(this: M, source: string | object | ModelSettings, options?: Live2DFactoryOptions): InstanceType<M> {
+        const model = new this(options) as InstanceType<M>;
 
         Live2DFactory.setupLive2DModel(model, source, options).then(options?.onLoad).catch(options?.onError);
 
