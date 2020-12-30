@@ -52,7 +52,7 @@
     "glob": "^7.1.6",
     "handlebars": "^4.7.6",
     "lodash": "latest",
-    "pixi.js": "^5.2.1",
+    "pixi.js": "^5.3.7",
     "rimraf": "^3.0.2",
     "sinon": "^9.0.1",
     "sinon-chai": "^3.5.0",
