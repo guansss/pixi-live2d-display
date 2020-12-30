@@ -1,6 +1,5 @@
 import { InternalModel } from '@/cubism-common/InternalModel';
 import { Matrix, Transform } from '@pixi/math';
-import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from './cubism-common/constants';
 
 const tempMatrix = new Matrix();
 
@@ -37,25 +36,11 @@ export class Live2DTransform extends Transform {
     /**
      * Gets a drawing matrix for Live2D model.
      * @param internalModel
-     * @param gl
+     * @param projectionMatrix
      */
-    applyTransform(internalModel: InternalModel, gl: WebGLRenderingContext): void {
-        if (this.needsUpdate || this.glWidth !== gl.drawingBufferWidth || this.glHeight !== gl.drawingBufferHeight) {
-            this.needsUpdate = false;
+    applyTransform(internalModel: InternalModel, projectionMatrix: Matrix): void {
+        tempMatrix.copyFrom(projectionMatrix).append(this.worldTransform);
 
-            this.glWidth = gl.drawingBufferWidth;
-            this.glHeight = gl.drawingBufferHeight;
-
-            tempMatrix
-                .copyFrom(this.worldTransform)
-
-                // convert to Live2D coordinate
-                .scale(LOGICAL_WIDTH / this.glWidth, LOGICAL_HEIGHT / this.glHeight)
-
-                // move the Live2D origin from center to top-left
-                .translate(-LOGICAL_WIDTH / 2, -LOGICAL_HEIGHT / 2);
-
-            internalModel.updateTransform(tempMatrix);
-        }
+        internalModel.updateTransform(tempMatrix);
     }
 }

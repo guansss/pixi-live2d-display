@@ -53,6 +53,12 @@ export class Cubism4InternalModel extends InternalModel {
 
     pixelsPerUnit = 1;
 
+    /**
+     * Matrix that moves the origin from top left to center.
+     * @protected
+     */
+    protected centeringTransform = new Matrix();
+
     constructor(coreModel: CubismModel, settings: Cubism4ModelSettings, options?: InternalModelOptions) {
         super();
 
@@ -95,6 +101,11 @@ export class Cubism4InternalModel extends InternalModel {
         super.setupLayout();
 
         this.pixelsPerUnit = this.coreModel.getModel().canvasinfo.PixelsPerUnit;
+
+        // move the origin from top left to center
+        this.centeringTransform
+            .scale(this.pixelsPerUnit, this.pixelsPerUnit)
+            .translate(this.originalWidth / 2, this.originalHeight / 2);
     }
 
     updateWebGLContext(gl: WebGLRenderingContext, glContextID: number): void {
@@ -140,11 +151,10 @@ export class Cubism4InternalModel extends InternalModel {
     }
 
     updateTransform(transform: Matrix) {
-        super.updateTransform(transform);
-
-        this.drawingMatrix.translate(this.width * transform.a / 2, this.height * transform.d / 2);
-        this.drawingMatrix.a *= this.pixelsPerUnit;
-        this.drawingMatrix.d *= this.pixelsPerUnit;
+        this.drawingMatrix
+            .copyFrom(this.centeringTransform)
+            .prepend(this.localTransform)
+            .prepend(transform);
     }
 
     public update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {
@@ -195,11 +205,11 @@ export class Cubism4InternalModel extends InternalModel {
 
         // set given 3x3 matrix into a 4x4 matrix, with Y inverted
         array[0] = matrix.a;
-        array[1] = matrix.c;
-        array[4] = matrix.b;
-        array[5] = matrix.d;
+        array[1] = matrix.b;
+        array[4] = -matrix.c;
+        array[5] = -matrix.d;
         array[12] = matrix.tx;
-        array[13] = -matrix.ty;
+        array[13] = matrix.ty;
 
         this.renderer.setMvpMatrix(tempMatrix);
         this.renderer.setRenderState(Cubism4InternalModel.frameBufferMap.get(gl)!, [0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight]);

@@ -160,11 +160,11 @@ export class Cubism2InternalModel extends InternalModel {
 
         // set given 3x3 matrix into a 4x4 matrix, with Y inverted
         tempMatrixArray[0] = matrix.a;
-        tempMatrixArray[1] = -matrix.c;
-        tempMatrixArray[4] = matrix.b;
-        tempMatrixArray[5] = -matrix.d;
+        tempMatrixArray[1] = matrix.b;
+        tempMatrixArray[4] = matrix.c;
+        tempMatrixArray[5] = matrix.d;
         tempMatrixArray[12] = matrix.tx;
-        tempMatrixArray[13] = -matrix.ty;
+        tempMatrixArray[13] = matrix.ty;
 
         this.coreModel.setMatrix(tempMatrixArray);
         this.coreModel.draw();
