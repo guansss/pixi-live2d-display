@@ -1,3 +1,5 @@
+import './check-runtime';
+
 export * from './Cubism4ExpressionManager';
 export * from './Cubism4ModelSettings';
 export * from './Cubism4MotionManager';
