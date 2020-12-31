@@ -31,7 +31,8 @@ export interface Bounds {
     bottom: number
 }
 
-export interface InternalModelOptions extends MotionManagerOptions {}
+export interface InternalModelOptions extends MotionManagerOptions {
+}
 
 export abstract class InternalModel extends EventEmitter {
     abstract readonly coreModel: object;
@@ -168,7 +169,7 @@ export abstract class InternalModel extends EventEmitter {
         return { left, right, top, bottom };
     }
 
-    updateTransform(transform: Matrix) {
+    updateTransform(transform: Matrix, width: number, height: number) {
         this.drawingMatrix.copyFrom(transform).append(this.localTransform);
     }
 
@@ -198,7 +199,7 @@ export abstract class InternalModel extends EventEmitter {
      */
     abstract bindTexture(index: number, texture: WebGLTexture): void;
 
-    abstract draw(gl: WebGLRenderingContext): void;
+    abstract draw(gl: WebGLRenderingContext, framebuffer?: WebGLFramebuffer): void;
 
     protected abstract getHitAreaDefs(): CommonHitArea[];
 

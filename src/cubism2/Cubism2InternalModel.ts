@@ -173,7 +173,7 @@ export class Cubism2InternalModel extends InternalModel {
         this.coreModel.setParamFloat(this.breathParamIndex, 0.5 + 0.5 * Math.sin(t / 3.2345));
     }
 
-    draw(gl: WebGLRenderingContext): void {
+    draw(gl: WebGLRenderingContext, framebuffer?: WebGLFramebuffer): void {
         const matrix = this.drawingMatrix;
 
         // set given 3x3 matrix into a 4x4 matrix, with Y inverted

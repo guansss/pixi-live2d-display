@@ -48,6 +48,8 @@ describe('Live2DModel', async () => {
     }
 
     before(async function() {
+        window.runtimes = runtimes;
+
         window.app = app = createApp(Application);
         app.stage.sortableChildren = true;
         app.stage.interactive = true;
@@ -88,7 +90,7 @@ describe('Live2DModel', async () => {
         runtimes.cubism4.model1.x = 550;
         runtimes.cubism4.model2.x = runtimes.cubism2.model1.width;
 
-        app.ticker.start();
+        app.start();
     });
 
     runtimes.each((runtime, name) => {

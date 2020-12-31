@@ -1,8 +1,10 @@
 import { createTexture } from '@/factory/texture';
 import { Graphics } from '@pixi/graphics';
 import { Sprite } from '@pixi/sprite';
+import { BaseRenderTexture, RenderTexture } from '@pixi/core';
 import chunk from 'lodash/chunk';
 import { TEST_TEXTURE } from '../env';
+import { delay } from '../utils';
 
 describe('Compatibility', function() {
     const ITEM_SIZE = 32;
@@ -54,6 +56,21 @@ describe('Compatibility', function() {
         const pixels = extractPixels(app, 0, itemOriginY, ITEM_SIZE, ITEM_SIZE);
 
         expect(pixels.every(pixel => pixel === 0xFFFF0000)).to.be.true;
+    });
+
+    it('should work with PIXI.RenderTexture', async function() {
+        const brt = new BaseRenderTexture(2000, 2000, undefined, 1);
+        const rt = new RenderTexture(brt);
+        const sprite = new Sprite(rt);
+
+        app.stage.addChild(sprite);
+
+        // app.start()
+
+        await delay(500);
+
+        app.renderer.render(runtimes.cubism2.model1, rt);
+        app.render();
     });
 
     it('should work after losing and restoring WebGL context', function(done) {

@@ -2,9 +2,9 @@ import { InternalModel, ModelSettings, MotionPriority } from '@/cubism-common';
 import { MotionManagerOptions } from '@/cubism-common/MotionManager';
 import type { Live2DFactoryOptions } from '@/factory/Live2DFactory';
 import { Live2DFactory } from '@/factory/Live2DFactory';
-import { Renderer, Texture } from '@pixi/core';
+import { Framebuffer, Renderer, Texture } from '@pixi/core';
 import { Container } from '@pixi/display';
-import { ObservablePoint, Point } from '@pixi/math';
+import { Matrix, ObservablePoint, Point } from '@pixi/math';
 import { Ticker } from '@pixi/ticker';
 import { InteractionMixin } from './InteractionMixin';
 import { Live2DTransform } from './Live2DTransform';
@@ -28,6 +28,7 @@ const DEFAULT_OPTIONS: Pick<Required<Live2DModelOptions>, 'autoUpdate' | 'autoIn
 };
 
 const tempPoint = new Point();
+const tempMatrix = new Matrix();
 
 // a reference to Ticker class, defaults to the one in window.PIXI (when loaded by a <script> tag)
 let TickerClass: typeof Ticker | undefined = (window as any).PIXI?.Ticker;
@@ -329,8 +330,16 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         this.internalModel.update(this.deltaTime, this.elapsedTime);
         this.deltaTime = 0;
 
-        this.transform.applyTransform(this.internalModel, renderer.globalUniforms.uniforms.projectionMatrix);
-        this.internalModel.draw(renderer.gl);
+        const internalTransform = tempMatrix
+            .copyFrom(renderer.globalUniforms.uniforms.projectionMatrix)
+            .append(this.worldTransform);
+
+        const framebuffer = (renderer.framebuffer as any).current as Framebuffer | null;
+        const renderWidth = (framebuffer ?? renderer).width;
+        const renderHeight = (framebuffer ?? renderer).height;
+
+        this.internalModel.updateTransform(internalTransform, renderWidth, renderHeight);
+        this.internalModel.draw(renderer.gl, renderer.gl.getParameter(renderer.gl.FRAMEBUFFER_BINDING));
 
         // reset WebGL state and texture bindings
         renderer.state.reset();
