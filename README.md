@@ -6,21 +6,26 @@
 
 Live2D integration for [PixiJS](https://github.com/pixijs/pixi.js) v5.
 
-**Resources**
+This project aims to be a universal Live2D framework on the web platform. While the official Live2D framework is just
+complex and problematic, this project has rewritten it to unify and simplify the APIs, which allows you to control the
+Live2D models on a high level without the need to learn how the internal system works.
+
+#### Demo
 
 - [Basic demo](https://codepen.io/guansss/pen/oNzoNoz/left?editors=1010)
 - [Advanced demo](https://codepen.io/guansss/pen/KKgXBOP/left?editors=0010)
 
+#### Documentation
 
 - [Wiki](https://github.com/guansss/pixi-live2d-display/wiki)
 - [API Documentation](https://guansss.github.io/pixi-live2d-display/)
 
 ## Cubism
 
-Cubism is the name of Live2D SDK. There are so far three versions of it: Cubism 2.1, Cubism 3 and Cubism 4, where the
-Cubism 4 runtime is backward-compatible with Cubism 3 models.
+Cubism is the name of Live2D SDK. There are so far three versions of it: Cubism 2.1, Cubism 3 and Cubism 4; where Cubism
+4 is backward-compatible with Cubism 3 models.
 
-This plugin supports Cubism 2.1 and Cubism 4 runtime, and thus all kinds of Live2D models.
+This plugin supports all variants of Live2D models by using Cubism 2.1 and Cubism 4.
 
 #### Requirement
 
@@ -53,7 +58,7 @@ To make it clear, here's how you would use these files:
 
 ## Install
 
-##### Via NPM
+#### Via NPM
 
 ```sh
 npm install pixi-live2d-display@beta
@@ -69,7 +74,7 @@ import { Live2DModel } from 'pixi-live2d-display/lib/cubism2';
 import { Live2DModel } from 'pixi-live2d-display/lib/cubism4';
 ```
 
-##### Via CDN
+#### Via CDN
 
 ```html
 
@@ -81,6 +86,8 @@ import { Live2DModel } from 'pixi-live2d-display/lib/cubism4';
 <!-- For Cubism 4 only -->
 <script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.3.0-beta/dist/cubism4.min.js"></script>
 ```
+
+In this way, all the exported members are available under `PIXI.live2d` namespace, such as `PIXI.live2d.Live2DModel`.
 
 ## Usage
 
@@ -151,18 +158,7 @@ async function main() {
 }
 ```
 
-### Using Prebuilt Files
-
-When including prebuilt files via the `<script>` tag, all the exported members are available under `PIXI.live2d`
-namespace. For example the `import { Live2DModel } from 'pixi-live2d-display'` will become `PIXI.live2d.Live2DModel`.
-
-```javascript
-const app = new PIXI.Application();
-
-const model = await PIXI.live2d.Live2DModel.from('shizuku.model.json');
-
-app.stage.addChild(model);
-```
+For more information, please visit the [Wiki](https://github.com/guansss/pixi-live2d-display/wiki).
 
 ---
 
