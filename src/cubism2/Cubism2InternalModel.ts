@@ -23,7 +23,7 @@ export class Cubism2InternalModel extends InternalModel {
     coreModel: Live2DModelWebGL;
     motionManager: Cubism2MotionManager;
 
-    eyeBlink: Live2DEyeBlink;
+    eyeBlink?: Live2DEyeBlink;
     physics?: Live2DPhysics;
     pose?: Live2DPose;
 
@@ -138,7 +138,7 @@ export class Cubism2InternalModel extends InternalModel {
         model.saveParam();
 
         if (!motionUpdated) {
-            this.eyeBlink.update(dt);
+            this.eyeBlink?.update(dt);
         }
 
         this.updateFocus();
