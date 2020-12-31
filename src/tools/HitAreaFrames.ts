@@ -54,14 +54,18 @@ export class HitAreaFrames extends Graphics {
     protected _render(renderer: Renderer): void {
         const internalModel = (this.parent as Live2DModel).internalModel;
 
-        const scale = 1 / this.transform.worldTransform.a;
+        // extract scale from the transform matrix, and invert it to ease following calculation
+        // https://math.stackexchange.com/a/13165
+        const scale = 1 / Math.sqrt(this.transform.worldTransform.a ** 2 + this.transform.worldTransform.b ** 2);
 
         this.texts.forEach(text => {
-            this.lineStyle(
-                this.strokeWidth * scale,
-                text.visible ? this.activeColor : this.normalColor,
-                1,
-            );
+            (
+                // correct the type definition of this method, the official definition is wrong!
+                this.lineStyle as any as (options: { width?: number, color?: number }) => void
+            )({
+                width: this.strokeWidth * scale,
+                color: text.visible ? this.activeColor : this.normalColor,
+            });
 
             const bounds = internalModel.getHitArea(text.text);
             const transform = internalModel.localTransform;
@@ -71,15 +75,10 @@ export class HitAreaFrames extends Graphics {
             bounds.top = bounds.top * transform.d + transform.ty;
             bounds.bottom = bounds.bottom * transform.d + transform.ty;
 
-            this.moveTo(bounds.left, bounds.top);
-            this.lineTo(bounds.right, bounds.top);
-            this.lineTo(bounds.right, bounds.bottom);
-            this.lineTo(bounds.left, bounds.bottom);
-            this.lineTo(bounds.left, bounds.top);
-            this.closePath();
+            this.drawRect(bounds.left, bounds.top, bounds.right - bounds.left, bounds.bottom - bounds.top);
 
-            text.x = bounds.left + this.strokeWidth;
-            text.y = bounds.top + this.strokeWidth;
+            text.x = bounds.left + this.strokeWidth * scale;
+            text.y = bounds.top + this.strokeWidth * scale;
             text.scale.set(scale);
         });
 
