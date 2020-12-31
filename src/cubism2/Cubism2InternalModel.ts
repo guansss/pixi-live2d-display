@@ -129,30 +129,48 @@ export class Cubism2InternalModel extends InternalModel {
 
         const model = this.coreModel;
 
-        model.loadParam();
+        this.emit('beforeMotionUpdate');
 
-        const updated = this.motionManager.update(this.coreModel, now);
-        if (!updated) {
-            this.eyeBlink.update(dt);
-        }
+        const motionUpdated = this.motionManager.update(this.coreModel, now);
+
+        this.emit('afterMotionUpdate');
 
         model.saveParam();
 
-        const focusX = this.focusController.x;
-        const focusY = this.focusController.y;
-        const t = (now / 1000) * 2 * Math.PI;
-        model.addToParamFloat(this.eyeballXParamIndex, focusX);
-        model.addToParamFloat(this.eyeballYParamIndex, focusY);
-        model.addToParamFloat(this.angleXParamIndex, focusX * 30 + 15 * Math.sin(t / 6.5345) * 0.5);
-        model.addToParamFloat(this.angleYParamIndex, focusY * 30 + 8 * Math.sin(t / 3.5345) * 0.5);
-        model.addToParamFloat(this.angleZParamIndex, focusX * focusY * -30 + 10 * Math.sin(t / 5.5345) * 0.5);
-        model.addToParamFloat(this.bodyAngleXParamIndex, focusX * 10 + 4 * Math.sin(t / 15.5345) * 0.5);
-        model.setParamFloat(this.breathParamIndex, 0.5 + 0.5 * Math.sin(t / 3.2345));
+        if (!motionUpdated) {
+            this.eyeBlink.update(dt);
+        }
+
+        this.updateFocus();
+        this.updateNaturalMovements(dt, now);
 
         this.physics?.update(now);
         this.pose?.update(dt);
 
+        this.emit('beforeModelUpdate');
+
         model.update();
+        model.loadParam();
+    }
+
+    updateFocus() {
+        this.coreModel.addToParamFloat(this.eyeballXParamIndex, this.focusController.x);
+        this.coreModel.addToParamFloat(this.eyeballYParamIndex, this.focusController.y);
+        this.coreModel.addToParamFloat(this.angleXParamIndex, this.focusController.x * 30);
+        this.coreModel.addToParamFloat(this.angleYParamIndex, this.focusController.y * 30);
+        this.coreModel.addToParamFloat(this.angleZParamIndex, this.focusController.x * this.focusController.y * -30);
+        this.coreModel.addToParamFloat(this.bodyAngleXParamIndex, this.focusController.x * 10);
+    }
+
+    updateNaturalMovements(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp) {
+        const t = (now / 1000) * 2 * Math.PI;
+
+        this.coreModel.addToParamFloat(this.angleXParamIndex, 15 * Math.sin(t / 6.5345) * 0.5);
+        this.coreModel.addToParamFloat(this.angleYParamIndex, 8 * Math.sin(t / 3.5345) * 0.5);
+        this.coreModel.addToParamFloat(this.angleZParamIndex, 10 * Math.sin(t / 5.5345) * 0.5);
+        this.coreModel.addToParamFloat(this.bodyAngleXParamIndex, 4 * Math.sin(t / 15.5345) * 0.5);
+
+        this.coreModel.setParamFloat(this.breathParamIndex, 0.5 + 0.5 * Math.sin(t / 3.2345));
     }
 
     draw(gl: WebGLRenderingContext): void {

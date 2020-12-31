@@ -160,14 +160,17 @@ export class Cubism4InternalModel extends InternalModel {
     public update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {
         super.update(dt, now);
 
+        // cubism4 uses seconds
         dt /= 1000;
         now /= 1000;
 
         const model = this.coreModel;
 
-        model.loadParameters();
+        this.emit('beforeMotionUpdate');
 
-        let motionUpdated = this.motionManager.update(this.coreModel, now);
+        const motionUpdated = this.motionManager.update(this.coreModel, now);
+
+        this.emit('afterMotionUpdate');
 
         model.saveParameters();
 
@@ -175,15 +178,10 @@ export class Cubism4InternalModel extends InternalModel {
             this.eyeBlink?.updateParameters(model, dt);
         }
 
-        model.addParameterValueById(this.idParamAngleX, this.focusController.x * 30); // -30 ~ 30
-        model.addParameterValueById(this.idParamAngleY, this.focusController.y * 30);
-        model.addParameterValueById(this.idParamAngleZ, this.focusController.x * this.focusController.y * -30);
-        model.addParameterValueById(this.idParamBodyAngleX, this.focusController.x * 10); // -10 ~ 10
-        model.addParameterValueById(this.idParamEyeBallX, this.focusController.x); // -1 ~ 1
-        model.addParameterValueById(this.idParamEyeBallY, this.focusController.y);
+        this.updateFocus();
 
-        this.breath?.updateParameters(model, dt);
-        this.physics?.evaluate(model, dt);
+        // revert the timestamps to be milliseconds
+        this.updateNaturalMovements(dt * 1000, now * 1000);
 
         // TODO: Add lip sync API
         // if (this.lipSync) {
@@ -194,9 +192,26 @@ export class Cubism4InternalModel extends InternalModel {
         //     }
         // }
 
+        this.physics?.evaluate(model, dt);
         this.pose?.updateParameters(model, dt);
 
+        this.emit('beforeModelUpdate');
+
         model.update();
+        model.loadParameters();
+    }
+
+    updateFocus() {
+        this.coreModel.addParameterValueById(this.idParamEyeBallX, this.focusController.x); // -1 ~ 1
+        this.coreModel.addParameterValueById(this.idParamEyeBallY, this.focusController.y);
+        this.coreModel.addParameterValueById(this.idParamAngleX, this.focusController.x * 30); // -30 ~ 30
+        this.coreModel.addParameterValueById(this.idParamAngleY, this.focusController.y * 30);
+        this.coreModel.addParameterValueById(this.idParamAngleZ, this.focusController.x * this.focusController.y * -30);
+        this.coreModel.addParameterValueById(this.idParamBodyAngleX, this.focusController.x * 10); // -10 ~ 10
+    }
+
+    updateNaturalMovements(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp) {
+        this.breath?.updateParameters(this.coreModel, dt / 1000);
     }
 
     public draw(gl: WebGLRenderingContext): void {
