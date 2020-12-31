@@ -1,5 +1,6 @@
 import { resolve as urlResolve } from 'url';
 import { readArrayBuffer, remoteRequire } from './utils';
+import { CubismMoc } from '@cubism/model/cubismmoc';
 
 export const shizuku = {
     file: './assets/shizuku/shizuku.model.json',
@@ -62,8 +63,8 @@ TEST_MODEL.modelData = readArrayBuffer(urlResolve(TEST_MODEL.file, TEST_MODEL.js
 TEST_MODEL.coreModel = Live2DModelWebGL.loadModel(TEST_MODEL.modelData);
 
 export function setupENV() {
-    // TEST_MODEL4.modelData = readArrayBuffer(urlResolve(TEST_MODEL4.file, TEST_MODEL4.json.FileReferences.Moc));
-    // TEST_MODEL4.coreModel = CubismMoc.create(TEST_MODEL4.modelData).createModel();
+    TEST_MODEL4.modelData = readArrayBuffer(urlResolve(TEST_MODEL4.file, TEST_MODEL4.json.FileReferences.Moc));
+    TEST_MODEL4.coreModel = CubismMoc.create(TEST_MODEL4.modelData).createModel();
 }
 
 export const TEST_SOUND = './assets/shizuku/sounds/shake_00.mp3';
