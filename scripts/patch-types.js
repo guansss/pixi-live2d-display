@@ -15,7 +15,6 @@ tsdContent = tsdContent.slice(0, secondLineIndex) +
     '\n///<reference types="pixi.js"/>\n' +
 
     // dts-bundle-generator currently doesn't support `import x = y` statements
-    '\nimport { InteractionEvent, InteractionManager } from \'@pixi/interaction\';' +
     '\nimport { EventEmitter, url } from \'@pixi/utils\';' +
 
     tsdContent.slice(secondLineIndex);
