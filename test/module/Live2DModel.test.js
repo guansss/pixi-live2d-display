@@ -18,14 +18,14 @@ describe('Live2DModel', async () => {
         cubism2: {
             model1: undefined,
             model2: undefined,
-            nonScaledWidth: TEST_MODEL.width * (TEST_MODEL.json.layout.width || LOGICAL_WIDTH) / LOGICAL_WIDTH,
-            nonScaledHeight: TEST_MODEL.height * (TEST_MODEL.json.layout.height || LOGICAL_HEIGHT) / LOGICAL_HEIGHT,
+            nonScaledWidth: TEST_MODEL.width * (TEST_MODEL.json.layout && TEST_MODEL.json.layout.width || LOGICAL_WIDTH) / LOGICAL_WIDTH,
+            nonScaledHeight: TEST_MODEL.height * (TEST_MODEL.json.layout && TEST_MODEL.json.layout.height || LOGICAL_HEIGHT) / LOGICAL_HEIGHT,
         },
         cubism4: {
             model1: undefined,
             model2: undefined,
-            nonScaledWidth: TEST_MODEL4.width * (TEST_MODEL4.json.Layout.Width || LOGICAL_WIDTH) / LOGICAL_WIDTH,
-            nonScaledHeight: TEST_MODEL4.height * (TEST_MODEL4.json.Layout.Height || LOGICAL_HEIGHT) / LOGICAL_HEIGHT,
+            nonScaledWidth: TEST_MODEL4.width * (TEST_MODEL4.json.Layout && TEST_MODEL4.json.Layout.Width || LOGICAL_WIDTH) / LOGICAL_WIDTH,
+            nonScaledHeight: TEST_MODEL4.height * (TEST_MODEL4.json.Layout && TEST_MODEL4.json.Layout.Height || LOGICAL_HEIGHT) / LOGICAL_HEIGHT,
         },
     });
 

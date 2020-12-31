@@ -1,4 +1,3 @@
-import { CubismMoc } from '@cubism/model/cubismmoc';
 import { resolve as urlResolve } from 'url';
 import { readArrayBuffer, remoteRequire } from './utils';
 
