@@ -32,7 +32,8 @@ This plugin supports all variants of Live2D models by using Cubism 2.1 and Cubis
 Before using the plugin, you'll need to include the Cubism runtime library, aka Cubism Core.
 
 For Cubism 4, it's `live2dcubismcore.min.js` that can be extracted from
-the [Cubism 4 SDK](https://www.live2d.com/download/cubism-sdk/download-web/).
+the [Cubism 4 SDK](https://www.live2d.com/download/cubism-sdk/download-web/), or be referred by
+a [direct link](https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js).
 
 For Cubism 2.1, it's `live2d.min.js`. This SDK is no longer downloadable from the official
 site [since 9/4/2019](https://help.live2d.com/en/other/other_20/), but can be
@@ -78,13 +79,13 @@ import { Live2DModel } from 'pixi-live2d-display/lib/cubism4';
 
 ```html
 
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.3.0-beta/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.3.0-beta.1/dist/index.min.js"></script>
 
 <!-- For Cubism 2 only -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.3.0-beta/dist/cubism2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.3.0-beta.1/dist/cubism2.min.js"></script>
 
 <!-- For Cubism 4 only -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.3.0-beta/dist/cubism4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.3.0-beta.1/dist/cubism4.min.js"></script>
 ```
 
 In this way, all the exported members are available under `PIXI.live2d` namespace, such as `PIXI.live2d.Live2DModel`.
