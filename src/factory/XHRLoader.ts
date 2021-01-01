@@ -6,7 +6,7 @@ const TAG = 'XHRLoader';
 
 function createNetworkError(message: string, url: string, status: number, aborted = false): Error {
     const err = new Error(message);
-    (err as any).url = status;
+    (err as any).url = url;
     (err as any).status = status;
     (err as any).aborted = aborted;
 
