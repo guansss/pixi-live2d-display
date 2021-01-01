@@ -4,6 +4,7 @@ import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
 import { Cubism2MotionManager } from '@/cubism2/Cubism2MotionManager';
 import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
 import { Cubism4MotionManager } from '@/cubism4/Cubism4MotionManager';
+import { SoundManager } from '@/cubism-common/SoundManager';
 import '@/factory';
 import fromPairs from 'lodash/fromPairs';
 import sinon from 'sinon';
@@ -339,6 +340,23 @@ describe('MotionManager', function() {
             tasks.tap_body0();
             expect(await suspendedForce0).to.be.false;
             expect(startMotionStub).to.be.calledOnceWith('tap_body1');
+        }
+    });
+
+    it.only('should not break motion when the sound fails to play', async function() {
+        config.sound = true;
+
+        const playStub = sinon.stub(SoundManager, 'play').rejects(new Error('foo'));
+
+        try {
+            const manager = createManager2();
+
+            await manager.startMotion('tap_body', 0);
+
+            expect(playStub.to.be.called);
+        } finally {
+            playStub.restore();
+            config.sound = false;
         }
     });
 });
