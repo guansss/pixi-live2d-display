@@ -343,7 +343,7 @@ describe('MotionManager', function() {
         }
     });
 
-    it.only('should not break motion when the sound fails to play', async function() {
+    it('should not break motion when the sound fails to play', async function() {
         config.sound = true;
 
         const playStub = sinon.stub(SoundManager, 'play').rejects(new Error('foo'));
@@ -358,5 +358,19 @@ describe('MotionManager', function() {
             playStub.restore();
             config.sound = false;
         }
+    });
+
+    it('should not start idle motion when not fully idle', function() {
+        const manager = createManager2();
+
+        sinon.stub(manager, 'loadMotion').returns(new Promise(noResolve => {}));
+
+        manager.startMotion('idle', 0);
+
+        sinon.stub(manager, 'startRandomMotion');
+
+        updateManager(manager);
+
+        expect(manager.startRandomMotion).to.not.be.called;
     });
 });

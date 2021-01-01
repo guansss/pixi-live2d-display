@@ -251,8 +251,10 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
 
             this.state.complete();
 
-            // noinspection JSIgnoredPromiseFromCall
-            this.startRandomMotion(this.groups.idle, MotionPriority.IDLE);
+            if (this.state.isClear()) {
+                // noinspection JSIgnoredPromiseFromCall
+                this.startRandomMotion(this.groups.idle, MotionPriority.IDLE);
+            }
         }
 
         let updated = this.updateMotion(model, now);

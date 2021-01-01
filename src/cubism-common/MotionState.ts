@@ -136,6 +136,10 @@ export class MotionState {
         this.setReservedIdle(undefined, undefined);
     }
 
+    isClear(): boolean {
+        return this.currentGroup === undefined && this.reservedGroup === undefined && this.reservedIdleGroup === undefined;
+    }
+
     shouldOverrideExpression(): boolean {
         return this.currentPriority > MotionPriority.IDLE;
     }
