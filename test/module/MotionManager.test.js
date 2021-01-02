@@ -353,7 +353,7 @@ describe('MotionManager', function() {
 
             await manager.startMotion('tap_body', 0);
 
-            expect(playStub.to.be.called);
+            expect(playStub).to.be.called;
         } finally {
             playStub.restore();
             config.sound = false;
