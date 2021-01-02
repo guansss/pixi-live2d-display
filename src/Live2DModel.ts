@@ -346,10 +346,6 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         renderer.texture.reset();
     }
 
-        // reset WebGL state
-        renderer.state.reset();
-    }
-
     /** @override */
     destroy(options?: { children?: boolean, texture?: boolean, baseTexture?: boolean }): void {
         this.emit('destroy');
