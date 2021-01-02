@@ -373,4 +373,16 @@ describe('MotionManager', function() {
 
         expect(manager.startRandomMotion).to.not.be.called;
     });
+
+    it('should not start already failed motion in startRandomMotion()', async function() {
+        const manager = createManager2();
+
+        sinon.stub(manager, '_loadMotion').returns(undefined);
+
+        for (let i = 0; i < manager.definitions.idle.length; i++) {
+            await manager.startMotion('idle', i);
+        }
+
+        expect(manager.startRandomMotion('idle')).to.eventually.be.false;
+    });
 });

@@ -215,9 +215,19 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         const groupDefs = this.definitions[group];
 
         if (groupDefs?.length) {
-            const index = Math.floor(Math.random() * groupDefs.length);
+            const availableIndices = [];
 
-            return this.startMotion(group, index, priority);
+            for (let i = 0; i < groupDefs!.length; i++) {
+                if (this.motionGroups[group]?.[i] !== null) {
+                    availableIndices.push(i);
+                }
+            }
+
+            if (availableIndices.length) {
+                const index = Math.floor(Math.random() * availableIndices.length);
+
+                return this.startMotion(group, availableIndices[index]!, priority);
+            }
         }
 
         return Promise.resolve(false);
