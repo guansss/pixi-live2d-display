@@ -27,14 +27,39 @@ Live2DFactory.registerRuntime({
         const moc = CubismMoc.create(data);
 
         try {
-            return moc.createModel();
-        } finally {
-            moc.release();
+            const model = moc.createModel();
+
+            // store the moc instance so we can reference it later
+            (model as any).__moc = moc;
+
+            return model;
+        } catch (e) {
+            try {
+                moc.release();
+            } catch (ignored) {
+            }
+
+            throw e;
         }
     },
 
     createInternalModel(coreModel: CubismModel, settings: Cubism4ModelSettings, options?: Live2DFactoryOptions): Cubism4InternalModel {
-        return new Cubism4InternalModel(coreModel, settings, options);
+        const model = new Cubism4InternalModel(coreModel, settings, options);
+
+        const coreModelWithMoc = coreModel as { __moc?: CubismMoc };
+
+        if (coreModelWithMoc.__moc) {
+            // transfer the moc to InternalModel, because the coreModel will
+            // probably have been set to undefined when we receive the "destroy" event
+            (model as any).__moc = coreModelWithMoc.__moc;
+
+            delete coreModelWithMoc.__moc;
+
+            // release the moc when destroying
+            model.once('destroy', releaseMoc);
+        }
+
+        return model;
     },
 
     createPhysics(coreModel: CubismModel, data: any): CubismPhysics {
@@ -45,3 +70,7 @@ Live2DFactory.registerRuntime({
         return CubismPose.create(data);
     },
 });
+
+function releaseMoc(this: Cubism4InternalModel) {
+    ((this as any).__moc as CubismMoc | undefined)?.release();
+}

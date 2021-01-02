@@ -44,6 +44,10 @@ export const haru = {
     },
 };
 
+export const hiyori = {
+    file: '../../CubismWebSamples/Samples/Resources/Hiyori/Hiyori.model3.json',
+};
+
 export const TEST_MODEL = shizuku;
 export const TEST_MODEL4 = haru;
 

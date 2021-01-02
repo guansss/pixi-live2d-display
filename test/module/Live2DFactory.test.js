@@ -4,17 +4,20 @@ import { Application } from '@pixi/app';
 import { Texture } from '@pixi/core';
 import merge from 'lodash/merge';
 import sinon from 'sinon';
-import { TEST_MODEL, TEST_MODEL4, TEST_TEXTURE } from '../env';
+import { hiyori, TEST_MODEL, TEST_MODEL4, TEST_TEXTURE } from '../env';
 import { createApp, delay } from '../utils';
 
 describe('Live2DFactory', function() {
     const options = { autoUpdate: false, motionPreload: MotionPreloadStrategy.NONE };
     const originalLogLevel = config.logLevel;
     const fakeXHRs = [];
+    let app;
 
     this.timeout(1000);
 
     before(function() {
+        app = createApp(Application, false);
+
         this.fakeXHR = sinon.useFakeXMLHttpRequest();
 
         const matchesFake = url => url.match(/fake/);
@@ -33,6 +36,7 @@ describe('Live2DFactory', function() {
     });
 
     after(function() {
+        app.destroy(true, { children: true });
         this.fakeXHR.restore();
     });
 
@@ -89,17 +93,27 @@ describe('Live2DFactory', function() {
         await expect(Live2DModel.from(merge({}, TEST_MODEL.json, { textures: ['fakeTexture'] }), options)).to.be.rejected;
     });
 
+    it('should not freeze the process when having various cubism4 models at the same time', async function() {
+        try {
+            const response = await fetch(hiyori.file);
+            if (!response.ok) throw new Error('Not OK');
+        } catch (e) {
+            // skip because missing the model in env
+            this.skip();
+        }
+
+        const model1 = await Live2DModel.from(TEST_MODEL4.file, options);
+
+        app.stage.addChild(model1);
+        app.render();
+
+        const model2 = await Live2DModel.from(hiyori.file, options);
+
+        app.stage.addChild(model2);
+        app.render();
+    });
+
     describe('Synchronous creation', function() {
-        let app;
-
-        before(function() {
-            app = createApp(Application, false);
-        });
-
-        after(function() {
-            app.destroy();
-        });
-
         it('should create Live2DModel', async function() {
             const modelOptions = { ...options };
 
@@ -114,17 +128,22 @@ describe('Live2DFactory', function() {
 
             const eventEmitted = new Promise((resolve2, reject2) => {
                 model.on('ready', () => {
-                        try {
-                            app.stage.addChild(model);
-                            model.update(100);
-                            app.render();
-                        } catch (e) {
-                            reject2(e);
-                        }
-                    })
+                    try {
+                        app.stage.addChild(model);
+                        model.update(100);
+
+                        // expect no errors
+                        app.render();
+                    } catch (e) {
+                        reject2(e);
+                    }
+                })
                     .on('load', () => {
                         try {
                             app.render();
+                            app.stage.removeChild(model);
+                            model.destroy();
+
                             resolve2();
                         } catch (e) {
                             reject2(e);
