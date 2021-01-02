@@ -79,13 +79,13 @@ import { Live2DModel } from 'pixi-live2d-display/lib/cubism4';
 
 ```html
 
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.3.0-beta.1/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@beta/dist/index.min.js"></script>
 
 <!-- For Cubism 2 only -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.3.0-beta.1/dist/cubism2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@beta/dist/cubism2.min.js"></script>
 
 <!-- For Cubism 4 only -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.3.0-beta.1/dist/cubism4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@beta/dist/cubism4.min.js"></script>
 ```
 
 In this way, all the exported members are available under `PIXI.live2d` namespace, such as `PIXI.live2d.Live2DModel`.
