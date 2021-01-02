@@ -251,7 +251,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
 
             this.state.complete();
 
-            if (this.state.isClear()) {
+            if (this.state.shouldRequestIdleMotion()) {
                 // noinspection JSIgnoredPromiseFromCall
                 this.startRandomMotion(this.groups.idle, MotionPriority.IDLE);
             }

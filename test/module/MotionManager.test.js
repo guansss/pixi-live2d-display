@@ -365,7 +365,7 @@ describe('MotionManager', function() {
 
         sinon.stub(manager, 'loadMotion').returns(new Promise(noResolve => {}));
 
-        manager.startMotion('idle', 0);
+        manager.startMotion('idle', 0, MotionPriority.IDLE);
 
         sinon.stub(manager, 'startRandomMotion');
 

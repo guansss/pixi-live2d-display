@@ -136,8 +136,8 @@ export class MotionState {
         this.setReservedIdle(undefined, undefined);
     }
 
-    isClear(): boolean {
-        return this.currentGroup === undefined && this.reservedGroup === undefined && this.reservedIdleGroup === undefined;
+    shouldRequestIdleMotion(): boolean {
+        return this.currentGroup === undefined && this.reservedIdleGroup === undefined;
     }
 
     shouldOverrideExpression(): boolean {
