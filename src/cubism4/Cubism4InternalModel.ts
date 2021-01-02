@@ -235,12 +235,12 @@ export class Cubism4InternalModel extends InternalModel {
         this.renderer.drawModel();
     }
 
-    release() {
-        this.motionManager.release();
+    destroy() {
+        super.destroy();
+
         this.renderer.release();
         this.coreModel.release();
 
-        (this as Partial<this>).motionManager = undefined;
         (this as Partial<this>).renderer = undefined;
         (this as Partial<this>).coreModel = undefined;
     }

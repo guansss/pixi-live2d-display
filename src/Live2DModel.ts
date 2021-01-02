@@ -359,7 +359,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
             this.textures.forEach(texture => texture.destroy(options.baseTexture));
         }
 
-        this.internalModel.release();
+        this.internalModel.destroy();
 
         super.destroy(options);
     }

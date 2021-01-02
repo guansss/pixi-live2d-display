@@ -37,9 +37,9 @@ export interface InternalModelOptions extends MotionManagerOptions {
 export abstract class InternalModel extends EventEmitter {
     abstract readonly coreModel: object;
 
-    abstract readonly motionManager: MotionManager;
-
     abstract readonly settings: ModelSettings;
+
+    abstract motionManager: MotionManager;
 
     pose?: any;
     physics?: any;
@@ -178,8 +178,10 @@ export abstract class InternalModel extends EventEmitter {
     };
 
     destroy() {
-        this.emit('destroy');
         this.motionManager.destroy();
+        (this as Partial<this>).motionManager = undefined;
+
+        this.emit('destroy');
     }
 
     abstract getHitAreaVertices(drawIndex: number): Float32Array;
@@ -206,6 +208,4 @@ export abstract class InternalModel extends EventEmitter {
     protected abstract getSize(): [number, number];
 
     protected abstract getLayout(): CommonLayout;
-
-    abstract release(): void;
 }
