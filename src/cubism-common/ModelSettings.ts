@@ -27,7 +27,15 @@ export abstract class ModelSettings {
         this.json = json;
 
         let url = (json as any).url;
-        this.url = typeof url === 'string' ? url : '';
+
+        if (typeof url !== 'string') {
+            // this is not allowed because it'll typically result in errors, including a
+            // fatal error - an OOM that crashes the browser while initializing this cubism2 model,
+            // I'm not kidding!
+            throw new TypeError('The `url` property must be specified in settings JSON.');
+        }
+
+        this.url = url;
 
         // set default name to folder's name
         this.name = folderName(this.url);

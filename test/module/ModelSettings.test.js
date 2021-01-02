@@ -3,11 +3,13 @@ import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
 import { TEST_MODEL, TEST_MODEL4 } from '../env';
 
 const basicCubism2SettingsJSON = {
+    url: 'foo/bar',
     model: 'foo.moc',
     textures: ['foo.png'],
 };
 
 const basicCubism4SettingsJSON = {
+    url: 'foo/bar',
     Version: 3,
     FileReferences: {
         Moc: 'foo.moc',
