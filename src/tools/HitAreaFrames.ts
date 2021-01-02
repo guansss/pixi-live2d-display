@@ -67,7 +67,7 @@ export class HitAreaFrames extends Graphics {
                 color: text.visible ? this.activeColor : this.normalColor,
             });
 
-            const bounds = internalModel.getHitArea(text.text);
+            const bounds = internalModel.getDrawableBounds(internalModel.hitAreas[text.text]!.index);
             const transform = internalModel.localTransform;
 
             bounds.left = bounds.left * transform.a + transform.tx;

@@ -140,7 +140,7 @@ export class Cubism4InternalModel extends InternalModel {
         })) ?? [];
     }
 
-    getHitAreaVertices(drawIndex: number): Float32Array {
+    getDrawableVertices(drawIndex: number): Float32Array {
         const arr = this.coreModel.getDrawableVertices(drawIndex).slice(0);
 
         for (let i = 0; i < arr.length; i += 2) {

@@ -143,13 +143,15 @@ export abstract class InternalModel extends EventEmitter {
             return false;
         }
 
-        const bounds = this.getHitArea(hitAreaName);
+        const drawIndex = this.hitAreas[hitAreaName]!.index;
+
+        const bounds = this.getDrawableBounds(drawIndex);
 
         return bounds.left <= x && x <= bounds.right && bounds.top <= y && y <= bounds.bottom;
     }
 
-    getHitArea(hitAreaName: string): Bounds {
-        const vertices = this.getHitAreaVertices(this.hitAreas[hitAreaName]!.index);
+    getDrawableBounds(drawIndex: number): Bounds {
+        const vertices = this.getDrawableVertices(drawIndex);
 
         let left = vertices[0]!;
         let right = vertices[0]!;
@@ -184,7 +186,7 @@ export abstract class InternalModel extends EventEmitter {
         this.emit('destroy');
     }
 
-    abstract getHitAreaVertices(drawIndex: number): Float32Array;
+    abstract getDrawableVertices(drawIndex: number): Float32Array;
 
     /**
      * Updates GL context when it's changed.
