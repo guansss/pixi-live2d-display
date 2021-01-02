@@ -1,4 +1,5 @@
-import { config, SoundManager } from '../../src';
+import { config } from '@/config';
+import { SoundManager } from '@/cubism-common/SoundManager';
 import { TEST_SOUND } from '../env';
 
 describe('SoundManager', function() {
@@ -28,7 +29,7 @@ describe('SoundManager', function() {
         SoundManager.play(audio).then(() => {
             expect(audio.readyState, 'should be ready to play').to.gte(audio.HAVE_ENOUGH_DATA);
 
-            // seek to the end so we don't have to wait
+            // seek to the end so we don't have to wait for the playback
             audio.currentTime = audio.duration;
         });
     });
@@ -42,7 +43,7 @@ describe('SoundManager', function() {
 
             sinon.stub(audio, 'play').rejects(new Error('expected error'));
 
-            expect(SoundManager.play(audio)).to.eventually.be.rejectedWith('expected error');
+            expect(SoundManager.play(audio)).to.be.rejectedWith('expected error');
         })).to.be.rejectedWith('expected error');
     });
 

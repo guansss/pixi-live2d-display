@@ -1,76 +1,46 @@
-import camelCase from 'lodash/camelCase';
-
-/**
- * Deep clones a JSON object, converting all the property names to camel case.
- * @param value - JSON object.
- * @return Cloned object.
- */
-export function cloneWithCamelCase(value: any): any {
-    if (Array.isArray(value)) {
-        return value.map(cloneWithCamelCase);
-    }
-
-    if (value && typeof value === 'object') {
-        const clone: any = {};
-
-        for (const key of Object.keys(value)) {
-            clone[camelCase(key)] = cloneWithCamelCase(value[key]);
-        }
-
-        return clone;
-    }
-
-    return value;
-}
-
 /**
  * Copies a property at only if it matches the `type`.
- * @param dest - Destination object.
- * @param src - Source object.
- * @param key - Key of the property.
  * @param type - Type expected to match `typeof` on the property.
+ * @param from - Source object.
+ * @param to - Destination object.
+ * @param fromKey - Key of the property in source object.
+ * @param toKey - Key of the property in destination object.
  */
-export function copyProperty(dest: any, src: any, key: string, type: string) {
-    const value = src[key];
+// TODO: lint and fix the formatting!
+export function copyProperty<From, FromKey extends keyof From, ToKey extends keyof any, To extends Partial<Record<ToKey, From[FromKey]>>>(type: string, from: From, to: To, fromKey: FromKey, toKey: ToKey) {
+    const value = from[fromKey];
 
-    if (typeof value === type) {
-        dest[key] = value;
+    if (value !== null && typeof value === type) {
+        // a type error will occur here, have no idea
+        to[toKey] = value as any;
     }
 }
 
 /**
  * Copies an array at `key`, filtering the items that match the `type`.
- * @param dest - Destination object.
- * @param src - Source object.
- * @param key - Key of the array property.
  * @param type - Type expected to match `typeof` on the items.
+ * @param from - Source object.
+ * @param to - Destination object.
+ * @param fromKey - Key of the array property in source object.
+ * @param toKey - Key of the array property in destination object.
  */
-export function copyArray(dest: any, src: any, key: string, type: string) {
-    const array = src[key];
+export function copyArray<FromKey extends keyof any, From extends Partial<Record<FromKey, any[]>>, ToKey extends keyof any, To extends Partial<Record<ToKey, any[]>>>(type: string, from: From, to: To, fromKey: FromKey, toKey: ToKey) {
+    const array = from[fromKey];
 
     if (Array.isArray(array)) {
-        dest[key] = array.filter(item => typeof item === type);
+        to[toKey] = array.filter(item => item !== null && typeof item === type) as any;
     }
 }
 
 /**
- * Copies an object array at `key`, filtering the items with properties matching the type in given `types` map.
- *
- * ```js
- * copyArrayDeep(o1, o2, 'users', { name: 'string', id: 'number' });
- * ```
- *
- * @param dest - Destination object.
- * @param src - Source object.
- * @param key - Key of the array property.
- * @param types - Type dictionary to match `typeof` on each property of the items.
+ * @see {@link https://www.typescriptlang.org/docs/handbook/mixins.html}
  */
-export function copyObjectArray(dest: any, src: any, key: string, types: Record<string, string>) {
-    const array = src[key];
-
-    const matchers = Object.entries(types);
-
-    if (Array.isArray(array)) {
-        dest[key] = array.filter(item => matchers.every(([key, type]) => typeof item[key] === type));
-    }
+export function applyMixins(derivedCtor: any, baseCtors: any[]) {
+    baseCtors.forEach(baseCtor => {
+        Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
+            if (name !== 'constructor') {
+                Object.defineProperty(derivedCtor.prototype, name, Object.getOwnPropertyDescriptor(baseCtor.prototype, name)!);
+            }
+        });
+    });
 }

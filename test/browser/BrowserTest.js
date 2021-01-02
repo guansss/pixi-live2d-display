@@ -5,13 +5,18 @@
 
     const app = createApp(PIXI.Application);
 
-    PIXI.live2d.config.logLevel = PIXI.live2d.config.LOG_LEVEL_NONE;
+    app.ticker.start();
+
+    PIXI.live2d.config.logLevel = PIXI.live2d.config.LOG_LEVEL_VERBOSE;
 
     async function loadModel() {
-        model = await PIXI.live2d.Live2DModel.fromModelSettingsFile(TEST_MODEL.file);
-        app.stage.addChild(model);
+        model = await PIXI.live2d.Live2DModel.from(TEST_MODEL.file);
 
-        model.on('hit', hitAreas => hitAreas.includes('body') && model.internal.motionManager.startRandomMotion('tapBody'));
+        model.y = -100;
+
+        model.on('hit', hitAreas => hitAreas.includes('body') && model.motion('tap_body'));
+
+        app.stage.addChild(model);
     }
 
     window.BrowserTest = {

@@ -1,36 +1,66 @@
+import { InternalModel, Live2DModel, LOGICAL_HEIGHT, LOGICAL_WIDTH } from '@';
+import { HitAreaFrames } from '@/tools/HitAreaFrames';
 import { Application } from '@pixi/app';
 import { BatchRenderer, Renderer } from '@pixi/core';
-import { Graphics } from '@pixi/graphics';
 import { InteractionManager } from '@pixi/interaction';
 import { Ticker, TickerPlugin } from '@pixi/ticker';
-import { Live2DModel } from '../../src';
-import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from '../../src/live2d/Live2DInternalModel';
-import { createApp } from '../utils';
-import { TEST_MODEL } from './../env';
+import merge from 'lodash/merge';
+import { RUNTIMES, TEST_MODEL, TEST_MODEL4 } from '../env';
+import { addBackground, callBefore, createApp, draggable } from '../utils';
 
 Application.registerPlugin(TickerPlugin);
 Renderer.registerPlugin('batch', BatchRenderer);
 Renderer.registerPlugin('interaction', InteractionManager);
 Live2DModel.registerTicker(Ticker);
 
-// model's non-scaled size, taking into account the `layout` defined in model settings
-const modelBaseWidth = TEST_MODEL.width * (TEST_MODEL.json.layout.width || LOGICAL_WIDTH) / LOGICAL_WIDTH;
-const modelBaseHeight = TEST_MODEL.height * (TEST_MODEL.json.layout.height || LOGICAL_HEIGHT) / LOGICAL_HEIGHT;
-
 describe('Live2DModel', async () => {
+    const runtimes = merge({}, RUNTIMES, {
+        cubism2: {
+            model1: undefined,
+            model2: undefined,
+            nonScaledWidth: TEST_MODEL.width * (TEST_MODEL.json.layout && TEST_MODEL.json.layout.width || LOGICAL_WIDTH) / LOGICAL_WIDTH,
+            nonScaledHeight: TEST_MODEL.height * (TEST_MODEL.json.layout && TEST_MODEL.json.layout.height || LOGICAL_HEIGHT) / LOGICAL_HEIGHT,
+        },
+        cubism4: {
+            model1: undefined,
+            model2: undefined,
+            nonScaledWidth: TEST_MODEL4.width * (TEST_MODEL4.json.Layout && TEST_MODEL4.json.Layout.Width || LOGICAL_WIDTH) / LOGICAL_WIDTH,
+            nonScaledHeight: TEST_MODEL4.height * (TEST_MODEL4.json.Layout && TEST_MODEL4.json.Layout.Height || LOGICAL_HEIGHT) / LOGICAL_HEIGHT,
+        },
+    });
+
+    callBefore(InternalModel.prototype, 'init', function() {
+        runtimes.each(runtime => {
+            const modelDef = runtime.definition;
+            if (this.settings.url === modelDef.file) {
+                this.settings.layout = modelDef.layout || modelDef.Layout;
+            }
+        });
+    });
+
     let app;
-    let model, model2;
 
-    before(async () => {
-        model = await Live2DModel.fromModelSettingsFile(TEST_MODEL.file);
+    async function createModel(modelDef, options = {}) {
+        const model = await Live2DModel.from(modelDef.file);
+        model.zIndex = options.zIndex || 0;
+        options.app && options.app.stage.addChild(model);
+        return model;
+    }
 
-        // test multiple models
-        model2 = await Live2DModel.fromModelSettingsFile(TEST_MODEL.file);
-        model2.scale.set(0.5, 0.5);
+    before(async function() {
+        window.runtimes = runtimes;
 
-        app = createApp(Application);
-        app.stage.addChild(model);
-        app.stage.addChild(model2);
+        window.app = app = createApp(Application);
+        app.stage.sortableChildren = true;
+        app.stage.interactive = true;
+        // app.stage.on('pointerup', e => console.log(e.data.global.x, e.data.global.y));
+
+        let modelLayer = 0;
+
+        await runtimes.each(async runtime => {
+            runtime.model1 = await createModel(runtime.definition, { app, zIndex: modelLayer-- });
+            runtime.model2 = await createModel(runtime.definition, { app, zIndex: runtime.model1.zIndex + 1 });
+        });
 
         // at least render the models once, otherwise hit testing will always fail
         // because Live2DModelWebGL#getTransformedPoints will return an array of zeros
@@ -38,119 +68,98 @@ describe('Live2DModel', async () => {
     });
 
     after(function() {
-        function hitHandler(hitAreas) {
-            hitAreas.includes('head') && this.internal.motionManager.expressionManager.setRandomExpression();
-            hitAreas.includes('body') && this.internal.motionManager.startRandomMotion('tapBody');
-        }
+        runtimes.each(runtime => {
+            runtime.model1.scale.set(0.5, 0.5);
+            runtime.model2.scale.set(0.125, 0.125);
 
-        // free to play!
-        model.on('hit', hitHandler);
-        model2.on('hit', hitHandler);
+            [runtime.model1, runtime.model2].forEach(model => {
+                addBackground(model);
+                draggable(app, model);
+                model.addChild(new HitAreaFrames());
+
+                model.interaction = runtime.definition.interaction;
+
+                // free to play!
+                model.on('hit', function(hitAreas) {
+                    hitAreas.includes(this.interaction.exp) && this.internalModel.motionManager.expressionManager?.setRandomExpression();
+                    Object.keys(this.interaction.motion).forEach(area => hitAreas.includes(area) && this.internalModel.motionManager.startRandomMotion(this.interaction.motion[area]));
+                });
+            });
+        });
+
+        runtimes.cubism4.model1.x = 550;
+        runtimes.cubism4.model2.x = runtimes.cubism2.model1.width;
+
+        app.start();
     });
 
-    afterEach(() => {
-        // reset state
-        model.scale.set(1, 1);
-        model.position.set(0, 0);
-        model.anchor.set(0, 0);
-    });
+    runtimes.each((runtime, name) => {
+        describe(name, function() {
+            afterEach(() => {
+                // reset states
+                runtime.model1.scale.set(1, 1);
+                runtime.model1.position.set(0, 0);
+                runtime.model1.anchor.set(0, 0);
+            });
 
-    it('should have correct size', () => {
-        expect(model.internal.originalWidth).to.equal(TEST_MODEL.width);
-        expect(model.internal.originalHeight).to.equal(TEST_MODEL.height);
+            it('should have correct size', () => {
+                expect(runtime.model1.internalModel.originalWidth).to.equal(runtime.definition.width);
+                expect(runtime.model1.internalModel.originalHeight).to.equal(runtime.definition.height);
 
-        expect(model.width).to.equal(modelBaseWidth);
-        expect(model.height).to.equal(modelBaseHeight);
+                expect(runtime.model1.width).to.equal(runtime.nonScaledWidth);
+                expect(runtime.model1.height).to.equal(runtime.nonScaledHeight);
 
-        model.scale.set(10, 0.1);
+                runtime.model1.scale.set(10, 0.1);
 
-        expect(model.width).to.equal(modelBaseWidth * 10);
-        expect(model.height).to.equal(modelBaseHeight * 0.1);
-    });
+                expect(runtime.model1.width).to.equal(runtime.nonScaledWidth * 10);
+                expect(runtime.model1.height).to.equal(runtime.nonScaledHeight * 0.1);
+            });
 
-    it('should have correct bounds according to size, position and anchor', () => {
-        model.scale.set(2, 3);
-        model.position.set(200, 300);
-        model.anchor.set(0.2, 0.3);
+            it('should have correct bounds according to size, position and anchor', () => {
+                runtime.model1.scale.set(2, 3);
+                runtime.model1.position.set(200, 300);
+                runtime.model1.anchor.set(0.2, 0.3);
 
-        const bounds = model.getBounds();
+                const bounds = runtime.model1.getBounds();
 
-        expect(bounds.x).to.equal(200 - modelBaseWidth * 2 * 0.2);
-        expect(bounds.y).to.equal(300 - modelBaseHeight * 3 * 0.3);
-        expect(bounds.width).to.equal(modelBaseWidth * 2);
-        expect(bounds.height).to.equal(modelBaseHeight * 3);
-    });
+                // compare approximately because of the float points
+                expect(bounds.x).to.be.closeTo(200 - runtime.nonScaledWidth * 2 * 0.2, 0.001);
+                expect(bounds.y).to.be.closeTo(300 - runtime.nonScaledHeight * 3 * 0.3, 0.001);
+                expect(bounds.width).to.be.closeTo(runtime.nonScaledWidth * 2, 0.001);
+                expect(bounds.height).to.be.closeTo(runtime.nonScaledHeight * 3, 0.001);
+            });
 
-    it('should not break rendering of PIXI.Graphics', function() {
-        // https://github.com/guansss/pixi-live2d-display/issues/5
+            it('should handle tapping', () => {
+                const listener = sinon.spy();
 
-        const SIZE = 50;
+                runtime.model1.on('hit', listener);
 
-        const graphics = new Graphics();
-        graphics.beginFill(0xff0000);
-        graphics.drawRect(0, 0, SIZE, SIZE);
-        app.stage.addChild(graphics);
-        app.render();
+                runtime.model1.tap(-1000, -1000);
+                expect(listener).to.not.be.called;
 
-        const offscreenCanvas = document.createElement('canvas');
-        offscreenCanvas.width = app.view.width;
-        offscreenCanvas.height = app.view.height;
+                for (const { hitArea, x, y } of runtime.definition.hitTests) {
+                    runtime.model1.tap(x, y);
+                    expect(listener).to.be.calledOnceWith(hitArea);
+                    listener.resetHistory();
 
-        const context = offscreenCanvas.getContext('2d');
-        context.drawImage(app.view, 0, 0);
-
-        const pixels = context.getImageData(0, 0, SIZE, SIZE).data;
-
-        // detect the red square
-        expect(pixels).to.satisfy(() => {
-            for (let i = 0; i < pixels.length; i += 4) {
-                if (pixels[i] !== 255 ||
-                    pixels[i + 1] !== 0 ||
-                    pixels[i + 2] !== 0 ||
-                    pixels[i + 3] !== 255) {
-                    return false;
+                    // mimic an InteractionEvent
+                    runtime.model1.emit('pointertap', { data: { global: { x, y } } });
+                    expect(listener).to.be.calledOnceWith(hitArea);
+                    listener.resetHistory();
                 }
-            }
-            return true;
+            });
         });
     });
 
-    it('should handle tapping', () => {
-        const listener = sinon.spy();
+    it('should handle GCed textures', function() {
+        app.render();
 
-        model.on('hit', listener);
+        // all textures would be destroyed
+        app.renderer.textureGC.count = 100000;
+        app.renderer.textureGC.run();
 
-        model.tap(-1000, -1000);
-        expect(listener).to.not.be.called;
-
-        for (const { hitArea, x, y } of TEST_MODEL.hitTests) {
-            model.tap(x, y);
-            expect(listener).to.be.calledWith(hitArea);
-            listener.resetHistory();
-
-            // mimic an InteractionEvent
-            model.emit('pointertap', { data: { global: { x, y } } });
-            expect(listener).to.be.calledWith(hitArea);
-            listener.resetHistory();
-        }
+        app.render();
     });
 
-    it('should work after losing and restoring WebGL context', function(done) {
-        setTimeout(() => {
-            console.warn('WebGL lose context');
-            const ext = app.renderer.gl.getExtension('WEBGL_lose_context');
-            ext.loseContext();
-
-            setTimeout(() => {
-                console.warn('WebGL restore context');
-                ext.restoreContext();
-
-                setTimeout(() => {
-                    expect(() => app.render()).to.not.throw();
-
-                    done();
-                }, 100);
-            }, 100);
-        }, 200);
-    });
+    require('./compat.test');
 });

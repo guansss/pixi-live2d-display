@@ -1,12 +1,29 @@
 const path = require('path');
 const merge = require('lodash/merge');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const webpack = require('webpack');
+const packageJSON = require('./package.json');
+
+const definePlugin = new webpack.DefinePlugin({
+    __PRODUCTION__: true,
+    __VERSION__: JSON.stringify(packageJSON.version),
+});
+
+// add browser-specific tools
+const addBrowserTools = new webpack.NormalModuleReplacementPlugin(/\/common/, function(resource) {
+    if (!resource.contextInfo.issuer.includes('common-browser')) {
+        resource.request = resource.request.replace('common', `common-browser`);
+        console.log(resource.contextInfo.issuer, resource.request);
+    }
+});
 
 module.exports = [
     // profile for module systems
     {
         output: {
-            filename: 'index.js',
+            filename: '[name].js',
+            path: path.resolve(__dirname, 'lib'),
             library: {
                 commonjs: 'pixi-live2d-display',
                 amd: 'pixi-live2d-display',
@@ -14,23 +31,50 @@ module.exports = [
             },
         },
         plugins: [
-            new ForkTsCheckerWebpackPlugin(), // just check it once!
+            definePlugin,
+
+            // just check it once!
+            new ForkTsCheckerWebpackPlugin({
+                typescript: {
+                    configFile: 'tsconfig.build.json',
+                },
+            }),
+            // new BundleAnalyzerPlugin(),
         ],
         externals: [/* place holder for merging */ undefined, /lodash/],
-    },
-
-    // profile for browser, Lodash is bundled
-    {
-        output: {
-            filename: 'browser.js',
-            library: ['PIXI', 'live2d'],
+        optimization: {
+            minimize: false,
         },
     },
+
+    // profiles for browser, Lodash and browser-specific tools are bundled
+    {
+        output: {
+            filename: '[name].js',
+            path: path.resolve(__dirname, 'dist'),
+            library: ['PIXI', 'live2d'],
+        },
+        plugins: [definePlugin, addBrowserTools],
+        optimization: {
+            minimize: false,
+        },
+    },
+    {
+        output: {
+            filename: '[name].min.js',
+            path: path.resolve(__dirname, 'dist'),
+            library: ['PIXI', 'live2d'],
+        },
+        plugins: [definePlugin, addBrowserTools],
+    },
 ].map(override => merge({
-    entry: './src/index.ts',
+    entry: {
+        index: './src/index.ts',
+        cubism2: './src/csm2.ts',
+        cubism4: './src/csm4.ts',
+    },
     devtool: 'source-map', // issue related: https://bugs.chromium.org/p/chromium/issues/detail?id=1052872
     output: {
-        path: path.resolve(__dirname, 'lib'),
         libraryTarget: 'umd',
     },
     module: {
@@ -42,6 +86,7 @@ module.exports = [
                         loader: 'ts-loader',
                         options: {
                             transpileOnly: true,
+                            configFile: 'tsconfig.build.json',
                         },
                     },
                 ],
@@ -50,6 +95,10 @@ module.exports = [
         ],
     },
     resolve: {
+        alias: {
+            '@': path.resolve(__dirname, 'src'),
+            '@cubism': path.resolve(__dirname, 'cubism/src'),
+        },
         extensions: ['.ts', '.js'],
     },
     externals: [

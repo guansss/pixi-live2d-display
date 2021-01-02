@@ -1,6 +1,6 @@
 {
   "name": "pixi-live2d-display",
-  "version": "0.2.2",
+  "version": "0.3.0-beta.1",
   "description": "Live2D plugin for PixiJS",
   "main": "lib/index.js",
   "repository": {
@@ -12,15 +12,17 @@
   "scripts": {
     "test": "webpack --config=webpack.test.config.js && node node_modules/floss/bin/floss.js --path=build.test",
     "test:debug": "webpack --config=webpack.test.config.js && node node_modules/floss/bin/floss.js --path=build.test -d",
-    "build": "rimraf lib && webpack --mode=production",
-    "type": "rimraf types && dts-bundle-generator src/index.ts --no-check -o=types/index.d.ts && node scripts/patch-types.js",
-    "doc": "rimraf \"docs/!(.git|.nojekyll)\" && typedoc src --out docs --mode file --disableOutputCheck --excludeNotExported && node scripts/patch-docs.js",
+    "build": "rimraf lib && rimraf dist && webpack --mode=production",
+    "type": "rimraf types && dts-bundle-generator src/index.ts --no-check --project=tsconfig.build.json -o=types/index.d.ts && node scripts/patch-types.js",
+    "doc": "rimraf \"docs/!(.git|.nojekyll)\" && node scripts/gen-docs.js",
     "deploy": "cd docs && git add -A && git commit -m \"Update docs\" && git push",
-    "prepublishOnly": "yarn build && yarn test && yarn type && yarn doc && yarn deploy"
+    "prepublishOnly": "yarn build && yarn test && yarn type"
   },
   "files": [
     "lib",
+    "dist",
     "src",
+    "cubism/src",
     "types"
   ],
   "types": "types/index.d.ts",
@@ -43,20 +45,22 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "chalk": "^4.0.0",
-    "dts-bundle-generator": "^4.0.0",
+    "dts-bundle-generator": "^5.5.0",
     "electron": "^8.1.1",
     "floss": "^3.0.0",
-    "fork-ts-checker-webpack-plugin": "^4.1.0",
+    "fork-ts-checker-webpack-plugin": "^6.0.7",
     "glob": "^7.1.6",
+    "handlebars": "^4.7.6",
     "lodash": "latest",
-    "pixi.js": "^5.2.1",
+    "pixi.js": "^5.3.7",
     "rimraf": "^3.0.2",
     "sinon": "^9.0.1",
     "sinon-chai": "^3.5.0",
-    "ts-loader": "^6.2.1",
-    "typedoc": "^0.17.4",
-    "typescript": "^3.8.3",
+    "ts-loader": "^8.0.12",
+    "typedoc": "0.20.0-beta.27",
+    "typescript": "^4.1.2",
     "webpack": "^4.42.0",
+    "webpack-bundle-analyzer": "^3.7.0",
     "webpack-cli": "^3.3.11"
   }
 }

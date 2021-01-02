@@ -1,0 +1,3 @@
+[submodule "cubism"]
+	path = cubism
+	url = git@github.com:guansss/CubismWebFramework.git

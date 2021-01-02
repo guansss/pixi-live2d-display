@@ -3,13 +3,19 @@
     "experimentalDecorators": true,
     "declaration": true,
     "incremental": true,
-    "target": "ES5",
+    "target": "ES6",
     "module": "esnext",
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "noUncheckedIndexedAccess": true,
     "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@cubism/*": ["cubism/src/*"]
+    },
     "types": [
       "node"
     ],
@@ -21,12 +27,13 @@
   },
   "include": [
     "src/**/*",
+    "cubism/**/*",
     "core/**/*"
   ],
   "exclude": [
     "node_modules",
-    "types",
     "lib",
-    "build*"
+    "build*",
+    "./types"
   ]
 }

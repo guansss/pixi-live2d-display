@@ -1,5 +1,7 @@
 /**
  * Unofficial declaration file of Cubism 2.1 core library.
+ *
+ * @see {@link http://doc.live2d.com/api/core/cpp2.0j/}
  */
 
 declare class Live2D {
@@ -13,9 +15,9 @@ declare class Live2DModelWebGL {
 
     private constructor();
 
-    drawParamWebGL: DrawParamWebGL;
+    drawParamWebGL: Live2DObfuscated.DrawParamWebGL;
 
-    getModelContext(): ModelContext;
+    getModelContext(): Live2DObfuscated.ModelContext;
 
     /**
      * @return The width of model's Live2D drawing canvas but NOT the html canvas element.
@@ -49,7 +51,7 @@ declare class Live2DModelWebGL {
 
     getDrawDataIndex(id: string): number;
 
-    getTransformedPoints(index: number): number[];
+    getTransformedPoints(index: number): Float32Array;
 
     loadParam(): void;
 
@@ -64,6 +66,8 @@ declare class AMotion {
     setFadeIn(time: number): unknown;
 
     setFadeOut(time: number): unknown;
+
+    updateParam(model: Live2DModelWebGL, entry: Live2DObfuscated.MotionQueueEnt): void
 
     updateParamExe(model: Live2DModelWebGL, time: DOMTimeStamp, weight: number, MotionQueueEnt: unknown): unknown;
 }
@@ -116,23 +120,42 @@ declare class PartsDataID {
     static getID(id: string): string;
 }
 
-// Hidden classes
-
-declare class DrawParamWebGL {
-    gl: WebGLRenderingContext;
-    glno: number;
-
-    firstDraw: boolean;
-
-    setGL(gl: WebGLRenderingContext): void;
+declare class DrawDataID {
+    id: string;
 }
 
-declare class ModelContext {
-    clipManager: ClipManager;
-}
+/**
+ * Members that have been obfuscated.
+ */
+declare namespace Live2DObfuscated {
+    class MotionQueueEnt {
+        isFinished(): boolean;
+    }
 
-declare class ClipManager {
-    curFrameNo: number;
+    class DrawParamWebGL {
+        gl: WebGLRenderingContext;
+        glno: number;
 
-    getMaskRenderTexture(): number;
+        firstDraw: boolean;
+
+        setGL(gl: WebGLRenderingContext): void;
+    }
+
+    class ModelContext {
+        clipManager: ClipManager;
+
+        // this is basically `Unknown_b[]`, but not reliable since it's an obfuscated property,
+        // always check the type before using it!
+        _$aS?: unknown;
+    }
+
+    class Unknown_b {
+        getDrawDataID(): DrawDataID;
+    }
+
+    class ClipManager {
+        curFrameNo: number;
+
+        getMaskRenderTexture(): number;
+    }
 }

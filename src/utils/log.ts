@@ -1,18 +1,16 @@
-import { config } from '../config';
+import { config } from '@/config';
 
 /**
- * A logger that supports tagging.
+ * A simple tagged logger.
  *
  * You can replace the methods with your own ones.
  *
  * ```js
  * import { logger } from 'pixi-live2d-display';
  *
- * function myLog(tag, ...messages) {
+ * logger.log = (tag, ...messages) => {
  *     console.log(tag, 'says:', ...messages);
- * }
- *
- * logger.log = myLog;
+ * };
  * ```
  */
 export namespace logger {

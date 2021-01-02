@@ -18,11 +18,6 @@
     {"name": "f03", "file": "expressions/f03.exp.json"},
     {"name": "f04", "file": "expressions/f04.exp.json"}
   ],
-  "layout": {
-    "center_x": 0,
-    "y": 1.2,
-    "width": 2.4
-  },
   "hit_areas": [
     {"name": "head", "id": "D_REF.HEAD"},
     {"name": "mouth", "id": "D_REF.MOUTH"},

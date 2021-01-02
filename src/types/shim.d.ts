@@ -3,17 +3,12 @@
  */
 
 declare module '@pixi/core' {
-    export { Renderer, Texture, BaseTexture } from 'pixi.js';
-}
-
-declare module '@pixi/loaders' {
-    export { Loader, LoaderResource, ILoaderOptions } from 'pixi.js';
+    export { Renderer, Texture, BaseTexture, Framebuffer, GLFramebuffer } from 'pixi.js';
 }
 
 declare module '@pixi/utils' {
     import { utils } from 'pixi.js';
     export import EventEmitter = utils.EventEmitter;
-    export import TextureCache = utils.TextureCache;
     export import url = utils.url;
 }
 
@@ -29,10 +24,16 @@ declare module '@pixi/display' {
     export { DisplayObject, Container } from 'pixi.js';
 }
 
+declare module '@pixi/graphics' {
+    export { Graphics } from 'pixi.js';
+}
+
+declare module '@pixi/text' {
+    export { Text, TextStyle } from 'pixi.js';
+}
+
 declare module '@pixi/interaction' {
-    import { interaction } from 'pixi.js';
-    export import InteractionEvent = interaction.InteractionEvent;
-    export import InteractionManager = interaction.InteractionManager;
+    export { InteractionEvent, InteractionManager } from 'pixi.js';
 }
 
 declare module '@pixi/math' {
