@@ -7,11 +7,13 @@ export namespace config {
     export const LOG_LEVEL_ERROR = 2;
     export const LOG_LEVEL_NONE = 999;
 
+    declare const __PRODUCTION__: boolean;
+
     /**
      * Log level.
      * @default {@link LOG_LEVEL_WARNING}
      */
-    export let logLevel = process.env.NODE_ENV === 'production' ? LOG_LEVEL_WARNING : LOG_LEVEL_VERBOSE;
+    export let logLevel = __PRODUCTION__ ? LOG_LEVEL_WARNING : LOG_LEVEL_VERBOSE;
 
     /**
      * Enabling sound for motions.
@@ -23,3 +25,7 @@ export namespace config {
      */
     export let motionSync = true;
 }
+
+declare const __VERSION__: string;
+
+export const VERSION = __VERSION__;

@@ -1,4 +1,11 @@
 const path = require('path');
+const webpack = require('webpack');
+const packageJSON = require('./package.json');
+
+const definePlugin = new webpack.DefinePlugin({
+    __PRODUCTION__: false,
+    __VERSION__: JSON.stringify(packageJSON.version),
+});
 
 module.exports = {
     entry: './test/index.js',
@@ -37,6 +44,7 @@ module.exports = {
         },
         extensions: ['.ts', '.js'],
     },
+    plugins: [definePlugin],
     optimization: {
         minimize: false,
     },

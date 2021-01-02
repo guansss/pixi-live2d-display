@@ -3,6 +3,12 @@ const merge = require('lodash/merge');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const webpack = require('webpack');
+const packageJSON = require('./package.json');
+
+const definePlugin = new webpack.DefinePlugin({
+    __PRODUCTION__: true,
+    __VERSION__: JSON.stringify(packageJSON.version),
+});
 
 // add browser-specific tools
 const addBrowserTools = new webpack.NormalModuleReplacementPlugin(/\/common/, function(resource) {
@@ -25,6 +31,8 @@ module.exports = [
             },
         },
         plugins: [
+            definePlugin,
+
             // just check it once!
             new ForkTsCheckerWebpackPlugin({
                 typescript: {
@@ -46,7 +54,7 @@ module.exports = [
             path: path.resolve(__dirname, 'dist'),
             library: ['PIXI', 'live2d'],
         },
-        plugins: [addBrowserTools],
+        plugins: [definePlugin, addBrowserTools],
         optimization: {
             minimize: false,
         },
@@ -57,7 +65,7 @@ module.exports = [
             path: path.resolve(__dirname, 'dist'),
             library: ['PIXI', 'live2d'],
         },
-        plugins: [addBrowserTools],
+        plugins: [definePlugin, addBrowserTools],
     },
 ].map(override => merge({
     entry: {
