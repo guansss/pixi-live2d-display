@@ -5,7 +5,7 @@ declare interface Live2DMotion {
 
 const originalUpdateParam = Live2DMotion.prototype.updateParam;
 
-Live2DMotion.prototype.updateParam = function(model: Live2DModelWebGL, entry: MotionQueueEnt) {
+Live2DMotion.prototype.updateParam = function(model: Live2DModelWebGL, entry: Live2DObfuscated.MotionQueueEnt) {
     originalUpdateParam.call(this, model, entry);
 
     if (entry.isFinished() && this.onFinishHandler) {
