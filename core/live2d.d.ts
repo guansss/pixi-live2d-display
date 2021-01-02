@@ -15,9 +15,9 @@ declare class Live2DModelWebGL {
 
     private constructor();
 
-    drawParamWebGL: DrawParamWebGL;
+    drawParamWebGL: Live2DObfuscated.DrawParamWebGL;
 
-    getModelContext(): ModelContext;
+    getModelContext(): Live2DObfuscated.ModelContext;
 
     /**
      * @return The width of model's Live2D drawing canvas but NOT the html canvas element.
@@ -67,7 +67,7 @@ declare class AMotion {
 
     setFadeOut(time: number): unknown;
 
-    updateParam(model: Live2DModelWebGL, entry: MotionQueueEnt): void
+    updateParam(model: Live2DModelWebGL, entry: Live2DObfuscated.MotionQueueEnt): void
 
     updateParamExe(model: Live2DModelWebGL, time: DOMTimeStamp, weight: number, MotionQueueEnt: unknown): unknown;
 }
@@ -120,27 +120,42 @@ declare class PartsDataID {
     static getID(id: string): string;
 }
 
-// Hidden classes
-
-declare class MotionQueueEnt {
-    isFinished(): boolean;
+declare class DrawDataID {
+    id: string;
 }
 
-declare class DrawParamWebGL {
-    gl: WebGLRenderingContext;
-    glno: number;
+/**
+ * Members that have been obfuscated.
+ */
+declare namespace Live2DObfuscated {
+    class MotionQueueEnt {
+        isFinished(): boolean;
+    }
 
-    firstDraw: boolean;
+    class DrawParamWebGL {
+        gl: WebGLRenderingContext;
+        glno: number;
 
-    setGL(gl: WebGLRenderingContext): void;
-}
+        firstDraw: boolean;
 
-declare class ModelContext {
-    clipManager: ClipManager;
-}
+        setGL(gl: WebGLRenderingContext): void;
+    }
 
-declare class ClipManager {
-    curFrameNo: number;
+    class ModelContext {
+        clipManager: ClipManager;
 
-    getMaskRenderTexture(): number;
+        // this is basically `Unknown_b[]`, but not reliable since it's an obfuscated property,
+        // always check the type before using it!
+        _$aS?: unknown;
+    }
+
+    class Unknown_b {
+        getDrawDataID(): DrawDataID;
+    }
+
+    class ClipManager {
+        curFrameNo: number;
+
+        getMaskRenderTexture(): number;
+    }
 }

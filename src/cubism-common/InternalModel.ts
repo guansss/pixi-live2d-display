@@ -186,7 +186,11 @@ export abstract class InternalModel extends EventEmitter {
         this.emit('destroy');
     }
 
-    abstract getDrawableVertices(drawIndex: number): Float32Array;
+    abstract getDrawableIDs(): string[];
+
+    abstract getDrawableIndex(id: string): number;
+
+    abstract getDrawableVertices(drawIndex: number | string): Float32Array;
 
     /**
      * Updates GL context when it's changed.

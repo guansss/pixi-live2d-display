@@ -140,8 +140,22 @@ export class Cubism4InternalModel extends InternalModel {
         })) ?? [];
     }
 
-    getDrawableVertices(drawIndex: number): Float32Array {
-        const arr = this.coreModel.getDrawableVertices(drawIndex).slice(0);
+    getDrawableIDs(): string[] {
+        return this.coreModel.getDrawableIds();
+    }
+
+    getDrawableIndex(id: string): number {
+        return this.coreModel.getDrawableIndex(id);
+    }
+
+    getDrawableVertices(drawIndex: number | string): Float32Array {
+        if (typeof drawIndex === 'string') {
+            drawIndex = this.coreModel.getDrawableIndex(drawIndex);
+
+            if (drawIndex === -1) throw new TypeError('Unable to find drawable ID: ' + drawIndex);
+        }
+
+        const arr = this.coreModel.getDrawableVertices(drawIndex).slice();
 
         for (let i = 0; i < arr.length; i += 2) {
             arr[i] = arr[i]! * this.pixelsPerUnit + this.originalWidth / 2;

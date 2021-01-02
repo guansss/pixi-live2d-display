@@ -120,8 +120,44 @@ export class Cubism2InternalModel extends InternalModel {
         })) || [];
     }
 
-    getDrawableVertices(drawIndex: number): Float32Array {
-        return this.coreModel.getTransformedPoints(drawIndex).slice(0);
+    getDrawableIDs(): string[] {
+        const arr: unknown = this.coreModel.getModelContext()._$aS;
+
+        if (Array.isArray(arr) && arr.length) {
+            // a type guard that predicates the argument is an instance of Live2DObfuscated.Unknown_b
+            const isClassB = (
+                (arg: any) => !!(arg as Live2DObfuscated.Unknown_b).getDrawDataID
+            ) as (arg: any) => arg is Live2DObfuscated.Unknown_b;
+
+            // let's do a fast check on the first item
+            if (isClassB(arr[0])) {
+                const ids = [];
+
+                for (const item of arr) {
+                    if (isClassB(item)) {
+                        ids.push(item.getDrawDataID().id);
+                    }
+                }
+
+                return ids;
+            }
+        }
+
+        return [];
+    }
+
+    getDrawableIndex(id: string): number {
+        return this.coreModel.getDrawDataIndex(id);
+    }
+
+    getDrawableVertices(drawIndex: number | string): Float32Array {
+        if (typeof drawIndex === 'string') {
+            drawIndex = this.coreModel.getDrawDataIndex(drawIndex);
+
+            if (drawIndex === -1) throw new TypeError('Unable to find drawable ID: ' + drawIndex);
+        }
+
+        return this.coreModel.getTransformedPoints(drawIndex).slice();
     }
 
     update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {
