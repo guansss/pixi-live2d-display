@@ -38,6 +38,10 @@ export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec
         if (this.settings.expressions) {
             this.expressionManager = new Cubism4ExpressionManager(this.settings, options);
         }
+
+        this.queueManager.setEventCallback((caller, eventValue, customData) => {
+            this.emit('motion:' + eventValue);
+        });
     }
 
     isFinished(): boolean {
@@ -86,5 +90,12 @@ export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec
 
     protected updateMotion(model: CubismModel, now: DOMHighResTimeStamp): boolean {
         return this.queueManager.doUpdateMotion(model, now);
+    }
+
+    destroy() {
+        super.destroy();
+
+        this.queueManager.release();
+        (this as Partial<Mutable<this>>).queueManager = undefined;
     }
 }

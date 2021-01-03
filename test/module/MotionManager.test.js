@@ -5,6 +5,7 @@ import { Cubism2MotionManager } from '@/cubism2/Cubism2MotionManager';
 import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
 import { Cubism4MotionManager } from '@/cubism4/Cubism4MotionManager';
 import { SoundManager } from '@/cubism-common/SoundManager';
+import { url } from '@pixi/utils';
 import '@/factory';
 import fromPairs from 'lodash/fromPairs';
 import sinon from 'sinon';
@@ -32,7 +33,7 @@ describe('MotionManager', function() {
     }
 
     function updateManager(manager) {
-        manager.update(TEST_MODEL.coreModel, performance.now());
+        manager.update(manager instanceof Cubism2MotionManager ? TEST_MODEL.coreModel : TEST_MODEL4.coreModel, performance.now());
     }
 
     before(() => {
@@ -384,5 +385,25 @@ describe('MotionManager', function() {
         }
 
         expect(manager.startRandomMotion('idle')).to.eventually.be.false;
+    });
+
+    it('should handle user events', async function() {
+        const motionFile = url.resolve(TEST_MODEL4.file, TEST_MODEL4.json.FileReferences.Motions.Idle[0].File);
+        const motionJSON = await fetch(motionFile).then(res => res.json());
+
+        // check if motion JSON has been set up correctly
+        expect(motionJSON.Meta.UserDataCount).to.equal(1);
+        expect(motionJSON.UserData[0].Value).to.equal('test');
+
+        const manager = createManager4();
+        const handler = sinon.spy();
+
+        manager.on('motion:test', handler);
+
+        await manager.startMotion('Idle', 0);
+
+        updateManager(manager);
+
+        expect(handler).to.be.called;
     });
 });

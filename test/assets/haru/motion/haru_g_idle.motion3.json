@@ -8,9 +8,15 @@
 		"CurveCount": 63,
 		"TotalSegmentCount": 296,
 		"TotalPointCount": 785,
-		"UserDataCount": 0,
+		"UserDataCount": 1,
 		"TotalUserDataSize": 0
 	},
+	"UserData": [
+		{
+			"Time": 0.0,
+			"Value": "test"
+		}
+	],
 	"Curves": [
 		{
 			"Target": "Model",

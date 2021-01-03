@@ -73,4 +73,10 @@ export class Cubism2MotionManager extends MotionManager<Live2DMotion, Cubism2Spe
     protected updateMotion(model: Live2DModelWebGL, now: DOMHighResTimeStamp): boolean {
         return this.queueManager.updateParam(model);
     }
+
+    destroy() {
+        super.destroy();
+
+        (this as Partial<Mutable<this>>).queueManager = undefined;
+    }
 }
