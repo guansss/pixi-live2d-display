@@ -31,7 +31,7 @@ export class Cubism2ModelSettings extends ModelSettings {
         // should always return a boolean
         return !!json
             && typeof json.model === 'string'
-            && Array.isArray(json.textures)
+            && json.textures?.length > 0
 
             // textures must be an array of strings
             && json.textures.every((item: any) => typeof item === 'string');

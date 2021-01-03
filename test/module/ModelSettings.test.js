@@ -23,6 +23,7 @@ describe('ModelSettings', () => {
         expect(Cubism2ModelSettings.isValidJSON(TEST_MODEL.json)).to.be.true;
         expect(Cubism2ModelSettings.isValidJSON(basicCubism2SettingsJSON)).to.be.true;
         expect(Cubism2ModelSettings.isValidJSON({})).to.be.false;
+        expect(Cubism2ModelSettings.isValidJSON({ model: 'foo', textures: [] })).to.be.false;
         expect(Cubism2ModelSettings.isValidJSON({ model: 'foo', textures: [1] })).to.be.false;
         expect(Cubism2ModelSettings.isValidJSON(undefined)).to.be.false;
 
@@ -30,6 +31,7 @@ describe('ModelSettings', () => {
         expect(Cubism4ModelSettings.isValidJSON(TEST_MODEL4.json)).to.be.true;
         expect(Cubism4ModelSettings.isValidJSON(basicCubism4SettingsJSON)).to.be.true;
         expect(Cubism4ModelSettings.isValidJSON({})).to.be.false;
+        expect(Cubism4ModelSettings.isValidJSON({ FileReferences: { Moc: 'foo', Textures: [] } })).to.be.false;
         expect(Cubism4ModelSettings.isValidJSON({ FileReferences: { Moc: 'foo', Textures: [1] } })).to.be.false;
         expect(Cubism4ModelSettings.isValidJSON(undefined)).to.be.false;
     });
