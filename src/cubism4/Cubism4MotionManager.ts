@@ -5,6 +5,7 @@ import { CubismModel } from '@cubism/model/cubismmodel';
 import { ACubismMotion } from '@cubism/motion/acubismmotion';
 import { CubismMotion } from '@cubism/motion/cubismmotion';
 import { CubismMotionQueueManager } from '@cubism/motion/cubismmotionqueuemanager';
+import { config } from '@/config';
 
 export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec.Motion> {
     readonly definitions: Partial<Record<string, CubismSpec.Motion[]>>;
@@ -60,16 +61,17 @@ export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec
         this.queueManager.stopAllMotions();
     }
 
-    createMotion(data: object, definition: CubismSpec.Motion): CubismMotion {
+    createMotion(data: object, group: string, definition: CubismSpec.Motion): CubismMotion {
         const motion = CubismMotion.create(data as unknown as CubismSpec.MotionJSON);
 
-        if (definition.FadeInTime! >= 0) {
-            motion.setFadeInTime(definition.FadeInTime!);
-        }
+        const defaultFadingDuration = (
+            group === this.groups.idle
+                ? config.idleMotionFadingDuration
+                : config.motionFadingDuration
+        ) / 1000;
 
-        if (definition.FadeOutTime! >= 0) {
-            motion.setFadeOutTime(definition.FadeOutTime!);
-        }
+        motion.setFadeInTime(definition.FadeInTime! > 0 ? definition.FadeInTime! : defaultFadingDuration);
+        motion.setFadeOutTime(definition.FadeOutTime! > 0 ? definition.FadeOutTime! : defaultFadingDuration);
 
         motion.setEffectIds(this.eyeBlinkIds, this.lipSyncIds);
 

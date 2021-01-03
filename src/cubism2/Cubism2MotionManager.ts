@@ -1,8 +1,8 @@
-import { MOTION_FADING_DURATION } from '@/cubism-common/constants';
 import { MotionManager, MotionManagerOptions } from '@/cubism-common/MotionManager';
 import { Cubism2ExpressionManager } from '@/cubism2/Cubism2ExpressionManager';
 import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
 import './patch-motion';
+import { config } from '@/config';
 
 export class Cubism2MotionManager extends MotionManager<Live2DMotion, Cubism2Spec.Motion> {
     readonly definitions: Partial<Record<string, Cubism2Spec.Motion[]>>;
@@ -37,11 +37,16 @@ export class Cubism2MotionManager extends MotionManager<Live2DMotion, Cubism2Spe
         return this.queueManager.isFinished();
     }
 
-    createMotion(data: ArrayBuffer, definition: Cubism2Spec.Motion): Live2DMotion {
+    createMotion(data: ArrayBuffer, group: string, definition: Cubism2Spec.Motion): Live2DMotion {
         const motion = Live2DMotion.loadMotion(data);
 
-        motion.setFadeIn(definition.fade_in! > 0 ? definition.fade_in! : MOTION_FADING_DURATION);
-        motion.setFadeOut(definition.fade_out! > 0 ? definition.fade_out! : MOTION_FADING_DURATION);
+        const defaultFadingDuration =
+            group === this.groups.idle
+                ? config.idleMotionFadingDuration
+                : config.motionFadingDuration;
+
+        motion.setFadeIn(definition.fade_in! > 0 ? definition.fade_in! : defaultFadingDuration);
+        motion.setFadeOut(definition.fade_out! > 0 ? definition.fade_out! : defaultFadingDuration);
 
         return motion;
     }

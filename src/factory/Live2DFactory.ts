@@ -273,7 +273,7 @@ export class Live2DFactory {
                         delete taskGroup[index];
                     }
 
-                    return motionManager.createMotion(data, definition);
+                    return motionManager.createMotion(data, group, definition);
                 })
                 .catch(e => logger.warn(motionManager.tag, `Failed to load motion: ${path}\n`, e));
 

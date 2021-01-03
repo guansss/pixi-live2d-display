@@ -288,7 +288,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
 
     abstract isFinished(): boolean;
 
-    abstract createMotion(data: ArrayBuffer | object, definition: MotionSpec): Motion;
+    abstract createMotion(data: ArrayBuffer | object, group: string, definition: MotionSpec): Motion;
 
     abstract getMotionFile(definition: MotionSpec): string;
 

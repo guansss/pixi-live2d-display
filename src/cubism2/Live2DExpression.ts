@@ -1,4 +1,4 @@
-import { EXPRESSION_FADING_DURATION } from '@/cubism-common/constants';
+import { config } from '@/config';
 
 export class Live2DExpression extends AMotion {
     readonly params: NonNullable<Cubism2Spec.ExpressionJSON['params']> = [];
@@ -6,8 +6,8 @@ export class Live2DExpression extends AMotion {
     constructor(json: Cubism2Spec.ExpressionJSON) {
         super();
 
-        this.setFadeIn(json.fade_in! > 0 ? json.fade_in! : EXPRESSION_FADING_DURATION);
-        this.setFadeOut(json.fade_out! > 0 ? json.fade_out! : EXPRESSION_FADING_DURATION);
+        this.setFadeIn(json.fade_in! > 0 ? json.fade_in! : config.expressionFadingDuration);
+        this.setFadeOut(json.fade_out! > 0 ? json.fade_out! : config.expressionFadingDuration);
 
         if (Array.isArray(json.params)) {
             json.params.forEach(param => {
