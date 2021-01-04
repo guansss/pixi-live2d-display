@@ -46,6 +46,4 @@ jobs:
 
       - uses: GabrielBB/xvfb-action@v1.0
         with:
-          run: |
-            yarn build
-            yarn test
+          run: yarn test:ci
