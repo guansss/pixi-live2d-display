@@ -2,7 +2,9 @@ import assert from 'assert';
 import { TEST_MODEL } from '../env';
 import { createApp, loadScript } from '../utils';
 
-describe('Browser <script> tag', () => {
+describe('Browser <script> tag', function() {
+    this.timeout(2000);
+
     it('should work with Pixi in browser', async function() {
         // provide globals for browser test, don't directly assign them to window
         // because that will confuse coding assistance in IDE
@@ -12,7 +14,11 @@ describe('Browser <script> tag', () => {
             window[key] = env[key];
         }
 
-        await loadScript('https://cdn.jsdelivr.net/npm/pixi.js@5.1.3/dist/pixi.min.js');
+        await loadScript('https://cdn.jsdelivr.net/npm/pixi.js@5.3.7/dist/pixi.min.js');
+
+        // prevent Pixi from flagging WebGL as unsupported in headless test
+        // https://github.com/pixijs/pixi.js/issues/6109
+        PIXI.settings.FAIL_IF_MAJOR_PERFORMANCE_CAVEAT = false;
 
         // a production build is required!!
         await loadScript('../dist/index.js');
