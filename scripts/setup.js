@@ -1,23 +1,35 @@
 const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
+const AdmZip = require('adm-zip');
 
 const overwriteExisting = false;
+const coreDir = path.resolve(__dirname, '../core') + '/';
 
 const downloadFiles = [{
-    file: '../core/live2d.min.js',
+    file: coreDir + 'live2d.min.js',
     url: 'http://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js',
 }, {
-    file: '../core/live2dcubismcore.js',
-    // the official site only serves the minified version
-    url: 'https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js',
+    file: coreDir + 'sdk4.zip',
+    url: 'https://cubism.live2d.com/sdk-web/bin/CubismSdkForWeb-4-r.1.zip',
+    unzip: [{
+        entryFile: 'CubismSdkForWeb-4-r.1/Core/live2dcubismcore.js',
+        outputFile: coreDir + 'live2dcubismcore.js',
+    }, {
+        entryFile: 'CubismSdkForWeb-4-r.1/Core/live2dcubismcore.d.ts',
+        outputFile: coreDir + 'live2dcubismcore.d.ts',
+    }],
 }];
 
 async function main() {
     await Promise.all(downloadFiles.map(async downloadFile => {
-        const file = path.resolve(__dirname, downloadFile.file);
+        await download(downloadFile.url, downloadFile.file);
 
-        await download(downloadFile.url, file);
+        if (downloadFile.unzip) {
+            unzip(downloadFile.file, downloadFile.unzip);
+
+            fs.rmSync(downloadFile.file);
+        }
     }));
 }
 
@@ -38,15 +50,33 @@ async function download(url, file) {
         fs.mkdirSync(dir);
     }
 
-    const content = await fetch(url).then(res => res.text());
+    const buffer = await fetch(url).then(res => res.buffer());
 
-    if (!content) {
+    if (!buffer.length) {
         throw new Error('Empty response');
     }
 
-    fs.writeFileSync(file, content, 'utf8');
+    fs.writeFileSync(file, buffer);
 
     console.log('Downloaded ', file);
+}
+
+function unzip(zipPath, entries) {
+    const zip = new AdmZip(zipPath);
+
+    for (const { entryFile, outputFile } of entries) {
+        console.log('Extracting ', outputFile);
+
+        try {
+            const keepEntryPath = false;
+
+            zip.extractEntryTo(entryFile, path.dirname(outputFile), keepEntryPath, overwriteExisting, path.basename(outputFile));
+        } catch (e) {
+            if (!(!overwriteExisting && e && e.message.includes('already exists'))) {
+                throw e;
+            }
+        }
+    }
 }
 
 main().then();

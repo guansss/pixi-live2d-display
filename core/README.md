@@ -1,6 +1,8 @@
 # Live2D Cubism Core
 
-Live2D runtime libraries. All the files listed below must be placed in this folder when developing this project. 
+Live2D runtime libraries. All the files listed below must be placed in this folder when developing this project.
+
+Run `yarn setup` to get these files set up automatically.
 
 ### Cubism 2.1
 
@@ -10,7 +12,8 @@ Unofficial declaration file of Cubism 2.1 core library. Already provided.
 
 #### `live2d.min.js`
 
-Cubism 2.1 core library. It's no longer downloadable from the official site, but can be found [here](https://github.com/dylanNew/live2d/tree/master/webgl/Live2D/lib).
+Cubism 2.1 core library. It's no longer downloadable from the official site, but can be
+found [here](https://github.com/dylanNew/live2d/tree/master/webgl/Live2D/lib).
 
 ### Cubism 4
 
