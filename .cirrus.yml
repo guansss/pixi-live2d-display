@@ -8,6 +8,7 @@ test_task:
 
     #https://github.com/cirruslabs/cirrus-ci-docs/issues/407
     populate_script:
+      - git config --global url."https://x-access-token:${CIRRUS_REPO_CLONE_TOKEN}@github.com".insteadOf "git@github.com:"
       - git submodule init
       - git submodule update
 
