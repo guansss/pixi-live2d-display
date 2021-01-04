@@ -10,6 +10,7 @@
   "author": "guansss <821143943@qq.com>",
   "license": "MIT",
   "scripts": {
+    "setup": "node scripts/setup.js",
     "test": "webpack --config=webpack.test.config.js && node node_modules/floss/bin/floss.js --path=build.test",
     "test:debug": "webpack --config=webpack.test.config.js && node node_modules/floss/bin/floss.js --path=build.test -d",
     "build": "rimraf lib && rimraf dist && webpack --mode=production",
@@ -52,6 +53,7 @@
     "glob": "^7.1.6",
     "handlebars": "^4.7.6",
     "lodash": "latest",
+    "node-fetch": "^2.6.1",
     "pixi.js": "^5.3.7",
     "rimraf": "^3.0.2",
     "sinon": "^9.0.1",

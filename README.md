@@ -2,7 +2,7 @@
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/guansss/pixi-live2d-display?style=flat-square)
 ![Cubism version](https://img.shields.io/badge/Cubism-all-ff69b4?style=flat-square)
-[![Codacy Badge](https://img.shields.io/codacy/grade/815a5e1399b74441a2203b7c7b4861c0?style=flat-square&logo=codacy)](https://www.codacy.com/manual/guansss/pixi-live2d-display?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=guansss/pixi-live2d-display&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://img.shields.io/cirrus/github/guansss/pixi-live2d-display?style=flat-square)](https://cirrus-ci.com/github/guansss/pixi-live2d-display)
 
 Live2D integration for [PixiJS](https://github.com/pixijs/pixi.js) v5.
 

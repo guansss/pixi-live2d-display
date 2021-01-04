@@ -1,0 +1,15 @@
+container:
+  image: node:latest
+
+test_task:
+  node_modules_cache:
+    folder: node_modules
+    fingerprint_script: cat yarn.lock
+    populate_script: yarn install
+
+  core_cache:
+    folder: core
+    reupload_on_changes: false # normally the files will never change
+    populate_script: yarn run setup
+
+  test_script: yarn run test
