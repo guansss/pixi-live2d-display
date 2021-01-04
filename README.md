@@ -2,7 +2,7 @@
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/guansss/pixi-live2d-display?style=flat-square)
 ![Cubism version](https://img.shields.io/badge/Cubism-all-ff69b4?style=flat-square)
-[![Build Status](https://img.shields.io/cirrus/github/guansss/pixi-live2d-display?style=flat-square)](https://cirrus-ci.com/github/guansss/pixi-live2d-display)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/guansss/pixi-live2d-display/test?style=flat-square)
 
 Live2D integration for [PixiJS](https://github.com/pixijs/pixi.js) v5.
 
