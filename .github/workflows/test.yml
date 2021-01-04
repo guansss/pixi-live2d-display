@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Test CI
 
 on: [ push ]
 
@@ -46,4 +46,6 @@ jobs:
 
       - uses: GabrielBB/xvfb-action@v1.0
         with:
-          run: yarn test
+          run: |
+            yarn build
+            yarn test
