@@ -12,9 +12,12 @@ const definePlugin = new webpack.DefinePlugin({
 
 // add browser-specific tools
 const addBrowserTools = new webpack.NormalModuleReplacementPlugin(/\/common/, function(resource) {
-    if (!resource.contextInfo.issuer.includes('common-browser')) {
-        resource.request = resource.request.replace('common', `common-browser`);
-        console.log(resource.contextInfo.issuer, resource.request);
+    // don't know why but this can be undefined on Linux
+    if (resource.contextInfo) {
+        if (!resource.contextInfo.issuer.includes('common-browser')) {
+            resource.request = resource.request.replace('common', `common-browser`);
+            console.log(resource.contextInfo.issuer, resource.request);
+        }
     }
 });
 
