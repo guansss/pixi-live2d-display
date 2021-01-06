@@ -37,7 +37,6 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn --frozen-lockfile
 
       - name: Setup core
