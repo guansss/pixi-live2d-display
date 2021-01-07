@@ -42,6 +42,8 @@ export class Cubism2InternalModel extends InternalModel {
 
     drawDataCount = 0;
 
+    disableCulling = false;
+
     constructor(coreModel: Live2DModelWebGL, settings: Cubism2ModelSettings, options?: InternalModelOptions) {
         super();
 
@@ -78,6 +80,13 @@ export class Cubism2InternalModel extends InternalModel {
         if (arr?.length) {
             this.drawDataCount = arr.length;
         }
+
+        let culling = this.coreModel.drawParamWebGL.culling;
+
+        Object.defineProperty(this.coreModel.drawParamWebGL, 'culling', {
+            set: (v: boolean) => culling = v,
+            get: () => this.disableCulling ? false : culling,
+        });
     }
 
     protected getSize(): [number, number] {
@@ -207,6 +216,13 @@ export class Cubism2InternalModel extends InternalModel {
     }
 
     draw(gl: WebGLRenderingContext, framebuffer?: WebGLFramebuffer): void {
+        const disableCulling = this.disableCulling;
+
+        // culling must be disabled to get this cubism2 model drawn properly on a framebuffer
+        if (framebuffer) {
+            this.disableCulling = true;
+        }
+
         const matrix = this.drawingMatrix;
 
         // set given 3x3 matrix into a 4x4 matrix, with Y inverted
@@ -219,6 +235,8 @@ export class Cubism2InternalModel extends InternalModel {
 
         this.coreModel.setMatrix(tempMatrixArray);
         this.coreModel.draw();
+
+        this.disableCulling = disableCulling;
     }
 
     destroy() {

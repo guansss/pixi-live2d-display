@@ -48,6 +48,19 @@ export const hiyori = {
     file: '../../CubismWebSamples/Samples/Resources/Hiyori/Hiyori.model3.json',
 };
 
+export const eksistere = {
+    "Version": 3,
+    "FileReferences": {
+        "Moc": "0828upd__l2d_382.u.moc3",
+        "Textures": ["textures/texture_00.png"],
+        "Physics": "0828upd__l2d_382.u.physics3.json",
+        "Motions": {
+            "Idle": [{ "File": "motions/Mgirl12_stand.motion3.json" }, { "File": "motions/Mgirl12_stand_c.motion3.json" }, { "File": "motions/Mgirl12_stand_a.motion3.json" }, { "File": "motions/Mgirl12_stand.motion3.json" }, { "File": "motions/Mgirl12_stand02.motion3.json" }],
+        },
+    },
+    "url": "https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/%E5%B0%91%E5%A5%B3%E5%92%96%E5%95%A1%E6%9E%AA%20girls%20cafe%20gun/0828upd__l2d_382.u/0828upd__l2d_382.u.model3.json",
+};
+
 export const TEST_MODEL = shizuku;
 export const TEST_MODEL4 = haru;
 

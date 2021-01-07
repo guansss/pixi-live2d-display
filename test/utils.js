@@ -64,7 +64,6 @@ export function addBackground(model) {
 
 export function draggable(app, model) {
     app.stage.interactive = true;
-    app.stage.on('pointerup', () => model.dragging = false);
     model.on('pointerdown', e => {
         model.dragging = true;
         model._dragX = e.data.global.x;
@@ -78,6 +77,8 @@ export function draggable(app, model) {
             model._dragY = e.data.global.y;
         }
     });
+    model.on('pointerupoutside', () => model.dragging = false);
+    model.on('pointerup', () => model.dragging = false);
 }
 
 export function callBefore(obj, method, fn) {

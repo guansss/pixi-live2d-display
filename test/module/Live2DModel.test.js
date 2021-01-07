@@ -14,7 +14,7 @@ Renderer.registerPlugin('interaction', InteractionManager);
 Live2DModel.registerTicker(Ticker);
 
 describe('Live2DModel', async () => {
-    const runtimes = merge({}, RUNTIMES, {
+    window.runtimes = merge({}, RUNTIMES, {
         cubism2: {
             model1: undefined,
             model2: undefined,
@@ -48,8 +48,6 @@ describe('Live2DModel', async () => {
     }
 
     before(async function() {
-        window.runtimes = runtimes;
-
         window.app = app = createApp(Application);
         app.stage.sortableChildren = true;
         app.stage.interactive = true;
@@ -89,6 +87,11 @@ describe('Live2DModel', async () => {
 
         runtimes.cubism4.model1.x = 550;
         runtimes.cubism4.model2.x = runtimes.cubism2.model1.width;
+
+        // createModel(eksistere, { app, zIndex: 100 }).then(model => {
+        //     model.scale.set(0.5);
+        //     draggable(app, model);
+        // });
 
         app.start();
     });

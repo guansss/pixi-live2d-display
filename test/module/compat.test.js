@@ -4,7 +4,6 @@ import { Sprite } from '@pixi/sprite';
 import { BaseRenderTexture, RenderTexture } from '@pixi/core';
 import chunk from 'lodash/chunk';
 import { TEST_TEXTURE } from '../env';
-import { delay } from '../utils';
 
 describe('Compatibility', function() {
     const ITEM_SIZE = 32;
@@ -58,19 +57,30 @@ describe('Compatibility', function() {
         expect(pixels.every(pixel => pixel === 0xFFFF0000)).to.be.true;
     });
 
-    it('should work with PIXI.RenderTexture', async function() {
-        const brt = new BaseRenderTexture(2000, 2000, undefined, 1);
-        const rt = new RenderTexture(brt);
-        const sprite = new Sprite(rt);
+    describe('should work with PIXI.RenderTexture', function() {
+        let offsetY = 0;
 
-        app.stage.addChild(sprite);
+        runtimes.each((runtime, name) => {
+            it(name, function() {
+                const renderTexture = new RenderTexture(
+                    new BaseRenderTexture(runtime.model1.internalModel.width, runtime.model1.internalModel.height, undefined, 1),
+                );
+                const sprite = new Sprite(renderTexture);
 
-        // app.start()
+                app.stage.addChild(sprite);
+                app.renderer.render(runtime.model1, renderTexture);
 
-        await delay(500);
+                sprite.scale.set(0.1);
+                sprite.y = app.view.height - sprite.height - offsetY;
+                offsetY += sprite.height;
 
-        app.renderer.render(runtimes.cubism2.model1, rt);
-        app.render();
+                app.render();
+
+                // app.ticker.add(()=>{
+                //     app.renderer.render(runtime.model1, renderTexture);
+                // })
+            });
+        });
     });
 
     it('should work after losing and restoring WebGL context', function(done) {

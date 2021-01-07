@@ -6,6 +6,10 @@ declare module '@pixi/core' {
     export { Renderer, Texture, BaseTexture, Framebuffer, GLFramebuffer } from 'pixi.js';
 }
 
+declare module '@pixi/settings' {
+    export { settings } from 'pixi.js';
+}
+
 declare module '@pixi/utils' {
     import { utils } from 'pixi.js';
     export import EventEmitter = utils.EventEmitter;

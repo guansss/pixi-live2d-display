@@ -138,6 +138,8 @@ declare namespace Live2DObfuscated {
 
         firstDraw: boolean;
 
+        culling: boolean;
+
         setGL(gl: WebGLRenderingContext): void;
     }
 
