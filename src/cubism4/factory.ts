@@ -7,6 +7,10 @@ import { CubismPose } from '@cubism/effect/cubismpose';
 import { CubismMoc } from '@cubism/model/cubismmoc';
 import { CubismModel } from '@cubism/model/cubismmodel';
 import { CubismPhysics } from '@cubism/physics/cubismphysics';
+import { config } from '@/config';
+import { config as cubism4Config } from '@cubism/config';
+
+config.cubism4 = cubism4Config;
 
 Live2DFactory.registerRuntime({
     version: 4,
