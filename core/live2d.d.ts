@@ -144,13 +144,27 @@ declare namespace Live2DObfuscated {
     class ModelContext {
         clipManager: ClipManager;
 
-        // this is basically `Unknown_b[]`, but not reliable since it's an obfuscated property,
-        // always check the type before using it!
-        _$aS?: unknown;
+        /**
+         * This is basically `DrawData[]`, but not reliable since it's an obfuscated property.
+         * Always check the type before using it!
+         */
+        _$aS?: unknown; // DrawData[]
+
+        getDrawData(index: number): DrawData | null;
     }
 
-    class Unknown_b {
+    class IDrawData {
         getDrawDataID(): DrawDataID;
+    }
+
+    class DrawData extends IDrawData {
+        getNumPoints?(): unknown;
+
+        draw(aN: unknown, aK: unknown, aI: Unknown_aB): void;
+    }
+
+    class Unknown_aB {
+        baseOpacity: number;
     }
 
     class ClipManager {

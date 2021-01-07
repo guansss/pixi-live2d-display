@@ -40,6 +40,8 @@ export class Cubism2InternalModel extends InternalModel {
 
     textureFlipY = true;
 
+    drawDataCount = 0;
+
     constructor(coreModel: Live2DModelWebGL, settings: Cubism2ModelSettings, options?: InternalModelOptions) {
         super();
 
@@ -70,6 +72,12 @@ export class Cubism2InternalModel extends InternalModel {
         }
 
         this.coreModel.saveParam();
+
+        const arr: any = this.coreModel.getModelContext()._$aS;
+
+        if (arr?.length) {
+            this.drawDataCount = arr.length;
+        }
     }
 
     protected getSize(): [number, number] {
@@ -121,29 +129,18 @@ export class Cubism2InternalModel extends InternalModel {
     }
 
     getDrawableIDs(): string[] {
-        const arr: unknown = this.coreModel.getModelContext()._$aS;
+        const modelContext = this.coreModel.getModelContext();
+        const ids = [];
 
-        if (Array.isArray(arr) && arr.length) {
-            // a type guard that predicates the argument is an instance of Live2DObfuscated.Unknown_b
-            const isClassB = (
-                (arg: any) => !!(arg as Live2DObfuscated.Unknown_b).getDrawDataID
-            ) as (arg: any) => arg is Live2DObfuscated.Unknown_b;
+        for (let i = 0; i < this.drawDataCount; i++) {
+            const drawData = modelContext.getDrawData(i);
 
-            // let's do a fast check on the first item
-            if (isClassB(arr[0])) {
-                const ids = [];
-
-                for (const item of arr) {
-                    if (isClassB(item)) {
-                        ids.push(item.getDrawDataID().id);
-                    }
-                }
-
-                return ids;
+            if (drawData) {
+                ids.push(drawData.getDrawDataID().id);
             }
         }
 
-        return [];
+        return ids;
     }
 
     getDrawableIndex(id: string): number {
