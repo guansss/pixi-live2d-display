@@ -5,7 +5,6 @@ import { MotionPriority, MotionState } from '@/cubism-common/MotionState';
 import { SoundManager } from '@/cubism-common/SoundManager';
 import { logger } from '@/utils';
 import { EventEmitter } from '@pixi/utils';
-import noop from 'lodash/noop';
 
 export interface MotionManagerOptions {
     motionPreload?: MotionPreloadStrategy;
@@ -164,25 +163,30 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             const soundURL = this.getSoundFile(definition);
 
             if (soundURL) {
-                // start to load the audio
-                audio = SoundManager.add(
-                    this.settings.resolveURL(soundURL),
-                    () => this.currentAudio = undefined,
-                    () => this.currentAudio = undefined,
-                );
+                try {
+                    // start to load the audio
+                    audio = SoundManager.add(
+                        this.settings.resolveURL(soundURL),
+                        () => this.currentAudio = undefined,
+                        () => this.currentAudio = undefined,
+                    );
 
-                this.currentAudio = audio;
+                    this.currentAudio = audio;
+                } catch (e) {
+                    logger.warn(this.tag, 'Failed to create audio', soundURL, e);
+                }
             }
         }
 
-        let motion = await this.loadMotion(group, index);
+        const motion = await this.loadMotion(group, index);
 
         if (audio) {
+            const readyToPlay = SoundManager.play(audio)
+                .catch(e => logger.warn(this.tag, 'Failed to play audio', audio!.src, e));
+
             if (config.motionSync) {
                 // wait until the audio is ready
-                await SoundManager.play(audio).catch(noop);
-            } else {
-                SoundManager.play(audio).catch(noop);
+                await readyToPlay;
             }
         }
 
