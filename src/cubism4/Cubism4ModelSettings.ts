@@ -33,6 +33,28 @@ export class Cubism4ModelSettings extends ModelSettings {
 
         Object.assign(this, new CubismModelSettingsJson(json));
     }
+
+    replaceFiles(replace: (file: string, path: string) => string) {
+        super.replaceFiles(replace);
+
+        if (this.motions) {
+            for (const [group, motions] of Object.entries(this.motions)) {
+                for (let i = 0; i < motions.length; i++) {
+                    motions[i]!.File = replace(motions[i]!.File, `motions.${group}[${i}].File`);
+
+                    if (motions[i]!.Sound !== undefined) {
+                        motions[i]!.Sound = replace(motions[i]!.Sound!, `motions.${group}[${i}].Sound`);
+                    }
+                }
+            }
+        }
+
+        if (this.expressions) {
+            for (let i = 0; i < this.expressions.length; i++) {
+                this.expressions[i]!.File = replace(this.expressions[i]!.File, `expressions[${i}].File`);
+            }
+        }
+    }
 }
 
 applyMixins(Cubism4ModelSettings, [CubismModelSettingsJson]);

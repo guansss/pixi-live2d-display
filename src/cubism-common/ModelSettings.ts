@@ -48,4 +48,32 @@ export abstract class ModelSettings {
     resolveURL(path: string): string {
         return url.resolve(this.url, path);
     }
+
+    replaceFiles(replace: (file: string, path: string) => string) {
+        this.moc = replace(this.moc, 'moc');
+
+        if (this.pose !== undefined) {
+            (this.pose = replace(this.pose, 'pose'));
+        }
+
+        if (this.physics !== undefined) {
+            (this.physics = replace(this.physics, 'physics'));
+        }
+
+        for (let i = 0; i < this.textures.length; i++) {
+            this.textures[i] = replace(this.textures[i]!, `textures[${i}]`);
+        }
+    };
+
+    getDefinedFiles(): string[] {
+        const files: string[] = [];
+
+        this.replaceFiles((file: string) => {
+            files.push(file);
+
+            return file;
+        });
+
+        return files;
+    }
 }

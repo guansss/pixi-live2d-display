@@ -69,4 +69,24 @@ export class Cubism2ModelSettings extends ModelSettings {
         copyArray('object', json, this, 'init_params', 'initParams');
         copyArray('object', json, this, 'init_opacities', 'initOpacities');
     }
+
+    replaceFiles(replace: (file: string, path: string) => string) {
+        super.replaceFiles(replace);
+
+        for (const [group, motions] of Object.entries(this.motions)) {
+            for (let i = 0; i < motions.length; i++) {
+                motions[i]!.file = replace(motions[i]!.file, `motions.${group}[${i}].file`);
+
+                if (motions[i]!.sound !== undefined) {
+                    motions[i]!.sound = replace(motions[i]!.sound!, `motions.${group}[${i}].sound`);
+                }
+            }
+        }
+
+        if (this.expressions) {
+            for (let i = 0; i < this.expressions.length; i++) {
+                this.expressions[i]!.file = replace(this.expressions[i]!.file, `expressions[${i}].file`);
+            }
+        }
+    }
 }
