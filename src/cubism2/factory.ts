@@ -10,7 +10,7 @@ Live2DFactory.registerRuntime({
 
     createModelSettings(json: any): Cubism2ModelSettings | undefined {
         if (Cubism2ModelSettings.isValidJSON(json)) {
-            return new Cubism2ModelSettings(json);
+            return new Cubism2ModelSettings(json as Cubism2Spec.ModelJSON & { url: string });
         }
     },
 

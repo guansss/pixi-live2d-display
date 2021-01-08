@@ -37,7 +37,7 @@ export class Cubism2ModelSettings extends ModelSettings {
             && json.textures.every((item: any) => typeof item === 'string');
     }
 
-    constructor(json: Cubism2Spec.ModelJSON) {
+    constructor(json: Cubism2Spec.ModelJSON & { url: string }) {
         super(json);
 
         if (!Cubism2ModelSettings.isValidJSON(json)) {
