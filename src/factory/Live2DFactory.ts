@@ -107,31 +107,42 @@ export const setupOptionals: Middleware<Live2DFactoryContext> = async (context, 
         const runtime = Live2DFactory.getRuntime(settings);
 
         if (runtime) {
+            const tasks: Promise<void>[] = [];
+
             if (settings.pose) {
-                await Live2DLoader.load({
-                        settings,
-                        url: settings.pose,
-                        type: 'json',
-                        target: internalModel,
-                    })
-                    .then((data: ArrayBuffer) => {
-                        internalModel.pose = runtime.createPose(internalModel.coreModel, data);
-                        context.live2dModel.emit('poseLoaded', internalModel.pose);
-                    })
-                    .catch((e: Error) => logger.warn(TAG, 'Failed to load pose.\n', e));
+                tasks.push(
+                    Live2DLoader.load({
+                            settings,
+                            url: settings.pose,
+                            type: 'json',
+                            target: internalModel,
+                        })
+                        .then((data: ArrayBuffer) => {
+                            internalModel.pose = runtime.createPose(internalModel.coreModel, data);
+                            context.live2dModel.emit('poseLoaded', internalModel.pose);
+                        })
+                        .catch((e: Error) => logger.warn(TAG, 'Failed to load pose.\n', e)),
+                );
             }
+
             if (settings.physics) {
-                await Live2DLoader.load({
-                        settings,
-                        url: settings.physics,
-                        type: 'json',
-                        target: internalModel,
-                    })
-                    .then((data: ArrayBuffer) => {
-                        internalModel.physics = runtime.createPhysics(internalModel.coreModel, data);
-                        context.live2dModel.emit('physicsLoaded', internalModel.physics);
-                    })
-                    .catch((e: Error) => logger.warn(TAG, 'Failed to load physics.\n', e));
+                tasks.push(
+                    Live2DLoader.load({
+                            settings,
+                            url: settings.physics,
+                            type: 'json',
+                            target: internalModel,
+                        })
+                        .then((data: ArrayBuffer) => {
+                            internalModel.physics = runtime.createPhysics(internalModel.coreModel, data);
+                            context.live2dModel.emit('physicsLoaded', internalModel.physics);
+                        })
+                        .catch((e: Error) => logger.warn(TAG, 'Failed to load physics.\n', e)),
+                );
+            }
+
+            if (tasks.length) {
+                await Promise.all(tasks);
             }
         }
     }
