@@ -6,7 +6,6 @@ import { RUNTIMES } from '../env';
 import { Live2DModel } from '@/Live2DModel';
 import urlModule from 'url';
 import JSZip from 'jszip';
-import merge from 'lodash/merge';
 
 describe('Loaders', function() {
     async function fetchBlob(url) {
@@ -23,7 +22,7 @@ describe('Loaders', function() {
         return file;
     }
 
-    const runtimes = merge({}, RUNTIMES);
+    const runtimes = Object.assign({}, RUNTIMES);
 
     before(async function() {
         await runtimes.each(async (runtime, runtimeName) => {

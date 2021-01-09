@@ -1,6 +1,7 @@
 import { resolve as urlResolve } from 'url';
 import { readArrayBuffer, remoteRequire } from './utils';
 import { CubismMoc } from '@cubism/model/cubismmoc';
+import merge from 'lodash/merge';
 
 export const shizuku = {
     file: './assets/shizuku/shizuku.model.json',
@@ -66,13 +67,17 @@ export const TEST_MODEL4 = haru;
 
 // preload model settings JSON
 
-TEST_MODEL.json = remoteRequire(TEST_MODEL.file);
-TEST_MODEL.json.url = TEST_MODEL.file;
-TEST_MODEL.json.layout = TEST_MODEL.layout;
+const modelJSON = remoteRequire(TEST_MODEL.file);
+modelJSON.url = TEST_MODEL.file;
+modelJSON.layout = TEST_MODEL.layout;
 
-TEST_MODEL4.json = remoteRequire(TEST_MODEL4.file);
-TEST_MODEL4.json.url = TEST_MODEL4.file;
-TEST_MODEL4.json.Layout = TEST_MODEL4.Layout;
+Object.defineProperty(TEST_MODEL, 'json', { get: () => merge({}, modelJSON) });
+
+const model4JSON = remoteRequire(TEST_MODEL4.file);
+model4JSON.url = TEST_MODEL4.file;
+model4JSON.Layout = TEST_MODEL4.Layout;
+
+Object.defineProperty(TEST_MODEL4, 'json', { get: () => merge({}, model4JSON) });
 
 // preload model data
 

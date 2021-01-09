@@ -113,6 +113,23 @@ describe('Live2DFactory', function() {
         app.render();
     });
 
+    it('should create model from a URL without extension', async function() {
+        const fakeURL = TEST_MODEL.file.replace('.model.json', '-fake');
+
+        expect(fakeURL).to.not.include('model.json');
+
+        const modelCreation = Live2DModel.from(fakeURL);
+
+        expect(fakeXHRs.length).to.equal(1);
+        expect(fakeXHRs[0].url).to.equal(fakeURL);
+
+        fakeXHRs[0].respond(200, {}, JSON.stringify(TEST_MODEL.json));
+
+        const model = await modelCreation;
+
+        expect(model).to.be.instanceOf(Live2DModel);
+    });
+
     describe('Synchronous creation', function() {
         it('should create Live2DModel', async function() {
             const modelOptions = { ...options };
