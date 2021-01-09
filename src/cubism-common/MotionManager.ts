@@ -125,6 +125,10 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
 
         const motion = await this._loadMotion(group, index);
 
+        if (this.destroyed) {
+            return;
+        }
+
         this.motionGroups[group]![index] = motion ?? null;
 
         return motion;
