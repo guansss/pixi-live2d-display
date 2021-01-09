@@ -25,8 +25,6 @@ import mapKeys from 'lodash/mapKeys';
 const tempMatrix = new CubismMatrix44();
 
 export class Cubism4InternalModel extends InternalModel {
-    static frameBufferMap = new WeakMap<WebGLRenderingContext, WebGLFramebuffer>();
-
     settings: Cubism4ModelSettings;
     coreModel: CubismModel;
     motionManager: Cubism4MotionManager;
@@ -110,10 +108,6 @@ export class Cubism4InternalModel extends InternalModel {
     }
 
     updateWebGLContext(gl: WebGLRenderingContext, glContextID: number): void {
-        if (!Cubism4InternalModel.frameBufferMap.has(gl)) {
-            Cubism4InternalModel.frameBufferMap.set(gl, gl.getParameter(gl.FRAMEBUFFER_BINDING));
-        }
-
         // reset resources that were bound to previous WebGL context
         this.renderer.firstDraw = true;
         this.renderer._bufferData = {
@@ -232,7 +226,7 @@ export class Cubism4InternalModel extends InternalModel {
         this.breath?.updateParameters(this.coreModel, dt / 1000);
     }
 
-    draw(gl: WebGLRenderingContext, framebuffer?: WebGLFramebuffer): void {
+    draw(gl: WebGLRenderingContext): void {
         const matrix = this.drawingMatrix;
         const array = tempMatrix.getArray();
 
@@ -245,7 +239,7 @@ export class Cubism4InternalModel extends InternalModel {
         array[13] = matrix.ty;
 
         this.renderer.setMvpMatrix(tempMatrix);
-        this.renderer.setRenderState(framebuffer!, this.viewport);
+        this.renderer.setRenderState(gl.getParameter(gl.FRAMEBUFFER_BINDING), this.viewport);
         this.renderer.drawModel();
     }
 

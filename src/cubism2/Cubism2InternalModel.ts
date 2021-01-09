@@ -118,10 +118,15 @@ export class Cubism2InternalModel extends InternalModel {
             }
         }
 
-        // a temporary workaround for the frame buffers bound to WebGL context in Live2D
         const clipManager = this.coreModel.getModelContext().clipManager;
         clipManager.curFrameNo = glContextID;
+
+        const framebuffer = gl.getParameter(gl.FRAMEBUFFER_BINDING);
+
+        // force Live2D to re-create the framebuffer
         clipManager.getMaskRenderTexture();
+
+        gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
     }
 
     /** @override */
@@ -215,11 +220,11 @@ export class Cubism2InternalModel extends InternalModel {
         this.coreModel.setParamFloat(this.breathParamIndex, 0.5 + 0.5 * Math.sin(t / 3.2345));
     }
 
-    draw(gl: WebGLRenderingContext, framebuffer?: WebGLFramebuffer): void {
+    draw(gl: WebGLRenderingContext): void {
         const disableCulling = this.disableCulling;
 
         // culling must be disabled to get this cubism2 model drawn properly on a framebuffer
-        if (framebuffer) {
+        if (gl.getParameter(gl.FRAMEBUFFER_BINDING)) {
             this.disableCulling = true;
         }
 

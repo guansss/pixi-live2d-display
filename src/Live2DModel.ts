@@ -339,7 +339,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         const renderHeight = (framebuffer ?? renderer).height;
 
         this.internalModel.updateTransform(internalTransform, renderWidth, renderHeight);
-        this.internalModel.draw(renderer.gl, renderer.gl.getParameter(renderer.gl.FRAMEBUFFER_BINDING));
+        this.internalModel.draw(renderer.gl);
 
         // reset WebGL state and texture bindings
         renderer.state.reset();
