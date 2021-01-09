@@ -42,20 +42,20 @@ export class XHRLoader {
     ): XMLHttpRequest {
         const xhr = new XMLHttpRequest();
 
-        this.allXhrSet.add(xhr);
+        XHRLoader.allXhrSet.add(xhr);
 
         if (target) {
-            let xhrSet = this.xhrMap.get(target);
+            let xhrSet = XHRLoader.xhrMap.get(target);
 
             if (!xhrSet) {
                 xhrSet = new Set([xhr]);
-                this.xhrMap.set(target, xhrSet);
+                XHRLoader.xhrMap.set(target, xhrSet);
             } else {
                 xhrSet.add(xhr);
             }
 
-            if (!target.listeners('destroy').includes(this.cancelXHRs)) {
-                target.once('destroy', this.cancelXHRs, this);
+            if (!target.listeners('destroy').includes(XHRLoader.cancelXHRs)) {
+                target.once('destroy', XHRLoader.cancelXHRs);
             }
         }
 
@@ -74,27 +74,27 @@ export class XHRLoader {
         };
         xhr.onabort = () => onerror(createNetworkError('Aborted.', url, xhr.status, true));
         xhr.onloadend = () => {
-            this.allXhrSet.delete(xhr);
+            XHRLoader.allXhrSet.delete(xhr);
 
             if (target) {
-                this.xhrMap.get(target)?.delete(xhr);
+                XHRLoader.xhrMap.get(target)?.delete(xhr);
             }
         };
 
         return xhr;
     }
 
-    static cancelXHRs(target: Live2DLoaderTarget) {
-        this.xhrMap.get(target)?.forEach(xhr => {
+    static cancelXHRs(this: Live2DLoaderTarget) {
+        XHRLoader.xhrMap.get(this)?.forEach(xhr => {
             xhr.abort();
-            this.allXhrSet.delete(xhr);
+            XHRLoader.allXhrSet.delete(xhr);
         });
-        this.xhrMap.delete(target);
+        XHRLoader.xhrMap.delete(this);
     }
 
     static release() {
-        this.allXhrSet.forEach(xhr => xhr.abort());
-        this.allXhrSet.clear();
-        this.xhrMap = new WeakMap();
+        XHRLoader.allXhrSet.forEach(xhr => xhr.abort());
+        XHRLoader.allXhrSet.clear();
+        XHRLoader.xhrMap = new WeakMap();
     }
 }

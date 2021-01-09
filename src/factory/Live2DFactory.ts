@@ -216,10 +216,10 @@ export class Live2DFactory {
     static expressionTasksMap = new WeakMap<ExpressionManager, Promise<any>[]>();
 
     static registerRuntime(runtime: Live2DRuntime) {
-        this.runtimes.push(runtime);
+        Live2DFactory.runtimes.push(runtime);
 
         // higher version as higher priority
-        this.runtimes.sort((a, b) => b.version - a.version);
+        Live2DFactory.runtimes.sort((a, b) => b.version - a.version);
     }
 
     static getRuntime(source: any): Live2DRuntime | undefined {
@@ -240,7 +240,7 @@ export class Live2DFactory {
         // be executed after all the handlers of "modelLoaded" and "textureLoaded"
         const readyEventEmitted = Promise.all([textureLoaded, modelLoaded]).then(() => live2dModel.emit('ready'));
 
-        await runMiddlewares(this.live2DModelMiddlewares, {
+        await runMiddlewares(Live2DFactory.live2DModelMiddlewares, {
             live2dModel,
             source,
             options: options || {},
@@ -260,15 +260,15 @@ export class Live2DFactory {
                 return Promise.resolve(undefined);
             }
 
-            if (!motionManager.listeners('destroy').includes(this.releaseTasks)) {
-                motionManager.once('destroy', this.releaseTasks, this);
+            if (!motionManager.listeners('destroy').includes(Live2DFactory.releaseTasks)) {
+                motionManager.once('destroy', Live2DFactory.releaseTasks);
             }
 
-            let tasks = this.motionTasksMap.get(motionManager);
+            let tasks = Live2DFactory.motionTasksMap.get(motionManager);
 
             if (!tasks) {
                 tasks = {};
-                this.motionTasksMap.set(motionManager, tasks);
+                Live2DFactory.motionTasksMap.set(motionManager, tasks);
             }
 
             let taskGroup = tasks[group];
@@ -287,7 +287,7 @@ export class Live2DFactory {
                     target: motionManager,
                 })
                 .then(data => {
-                    const taskGroup = this.motionTasksMap.get(motionManager)?.[group];
+                    const taskGroup = Live2DFactory.motionTasksMap.get(motionManager)?.[group];
 
                     if (taskGroup) {
                         delete taskGroup[index];
@@ -313,15 +313,15 @@ export class Live2DFactory {
                 return Promise.resolve(undefined);
             }
 
-            if (!expressionManager.listeners('destroy').includes(this.releaseTasks)) {
-                expressionManager.once('destroy', this.releaseTasks, this);
+            if (!expressionManager.listeners('destroy').includes(Live2DFactory.releaseTasks)) {
+                expressionManager.once('destroy', Live2DFactory.releaseTasks);
             }
 
-            let tasks = this.expressionTasksMap.get(expressionManager);
+            let tasks = Live2DFactory.expressionTasksMap.get(expressionManager);
 
             if (!tasks) {
                 tasks = [];
-                this.expressionTasksMap.set(expressionManager, tasks);
+                Live2DFactory.expressionTasksMap.set(expressionManager, tasks);
             }
 
             const path = expressionManager.getExpressionFile(definition);
@@ -333,7 +333,7 @@ export class Live2DFactory {
                     target: expressionManager,
                 })
                 .then(data => {
-                    const tasks = this.expressionTasksMap.get(expressionManager);
+                    const tasks = Live2DFactory.expressionTasksMap.get(expressionManager);
 
                     if (tasks) {
                         delete tasks[index];
@@ -351,11 +351,11 @@ export class Live2DFactory {
         return Promise.resolve(undefined);
     }
 
-    static releaseTasks(target: MotionManager | ExpressionManager) {
-        if (target instanceof MotionManager) {
-            this.motionTasksMap.delete(target);
+    static releaseTasks(this: MotionManager | ExpressionManager) {
+        if (this instanceof MotionManager) {
+            Live2DFactory.motionTasksMap.delete(this);
         } else {
-            this.expressionTasksMap.delete(target);
+            Live2DFactory.expressionTasksMap.delete(this);
         }
     }
 }
