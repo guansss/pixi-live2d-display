@@ -195,6 +195,11 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         }
 
         if (!this.state.start(motion, group, index, priority)) {
+            if (audio) {
+                SoundManager.dispose(audio);
+                this.currentAudio = undefined;
+            }
+
             return false;
         }
 
