@@ -1,4 +1,3 @@
-import { ModelSettings } from '@/cubism-common';
 import { Cubism2InternalModel } from '@/cubism2/Cubism2InternalModel';
 import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
 import { Live2DPhysics } from '@/cubism2/Live2DPhysics';
@@ -8,18 +7,16 @@ import { Live2DFactory, Live2DFactoryOptions } from '@/factory/Live2DFactory';
 Live2DFactory.registerRuntime({
     version: 2,
 
-    createModelSettings(json: any): Cubism2ModelSettings | undefined {
-        if (Cubism2ModelSettings.isValidJSON(json)) {
-            return new Cubism2ModelSettings(json as Cubism2Spec.ModelJSON & { url: string });
-        }
-    },
-
-    test(settings: ModelSettings): settings is Cubism2ModelSettings {
-        return settings instanceof Cubism2ModelSettings;
+    test(source: any): boolean {
+        return source instanceof Cubism2ModelSettings || Cubism2ModelSettings.isValidJSON(source);
     },
 
     ready(): Promise<void> {
         return Promise.resolve();
+    },
+
+    createModelSettings(json: object): Cubism2ModelSettings {
+        return new Cubism2ModelSettings(json as Cubism2Spec.ModelJSON & { url: string });
     },
 
     createCoreModel(data: ArrayBuffer): Live2DModelWebGL {

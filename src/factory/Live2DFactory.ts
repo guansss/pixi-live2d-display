@@ -30,11 +30,11 @@ export interface Live2DFactoryContext {
 export interface Live2DRuntime {
     version: number;
 
-    createModelSettings(json: any): ModelSettings | undefined;
-
-    test(settings: ModelSettings): boolean;
+    test(source: any): boolean;
 
     ready(): Promise<void>;
+
+    createModelSettings(json: object): ModelSettings;
 
     createCoreModel(data: ArrayBuffer): any;
 
@@ -69,15 +69,15 @@ export const jsonToSettings: Middleware<Live2DFactoryContext> = async (context, 
 
         return next();
     } else if (typeof context.source === 'object') {
-        for (const runtime of Live2DFactory.runtimes) {
+        const runtime = Live2DFactory.getRuntime(context.source);
+
+        if (runtime) {
             const settings = runtime.createModelSettings(context.source);
 
-            if (settings) {
-                context.settings = settings;
-                context.live2dModel.emit('settingsLoaded', settings);
+            context.settings = settings;
+            context.live2dModel.emit('settingsLoaded', settings);
 
-                return next();
-            }
+            return next();
         }
     }
 
@@ -86,12 +86,13 @@ export const jsonToSettings: Middleware<Live2DFactoryContext> = async (context, 
 
 export const waitUntilReady: Middleware<Live2DFactoryContext> = (context, next) => {
     if (context.settings) {
-        const runtime = Live2DFactory.runtimes.find(f => f.test(context.settings!));
+        const runtime = Live2DFactory.getRuntime(context.settings);
 
         if (runtime) {
             return runtime.ready().then(next);
         }
     }
+
     return next();
 };
 
@@ -103,7 +104,7 @@ export const setupOptionals: Middleware<Live2DFactoryContext> = async (context, 
 
     if (internalModel) {
         const settings = context.settings!;
-        const runtime = Live2DFactory.runtimes.find(f => f.test(settings));
+        const runtime = Live2DFactory.getRuntime(settings);
 
         if (runtime) {
             if (settings.pose) {
@@ -166,7 +167,7 @@ export const createInternalModel: Middleware<Live2DFactoryContext> = async (cont
     const settings = context.settings;
 
     if (settings instanceof ModelSettings) {
-        const runtime = Live2DFactory.runtimes.find(f => f.test(settings));
+        const runtime = Live2DFactory.getRuntime(settings);
 
         if (!runtime) {
             throw new TypeError('Unknown model settings.');
@@ -208,6 +209,14 @@ export class Live2DFactory {
 
         // higher version as higher priority
         this.runtimes.sort((a, b) => b.version - a.version);
+    }
+
+    static getRuntime(source: any): Live2DRuntime | undefined {
+        for (const runtime of Live2DFactory.runtimes) {
+            if (runtime.test(source)) {
+                return runtime;
+            }
+        }
     }
 
     static async setupLive2DModel<IM extends InternalModel>(live2dModel: Live2DModel<IM>, source: string | object | IM['settings'], options?: Live2DFactoryOptions): Promise<void> {

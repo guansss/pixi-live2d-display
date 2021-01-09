@@ -1,4 +1,3 @@
-import { ModelSettings } from '@/cubism-common';
 import { Cubism4InternalModel } from '@/cubism4/Cubism4InternalModel';
 import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
 import { cubism4Ready } from '@/cubism4/setup';
@@ -17,14 +16,12 @@ Live2DFactory.registerRuntime({
 
     ready: cubism4Ready,
 
-    createModelSettings(json: any): Cubism4ModelSettings | undefined {
-        if (Cubism4ModelSettings.isValidJSON(json)) {
-            return new Cubism4ModelSettings(json as CubismSpec.ModelJSON & { url: string });
-        }
+    test(source: any): boolean {
+        return source instanceof Cubism4ModelSettings || Cubism4ModelSettings.isValidJSON(source);
     },
 
-    test(settings: ModelSettings): settings is Cubism4ModelSettings {
-        return settings instanceof Cubism4ModelSettings;
+    createModelSettings(json: object): Cubism4ModelSettings {
+        return new Cubism4ModelSettings(json as CubismSpec.ModelJSON & { url: string });
     },
 
     createCoreModel(data: ArrayBuffer): CubismModel {

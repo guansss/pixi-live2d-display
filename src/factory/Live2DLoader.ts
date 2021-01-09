@@ -6,7 +6,7 @@ import { Middleware, runMiddlewares } from '@/utils/middleware';
 export type Live2DLoaderTarget = Live2DModel | InternalModel | MotionManager | ExpressionManager
 
 export interface Live2DLoaderContext {
-    type: 'json' | 'arraybuffer';
+    type: XMLHttpRequestResponseType;
     url: string;
     settings?: ModelSettings;
     target?: Live2DLoaderTarget;

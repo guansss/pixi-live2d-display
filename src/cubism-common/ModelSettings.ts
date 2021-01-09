@@ -76,4 +76,21 @@ export abstract class ModelSettings {
 
         return files;
     }
+
+    /**
+     * Validates that files defined in the JSON exist in given files.
+     */
+    validateFiles(files: string[]) {
+        const assertFileExists = (expectedFile: string) => {
+            const actualPath = this.resolveURL(expectedFile);
+
+            if (!files.includes(actualPath)) {
+                throw new Error(`File "${expectedFile}" is defined in settings, but does not exist in given files`);
+            }
+        };
+
+        assertFileExists(this.moc);
+
+        this.textures.forEach(assertFileExists);
+    }
 }

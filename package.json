@@ -54,6 +54,7 @@
     "fork-ts-checker-webpack-plugin": "^6.0.7",
     "glob": "^7.1.6",
     "handlebars": "^4.7.6",
+    "jszip": "^3.5.0",
     "lodash": "latest",
     "node-fetch": "^2.6.1",
     "pixi.js": "^5.3.7",

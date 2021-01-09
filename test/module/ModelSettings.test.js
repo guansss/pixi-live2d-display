@@ -80,7 +80,7 @@ describe('ModelSettings', () => {
         expect(settings.name).to.equal('bar');
     });
 
-    it.only('should iterate through all files', function() {
+    it('should iterate through all files', function() {
         function getFiles(obj, files) {
             for (const key of Object.keys(obj)) {
                 if (obj[key] && typeof obj[key] === 'object') {

@@ -36,7 +36,7 @@ export class XHRLoader {
     static createXHR<Data extends any>(
         target: Live2DLoaderTarget | undefined,
         url: string,
-        type: 'json' | 'arraybuffer',
+        type: XMLHttpRequestResponseType,
         onload: (data: Data) => void,
         onerror: (e: Error) => void,
     ): XMLHttpRequest {
