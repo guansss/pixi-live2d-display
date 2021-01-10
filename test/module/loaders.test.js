@@ -28,7 +28,7 @@ describe('Loaders', function() {
         await runtimes.each(async (runtime, runtimeName) => {
             const originalURL = runtime.definition.file;
 
-            const settingsFilePath = runtimeName.includes('2') ? 'foo/model.json' : 'foo/model3.json';
+            const settingsFilePath = runtimeName.includes('2') ? 'foo/spa  ced/model.json' : 'foo/spa  ced/model3.json';
 
             const settingsJSON = Object.assign({}, runtime.definition.json, { url: settingsFilePath });
 
@@ -41,7 +41,9 @@ describe('Loaders', function() {
             const files = await Promise.all(definedFiles.map(
                 async file => {
                     const url = urlModule.resolve(originalURL, file);
-                    return createFile(await fetchBlob(url), settings.resolveURL(file));
+                    const filePath = decodeURI(settings.resolveURL(file));
+
+                    return createFile(await fetchBlob(url), filePath);
                 },
             ));
 

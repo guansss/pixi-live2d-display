@@ -94,7 +94,7 @@ export class ZipLoader {
 
         // only consume the files defined in settings
         for (const definedFile of settings.getDefinedFiles()) {
-            const actualPath = urlUtils.resolve(settings.url, definedFile);
+            const actualPath = decodeURI(urlUtils.resolve(settings.url, definedFile));
 
             if (filePaths.includes(actualPath)) {
                 requiredFilePaths.push(actualPath);

@@ -52,7 +52,7 @@ export class FileLoader {
                 throw  new Error('"_objectURL" must be specified in ModelSettings');
             }
 
-            settings.validateFiles(files.map(file => file.webkitRelativePath));
+            settings.validateFiles(files.map(file => encodeURI(file.webkitRelativePath)));
 
             await FileLoader.upload(files, settings);
 
@@ -92,7 +92,7 @@ export class FileLoader {
 
         // only consume the files defined in settings
         for (const definedFile of settings.getDefinedFiles()) {
-            const actualPath = urlUtils.resolve(settings.url, definedFile);
+            const actualPath = decodeURI(urlUtils.resolve(settings.url, definedFile));
 
             const actualFile = files.find(file => file.webkitRelativePath === actualPath);
 
