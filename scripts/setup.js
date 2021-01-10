@@ -28,7 +28,7 @@ async function main() {
         if (downloadFile.unzip) {
             unzip(downloadFile.file, downloadFile.unzip);
 
-            fs.rmSync(downloadFile.file);
+            fs.unlinkSync(downloadFile.file);
         }
     }));
 }
