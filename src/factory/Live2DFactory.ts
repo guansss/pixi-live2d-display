@@ -253,6 +253,9 @@ export class Live2DFactory {
     }
 
     static loadMotion<Motion, MotionSpec>(motionManager: MotionManager<Motion, MotionSpec>, group: string, index: number): Promise<Motion | undefined> {
+        // errors in this method are always handled
+        const handleError = (e: any) => motionManager.emit('motionLoadError', group, index, e);
+
         try {
             const definition = motionManager.definitions[group] ?. [index];
 
@@ -293,19 +296,30 @@ export class Live2DFactory {
                         delete taskGroup[index];
                     }
 
-                    return motionManager.createMotion(data, group, definition);
+                    const motion = motionManager.createMotion(data, group, definition);
+
+                    motionManager.emit('motionLoaded', group, index, motion);
+
+                    return motion;
                 })
-                .catch(e => logger.warn(motionManager.tag, `Failed to load motion: ${path}\n`, e));
+                .catch(e => {
+                    logger.warn(motionManager.tag, `Failed to load motion: ${path}\n`, e);
+                    handleError(e);
+                });
 
             return taskGroup[index]!;
         } catch (e) {
             logger.warn(motionManager.tag, `Failed to load motion at "${group}"[${index}]\n`, e);
+            handleError(e);
         }
 
         return Promise.resolve(undefined);
     }
 
     static loadExpression<Expression, ExpressionSpec>(expressionManager: ExpressionManager<Expression, ExpressionSpec>, index: number): Promise<Expression | undefined> {
+        // errors in this method are always handled
+        const handleError = (e: any) => expressionManager.emit('expressionLoadError', index, e);
+
         try {
             const definition = expressionManager.definitions[index];
 
@@ -339,13 +353,21 @@ export class Live2DFactory {
                         delete tasks[index];
                     }
 
-                    return expressionManager.createExpression(data, definition);
+                    const expression = expressionManager.createExpression(data, definition);
+
+                    expressionManager.emit('expressionLoaded', index, expression);
+
+                    return expression;
                 })
-                .catch(e => logger.warn(expressionManager.tag, `Failed to load expression: ${path}\n`, e));
+                .catch(e => {
+                    logger.warn(expressionManager.tag, `Failed to load expression: ${path}\n`, e);
+                    handleError(e);
+                });
 
             return tasks[index]!;
         } catch (e) {
             logger.warn(expressionManager.tag, `Failed to load expression at [${index}]\n`, e);
+            handleError(e);
         }
 
         return Promise.resolve(undefined);
