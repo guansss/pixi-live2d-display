@@ -20,6 +20,16 @@ Live2DFactory.registerRuntime({
         return source instanceof Cubism4ModelSettings || Cubism4ModelSettings.isValidJSON(source);
     },
 
+    isValidMoc(modelData: ArrayBuffer): boolean {
+        if (modelData.byteLength < 4) {
+            return false;
+        }
+
+        const view = new Int8Array(modelData, 0, 4);
+
+        return String.fromCharCode(...view) === 'MOC3';
+    },
+
     createModelSettings(json: object): Cubism4ModelSettings {
         return new Cubism4ModelSettings(json as CubismSpec.ModelJSON & { url: string });
     },

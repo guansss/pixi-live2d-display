@@ -15,6 +15,16 @@ Live2DFactory.registerRuntime({
         return Promise.resolve();
     },
 
+    isValidMoc(modelData: ArrayBuffer): boolean {
+        if (modelData.byteLength < 3) {
+            return false;
+        }
+
+        const view = new Int8Array(modelData, 0, 3);
+
+        return String.fromCharCode(...view) === 'moc';
+    },
+
     createModelSettings(json: object): Cubism2ModelSettings {
         return new Cubism2ModelSettings(json as Cubism2Spec.ModelJSON & { url: string });
     },

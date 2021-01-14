@@ -34,6 +34,8 @@ export interface Live2DRuntime {
 
     ready(): Promise<void>;
 
+    isValidMoc(modelData: ArrayBuffer): boolean;
+
     createModelSettings(json: object): ModelSettings;
 
     createCoreModel(data: ArrayBuffer): any;
@@ -184,12 +186,16 @@ export const createInternalModel: Middleware<Live2DFactoryContext> = async (cont
             throw new TypeError('Unknown model settings.');
         }
 
-        const modelData = await Live2DLoader.load({
+        const modelData = await Live2DLoader.load<ArrayBuffer>({
             settings,
             url: settings.moc,
             type: 'arraybuffer',
             target: context.live2dModel,
         });
+
+        if (!runtime.isValidMoc(modelData)) {
+            throw new Error('Invalid moc data');
+        }
 
         const coreModel = runtime.createCoreModel(modelData);
 
