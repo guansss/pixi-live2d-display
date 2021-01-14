@@ -1,6 +1,7 @@
 import { createTexture } from '@/factory/texture';
 import { Graphics } from '@pixi/graphics';
 import { Sprite } from '@pixi/sprite';
+import { AlphaFilter } from '@pixi/filter-alpha';
 import { BaseRenderTexture, RenderTexture } from '@pixi/core';
 import chunk from 'lodash/chunk';
 import { TEST_TEXTURE } from '../env';
@@ -63,12 +64,12 @@ describe('Compatibility', function() {
         runtimes.each((runtime, name) => {
             it(name, function() {
                 const renderTexture = new RenderTexture(
-                    new BaseRenderTexture(runtime.model1.internalModel.width, runtime.model1.internalModel.height, undefined, 1),
+                    new BaseRenderTexture(runtime.model2.width, runtime.model2.height, undefined, 0.5),
                 );
                 const sprite = new Sprite(renderTexture);
 
                 app.stage.addChild(sprite);
-                app.renderer.render(runtime.model1, renderTexture);
+                app.renderer.render(runtime.model2, renderTexture);
 
                 sprite.scale.set(0.1);
                 sprite.y = app.view.height - sprite.height - offsetY;
@@ -77,8 +78,17 @@ describe('Compatibility', function() {
                 app.render();
 
                 // app.ticker.add(()=>{
-                //     app.renderer.render(runtime.model1, renderTexture);
+                //     app.renderer.render(runtime.model2, renderTexture);
                 // })
+            });
+        });
+    });
+
+    describe('should work with PIXI.Filter', function() {
+        runtimes.each((runtime, name) => {
+            it(name, function() {
+                runtime.model2.filters = [new AlphaFilter(0.8)];
+                app.render();
             });
         });
     });

@@ -40,7 +40,6 @@ export class Cubism4InternalModel extends InternalModel {
     userData?: CubismModelUserData;
 
     renderer = new CubismRenderer_WebGL();
-    viewport = [0, 0, 0, 0];
 
     idParamAngleX = ParamAngleX;
     idParamAngleY = ParamAngleY;
@@ -159,14 +158,11 @@ export class Cubism4InternalModel extends InternalModel {
         return arr;
     }
 
-    updateTransform(transform: Matrix, width: number, height: number) {
+    updateTransform(transform: Matrix) {
         this.drawingMatrix
             .copyFrom(this.centeringTransform)
             .prepend(this.localTransform)
             .prepend(transform);
-
-        this.viewport[2] = width;
-        this.viewport[3] = height;
     }
 
     public update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {

@@ -2,9 +2,9 @@ import { InternalModel, ModelSettings, MotionPriority } from '@/cubism-common';
 import { MotionManagerOptions } from '@/cubism-common/MotionManager';
 import type { Live2DFactoryOptions } from '@/factory/Live2DFactory';
 import { Live2DFactory } from '@/factory/Live2DFactory';
-import { Framebuffer, Renderer, Texture } from '@pixi/core';
+import { Renderer, Texture } from '@pixi/core';
 import { Container } from '@pixi/display';
-import { Matrix, ObservablePoint, Point } from '@pixi/math';
+import { Matrix, ObservablePoint, Point, Rectangle } from '@pixi/math';
 import { Ticker } from '@pixi/ticker';
 import { InteractionMixin } from './InteractionMixin';
 import { Live2DTransform } from './Live2DTransform';
@@ -325,6 +325,9 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
             (texture.baseTexture as any).touched = renderer.textureGC.count;
         }
 
+        const viewport = (renderer.framebuffer as any).viewport as Rectangle;
+        this.internalModel.viewport = [viewport.x, viewport.y, viewport.width, viewport.height];
+
         this.internalModel.update(this.deltaTime, this.elapsedTime);
         this.deltaTime = 0;
 
@@ -332,11 +335,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
             .copyFrom(renderer.globalUniforms.uniforms.projectionMatrix)
             .append(this.worldTransform);
 
-        const framebuffer = (renderer.framebuffer as any).current as Framebuffer | null;
-        const renderWidth = (framebuffer ?? renderer).width;
-        const renderHeight = (framebuffer ?? renderer).height;
-
-        this.internalModel.updateTransform(internalTransform, renderWidth, renderHeight);
+        this.internalModel.updateTransform(internalTransform);
         this.internalModel.draw(renderer.gl);
 
         // reset WebGL state and texture bindings

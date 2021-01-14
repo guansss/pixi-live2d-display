@@ -62,8 +62,7 @@ export function addBackground(model) {
     model.addChild(foreground);
 }
 
-export function draggable(app, model) {
-    app.stage.interactive = true;
+export function draggable(model) {
     model.on('pointerdown', e => {
         model.dragging = true;
         model._dragX = e.data.global.x;

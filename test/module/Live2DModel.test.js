@@ -70,9 +70,12 @@ describe('Live2DModel', async () => {
             runtime.model1.scale.set(0.5, 0.5);
             runtime.model2.scale.set(0.125, 0.125);
 
+            runtime.model2.anchor.set(1, 0);
+            runtime.model2.rotation = Math.PI * 3 / 2;
+
             [runtime.model1, runtime.model2].forEach(model => {
                 addBackground(model);
-                draggable(app, model);
+                draggable(model);
                 model.addChild(new HitAreaFrames());
 
                 model.interaction = runtime.definition.interaction;

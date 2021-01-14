@@ -77,6 +77,11 @@ export abstract class InternalModel extends EventEmitter {
 
     textureFlipY = false;
 
+    /**
+     * WebGL viewport. [x, y, width, height]
+     */
+    viewport: [number, number, number, number] = [0, 0, 0, 0];
+
     protected init() {
         this.setupLayout();
         this.setupHitAreas();
@@ -171,7 +176,7 @@ export abstract class InternalModel extends EventEmitter {
         return { left, right, top, bottom };
     }
 
-    updateTransform(transform: Matrix, width: number, height: number) {
+    updateTransform(transform: Matrix) {
         this.drawingMatrix.copyFrom(transform).append(this.localTransform);
     }
 

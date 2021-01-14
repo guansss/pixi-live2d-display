@@ -3,7 +3,9 @@
  */
 
 declare module '@pixi/core' {
-    export { Renderer, Texture, BaseTexture, Framebuffer, GLFramebuffer } from 'pixi.js';
+    export {
+        Renderer, Texture, BaseTexture, BaseRenderTexture, RenderTexture, Framebuffer, GLFramebuffer,
+    } from 'pixi.js';
 }
 
 declare module '@pixi/settings' {
@@ -18,6 +20,11 @@ declare module '@pixi/utils' {
 
 declare module '@pixi/app' {
     export { Application } from 'pixi.js';
+}
+
+declare module '@pixi/filter-*' {
+    import { filters } from 'pixi.js';
+    export import AlphaFilter = filters.AlphaFilter;
 }
 
 declare module '@pixi/ticker' {

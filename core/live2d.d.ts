@@ -173,5 +173,7 @@ declare namespace Live2DObfuscated {
         curFrameNo: number;
 
         getMaskRenderTexture(): number;
+
+        setupClip(modelContext: ModelContext, drawParam: DrawParamWebGL): void;
     }
 }

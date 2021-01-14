@@ -87,6 +87,17 @@ export class Cubism2InternalModel extends InternalModel {
             set: (v: boolean) => culling = v,
             get: () => this.disableCulling ? false : culling,
         });
+
+        const clipManager = this.coreModel.getModelContext().clipManager;
+        const originalSetupClip = clipManager.setupClip;
+
+        // after setupClip(), the GL viewport will be set to [0, 0, canvas.width, canvas.height],
+        // so we have to set it back
+        clipManager.setupClip = (modelContext, drawParam) => {
+            originalSetupClip.call(clipManager, modelContext, drawParam);
+
+            drawParam.gl.viewport(...this.viewport);
+        };
     }
 
     protected getSize(): [number, number] {
@@ -230,7 +241,6 @@ export class Cubism2InternalModel extends InternalModel {
 
         const matrix = this.drawingMatrix;
 
-        // set given 3x3 matrix into a 4x4 matrix, with Y inverted
         tempMatrixArray[0] = matrix.a;
         tempMatrixArray[1] = matrix.b;
         tempMatrixArray[4] = matrix.c;
