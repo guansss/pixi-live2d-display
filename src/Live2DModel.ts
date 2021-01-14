@@ -133,22 +133,20 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     constructor(options?: Live2DModelOptions) {
         super();
 
-        const _options = Object.assign({}, DEFAULT_OPTIONS, options);
+        this.once('modelLoaded', () => this.init(options));
+    }
 
-        this.autoInteract = _options.autoInteract;
-        this.autoUpdate = _options.autoUpdate;
+    protected init(options?: Live2DModelOptions) {
+        this.tag = `Live2DModel(${this.internalModel.settings.name})`;
+
+        const _options = Object.assign({}, DEFAULT_OPTIONS, options);
 
         if (_options.autoInteract) {
             this.interactive = true;
         }
 
-        this.init();
-    }
-
-    protected init() {
-        this.on('modelLoaded', () => {
-            this.tag = `Live2DModel(${this.internalModel.settings.name})`;
-        });
+        this.autoInteract = _options.autoInteract;
+        this.autoUpdate = _options.autoUpdate;
     }
 
     /**
@@ -279,7 +277,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         this.deltaTime += dt;
         this.elapsedTime += dt;
 
-        // don't call `this.model.update()` here, because it requires WebGL context
+        // don't call `this.internalModel.update()` here, because it requires WebGL context
     }
 
     /** @override */
