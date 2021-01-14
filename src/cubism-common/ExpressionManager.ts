@@ -3,7 +3,7 @@ import { MotionManagerOptions } from '@/cubism-common/MotionManager';
 import { logger } from '@/utils';
 import { EventEmitter } from '@pixi/utils';
 
-export abstract class ExpressionManager<Expression = any, ExpressionSpec=any> extends EventEmitter {
+export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> extends EventEmitter {
     /**
      * Tag for logging.
      */
@@ -134,6 +134,7 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec=any> ex
             return false;
         }
 
+        this.reserveExpressionIndex = -1;
         this.currentExpression = expression;
         this.startMotion(expression);
 
