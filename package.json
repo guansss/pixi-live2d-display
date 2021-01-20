@@ -64,7 +64,7 @@
     "sinon": "^9.0.1",
     "sinon-chai": "^3.5.0",
     "ts-loader": "^8.0.12",
-    "typedoc": "0.20.0-beta.27",
+    "typedoc": "0.20.16",
     "typescript": "^4.1.2",
     "webpack": "^4.42.0",
     "webpack-bundle-analyzer": "^3.7.0",

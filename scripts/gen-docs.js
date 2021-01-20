@@ -1,6 +1,7 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const TypeDoc = require('typedoc');
+const packageJSON = require('../package.json');
 
 typedoc().then(patchCSS);
 
@@ -12,7 +13,8 @@ async function typedoc() {
     app.options.addReader(new TypeDoc.TSConfigReader());
 
     app.bootstrap({
-        entryPoints:['src/index.ts'],
+        entryPoints: ['src/index.ts', 'src/types/events.d.ts'],
+        readme: 'DOC_INDEX.md',
         tsconfig: 'tsconfig.build.json',
         disableOutputCheck: true,
         excludePrivate: true,
@@ -21,14 +23,24 @@ async function typedoc() {
     const project = app.convert();
 
     if (project) { // Project may not have converted correctly
-        app.converter.on('endPage', pageEvent => {
-            console.log(chalk.blue('Patching'), pageEvent.filename);
+        const patchedFiles = [];
 
+        app.renderer.on('endPage', pageEvent => {
+            patchedFiles.push(pageEvent.url);
+
+            if (pageEvent.url === 'index.html') {
+                // append version to the project name
+                pageEvent.contents = pageEvent.contents.replace(`<h1>${packageJSON.name}</h1>`, `<h1>${packageJSON.name} ${packageJSON.version}</h1>`);
+            }
+
+            // remove the unnecessary "Return void" signatures for methods
             pageEvent.contents = pageEvent.contents.replace(/<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void<\/span><\/h4>/g, '');
         });
 
         // Rendered docs
         await app.generateDocs(project, 'docs');
+
+        console.log('\n', chalk.blue('Patched files:'), patchedFiles);
     } else {
         throw new Error('Project not have converted correctly');
     }
@@ -39,7 +51,7 @@ function patchCSS() {
 
     const cssFile = 'docs/assets/css/main.css';
 
-    console.log(cssFile);
+    console.log(chalk.green(cssFile));
 
     let cssContent = fs.readFileSync(cssFile, 'utf8');
 
@@ -55,6 +67,10 @@ function patchCSS() {
 .tsd-description:last-child > :last-child {
     margin-bottom: -20px !important;
     padding-bottom: 20px !important;
+}
+
+.tsd-description:last-child > .tsd-parameters:last-child .tsd-comment > p {
+    margin-bottom: 0;
 }
 
 .tsd-description:not(:first-child) > :first-child {
