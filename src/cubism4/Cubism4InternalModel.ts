@@ -120,7 +120,6 @@ export class Cubism4InternalModel extends InternalModel {
         CubismShader_WebGL.getInstance()._shaderSets = [];
     }
 
-    /** @override */
     bindTexture(index: number, texture: WebGLTexture): void {
         this.renderer.bindTexture(index, texture);
     }

@@ -5,6 +5,9 @@ import { MotionManager, MotionManagerOptions } from '@/cubism-common/MotionManag
 import { Matrix } from '@pixi/math';
 import { EventEmitter } from '@pixi/utils';
 
+/**
+ * Common layout definition shared between all Cubism versions.
+ */
 export interface CommonLayout {
     centerX?: number;
     centerY?: number;
@@ -18,6 +21,9 @@ export interface CommonLayout {
     right?: number;
 }
 
+/**
+ * Common hit area definition shared between all Cubism versions.
+ */
 export interface CommonHitArea {
     id: string;
     name: string;
@@ -31,13 +37,21 @@ export interface Bounds {
     bottom: number
 }
 
-export interface InternalModelOptions extends MotionManagerOptions {
-}
+export interface InternalModelOptions extends MotionManagerOptions {}
 
+/**
+ * A wrapper that manages the states of a Live2D core model, and delegates all operations to it.
+ * @emits {@link InternalModelEvents}
+ */
 export abstract class InternalModel extends EventEmitter {
+    /**
+     * The managed Live2D core model.
+     */
     abstract readonly coreModel: object;
 
     abstract readonly settings: ModelSettings;
+
+    focusController = new FocusController();
 
     abstract motionManager: MotionManager;
 
@@ -45,22 +59,24 @@ export abstract class InternalModel extends EventEmitter {
     physics?: any;
 
     /**
-     * Original width of model canvas.
+     * Original canvas width of the model. Note this doesn't represent the model's real size,
+     * as the model can overflow from its canvas.
      */
     readonly originalWidth: number = 0;
 
     /**
-     * Original height of model canvas.
+     * Original canvas height of the model. Note this doesn't represent the model's real size,
+     * as the model can overflow from its canvas.
      */
     readonly originalHeight: number = 0;
 
     /**
-     * Width of model canvas, scaled by `width` in {@link Cubism2ModelSettings#layout}.
+     * Canvas width of the model, scaled by the `width` of the model's layout.
      */
     readonly width: number = 0;
 
     /**
-     * Width of model canvas, scaled by `height` in {@link Cubism2ModelSettings#layout}.
+     * Canvas height of the model, scaled by the `height` of the model's layout.
      */
     readonly height: number = 0;
 
@@ -69,25 +85,39 @@ export abstract class InternalModel extends EventEmitter {
      */
     localTransform = new Matrix();
 
+    /**
+     * The final matrix to draw the model.
+     */
     drawingMatrix = new Matrix();
 
-    focusController = new FocusController();
-
+    // TODO: change structure
+    /**
+     * The hit area definitions, keyed by their names.
+     */
     hitAreas: Record<string, CommonHitArea> = {};
 
+    /**
+     * Flags whether `gl.UNPACK_FLIP_Y_WEBGL` should be enabled when binding the textures.
+     */
     textureFlipY = false;
 
     /**
-     * WebGL viewport. [x, y, width, height]
+     * WebGL viewport when drawing the model. The format is `[x, y, width, height]`.
      */
     viewport: [number, number, number, number] = [0, 0, 0, 0];
 
+    /**
+     * Should be called in the constructor of derived class.
+     */
     protected init() {
         this.setupLayout();
         this.setupHitAreas();
     }
 
-    protected setupLayout(): void {
+    /**
+     * Sets up the model's size and local transform by the model's layout.
+     */
+    protected setupLayout() {
         // cast `this` to be mutable
         const self = this as Mutable<this>;
 
@@ -125,6 +155,9 @@ export abstract class InternalModel extends EventEmitter {
         this.localTransform.translate(this.width * offsetX, -this.height * offsetY);
     }
 
+    /**
+     * Sets up the hit areas by their definitions in settings.
+     */
     protected setupHitAreas() {
         const definitions = this.getHitAreaDefs().filter(hitArea => hitArea.index >= 0);
 
@@ -134,15 +167,22 @@ export abstract class InternalModel extends EventEmitter {
     }
 
     /**
-     * Hit test on model.
+     * Hit-test on the model.
      * @param x - Position in model canvas.
      * @param y - Position in model canvas.
-     * @return The hit hit areas.
+     * @return The names of the *hit* hit areas. Can be empty if none is hit.
      */
     hitTest(x: number, y: number): string[] {
         return Object.keys(this.hitAreas).filter(hitAreaName => this.isHit(hitAreaName, x, y));
     }
 
+    /**
+     * Hit-test for a single hit area.
+     * @param hitAreaName - The hit area's name.
+     * @param x - Position in model canvas.
+     * @param y - Position in model canvas.
+     * @return True if hit.
+     */
     isHit(hitAreaName: string, x: number, y: number): boolean {
         if (!this.hitAreas[hitAreaName]) {
             return false;
@@ -155,8 +195,14 @@ export abstract class InternalModel extends EventEmitter {
         return bounds.left <= x && x <= bounds.right && bounds.top <= y && y <= bounds.bottom;
     }
 
-    getDrawableBounds(drawIndex: number): Bounds {
-        const vertices = this.getDrawableVertices(drawIndex);
+    // TODO: bounds parameter
+    /**
+     * Gets a drawable's bounds.
+     * @param index - Index of the drawable.
+     * @return The bounds in model canvas space.
+     */
+    getDrawableBounds(index: number): Bounds {
+        const vertices = this.getDrawableVertices(index);
 
         let left = vertices[0]!;
         let right = vertices[0]!;
@@ -176,47 +222,87 @@ export abstract class InternalModel extends EventEmitter {
         return { left, right, top, bottom };
     }
 
+    /**
+     * Updates the model's transform.
+     * @param transform - The world transform.
+     */
     updateTransform(transform: Matrix) {
         this.drawingMatrix.copyFrom(transform).append(this.localTransform);
     }
 
+    /**
+     * Updates the model's parameters.
+     * @param dt - Elapsed time in milliseconds from last frame.
+     * @param now - Current time in milliseconds.
+     */
     update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {
         this.focusController.update(dt);
     };
 
+    /**
+     * Destroys the model and all related resources.
+     * @emits {@link InternalModelEvents.destroy | destroy}
+     */
     destroy() {
         this.motionManager.destroy();
         (this as Partial<this>).motionManager = undefined;
 
+        // TODO: emit before destroy
         this.emit('destroy');
     }
 
-    abstract getDrawableIDs(): string[];
-
-    abstract getDrawableIndex(id: string): number;
-
-    abstract getDrawableVertices(drawIndex: number | string): Float32Array;
+    /**
+     * Gets all the hit area definitions.
+     * @return Normalized definitions.
+     */
+    protected abstract getHitAreaDefs(): CommonHitArea[];
 
     /**
-     * Updates GL context when it's changed.
-     * @param gl
-     * @param glContextID - Unique ID of given Gl context.
+     * Gets the model's original canvas size.
+     * @return `[width, height]`
+     */
+    protected abstract getSize(): [number, number];
+
+    /**
+     * Gets the layout definition.
+     * @return Normalized definition.
+     */
+    protected abstract getLayout(): CommonLayout;
+
+    /**
+     * Gets all the drawables' IDs.
+     * @return IDs.
+     */
+    abstract getDrawableIDs(): string[];
+
+    /**
+     * Finds the index of a drawable by its ID.
+     * @return The index.
+     */
+    abstract getDrawableIndex(id: string): number;
+
+    /**
+     * Gets a drawable's vertices.
+     * @param index - Either the index or the ID of the drawable.
+     * @throws Error when the drawable cannot be found.
+     */
+    abstract getDrawableVertices(index: number | string): Float32Array;
+
+    /**
+     * Updates WebGL context bound to this model.
+     * @param gl - WebGL context.
+     * @param glContextID - Unique ID for given WebGL context.
      */
     abstract updateWebGLContext(gl: WebGLRenderingContext, glContextID: number): void;
 
     /**
-     * Binds a texture to core model. The index must be the same as the index of this texture
-     * in {@link Cubism2ModelSettings#textures}
-     * @param index
-     * @param texture
+     * Binds a texture to the model. The index must be the same as that of this texture
+     * in the {@link ModelSettings.textures} array.
      */
     abstract bindTexture(index: number, texture: WebGLTexture): void;
 
+    /**
+     * Draws the model.
+     */
     abstract draw(gl: WebGLRenderingContext): void;
-
-    protected abstract getHitAreaDefs(): CommonHitArea[];
-
-    protected abstract getSize(): [number, number];
-
-    protected abstract getLayout(): CommonLayout;
 }

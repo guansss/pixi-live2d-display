@@ -4,6 +4,10 @@ import { CubismFramework, CubismStartupOption, LogLevel } from '@cubism/live2dcu
 let startupPromise: Promise<void>;
 let startupRetries = 20;
 
+/**
+ * Promises the Cubism 4 runtime has been started up.
+ * @return Promise that resolves if the startup has succeeded, rejects if failed.
+ */
 export function cubism4Ready(): Promise<void> {
     if (CubismFramework.isStarted()) {
         return Promise.resolve();
@@ -38,6 +42,9 @@ export function cubism4Ready(): Promise<void> {
     return startupPromise;
 }
 
+/**
+ * Starts up the Cubism 4 runtime.
+ */
 export function startUpCubism4(options?: CubismStartupOption) {
     options = Object.assign({
         logFunction: console.log,

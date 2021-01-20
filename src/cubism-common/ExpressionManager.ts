@@ -3,6 +3,9 @@ import { MotionManagerOptions } from '@/cubism-common/MotionManager';
 import { logger } from '@/utils';
 import { EventEmitter } from '@pixi/utils';
 
+/**
+ * Abstract expression manager.
+ */
 export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> extends EventEmitter {
     /**
      * Tag for logging.
@@ -10,29 +13,41 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
     tag: string;
 
     /**
-     * Expression definitions copied from {@link ModelSettings#expressions};
+     * Expression definitions copied from ModelSettings.
      */
     abstract readonly definitions: ExpressionSpec[];
 
+    /**
+     * The ModelSettings reference.
+     */
     readonly settings: ModelSettings;
 
     /**
-     * Instances of `Live2DExpression`. The structure is the same as {@link ExpressionManager#definitions};
+     * The Expressions. The structure is the same as {@link definitions}, initially there's only
+     * an empty array, which means all expressions will be `undefined`. When an Expression has
+     * been loaded, it'll fill the place in which it should be; when it fails to load,
+     * the place will be filled with `null`.
      */
     expressions: (Expression | null | undefined)[] = [];
 
     /**
-     * An empty `Live2DExpression`, used to reset the expression.
+     * An empty Expression to reset all the expression parameters.
      */
     defaultExpression!: Expression;
 
     /**
-     * Current expression. This won't change even when the expression has been reset in {@link ExpressionManager#resetExpression}.
+     * Current Expression. This will not be overwritten by the {@link defaultExpression}.
      */
     currentExpression!: Expression;
 
+    /**
+     * The pending Expression.
+     */
     reserveExpressionIndex = -1;
 
+    /**
+     * Flags the instance has been destroyed.
+     */
     destroyed = false;
 
     protected constructor(settings: ModelSettings, options?: MotionManagerOptions) {
@@ -41,6 +56,9 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
         this.tag = `ExpressionManager(${settings.name})`;
     }
 
+    /**
+     * Should be called in the constructor of derived class.
+     */
     protected init() {
         this.defaultExpression = this.createExpression({}, undefined);
         this.currentExpression = this.defaultExpression;
@@ -49,8 +67,12 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
     }
 
     /**
-     * Loads an expression.
-     * @param index
+     * Loads an Expression. Errors in this method will not be thrown,
+     * but be emitted with an "expressionLoadError" event.
+     * @param index - Index of the expression in definitions.
+     * @return Promise that resolves with the Expression, or with undefined if it can't be loaded.
+     * @emits {@link ExpressionManagerEvents.expressionLoaded}
+     * @emits {@link ExpressionManagerEvents.expressionLoadError}
      */
     protected async loadExpression(index: number): Promise<Expression | undefined> {
         if (!this.definitions[index]) {
@@ -74,12 +96,17 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
         return expression;
     }
 
+    /**
+     * Loads the Expression. Will be implemented by Live2DFactory.
+     * @ignore
+     */
     private _loadExpression(index: number): Promise<Expression | undefined> {
         throw new Error('Not implemented.');
     }
 
     /**
-     * Sets a random expression that differs from current one.
+     * Sets a random Expression that differs from current one.
+     * @return Promise that resolves with true if succeeded, with false otherwise.
      */
     async setRandomExpression(): Promise<boolean> {
         if (this.definitions.length === 0) {
@@ -100,27 +127,29 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
     }
 
     /**
-     * Resets expression using {@link ExpressionManager#defaultExpression}.
+     * Resets model's expression using {@link defaultExpression}.
      */
     resetExpression(): void {
         this.startMotion(this.defaultExpression);
     }
 
     /**
-     * Restores expression to {@link ExpressionManager#currentExpression}.
+     * Restores model's expression to {@link currentExpression}.
      */
     restoreExpression(): void {
         this.startMotion(this.currentExpression);
     }
 
     /**
-     * Sets an expression.
-     * @param index
+     * Sets an Expression.
+     * @param index - Either the index, or the name of the expression.
+     * @return Promise that resolves with true if succeeded, with false otherwise.
      */
     async setExpression(index: number | string): Promise<boolean> {
         if (typeof index !== 'number') {
             index = this.getExpressionIndex(index);
         }
+        // TODO: check if the same as current
 
         if (!(index > -1 && index < this.definitions.length)) {
             return false;
@@ -142,7 +171,7 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
     }
 
     /**
-     * Update parameters of a core model.
+     * Updates parameters of the core model.
      * @return True if the parameters are actually updated.
      */
     update(model: object, now: DOMHighResTimeStamp) {
@@ -153,6 +182,10 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
         return false;
     }
 
+    /**
+     * Destroys the instance.
+     * @emits {@link ExpressionManagerEvents.destroy}
+     */
     destroy() {
         this.destroyed = true;
         this.emit('destroy');
@@ -162,17 +195,45 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
         self.expressions = undefined;
     }
 
+    /**
+     * Checks if the expression playback has finished.
+     */
     abstract isFinished(): boolean;
 
+    /**
+     * Retrieves the expression's index by its name.
+     * @return The index. `-1` if not found.
+     */
     abstract getExpressionIndex(name: string): number;
 
+    /**
+     * Retrieves the expression's file path by its definition.
+     * @return The file path extracted from given definition. Not resolved.
+     */
     abstract getExpressionFile(definition: ExpressionSpec): string;
 
-    abstract createExpression(data: object, definition: ExpressionSpec | undefined): Expression;
+    /**
+     * Creates an Expression from the data.
+     * @param data - Content of the expression file.
+     * @param definition - The expression definition. Can be undefined when creating the {@link defaultExpression}.
+     * @return The created Expression.
+     */
+    abstract createExpression(data: JSONObject, definition: ExpressionSpec | undefined): Expression;
 
+    // TODO: rename
+    /**
+     * Applies the Expression to the model.
+     */
     protected abstract startMotion(motion: Expression): number;
 
+    /**
+     * Cancels expression playback.
+     */
     protected abstract stopAllMotions(): void;
 
+    /**
+     * Updates parameters of the core model.
+     * @return True if the parameters are actually updated.
+     */
     protected abstract updateMotion(model: object, now: DOMHighResTimeStamp): boolean;
 }

@@ -12,48 +12,72 @@ import { applyMixins, logger } from './utils';
 
 export interface Live2DModelOptions extends MotionManagerOptions {
     /**
-     * Automatically update internal model by `Ticker.shared`.
+     * Should the internal model be automatically updated by `PIXI.Ticker.shared`.
+     * @default ture
      */
     autoUpdate?: boolean;
 
     /**
-     * Automatically listen for pointer events from `InteractionManager` to achieve interaction.
+     * Should the internal model automatically reacts to interactions by listening for pointer events.
+     * @see {@link InteractionMixin}
+     * @default true
      */
     autoInteract?: boolean;
 }
 
-const DEFAULT_OPTIONS: Pick<Required<Live2DModelOptions>, 'autoUpdate' | 'autoInteract'> = {
-    autoUpdate: true,
-    autoInteract: true,
-};
-
 const tempPoint = new Point();
 const tempMatrix = new Matrix();
 
-// a reference to Ticker class, defaults to the one in window.PIXI (when loaded by a <script> tag)
+// a reference to Ticker class, defaults to window.PIXI.Ticker (when loaded by a <script> tag)
 let TickerClass: typeof Ticker | undefined = (window as any).PIXI?.Ticker;
 
-export interface Live2DModel<IM extends InternalModel = InternalModel> extends InteractionMixin {
-}
+export interface Live2DModel<IM extends InternalModel = InternalModel> extends InteractionMixin {}
+
+export type Live2DConstructor = { new(options?: Live2DModelOptions): Live2DModel }
 
 /**
- * A wrapper that makes Live2D model possible to be used as a `DisplayObject` in PixiJS.
+ * A wrapper that allows the Live2D model to be used as a DisplayObject in PixiJS.
  *
- * ```ts
- * let model = Live2DModel.fromModelSettingsFile('path/to/my-model.model.json');
+ * ```js
+ * const model = await Live2DModel.from('shizuku.model.json');
  * container.add(model);
  * ```
- *
  * @emits {@link Live2DModelEvents}
  */
 export class Live2DModel<IM extends InternalModel = InternalModel> extends Container {
-    static from<M extends { new(options?: Live2DFactoryOptions): Live2DModel } = typeof Live2DModel>(this: M, source: string | object | ModelSettings, options?: Live2DFactoryOptions): Promise<InstanceType<M>> {
+    /**
+     * Creates a Live2DModel from given source.
+     * @param source - Can be one of: settings file URL, settings JSON object, ModelSettings instance.
+     * @param options - Options for the creation.
+     * @return Promise that resolves with the Live2DModel.
+     */
+    static from<M extends Live2DConstructor = typeof Live2DModel>(this: M, source: string | JSONObject | ModelSettings, options?: Live2DFactoryOptions): Promise<InstanceType<M>> {
         const model = new this(options) as InstanceType<M>;
 
         return Live2DFactory.setupLive2DModel(model, source, options).then(() => model);
     }
 
-    static fromSync<M extends { new(options?: Live2DFactoryOptions): Live2DModel } = typeof Live2DModel>(this: M, source: string | object | ModelSettings, options?: Live2DFactoryOptions): InstanceType<M> {
+    /**
+     * Synchronous version of `Live2DModel.from()`. This method immediately returns a Live2DModel instance,
+     * whose resources have not been loaded. Therefore this model can't be manipulated or rendered
+     * until the "load" event has been emitted.
+     *
+     * ```js
+     * // no `await` here as it's not a Promise
+     * const model = Live2DModel.fromSync('shizuku.model.json');
+     *
+     * // these will cause errors!
+     * // app.stage.addChild(model);
+     * // model.motion('tap_body');
+     *
+     * model.once('load', () => {
+     *     // now it's safe
+     *     app.stage.addChild(model);
+     *     model.motion('tap_body');
+     * });
+     * ```
+     */
+    static fromSync<M extends Live2DConstructor = typeof Live2DModel>(this: M, source: string | JSONObject | ModelSettings, options?: Live2DFactoryOptions): InstanceType<M> {
         const model = new this(options) as InstanceType<M>;
 
         Live2DFactory.setupLive2DModel(model, source, options).then(options?.onLoad).catch(options?.onError);
@@ -62,8 +86,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     }
 
     /**
-     * Registers the class of `Ticker` for auto updating.
-     * @param tickerClass
+     * Registers the class of `PIXI.Ticker` for auto updating.
      */
     static registerTicker(tickerClass: typeof Ticker): void {
         TickerClass = tickerClass;
@@ -74,39 +97,48 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      */
     tag = 'Live2DModel(uninitialized)';
 
+    /**
+     * The internal model. Though typed as non-nullable, it'll be undefined until the "ready" event is emitted.
+     */
     internalModel!: IM;
 
+    /**
+     * Pixi textures.
+     */
     textures: Texture[] = [];
 
     /**
-     * Custom transform.
+     * Custom transform, currently useless.
+     * @ignore
      */
     transform = new Live2DTransform();
 
     /**
-     * Works like the one in `PIXI.Sprite`.
+     * The anchor behaves like the one in `PIXI.Sprite`, where `(0, 0)` means the top left
+     * and `(1, 1)` means the bottom right.
      */
     anchor = new ObservablePoint(this.onAnchorChange, this, 0, 0);
 
     /**
-     * An ID of Gl context that syncs with `renderer.CONTEXT_UID`.
+     * An ID of Gl context that syncs with `renderer.CONTEXT_UID`. Used to check if the GL context has changed.
+     * @ignore
      */
     glContextID = -1;
 
     /**
-     * Elapsed time since created. Milliseconds.
+     * Elapsed time in milliseconds since created.
      */
     elapsedTime: DOMHighResTimeStamp = performance.now();
 
     /**
-     * The time elapsed from last frame to current frame. Milliseconds.
+     * Elapsed time in milliseconds from last frame to this frame.
      */
     deltaTime: DOMHighResTimeStamp = 0;
 
     protected _autoUpdate = false;
 
     /**
-     * Enables automatic updating. Requires {@link Live2DModel.registerTicker} or global `window.PIXI.Ticker`.
+     * Enables automatic updating. Requires {@link Live2DModel.registerTicker} or the global `window.PIXI.Ticker`.
      */
     get autoUpdate() {
         return this._autoUpdate;
@@ -116,7 +148,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         if (autoUpdate) {
             if (!this._destroyed) {
                 if (TickerClass) {
-                    TickerClass?.shared.add(this.onTickerUpdate, this);
+                    TickerClass.shared.add(this.onTickerUpdate, this);
 
                     this._autoUpdate = true;
                 } else {
@@ -136,10 +168,17 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         this.once('modelLoaded', () => this.init(options));
     }
 
+    // TODO: rename
+    /**
+     * A handler of the "modelLoaded" event, called when the internal model has been loaded.
+     */
     protected init(options?: Live2DModelOptions) {
         this.tag = `Live2DModel(${this.internalModel.settings.name})`;
 
-        const _options = Object.assign({}, DEFAULT_OPTIONS, options);
+        const _options = Object.assign({
+            autoUpdate: true,
+            autoInteract: true,
+        }, options);
 
         if (_options.autoInteract) {
             this.interactive = true;
@@ -150,7 +189,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     }
 
     /**
-     * Called when the values of {@link Live2DModel#anchor} are changed.
+     * A callback that observes {@link Live2DModel.anchor}, called when its values have been changed.
      */
     protected onAnchorChange(): void {
         this.pivot.set(this.anchor.x * this.internalModel.width, this.anchor.y * this.internalModel.height);
@@ -158,6 +197,10 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
 
     /**
      * Shorthand to start a motion.
+     * @param group - The motion group.
+     * @param index - The index in this group. If not presented, a random motion will be started.
+     * @param priority - The motion priority. Defaults to `MotionPriority.NORMAL`.
+     * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
     motion(group: string, index?: number, priority?: MotionPriority): Promise<boolean> {
         return index === undefined
@@ -167,7 +210,8 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
 
     /**
      * Shorthand to set an expression.
-     * @param id
+     * @param id - Either the index, or the name of the expression. If not presented, a random expression will be set.
+     * @return Promise that resolves with true if succeeded, with false otherwise.
      */
     expression(id?: number | string): Promise<boolean> {
         if (this.internalModel.motionManager.expressionManager) {
@@ -179,7 +223,8 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     }
 
     /**
-     * Makes the model focus on a point.
+     * Updates the focus position. This will not cause the model to immediately look at the position,
+     * instead the movement will be interpolated.
      * @param x - Position in world space.
      * @param y - Position in world space.
      */
@@ -199,9 +244,10 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     }
 
     /**
-     * Performs tap on the model.
-     * @param x - The x position in world space.
-     * @param y - The y position in world space.
+     * Tap on the model. This will perform a hit-testing, and emit a "hit" event
+     * if at least one of the hit areas is hit.
+     * @param x - Position in world space.
+     * @param y - Position in world space.
      * @emits {@link Live2DModelEvents.hit}
      */
     tap(x: number, y: number): void {
@@ -214,6 +260,12 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         }
     }
 
+    /**
+     * Hit-test on the model.
+     * @param x - Position in world space.
+     * @param y - Position in world space.
+     * @return The names of the *hit* hit areas. Can be empty if none is hit.
+     */
     hitTest(x: number, y: number): string[] {
         tempPoint.x = x;
         tempPoint.y = y;
@@ -223,11 +275,11 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     }
 
     /**
-     * Gets the position in original (unscaled) Live2D model.
-     * @param position - The point in world space.
-     * @param result - The point to store new value.
+     * Calculates the position in the canvas of original, unscaled Live2D model.
+     * @param position - A Point in world space.
+     * @param result - A Point to store the new value. Defaults to a new Point.
      * @param skipUpdate - True to skip the update transform.
-     * @return The point in Live2D model.
+     * @return The Point in model canvas space.
      */
     toModelPosition(position: Point, result: Point = position.clone(), skipUpdate?: boolean): Point {
         if (!skipUpdate) {
@@ -249,9 +301,9 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     }
 
     /**
-     * Required by `InteractionManager` to perform hit testing.
-     * @param point - The point in world space.
-     * @return True if given point is inside this model.
+     * A method required by `PIXI.InteractionManager` to perform hit-testing.
+     * @param point - A Point in world space.
+     * @return True if the point is inside this model.
      */
     containsPoint(point: Point): boolean {
         return this.getBounds(true).contains(point.x, point.y);
@@ -263,15 +315,16 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     }
 
     /**
-     * A listener to be added to `Ticker`.
+     * An update callback to be added to `PIXI.Ticker` and invoked every tick.
      */
     onTickerUpdate(): void {
         this.update(TickerClass!.shared.deltaMS);
     }
 
     /**
-     * Updates parameters of the model.
-     * @param dt - The time elapsed since last frame.
+     * Updates the model. Note this method just update the timer,
+     * and the actual update will be done right before rendering the model.
+     * @param dt - The elapsed time in milliseconds since last frame.
      */
     update(dt: DOMHighResTimeStamp): void {
         this.deltaTime += dt;
@@ -343,7 +396,18 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         renderer.texture.reset();
     }
 
-    /** @override */
+    /**
+     * Destroys the model and all related resources. This takes the same options and also
+     * behaves the same as `PIXI.Container#destroy`.
+     * @param options - Options parameter. A boolean will act as if all options
+     *  have been set to that value
+     * @param [options.children=false] - if set to true, all the children will have their destroy
+     *  method called as well. 'options' will be passed on to those calls.
+     * @param [options.texture=false] - Only used for child Sprites if options.children is set to true
+     *  Should it destroy the texture of the child sprite
+     * @param [options.baseTexture=false] - Only used for child Sprites if options.children is set to true
+     *  Should it destroy the base texture of the child sprite
+     */
     destroy(options?: { children?: boolean, texture?: boolean, baseTexture?: boolean }): void {
         this.emit('destroy');
 

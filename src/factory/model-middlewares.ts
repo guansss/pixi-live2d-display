@@ -7,6 +7,9 @@ import { Live2DFactory, Live2DFactoryContext } from '@/factory/Live2DFactory';
 
 const TAG = 'Live2DFactory';
 
+/**
+ * A middleware that converts the source from a URL to a settings JSON object.
+ */
 export const urlToJSON: Middleware<Live2DFactoryContext> = async (context, next) => {
     if (typeof context.source === 'string') {
         const data = await Live2DLoader.load({
@@ -25,6 +28,9 @@ export const urlToJSON: Middleware<Live2DFactoryContext> = async (context, next)
     return next();
 };
 
+/**
+ * A middleware that converts the source from a settings JSON object to a ModelSettings instance.
+ */
 export const jsonToSettings: Middleware<Live2DFactoryContext> = async (context, next) => {
     if (context.source instanceof ModelSettings) {
         context.settings = context.source;
@@ -58,6 +64,10 @@ export const waitUntilReady: Middleware<Live2DFactoryContext> = (context, next) 
     return next();
 };
 
+/**
+ * A middleware that populates the Live2DModel with optional resources.
+ * Requires InternalModel in context when all the subsequent middlewares have finished.
+ */
 export const setupOptionals: Middleware<Live2DFactoryContext> = async (context, next) => {
     // wait until all has finished
     await next();
@@ -110,6 +120,11 @@ export const setupOptionals: Middleware<Live2DFactoryContext> = async (context, 
     }
 };
 
+/**
+ * A middleware that populates the Live2DModel with essential resources.
+ * Requires ModelSettings in context immediately, and InternalModel in context
+ * when all the subsequent middlewares have finished.
+ */
 export const setupEssentials: Middleware<Live2DFactoryContext> = async (context, next) => {
     if (context.settings) {
         const live2DModel = context.live2dModel;
@@ -136,6 +151,9 @@ export const setupEssentials: Middleware<Live2DFactoryContext> = async (context,
     }
 };
 
+/**
+ * A middleware that creates the InternalModel. Requires ModelSettings in context.
+ */
 export const createInternalModel: Middleware<Live2DFactoryContext> = async (context, next) => {
     const settings = context.settings;
 

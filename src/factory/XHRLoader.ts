@@ -4,6 +4,7 @@ import { Middleware } from '@/utils/middleware';
 
 const TAG = 'XHRLoader';
 
+// TODO: NetworkError class
 function createNetworkError(message: string, url: string, status: number, aborted = false): Error {
     const err = new Error(message);
     (err as any).url = url;
@@ -13,10 +14,23 @@ function createNetworkError(message: string, url: string, status: number, aborte
     return err;
 }
 
+/**
+ * The basic XHR loader.
+ */
 export class XHRLoader {
+    /**
+     * All the created XHRs, keyed by their owners respectively.
+     */
     static xhrMap = new WeakMap<Live2DLoaderTarget, Set<XMLHttpRequest>>();
+
+    /**
+     * All the created XHRs as a flat array.
+     */
     static allXhrSet = new Set<XMLHttpRequest>();
 
+    /**
+     * Middleware for Live2DLoader.
+     */
     static loader: Middleware<Live2DLoaderContext> = (context, next) => {
         return new Promise<void>((resolve, reject) => {
             const xhr = XHRLoader.createXHR(
@@ -33,11 +47,19 @@ export class XHRLoader {
         });
     };
 
-    static createXHR<Data extends any>(
+    /**
+     * Creates a managed XHR.
+     * @param target - If provided, the XHR will be canceled when receiving an "destroy" event from the target.
+     * @param url - The URL.
+     * @param type - The XHR response type.
+     * @param onload - Load listener.
+     * @param onerror - Error handler.
+     */
+    static createXHR<T = any>(
         target: Live2DLoaderTarget | undefined,
         url: string,
         type: XMLHttpRequestResponseType,
-        onload: (data: Data) => void,
+        onload: (data: T) => void,
         onerror: (e: Error) => void,
     ): XMLHttpRequest {
         const xhr = new XMLHttpRequest();
@@ -84,6 +106,9 @@ export class XHRLoader {
         return xhr;
     }
 
+    /**
+     * Cancels all XHRs related to this target.
+     */
     static cancelXHRs(this: Live2DLoaderTarget) {
         XHRLoader.xhrMap.get(this)?.forEach(xhr => {
             xhr.abort();
@@ -92,6 +117,9 @@ export class XHRLoader {
         XHRLoader.xhrMap.delete(this);
     }
 
+    /**
+     * Release all XHRs.
+     */
     static release() {
         XHRLoader.allXhrSet.forEach(xhr => xhr.abort());
         XHRLoader.allXhrSet.clear();

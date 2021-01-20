@@ -12,7 +12,7 @@ export namespace config {
     declare const __PRODUCTION__: boolean;
 
     /**
-     * Log level.
+     * Global log level.
      * @default {@link LOG_LEVEL_WARNING}
      */
     export let logLevel = __PRODUCTION__ ? LOG_LEVEL_WARNING : LOG_LEVEL_VERBOSE;
@@ -47,4 +47,7 @@ export namespace config {
 
 declare const __VERSION__: string;
 
+/**
+ * Consistent with the `version` in package.json.
+ */
 export const VERSION = __VERSION__;

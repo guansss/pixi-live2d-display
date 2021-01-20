@@ -11,6 +11,7 @@ declare global {
 
 declare module '@/cubism-common/ModelSettings' {
     interface ModelSettings {
+        /** @ignore */
         _objectURL?: string;
     }
 }
@@ -20,16 +21,29 @@ export type ExtendedFileList = File[] & { settings?: ModelSettings }
 /**
  * Experimental loader to load resources from uploaded files.
  *
- * Though named as a "Loader", this class has nothing to do with `Live2DLoader`,
- * it only contains a middleware for the `Live2DFactory.`
+ * This loader relies on
+ * [webkitRelativePath](https://developer.mozilla.org/en-US/docs/Web/API/File/webkitRelativePath)
+ * to recognize the file path.
+ *
+ * Though named as a "Loader", this class has nothing to do with Live2DLoader,
+ * it only contains a middleware for the Live2DFactory.
  */
 export class FileLoader {
+    /**
+     * Stores all the object URLs of uploaded files.
+     */
     static filesMap: {
         [settingsFileURL: string]: {
             [resourceFileURL: string]: string
         }
     } = {};
 
+    /**
+     * Resolves the path of a resource file to the object URL.
+     * @param settingsURL - Object URL of the settings file.
+     * @param filePath - Resource file path.
+     * @return Resolved object URL.
+     */
     static resolveURL(settingsURL: string, filePath: string): string {
         const resolved = FileLoader.filesMap[settingsURL]?.[filePath];
 
@@ -40,6 +54,9 @@ export class FileLoader {
         return resolved;
     }
 
+    /**
+     * Middleware for Live2DFactory.
+     */
     static factory: Middleware<Live2DFactoryContext> = async (context, next) => {
         if (Array.isArray(context.source) && context.source[0] instanceof File) {
             const files = context.source as File[];
@@ -85,7 +102,7 @@ export class FileLoader {
     };
 
     /**
-     * Consumes the files by storing their data URLs, and builds a `ModelSettings` from these files.
+     * Consumes the files by storing their object URLs. Files not defined in the settings will be ignored.
      */
     static async upload(files: File[], settings: ModelSettings): Promise<void> {
         const fileMap: Record<string, string> = {};
@@ -105,7 +122,8 @@ export class FileLoader {
     }
 
     /**
-     * Creates a `ModelSettings` by given files.
+     * Creates a ModelSettings by given files.
+     * @return Promise that resolves with the created ModelSettings.
      */
     static async createSettings(files: File[]): Promise<ModelSettings> {
         const settingsFile = files.find(file => file.name.endsWith('model.json') || file.name.endsWith('model3.json'));
@@ -132,6 +150,9 @@ export class FileLoader {
         return settings;
     }
 
+    /**
+     * Reads a file as text in UTF-8.
+     */
     static async readText(file: File): Promise<string> {
         return new Promise<string>((resolve, reject) => {
             const reader = new FileReader();

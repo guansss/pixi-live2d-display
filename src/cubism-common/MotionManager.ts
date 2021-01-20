@@ -7,15 +7,32 @@ import { logger } from '@/utils';
 import { EventEmitter } from '@pixi/utils';
 
 export interface MotionManagerOptions {
+    /**
+     * How to preload the motions.
+     * @default {@link MotionPreloadStrategy.NONE}
+     */
     motionPreload?: MotionPreloadStrategy;
+
+    //TODO: idle group option
 }
 
+/**
+ * Indicates how the motions will be preloaded.
+ */
 export enum MotionPreloadStrategy {
+    /** Preload all the motions. */
     ALL = 'ALL',
+
+    /** Preload only the idle motions. */
     IDLE = 'IDLE',
+
+    /** No preload. */
     NONE = 'NONE',
 }
 
+/**
+ * Handles the motion playback.
+ */
 export abstract class MotionManager<Motion = any, MotionSpec = any> extends EventEmitter {
     /**
      * Tag for logging.
@@ -23,37 +40,63 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
     tag: string;
 
     /**
-     * Motion definitions copied from {@link ModelSettings#motions};
+     * Motion definitions copied from ModelSettings.
      */
     abstract readonly definitions: Partial<Record<string, MotionSpec[]>>;
 
+    /**
+     * Motion groups with particular internal usages. Currently there's only the `idle` field,
+     * which specifies the actual name of the idle motion group, so the idle motions
+     * can be correctly found from the settings JSON of various Cubism versions.
+     */
     abstract readonly groups: { idle: string };
 
+    /**
+     * Indicates the content type of the motion files, varies in different Cubism versions.
+     * This will be used as `xhr.responseType`.
+     */
     abstract readonly motionDataType: 'json' | 'arraybuffer';
 
     /**
-     * Can be undefined if missing {@link ModelSettings#expressions}.
+     * Can be undefined if the settings defines no expression.
      */
     abstract expressionManager?: ExpressionManager;
 
+    /**
+     * The ModelSettings reference.
+     */
     readonly settings: ModelSettings;
 
     /**
-     * Instances of `Live2DMotion`. The structure is the same as {@link MotionManager#definitions};
+     * The Motions. The structure is the same as {@link definitions}, initially each group contains
+     * an empty array, which means all motions will be `undefined`. When a Motion has been loaded,
+     * it'll fill the place in which it should be; when it fails to load, the place will be filled
+     * with `null`.
      */
     motionGroups: Partial<Record<string, (Motion | undefined | null)[]>> = {};
 
+    /**
+     * Maintains the state of this MotionManager.
+     */
     state = new MotionState();
 
     /**
-     * Audio element of currently playing motion.
+     * Audio element of the current motion if a sound file is defined with it.
      */
     currentAudio?: HTMLAudioElement;
 
+    // TODO: remove it
+    /** @ignore */
     motionPreload: MotionPreloadStrategy = MotionPreloadStrategy.IDLE;
 
+    /**
+     * Flags there's a motion playing.
+     */
     playing = false;
 
+    /**
+     * Flags the instances has been destroyed.
+     */
     destroyed = false;
 
     protected constructor(settings: ModelSettings, options?: MotionManagerOptions) {
@@ -65,11 +108,17 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         this.motionPreload = options?.motionPreload ?? this.motionPreload;
     }
 
+    /**
+     * Should be called in the constructor of derived class.
+     */
     protected init() {
         this.setupMotions();
         this.stopAllMotions();
     }
 
+    /**
+     * Sets up motions from the definitions, and preloads them according to the preload strategy.
+     */
     protected setupMotions(): void {
         for (const group of Object.keys(this.definitions)) {
             // init with the same structure of definitions
@@ -104,9 +153,13 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
     }
 
     /**
-     * Loads a motion in a group.
-     * @param group
-     * @param index
+     * Loads a Motion in a motion group. Errors in this method will not be thrown,
+     * but be emitted with a "motionLoadError" event.
+     * @param group - The motion group.
+     * @param index - Index in the motion group.
+     * @return Promise that resolves with the Motion, or with undefined if it can't be loaded.
+     * @emits {@link MotionManagerEvents.motionLoaded}
+     * @emits {@link MotionManagerEvents.motionLoadError}
      */
     async loadMotion(group: string, index: number): Promise<Motion | undefined> {
         if (!this.definitions[group] ?. [index]) {
@@ -134,16 +187,21 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         return motion;
     }
 
+    // TODO: remove
+    /**
+     * Loads the Motion. Will be implemented by Live2DFactory.
+     * @ignore
+     */
     private _loadMotion(group: string, index: number): Promise<Motion | undefined> {
         throw new Error('Not implemented.');
     }
 
     /**
      * Starts a motion as given priority.
-     * @param group
-     * @param index
-     * @param priority
-     * @return Promise that resolves with true if the motion is successfully started.
+     * @param group - The motion group.
+     * @param index - Index in the motion group.
+     * @param priority - The priority to be applied.
+     * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
     async startMotion(group: string, index: number, priority = MotionPriority.NORMAL): Promise<boolean> {
         if (!this.state.reserve(group, index, priority)) {
@@ -219,10 +277,10 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
     }
 
     /**
-     * Starts a random motion in the group as given priority.
-     * @param group
-     * @param priority
-     * @return Promise that resolves with true if the motion is successfully started.
+     * Starts a random Motion as given priority.
+     * @param group - The motion group.
+     * @param priority - The priority to be applied.
+     * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
     startRandomMotion(group: string, priority?: MotionPriority): Promise<boolean> {
         const groupDefs = this.definitions[group];
@@ -246,6 +304,9 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         return Promise.resolve(false);
     }
 
+    /**
+     * Stops all playing motions as well as the sound.
+     */
     stopAllMotions(): void {
         this._stopAllMotions();
 
@@ -258,7 +319,9 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
     }
 
     /**
-     * Updates parameters of core model.
+     * Updates parameters of the core model.
+     * @param model - The core model.
+     * @param now - Current time in milliseconds.
      * @return True if the parameters have been actually updated.
      */
     update(model: object, now: DOMHighResTimeStamp): boolean {
@@ -287,6 +350,10 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         return updated;
     }
 
+    /**
+     * Destroys the instance.
+     * @emits {@link MotionManagerEvents.destroy}
+     */
     destroy() {
         this.destroyed = true;
         this.emit('destroy');
@@ -299,22 +366,53 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         self.motionGroups = undefined;
     }
 
+    /**
+     * Checks if the expression playback has finished.
+     */
     abstract isFinished(): boolean;
 
-    abstract createMotion(data: ArrayBuffer | object, group: string, definition: MotionSpec): Motion;
+    /**
+     * Creates a Motion from the data.
+     * @param data - Content of the motion file. The format must be consistent with {@link motionDataType}.
+     * @param group - The motion group.
+     * @param definition - The motion definition.
+     * @return The created Motion.
+     */
+    abstract createMotion(data: ArrayBuffer | JSONObject, group: string, definition: MotionSpec): Motion;
 
+    /**
+     * Retrieves the motion's file path by its definition.
+     * @return The file path extracted from given definition. Not resolved.
+     */
     abstract getMotionFile(definition: MotionSpec): string;
 
+    /**
+     * Retrieves the motion's name by its definition.
+     * @return The motion's name.
+     */
     protected abstract getMotionName(definition: MotionSpec): string;
 
+    /**
+     * Retrieves the motion's sound file by its definition.
+     * @return The motion's sound file, can be undefined.
+     */
     protected abstract getSoundFile(definition: MotionSpec): string | undefined;
 
+    /**
+     * Starts the Motion.
+     */
     protected abstract _startMotion(motion: Motion, onFinish?: (motion: Motion) => void): number;
 
+    /**
+     * Stops all playing motions.
+     */
     protected abstract _stopAllMotions(): void;
 
     /**
-     * @return True if parameters are updated by any motion.
+     * Updates parameters of the core model.
+     * @param model - The core model.
+     * @param now - Current time in milliseconds.
+     * @return True if the parameters have been actually updated.
      */
     protected abstract updateMotion(model: object, now: DOMHighResTimeStamp): boolean;
 }

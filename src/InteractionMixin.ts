@@ -1,11 +1,16 @@
 import { InteractionEvent, InteractionManager } from '@pixi/interaction';
 import { Live2DModel } from './Live2DModel';
 
+/**
+ * The interaction control split from Live2DModel class for code clarity. This mixin should *only*
+ * be used on the Live2DModel.
+ */
 export class InteractionMixin {
     private _autoInteract = false;
 
     /**
-     * Enables automatic interaction. Only takes effect if Pixi's interaction feature has been enabled (by registering the `InteractionManager` plugin in `PIXI.Renderer`).
+     * Enables automatic interaction. Only takes effect if Pixi's interaction
+     * feature has been enabled (by registering the `PIXI.InteractionManager` into `PIXI.Renderer`).
      */
     get autoInteract(): boolean {
         return this._autoInteract;
@@ -24,13 +29,12 @@ export class InteractionMixin {
     }
 
     /**
-     * The `InteractionManager` is locally stored so we can on/off events anytime.
+     * Local reference used to clean up the event listeners when destroying the model.
      */
     interactionManager?: InteractionManager;
 
     /**
-     * Registers interaction by subscribing to the `InteractionManager`.
-     * @param manager
+     * Registers interaction by subscribing to the `PIXI.InteractionManager`.
      */
     registerInteraction(this: Live2DModel, manager?: InteractionManager): void {
         if (manager !== this.interactionManager) {

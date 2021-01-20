@@ -1,27 +1,48 @@
 import { clamp } from '@/utils';
 
-const EPSILON = 0.01; // Minimum distance to respond
+// Minimum distance to respond
+const EPSILON = 0.01;
 
 const MAX_SPEED = 40 / 7.5;
+
+// the time to accelerate to max speed
 const ACCELERATION_TIME = 1 / (0.15 * 1000);
 
+/**
+ * Interpolates the transition of focus position.
+ */
 export class FocusController {
+    /** The focus position. */
     targetX = 0;
+
+    /** The focus position. */
     targetY = 0;
+
+    /** Current position. */
     x = 0;
+
+    /** Current position. */
     y = 0;
 
+    /** Current velocity. */
     vx = 0;
+
+    /** Current velocity. */
     vy = 0;
 
+    // TODO: focus instantly
     /**
-     * Focus in range [-1, 1].
+     * Sets the focus position with range `[-1, 1]`.
      */
     focus(x: number, y: number) {
         this.targetX = clamp(x, -1, 1);
         this.targetY = clamp(y, -1, 1);
     }
 
+    /**
+     * Updates the interpolation.
+     * @param dt - Delta time in milliseconds.
+     */
     update(dt: DOMHighResTimeStamp) {
         const dx = this.targetX - this.x;
         const dy = this.targetY - this.y;

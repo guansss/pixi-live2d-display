@@ -14,9 +14,6 @@ const tempMatrixArray = new Float32Array([
     0, 0, 0, 1,
 ]);
 
-/**
- * A wrapper of core model, which is `Live2DModelWebGL` from Live2D runtime library.
- */
 export class Cubism2InternalModel extends InternalModel {
     settings: Cubism2ModelSettings;
 
@@ -27,9 +24,7 @@ export class Cubism2InternalModel extends InternalModel {
     physics?: Live2DPhysics;
     pose?: Live2DPose;
 
-    /**
-     * Live2D parameter index, cached for better performance.
-     */
+    // parameter indices, cached for better performance
     eyeballXParamIndex: number;
     eyeballYParamIndex: number;
     angleXParamIndex: number;
@@ -40,8 +35,15 @@ export class Cubism2InternalModel extends InternalModel {
 
     textureFlipY = true;
 
+    /**
+     * Number of the drawables in this model.
+     */
     drawDataCount = 0;
 
+    /**
+     * If true, the face culling will always be disabled when drawing the model,
+     * regardless of the model's internal flags.
+     */
     disableCulling = false;
 
     constructor(coreModel: Live2DModelWebGL, settings: Cubism2ModelSettings, options?: InternalModelOptions) {
@@ -85,6 +87,8 @@ export class Cubism2InternalModel extends InternalModel {
 
         Object.defineProperty(this.coreModel.drawParamWebGL, 'culling', {
             set: (v: boolean) => culling = v,
+
+            // always return false when disabled
             get: () => this.disableCulling ? false : culling,
         });
 
@@ -114,7 +118,6 @@ export class Cubism2InternalModel extends InternalModel {
         };
     }
 
-    /** @override */
     updateWebGLContext(gl: WebGLRenderingContext, glContextID: number): void {
         const drawParamWebGL = this.coreModel.drawParamWebGL;
 
@@ -140,7 +143,6 @@ export class Cubism2InternalModel extends InternalModel {
         gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
     }
 
-    /** @override */
     bindTexture(index: number, texture: WebGLTexture): void {
         this.coreModel.setTexture(index, texture);
     }

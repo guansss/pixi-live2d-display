@@ -9,14 +9,14 @@ const VOLUME = 0.5;
  */
 export class SoundManager {
     /**
-     * Audio elements that are playing or pending to play. Finished audios will be removed automatically.
+     * Audio elements playing or pending to play. Finished audios will be removed automatically.
      */
     static audios: HTMLAudioElement[] = [];
 
     protected static _volume = VOLUME;
 
     /**
-     * Global volume that affects all the sounds.
+     * Global volume that applies to all the sounds.
      */
     static get volume(): number {
         return this._volume;
@@ -27,12 +27,13 @@ export class SoundManager {
         this.audios.forEach(audio => (audio.volume = this._volume));
     }
 
+    // TODO: return an ID?
     /**
-     * Adds a sound.
-     * @param file - URL of the sound.
-     * @param onFinish
-     * @param onError
-     * @return Added audio element.
+     * Creates an audio element and adds it to the {@link audios}.
+     * @param file - URL of the sound file.
+     * @param onFinish - Callback invoked when the playback has finished.
+     * @param onError - Callback invoked when error occurs.
+     * @return Created audio element.
      */
     static add(file: string, onFinish?: () => void, onError?: (e: Error) => void): HTMLAudioElement {
         const audio = new Audio(file);
@@ -57,8 +58,8 @@ export class SoundManager {
     }
 
     /**
-     * Plays a sound.
-     * @param audio
+     * Plays the sound.
+     * @param audio - An audio element.
      * @return Promise that resolves when the audio is ready to play, rejects when error occurs.
      */
     static play(audio: HTMLAudioElement): Promise<void> {
@@ -78,8 +79,8 @@ export class SoundManager {
     }
 
     /**
-     * Disposes an audio element and removes it from {@link SoundManager.audios}.
-     * @param audio
+     * Disposes an audio element and removes it from {@link audios}.
+     * @param audio - An audio element.
      */
     static dispose(audio: HTMLAudioElement): void {
         audio.pause();
@@ -89,10 +90,10 @@ export class SoundManager {
     }
 
     /**
-     * Destroys all audios.
+     * Destroys all managed audios.
      */
     static destroy(): void {
-        // dispose() removes given audio from the array, so the loop must be done backwards
+        // dispose() removes given audio from the array, so the loop must be backward
         for (let i = this.audios.length - 1; i >= 0; i--) {
             this.dispose(this.audios[i]!);
         }

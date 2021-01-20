@@ -19,11 +19,22 @@ export interface Live2DFactoryOptions extends Live2DModelOptions {
      */
     crossOrigin?: string;
 
+    /**
+     * Callback invokes when the model has been loaded.
+     * @default undefined
+     */
     onLoad?(): void;
 
+    /**
+     * Callback invokes when error occurs while loading the model.
+     * @default undefined
+     */
     onError?(e: Error): void;
 }
 
+/**
+ * The context transferred through the model creation middlewares.
+ */
 export interface Live2DFactoryContext {
     source: any,
     options: Live2DFactoryOptions;
@@ -32,27 +43,83 @@ export interface Live2DFactoryContext {
     settings?: ModelSettings;
 }
 
+/**
+ * Represents a Cubism version.
+ */
 export interface Live2DRuntime {
+    /**
+     * The version number. Higher version takes priority when matching the runtime.
+     */
     version: number;
 
+    /**
+     * Checks if the source belongs to this runtime.
+     * @param source - Either a settings JSON object or a ModelSettings instance.
+     * @return True if the source belongs to this runtime.
+     */
     test(source: any): boolean;
 
+    // TODO: remove
     ready(): Promise<void>;
 
+    /**
+     * Checks if the data is a valid moc to create the core model.
+     * @param modelData - The moc content.
+     * @return True if the data is valid.
+     */
     isValidMoc(modelData: ArrayBuffer): boolean;
 
-    createModelSettings(json: object): ModelSettings;
+    /**
+     * Creates a ModelSettings.
+     * @param json - The settings JSON object.
+     * @return Created ModelSettings.
+     */
+    createModelSettings(json: JSONObject): ModelSettings;
 
+    /**
+     * Creates a core model.
+     * @param data - Content of the moc file.
+     * @return Created core model.
+     */
     createCoreModel(data: ArrayBuffer): any;
 
+    /**
+     * Creates an InternalModel.
+     * @param coreModel - Core model that *must* belong to this runtime.
+     * @param settings - ModelSettings of this model.
+     * @param options - Options that will be passed to the InternalModel's constructor.
+     * @return Created InternalModel.
+     */
     createInternalModel(coreModel: any, settings: ModelSettings, options?: Live2DFactoryOptions): InternalModel;
 
+    /**
+     * Creates a pose.
+     * @param coreModel - Core model that *must* belong to this runtime.
+     * @param data - Content of the pose file.
+     * @return Created pose.
+     */
     createPose(coreModel: any, data: any): any;
 
+    /**
+     * Creates a physics.
+     * @param coreModel - Core model that *must* belong to this runtime.
+     * @param data - Content of the physics file.
+     * @return Created physics.
+     */
     createPhysics(coreModel: any, data: any): any;
 }
 
+/**
+ * Handles all the network load tasks.
+ *
+ * - Model creation: requested by {@link Live2DModel.from}.
+ * - Motion loading: implements the load method of MotionManager.
+ * - Expression loading: implements the load method of ExpressionManager.
+ */
 export class Live2DFactory {
+    /**
+     * All registered runtimes, sorted by versions in descending order.
+     */
     static runtimes: Live2DRuntime[] = [];
 
     static urlToJSON = urlToJSON;
@@ -62,17 +129,27 @@ export class Live2DFactory {
     static setupEssentials = setupEssentials;
     static createInternalModel = createInternalModel;
 
+    /**
+     * Middlewares to run through when setting up a Live2DModel.
+     */
     static live2DModelMiddlewares: Middleware<Live2DFactoryContext>[] = [
         urlToJSON, jsonToSettings, waitUntilReady, setupOptionals, setupEssentials, createInternalModel,
     ];
 
     /**
-     * loading tasks of each motion. The structure of each value in this map is the same as {@link MotionManager#definitions}.
+     * load tasks of each motion. The structure of each value in this map
+     * is the same as respective {@link MotionManager.definitions}.
      */
-    static motionTasksMap = new WeakMap<MotionManager, Record<string, Promise<any>[]>>();
+    static motionTasksMap = new WeakMap<MotionManager, Record<string, (Promise<any> | undefined)[]>>();
 
-    static expressionTasksMap = new WeakMap<ExpressionManager, Promise<any>[]>();
+    /**
+     * Load tasks of each expression.
+     */
+    static expressionTasksMap = new WeakMap<ExpressionManager, (Promise<any> | undefined)[]>();
 
+    /**
+     * Registers a Live2DRuntime.
+     */
     static registerRuntime(runtime: Live2DRuntime) {
         Live2DFactory.runtimes.push(runtime);
 
@@ -80,6 +157,12 @@ export class Live2DFactory {
         Live2DFactory.runtimes.sort((a, b) => b.version - a.version);
     }
 
+    // TODO: rename to findRuntime
+    /**
+     * Finds a runtime that matches given source.
+     * @param source - Either a settings JSON object or a ModelSettings instance.
+     * @return The Live2DRuntime, or undefined if not found.
+     */
     static getRuntime(source: any): Live2DRuntime | undefined {
         for (const runtime of Live2DFactory.runtimes) {
             if (runtime.test(source)) {
@@ -88,6 +171,13 @@ export class Live2DFactory {
         }
     }
 
+    /**
+     * Sets up a Live2DModel, populating it with all defined resources.
+     * @param live2dModel - The Live2DModel instance.
+     * @param source - Can be one of: settings file URL, settings JSON object, ModelSettings instance.
+     * @param options - Options for the process.
+     * @return Promise that resolves when all resources have been loaded, rejects when error occurs.
+     */
     static async setupLive2DModel<IM extends InternalModel>(live2dModel: Live2DModel<IM>, source: string | object | IM['settings'], options?: Live2DFactoryOptions): Promise<void> {
         const textureLoaded = new Promise(resolve => live2dModel.once('textureLoaded', resolve));
         const modelLoaded = new Promise(resolve => live2dModel.once('modelLoaded', resolve));
@@ -110,6 +200,14 @@ export class Live2DFactory {
         live2dModel.emit('load');
     }
 
+    /**
+     * Loads a Motion and registers the task to {@link motionTasksMap}. The task will be automatically
+     * canceled when its owner - the MotionManager instance - has been destroyed.
+     * @param motionManager - MotionManager that owns this Motion.
+     * @param group - The motion group.
+     * @param index - Index in the motion group.
+     * @return Promise that resolves with the Motion, or with undefined if it can't be loaded.
+     */
     static loadMotion<Motion, MotionSpec>(motionManager: MotionManager<Motion, MotionSpec>, group: string, index: number): Promise<Motion | undefined> {
         // errors in this method are always handled
         const handleError = (e: any) => motionManager.emit('motionLoadError', group, index, e);
@@ -174,6 +272,13 @@ export class Live2DFactory {
         return Promise.resolve(undefined);
     }
 
+    /**
+     * Loads an Expression and registers the task to {@link expressionTasksMap}. The task will be automatically
+     * canceled when its owner - the ExpressionManager instance - has been destroyed.
+     * @param expressionManager - ExpressionManager that owns this Expression.
+     * @param index - Index of the Expression.
+     * @return Promise that resolves with the Expression, or with undefined if it can't be loaded.
+     */
     static loadExpression<Expression, ExpressionSpec>(expressionManager: ExpressionManager<Expression, ExpressionSpec>, index: number): Promise<Expression | undefined> {
         // errors in this method are always handled
         const handleError = (e: any) => expressionManager.emit('expressionLoadError', index, e);

@@ -10,8 +10,8 @@ type ZipReader = any;
 /**
  * Experimental loader to load resources from a zip file.
  *
- * Though named as a "Loader", this class has nothing to do with `Live2DLoader`,
- * it only contains a middleware for the `Live2DFactory.`
+ * Though named as a "Loader", this class has nothing to do with Live2DLoader,
+ * it only contains a middleware for the Live2DFactory.
  */
 export class ZipLoader {
     static ZIP_PROTOCOL = 'zip://';

@@ -1,9 +1,6 @@
 import { ModelSettings } from '@/cubism-common/ModelSettings';
 import { copyArray, copyProperty } from '../utils';
 
-/**
- * Normalized Live2D model settings.
- */
 export class Cubism2ModelSettings extends ModelSettings {
     json!: Cubism2Spec.ModelJSON;
 
@@ -53,8 +50,7 @@ export class Cubism2ModelSettings extends ModelSettings {
     }
 
     /**
-     * Validates and copies **optional** properties from raw JSON.
-     * @param json
+     * Validates and copies *optional* properties from raw JSON.
      */
     protected copy(json: Cubism2Spec.ModelJSON): void {
         copyProperty('string', json, this, 'name', 'name');
