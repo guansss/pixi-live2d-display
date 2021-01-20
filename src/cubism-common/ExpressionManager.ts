@@ -109,21 +109,27 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
      * @return Promise that resolves with true if succeeded, with false otherwise.
      */
     async setRandomExpression(): Promise<boolean> {
-        if (this.definitions.length === 0) {
-            return false;
+        if (this.definitions.length) {
+            const availableIndices = [];
+
+            for (let i = 0; i < this.definitions.length; i++) {
+                if (
+                    this.expressions[i] !== null
+                    && this.expressions[i] !== this.currentExpression
+                    && i !== this.reserveExpressionIndex
+                ) {
+                    availableIndices.push(i);
+                }
+            }
+
+            if (availableIndices.length) {
+                const index = Math.floor(Math.random() * availableIndices.length);
+
+                return this.setExpression(index);
+            }
         }
 
-        if (this.definitions.length === 1) {
-            return this.setExpression(0);
-        }
-
-        let index;
-
-        do {
-            index = Math.floor(Math.random() * this.definitions.length);
-        } while (index === this.reserveExpressionIndex);
-
-        return this.setExpression(index);
+        return false;
     }
 
     /**
