@@ -109,6 +109,11 @@ export abstract class InternalModel extends EventEmitter {
     viewport: [number, number, number, number] = [0, 0, 0, 0];
 
     /**
+     * Flags this instance has been destroyed.
+     */
+    destroyed = false;
+
+    /**
      * Should be called in the constructor of derived class.
      */
     protected init() {
@@ -253,11 +258,11 @@ export abstract class InternalModel extends EventEmitter {
      * @emits {@link InternalModelEvents.destroy | destroy}
      */
     destroy() {
+        this.destroyed = true;
+        this.emit('destroy');
+
         this.motionManager.destroy();
         (this as Partial<this>).motionManager = undefined;
-
-        // TODO: emit before destroy
-        this.emit('destroy');
     }
 
     /**
