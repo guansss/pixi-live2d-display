@@ -34,15 +34,15 @@ export class Cubism2ExpressionManager extends ExpressionManager<Live2DExpression
         return new Live2DExpression(data);
     }
 
-    protected startMotion(motion: Live2DExpression): number {
+    protected _setExpression(motion: Live2DExpression): number {
         return this.queueManager.startMotion(motion);
     }
 
-    protected stopAllMotions(): void {
+    protected stopAllExpressions(): void {
         this.queueManager.stopAllMotions();
     }
 
-    protected updateMotion(model: Live2DModelWebGL, dt: number): boolean {
+    protected updateParameters(model: Live2DModelWebGL, dt: number): boolean {
         return this.queueManager.updateParam(model);
     }
 }

@@ -343,7 +343,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             }
         }
 
-        let updated = this.updateMotion(model, now);
+        let updated = this.updateParameters(model, now);
 
         updated = this.expressionManager?.update(model, now) || updated;
 
@@ -367,7 +367,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
     }
 
     /**
-     * Checks if the expression playback has finished.
+     * Checks if the motion playback has finished.
      */
     abstract isFinished(): boolean;
 
@@ -414,5 +414,5 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * @param now - Current time in milliseconds.
      * @return True if the parameters have been actually updated.
      */
-    protected abstract updateMotion(model: object, now: DOMHighResTimeStamp): boolean;
+    protected abstract updateParameters(model: object, now: DOMHighResTimeStamp): boolean;
 }

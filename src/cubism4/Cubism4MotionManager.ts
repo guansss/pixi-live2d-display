@@ -90,7 +90,7 @@ export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec
         return definition.Sound;
     }
 
-    protected updateMotion(model: CubismModel, now: DOMHighResTimeStamp): boolean {
+    protected updateParameters(model: CubismModel, now: DOMHighResTimeStamp): boolean {
         return this.queueManager.doUpdateMotion(model, now);
     }
 

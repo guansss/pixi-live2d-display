@@ -63,7 +63,7 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
         this.defaultExpression = this.createExpression({}, undefined);
         this.currentExpression = this.defaultExpression;
 
-        this.stopAllMotions();
+        this.stopAllExpressions();
     }
 
     /**
@@ -130,14 +130,14 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
      * Resets model's expression using {@link defaultExpression}.
      */
     resetExpression(): void {
-        this.startMotion(this.defaultExpression);
+        this._setExpression(this.defaultExpression);
     }
 
     /**
      * Restores model's expression to {@link currentExpression}.
      */
     restoreExpression(): void {
-        this.startMotion(this.currentExpression);
+        this._setExpression(this.currentExpression);
     }
 
     /**
@@ -165,7 +165,7 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
 
         this.reserveExpressionIndex = -1;
         this.currentExpression = expression;
-        this.startMotion(expression);
+        this._setExpression(expression);
 
         return true;
     }
@@ -176,7 +176,7 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
      */
     update(model: object, now: DOMHighResTimeStamp) {
         if (!this.isFinished()) {
-            return this.updateMotion(model, now);
+            return this.updateParameters(model, now);
         }
 
         return false;
@@ -220,20 +220,19 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
      */
     abstract createExpression(data: JSONObject, definition: ExpressionSpec | undefined): Expression;
 
-    // TODO: rename
     /**
      * Applies the Expression to the model.
      */
-    protected abstract startMotion(motion: Expression): number;
+    protected abstract _setExpression(motion: Expression): number;
 
     /**
      * Cancels expression playback.
      */
-    protected abstract stopAllMotions(): void;
+    protected abstract stopAllExpressions(): void;
 
     /**
      * Updates parameters of the core model.
      * @return True if the parameters are actually updated.
      */
-    protected abstract updateMotion(model: object, now: DOMHighResTimeStamp): boolean;
+    protected abstract updateParameters(model: object, now: DOMHighResTimeStamp): boolean;
 }

@@ -75,7 +75,7 @@ export class Cubism2MotionManager extends MotionManager<Live2DMotion, Cubism2Spe
         this.queueManager.stopAllMotions();
     }
 
-    protected updateMotion(model: Live2DModelWebGL, now: DOMHighResTimeStamp): boolean {
+    protected updateParameters(model: Live2DModelWebGL, now: DOMHighResTimeStamp): boolean {
         return this.queueManager.updateParam(model);
     }
 

@@ -34,15 +34,15 @@ export class Cubism4ExpressionManager extends ExpressionManager<CubismExpression
         return CubismExpressionMotion.create(data as unknown as CubismSpec.ExpressionJSON);
     }
 
-    protected startMotion(motion: CubismExpressionMotion): number {
+    protected _setExpression(motion: CubismExpressionMotion): number {
         return this.queueManager.startMotion(motion, false, performance.now());
     }
 
-    protected stopAllMotions(): void {
+    protected stopAllExpressions(): void {
         this.queueManager.stopAllMotions();
     }
 
-    protected updateMotion(model: CubismModel, now: DOMHighResTimeStamp): boolean {
+    protected updateParameters(model: CubismModel, now: DOMHighResTimeStamp): boolean {
         return this.queueManager.doUpdateMotion(model, now);
     }
 }
