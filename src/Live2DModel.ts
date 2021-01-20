@@ -227,8 +227,9 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * instead the movement will be interpolated.
      * @param x - Position in world space.
      * @param y - Position in world space.
+     * @param instant - Should the focus position be instantly applied.
      */
-    focus(x: number, y: number): void {
+    focus(x: number, y: number, instant: boolean = false): void {
         tempPoint.x = x;
         tempPoint.y = y;
 
@@ -240,6 +241,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         this.internalModel.focusController.focus(
             (tempPoint.x / this.internalModel.originalWidth) * 2 - 1,
             -((tempPoint.y / this.internalModel.originalHeight) * 2 - 1),
+            instant,
         );
     }
 

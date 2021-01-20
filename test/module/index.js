@@ -1,4 +1,5 @@
 export * from './utils.test';
+export * from './FocusController.test';
 export * from './ModelSettings.test';
 export * from './SoundManager.test';
 export * from './MotionManager.test';

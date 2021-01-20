@@ -30,13 +30,20 @@ export class FocusController {
     /** Current velocity. */
     vy = 0;
 
-    // TODO: focus instantly
     /**
-     * Sets the focus position with range `[-1, 1]`.
+     * Sets the focus position.
+     * @param x - X position in range `[-1, 1]`.
+     * @param y - Y position in range `[-1, 1]`.
+     * @param instant - Should the focus position be instantly applied.
      */
-    focus(x: number, y: number) {
+    focus(x: number, y: number, instant: boolean = false) {
         this.targetX = clamp(x, -1, 1);
         this.targetY = clamp(y, -1, 1);
+
+        if (instant) {
+            this.x = this.targetX;
+            this.y = this.targetY;
+        }
     }
 
     /**
