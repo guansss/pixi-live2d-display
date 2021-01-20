@@ -194,6 +194,16 @@ export class MotionState {
     }
 
     /**
+     * Checks if a Motion is currently playing or has reserved.
+     * @return True if active.
+     */
+    isActive(group: string, index: number): boolean {
+        return (group === this.currentGroup && index === this.currentIndex)
+            || (group === this.reservedGroup && index === this.reservedIndex)
+            || (group === this.reservedIdleGroup && index === this.reservedIdleIndex);
+    }
+
+    /**
      * Resets the state.
      */
     reset() {

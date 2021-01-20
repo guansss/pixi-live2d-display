@@ -282,14 +282,14 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * @param priority - The priority to be applied.
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    startRandomMotion(group: string, priority?: MotionPriority): Promise<boolean> {
+    async startRandomMotion(group: string, priority?: MotionPriority): Promise<boolean> {
         const groupDefs = this.definitions[group];
 
         if (groupDefs?.length) {
             const availableIndices = [];
 
             for (let i = 0; i < groupDefs!.length; i++) {
-                if (this.motionGroups[group]?.[i] !== null) {
+                if (this.motionGroups[group]![i] !== null && !this.state.isActive(group, i)) {
                     availableIndices.push(i);
                 }
             }
@@ -301,7 +301,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             }
         }
 
-        return Promise.resolve(false);
+        return false;
     }
 
     /**
