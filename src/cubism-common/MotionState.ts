@@ -193,11 +193,10 @@ export class MotionState {
         this.reservedIdleIndex = index;
     }
 
-    // TODO: rename to reset
     /**
      * Resets the state.
      */
-    clear() {
+    reset() {
         this.setCurrent(undefined, undefined, MotionPriority.NONE);
 
         // make sure the reserved motions (if existing) won't start when they are loaded

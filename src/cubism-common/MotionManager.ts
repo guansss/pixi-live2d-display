@@ -310,7 +310,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
     stopAllMotions(): void {
         this._stopAllMotions();
 
-        this.state.clear();
+        this.state.reset();
 
         if (this.currentAudio) {
             SoundManager.dispose(this.currentAudio);
