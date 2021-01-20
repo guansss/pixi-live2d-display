@@ -37,7 +37,7 @@ export const jsonToSettings: Middleware<Live2DFactoryContext> = async (context, 
 
         return next();
     } else if (typeof context.source === 'object') {
-        const runtime = Live2DFactory.getRuntime(context.source);
+        const runtime = Live2DFactory.findRuntime(context.source);
 
         if (runtime) {
             const settings = runtime.createModelSettings(context.source);
@@ -54,7 +54,7 @@ export const jsonToSettings: Middleware<Live2DFactoryContext> = async (context, 
 
 export const waitUntilReady: Middleware<Live2DFactoryContext> = (context, next) => {
     if (context.settings) {
-        const runtime = Live2DFactory.getRuntime(context.settings);
+        const runtime = Live2DFactory.findRuntime(context.settings);
 
         if (runtime) {
             return runtime.ready().then(next);
@@ -76,7 +76,7 @@ export const setupOptionals: Middleware<Live2DFactoryContext> = async (context, 
 
     if (internalModel) {
         const settings = context.settings!;
-        const runtime = Live2DFactory.getRuntime(settings);
+        const runtime = Live2DFactory.findRuntime(settings);
 
         if (runtime) {
             const tasks: Promise<void>[] = [];
@@ -158,7 +158,7 @@ export const createInternalModel: Middleware<Live2DFactoryContext> = async (cont
     const settings = context.settings;
 
     if (settings instanceof ModelSettings) {
-        const runtime = Live2DFactory.getRuntime(settings);
+        const runtime = Live2DFactory.findRuntime(settings);
 
         if (!runtime) {
             throw new TypeError('Unknown model settings.');

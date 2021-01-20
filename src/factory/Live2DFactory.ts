@@ -157,13 +157,12 @@ export class Live2DFactory {
         Live2DFactory.runtimes.sort((a, b) => b.version - a.version);
     }
 
-    // TODO: rename to findRuntime
     /**
      * Finds a runtime that matches given source.
      * @param source - Either a settings JSON object or a ModelSettings instance.
      * @return The Live2DRuntime, or undefined if not found.
      */
-    static getRuntime(source: any): Live2DRuntime | undefined {
+    static findRuntime(source: any): Live2DRuntime | undefined {
         for (const runtime of Live2DFactory.runtimes) {
             if (runtime.test(source)) {
                 return runtime;

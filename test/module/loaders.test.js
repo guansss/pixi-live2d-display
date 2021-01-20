@@ -32,7 +32,7 @@ describe('Loaders', function() {
 
             const settingsJSON = Object.assign({}, runtime.definition.json, { url: settingsFilePath });
 
-            const settings = Live2DFactory.getRuntime(settingsJSON).createModelSettings(settingsJSON);
+            const settings = Live2DFactory.findRuntime(settingsJSON).createModelSettings(settingsJSON);
 
             const settingsFile = createFile(new Blob([JSON.stringify(settingsJSON)]), settingsFilePath);
 
@@ -51,7 +51,7 @@ describe('Loaders', function() {
 
             runtime.files = files;
             runtime.settingsFile = settingsFile;
-            runtime.newSettings = () => Live2DFactory.getRuntime(settingsJSON).createModelSettings(settingsJSON);
+            runtime.newSettings = () => Live2DFactory.findRuntime(settingsJSON).createModelSettings(settingsJSON);
         });
     });
 

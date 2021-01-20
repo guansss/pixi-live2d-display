@@ -135,7 +135,7 @@ export class ZipLoader {
 
         settingsJSON.url = settingsFilePath;
 
-        const runtime = Live2DFactory.getRuntime(settingsJSON);
+        const runtime = Live2DFactory.findRuntime(settingsJSON);
 
         if (!runtime) {
             throw new Error('Unknown settings JSON');
