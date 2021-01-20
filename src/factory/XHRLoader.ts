@@ -4,18 +4,19 @@ import { Middleware } from '@/utils/middleware';
 
 const TAG = 'XHRLoader';
 
-// TODO: NetworkError class
-function createNetworkError(message: string, url: string, status: number, aborted = false): Error {
-    const err = new Error(message);
-    (err as any).url = url;
-    (err as any).status = status;
-    (err as any).aborted = aborted;
-
-    return err;
+class NetworkError extends Error {
+    constructor(message: string, public url: string, public status: number, public aborted = false) {
+        super(message);
+    }
 }
 
 /**
  * The basic XHR loader.
+ *
+ * A network error will be thrown with the following properties:
+ * - `url` - The request URL.
+ * - `status` - The HTTP status.
+ * - `aborted` - True if the error is caused by aborting the XHR.
  */
 export class XHRLoader {
     /**
@@ -92,9 +93,9 @@ export class XHRLoader {
         };
         xhr.onerror = () => {
             logger.warn(TAG, `Failed to load resource as ${xhr.responseType} (Status ${xhr.status}): ${url}`);
-            onerror(createNetworkError('Network error.', url, xhr.status));
+            onerror(new NetworkError('Network error.', url, xhr.status));
         };
-        xhr.onabort = () => onerror(createNetworkError('Aborted.', url, xhr.status, true));
+        xhr.onabort = () => onerror(new NetworkError('Aborted.', url, xhr.status, true));
         xhr.onloadend = () => {
             XHRLoader.allXhrSet.delete(xhr);
 
