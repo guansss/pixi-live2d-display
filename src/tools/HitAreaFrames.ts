@@ -3,6 +3,9 @@ import { Renderer } from '@pixi/core';
 import { Graphics } from '@pixi/graphics';
 import { InteractionEvent } from '@pixi/interaction';
 import { Text, TextStyle } from '@pixi/text';
+import { Rectangle } from '@pixi/math';
+
+const tempBounds = new Rectangle();
 
 export class HitAreaFrames extends Graphics {
     initialized = false;
@@ -67,18 +70,18 @@ export class HitAreaFrames extends Graphics {
                 color: text.visible ? this.activeColor : this.normalColor,
             });
 
-            const bounds = internalModel.getDrawableBounds(internalModel.hitAreas[text.text]!.index);
+            const bounds = internalModel.getDrawableBounds(internalModel.hitAreas[text.text]!.index, tempBounds);
             const transform = internalModel.localTransform;
 
-            bounds.left = bounds.left * transform.a + transform.tx;
-            bounds.right = bounds.right * transform.a + transform.tx;
-            bounds.top = bounds.top * transform.d + transform.ty;
-            bounds.bottom = bounds.bottom * transform.d + transform.ty;
+            bounds.x = bounds.x * transform.a + transform.tx;
+            bounds.y = bounds.y * transform.d + transform.ty;
+            bounds.width = bounds.width * transform.a;
+            bounds.height = bounds.height * transform.d;
 
-            this.drawRect(bounds.left, bounds.top, bounds.right - bounds.left, bounds.bottom - bounds.top);
+            this.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
 
-            text.x = bounds.left + this.strokeWidth * scale;
-            text.y = bounds.top + this.strokeWidth * scale;
+            text.x = bounds.x + this.strokeWidth * scale;
+            text.y = bounds.y + this.strokeWidth * scale;
             text.scale.set(scale);
         });
 

@@ -31,13 +31,15 @@ export interface CommonHitArea {
 }
 
 export interface Bounds {
-    left: number
-    right: number
-    top: number
-    bottom: number
+    x: number;
+    y: number;
+    width: number;
+    height: number;
 }
 
 export interface InternalModelOptions extends MotionManagerOptions {}
+
+const tempBounds: Bounds = { x: 0, y: 0, width: 0, height: 0 };
 
 /**
  * A wrapper that manages the states of a Live2D core model, and delegates all operations to it.
@@ -190,18 +192,18 @@ export abstract class InternalModel extends EventEmitter {
 
         const drawIndex = this.hitAreas[hitAreaName]!.index;
 
-        const bounds = this.getDrawableBounds(drawIndex);
+        const bounds = this.getDrawableBounds(drawIndex, tempBounds);
 
-        return bounds.left <= x && x <= bounds.right && bounds.top <= y && y <= bounds.bottom;
+        return bounds.x <= x && x <= bounds.x + bounds.width && bounds.y <= y && y <= bounds.y + bounds.height;
     }
 
-    // TODO: bounds parameter
     /**
      * Gets a drawable's bounds.
      * @param index - Index of the drawable.
+     * @param bounds - Object to store the output values.
      * @return The bounds in model canvas space.
      */
-    getDrawableBounds(index: number): Bounds {
+    getDrawableBounds(index: number, bounds?: Bounds): Bounds {
         const vertices = this.getDrawableVertices(index);
 
         let left = vertices[0]!;
@@ -219,7 +221,14 @@ export abstract class InternalModel extends EventEmitter {
             bottom = Math.max(vy, bottom);
         }
 
-        return { left, right, top, bottom };
+        bounds ??= {} as Bounds;
+
+        bounds.x = left;
+        bounds.y = top;
+        bounds.width = right - left;
+        bounds.height = bottom - top;
+
+        return bounds;
     }
 
     /**
