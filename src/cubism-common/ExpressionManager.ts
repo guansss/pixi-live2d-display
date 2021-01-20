@@ -149,9 +149,12 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
         if (typeof index !== 'number') {
             index = this.getExpressionIndex(index);
         }
-        // TODO: check if the same as current
 
         if (!(index > -1 && index < this.definitions.length)) {
+            return false;
+        }
+
+        if (index === this.expressions.indexOf(this.currentExpression)) {
             return false;
         }
 
