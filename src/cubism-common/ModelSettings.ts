@@ -125,24 +125,35 @@ export abstract class ModelSettings {
         return files;
     }
 
-    // TODO: return valid files
     /**
-     * Validates that the essential files defined in the settings exist in given files. Each file will be
+     * Validates that the files defined in the settings exist in given files. Each file will be
      * resolved by {@link resolveURL} before comparison.
      * @param files - A flat array of file paths.
-     * @throws Error if any file is defined in settings but not included in given files.
+     * @return All the files which are defined in the settings and also exist in given files,
+     * *including the optional files*.
+     * @throws Error if any *essential* file is defined in settings but not included in given files.
      */
-    validateFiles(files: string[]) {
-        const assertFileExists = (expectedFile: string) => {
+    validateFiles(files: string[]): string[] {
+        const assertFileExists = (expectedFile: string, shouldThrow: boolean): boolean => {
             const actualPath = this.resolveURL(expectedFile);
 
             if (!files.includes(actualPath)) {
-                throw new Error(`File "${expectedFile}" is defined in settings, but doesn't exist in given files`);
+                if (shouldThrow) {
+                    throw new Error(`File "${expectedFile}" is defined in settings, but doesn't exist in given files`);
+                }
+
+                return false;
             }
+
+            return true;
         };
 
-        assertFileExists(this.moc);
+        const essentialFiles = [this.moc, ...this.textures];
 
-        this.textures.forEach(assertFileExists);
+        essentialFiles.forEach(texture => assertFileExists(texture, true));
+
+        const definedFiles = this.getDefinedFiles();
+
+        return definedFiles.filter(file => assertFileExists(file, false));
     }
 }

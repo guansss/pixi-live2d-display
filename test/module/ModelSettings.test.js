@@ -2,6 +2,7 @@ import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
 import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
 import { TEST_MODEL, TEST_MODEL4 } from '../env';
 import xor from 'lodash/xor';
+import cloneDeep from 'lodash/cloneDeep';
 
 const basicCubism2SettingsJSON = {
     url: 'foo/bar',
@@ -80,11 +81,11 @@ describe('ModelSettings', () => {
         expect(settings.name).to.equal('bar');
     });
 
-    it('should iterate through all files', function() {
-        function getFiles(obj, files) {
+    describe('should iterate through all files', function() {
+        function retrieveFiles(obj, files) {
             for (const key of Object.keys(obj)) {
                 if (obj[key] && typeof obj[key] === 'object') {
-                    getFiles(obj[key], files);
+                    retrieveFiles(obj[key], files);
                 } else {
                     files.push(obj[key]);
                 }
@@ -119,37 +120,62 @@ describe('ModelSettings', () => {
             },
         };
 
-        for (const json of [cubism2JSON, cubism4JSON]) {
-            const expectedFiles = [];
+        for (const [cubismVersion, json] of [['cubism2', cubism2JSON], ['cubism4', cubism4JSON]]) {
+            const actuallyDefinedFiles = [];
 
-            getFiles(json, expectedFiles);
+            retrieveFiles(json, actuallyDefinedFiles);
 
             json.url = '';
 
-            const settings = createModelSettings(json);
-
-            const replacedFiles = [];
-
-            settings.replaceFiles((file, path) => {
-                expect(file).to.equal(path + ':foo');
-
-                replacedFiles.push(file);
-
-                return file;
-            });
-
-            const filesMatchExactly = files => {
-                const diff = xor(expectedFiles, files);
+            function matchActuallyDefinedFiles(files) {
+                const diff = xor(actuallyDefinedFiles, files);
 
                 if (diff.length) {
                     throw diff;
                 }
 
                 return true;
-            };
+            }
 
-            expect(settings.getDefinedFiles()).to.satisfy(filesMatchExactly);
-            expect(replacedFiles).to.satisfy(filesMatchExactly);
+            describe(cubismVersion, function() {
+                it('should get all defined files', function() {
+                    const settings = createModelSettings(cloneDeep(json));
+
+                    expect(settings.getDefinedFiles()).to.satisfy(matchActuallyDefinedFiles);
+                });
+
+                it('should replace all files', function() {
+                    const settings = createModelSettings(cloneDeep(json));
+                    const replacedFiles = [];
+
+                    settings.replaceFiles((file, path) => {
+                        expect(file).to.equal(path + ':foo');
+
+                        replacedFiles.push(file);
+
+                        return file + 'bar';
+                    });
+
+                    expect(replacedFiles).to.satisfy(matchActuallyDefinedFiles);
+
+                    for (const definedFile of settings.getDefinedFiles()) {
+                        expect(definedFile).to.include('foobar');
+                    }
+                });
+
+                it('should validate files', function() {
+                    const settings = createModelSettings(cloneDeep(json));
+
+                    expect(() => settings.validateFiles(actuallyDefinedFiles)).to.not.throw();
+                    expect(() => settings.validateFiles(actuallyDefinedFiles.filter(file => file.match(/moc|texture/)))).to.not.throw();
+                    expect(() => settings.validateFiles(['bar'])).to.throw();
+
+                    const validFiles = settings.validateFiles([...actuallyDefinedFiles, 'bar']);
+
+                    expect(validFiles).to.not.include('bar');
+                    expect(validFiles).to.satisfy(matchActuallyDefinedFiles);
+                });
+            });
         }
     });
 });
