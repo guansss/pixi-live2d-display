@@ -31,7 +31,9 @@ jobs:
         uses: actions/cache@v2
         id: core-cache
         with:
-          path: core/!(live2d.d.ts)
+          path: |
+            core/*
+            !core/live2d.d.ts
           key: ${{ runner.os }}-
           restore-keys: |
             ${{ runner.os }}-
