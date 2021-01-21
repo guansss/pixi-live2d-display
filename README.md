@@ -63,7 +63,7 @@ To make it clear, here's how you would use these files:
 #### Via NPM
 
 ```sh
-npm install pixi-live2d-display@beta
+npm install pixi-live2d-display
 ```
 
 ```js
@@ -80,13 +80,13 @@ import { Live2DModel } from 'pixi-live2d-display/lib/cubism4';
 
 ```html
 
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@beta/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/index.min.js"></script>
 
 <!-- For Cubism 2 only -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@beta/dist/cubism2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism2.min.js"></script>
 
 <!-- For Cubism 4 only -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@beta/dist/cubism4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js"></script>
 ```
 
 In this way, all the exported members are available under `PIXI.live2d` namespace, such as `PIXI.live2d.Live2DModel`.
