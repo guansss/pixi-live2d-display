@@ -10,11 +10,21 @@ This project aims to be a universal Live2D framework on the web platform. While 
 complex and problematic, this project has rewritten it to unify and simplify the APIs, which allows you to control the
 Live2D models on a high level without the need to learn how the internal system works.
 
+#### Features
+
+- Support for all versions of Live2D models
+- Support for PIXI.RenderTexture and PIXI.Filter
+- Pixi-style transform APIs: position, rotation, scale, anchor
+- Automatic interactions: focusing, hit-testing
+- Enhanced motion reserving logic compared to the official framework
+- Loading from uploaded files / zip files (experimental)
+
 #### Demo
 
 - [Basic demo](https://codepen.io/guansss/pen/oNzoNoz/left?editors=1010)
 - [Advanced demo](https://codepen.io/guansss/pen/KKgXBOP/left?editors=0010)
-- [Live2D Viewer Online (WIP)](https://guansss.github.io/live2d-viewer-web/)
+- [Render texture & filter demo](https://codepen.io/guansss/pen/qBaMNQV/left?editors=1010)
+- [Live2D Viewer Online](https://guansss.github.io/live2d-viewer-web/)
 
 #### Documentation
 
@@ -32,12 +42,13 @@ This plugin supports all variants of Live2D models by using Cubism 2.1 and Cubis
 
 Before using the plugin, you'll need to include the Cubism runtime library, aka Cubism Core.
 
-For Cubism 4, it's `live2dcubismcore.min.js` that can be extracted from
+For Cubism 4, you need `live2dcubismcore.min.js` that can be extracted from
 the [Cubism 4 SDK](https://www.live2d.com/download/cubism-sdk/download-web/), or be referred by
-a [direct link](https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js).
+a [direct link](https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js) (*however the direct link is quite
+unreliable, don't use it in production!*).
 
-For Cubism 2.1, it's `live2d.min.js`. This SDK is no longer downloadable from the official
-site [since 9/4/2019](https://help.live2d.com/en/other/other_20/), but can be
+For Cubism 2.1, you need `live2d.min.js`. It's no longer downloadable from the official
+site [since 2019/9/4](https://help.live2d.com/en/other/other_20/), but can be
 found [here](https://github.com/dylanNew/live2d/tree/master/webgl/Live2D/lib), and with
 a [CDN link](http://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js) that you'll probably need.
 
@@ -49,18 +60,18 @@ of the versions.
 Specifically, there are `cubism2.js` and `cubism4.js` for respective runtime, along with an `index.js` that includes
 both of them.
 
-Note that if you want both the Cubism 2 and Cubism 4 support, use `index.js`, but **NOT** the combination
+Note that if you want both the Cubism 2.1 and Cubism 4 support, use `index.js`, but *not* the combination
 of `cubism2.js` and `cubism4.js`.
 
 To make it clear, here's how you would use these files:
 
 - Use `cubism2.js`+`live2d.min.js` to support Cubism 2.1 models
 - Use `cubism4.js`+`live2dcubismcore.min.js` to support Cubism 3 and Cubism 4 models
-- Use `index.js`+`live2d.min.js`+`live2dcubismcore.min.js` to support all kinds of models
+- Use `index.js`+`live2d.min.js`+`live2dcubismcore.min.js` to support all versions of models
 
 ## Install
 
-#### Via NPM
+#### Via npm
 
 ```sh
 npm install pixi-live2d-display
@@ -69,10 +80,10 @@ npm install pixi-live2d-display
 ```js
 import { Live2DModel } from 'pixi-live2d-display';
 
-// For Cubism 2 only
+// if only Cubism 2.1
 import { Live2DModel } from 'pixi-live2d-display/lib/cubism2';
 
-// For Cubism 4 only
+// if only Cubism 4
 import { Live2DModel } from 'pixi-live2d-display/lib/cubism4';
 ```
 
@@ -82,10 +93,10 @@ import { Live2DModel } from 'pixi-live2d-display/lib/cubism4';
 
 <script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/index.min.js"></script>
 
-<!-- For Cubism 2 only -->
+<!-- if only Cubism 2.1 -->
 <script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism2.min.js"></script>
 
-<!-- For Cubism 4 only -->
+<!-- if only Cubism 4 -->
 <script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js"></script>
 ```
 
@@ -117,9 +128,10 @@ async function main() {
 
     app.stage.addChild(model);
 
-    // transformation
-    mode.x = 100
-    mode.y = 100
+    // transforms
+    model.x = 100;
+    model.y = 100;
+    model.rotation = Math.PI;
     model.scale.set(2, 2);
     model.anchor.set(0.5, 0.5);
 
@@ -164,5 +176,5 @@ For more information, please visit the [Wiki](https://github.com/guansss/pixi-li
 
 ---
 
-The example Live2D models, Shizuku (Cubism 2) and Haru (Cubism 4), are redistributed under
+The example Live2D models, Shizuku (Cubism 2.1) and Haru (Cubism 4), are redistributed under
 Live2D's [Free Material License](https://www.live2d.com/eula/live2d-free-material-license-agreement_en.html).
