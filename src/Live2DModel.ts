@@ -383,8 +383,11 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         const viewport = (renderer.framebuffer as any).viewport as Rectangle;
         this.internalModel.viewport = [viewport.x, viewport.y, viewport.width, viewport.height];
 
-        this.internalModel.update(this.deltaTime, this.elapsedTime);
-        this.deltaTime = 0;
+        // update only if the time has changed, as the model will possibly be updated once but rendered multiple times
+        if (this.deltaTime) {
+            this.internalModel.update(this.deltaTime, this.elapsedTime);
+            this.deltaTime = 0;
+        }
 
         const internalTransform = tempMatrix
             .copyFrom(renderer.globalUniforms.uniforms.projectionMatrix)
