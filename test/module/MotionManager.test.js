@@ -23,7 +23,7 @@ describe('MotionManager', function() {
         return new Cubism2MotionManager(new Cubism2ModelSettings({
             ...TEST_MODEL.json,
 
-            // exclude expression definitions to prevent creating ExpressionManager
+            // exclude expression definitions to avoid creating ExpressionManager
             expressions: undefined,
         }), options);
     }
@@ -54,27 +54,51 @@ describe('MotionManager', function() {
         const callRecord = [];
         const loadMotionStub = sinon.stub(MotionManager.prototype, 'loadMotion').callsFake((group, index) => {
             callRecord.push({ group, index });
-            return Promise.resolve(undefined);
+            return Promise.resolve();
         });
 
-        createManager2({ motionPreload: MotionPreloadStrategy.NONE });
+        try {
+            createManager2({ motionPreload: MotionPreloadStrategy.NONE });
 
-        expect(callRecord).to.be.empty;
+            expect(callRecord).to.be.empty;
 
-        createManager2({ motionPreload: MotionPreloadStrategy.IDLE });
+            createManager2({ motionPreload: MotionPreloadStrategy.IDLE });
 
-        expect(callRecord).to.eql(TEST_MODEL.json.motions.idle.map((_, index) => ({ group: 'idle', index })));
+            expect(callRecord).to.eql(TEST_MODEL.json.motions.idle.map((_, index) => ({ group: 'idle', index })));
 
-        callRecord.length = 0;
-        createManager2({ motionPreload: MotionPreloadStrategy.ALL });
+            callRecord.length = 0;
+            createManager2({ motionPreload: MotionPreloadStrategy.ALL });
 
-        const expectedRecord = [];
-        for (const [group, motions] of Object.entries(TEST_MODEL.json.motions)) {
-            expectedRecord.push(...motions.map((_, index) => ({ group, index })));
+            const expectedRecord = [];
+            for (const [group, motions] of Object.entries(TEST_MODEL.json.motions)) {
+                expectedRecord.push(...motions.map((_, index) => ({ group, index })));
+            }
+            expect(callRecord).to.eql(expectedRecord);
+        } finally {
+            loadMotionStub.restore();
         }
-        expect(callRecord).to.eql(expectedRecord);
+    });
 
-        loadMotionStub.restore();
+    it('should use custom idle group', function() {
+        const loadMotionStub = sinon.stub(MotionManager.prototype, 'loadMotion').callsFake(() => Promise.resolve());
+        const idleGroup = 'tap_body';
+
+        try {
+            const manager = createManager2({
+                motionPreload: MotionPreloadStrategy.IDLE,
+                idleMotionGroup: idleGroup,
+            });
+
+            expect(loadMotionStub).to.be.calledWith(idleGroup);
+
+            sinon.stub(manager, 'startMotion').callsFake(() => Promise.resolve(false));
+
+            manager.update(TEST_MODEL.coreModel, 100);
+
+            expect(manager.startMotion).to.be.calledWith(idleGroup);
+        } finally {
+            loadMotionStub.restore();
+        }
     });
 
     it('should load motions', async function() {

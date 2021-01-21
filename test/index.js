@@ -7,8 +7,11 @@ if (isHeadful) {
             setData({ initialized: true });
         };
 
+        const { remote } = require('electron');
+        remote.getCurrentWindow().maximize();
+
         // prefer devtools at right!
-        const webContents = require('electron').remote.getCurrentWebContents();
+        const webContents = remote.getCurrentWebContents();
         webContents.closeDevTools();
         webContents.openDevTools({ mode: 'right' });
     }

@@ -34,7 +34,7 @@ export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec
     }
 
     protected init(options?: MotionManagerOptions) {
-        super.init();
+        super.init(options);
 
         if (this.settings.expressions) {
             this.expressionManager = new Cubism4ExpressionManager(this.settings, options);

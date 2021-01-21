@@ -22,11 +22,11 @@ export class Cubism2MotionManager extends MotionManager<Live2DMotion, Cubism2Spe
 
         this.definitions = this.settings.motions;
 
-        this.init();
+        this.init(options);
     }
 
     protected init(options?: MotionManagerOptions) {
-        super.init();
+        super.init(options);
 
         if (this.settings.expressions) {
             this.expressionManager = new Cubism2ExpressionManager(this.settings, options);

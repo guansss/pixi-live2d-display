@@ -13,7 +13,11 @@ export interface MotionManagerOptions {
      */
     motionPreload?: MotionPreloadStrategy;
 
-    //TODO: idle group option
+    /**
+     * Specifies the idle motion group.
+     * @default "idle" in Cubism 2 and "Idle" in Cubism 4.
+     */
+    idleMotionGroup?: string;
 }
 
 /**
@@ -111,7 +115,11 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
     /**
      * Should be called in the constructor of derived class.
      */
-    protected init() {
+    protected init(options?: MotionManagerOptions) {
+        if (options?.idleMotionGroup) {
+            this.groups.idle = options.idleMotionGroup;
+        }
+
         this.setupMotions();
         this.stopAllMotions();
     }

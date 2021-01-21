@@ -1,13 +1,14 @@
 import { Texture } from '@pixi/core';
 import { Sprite } from '@pixi/sprite';
 
-const fs = require('electron').remote.require('fs');
-const { resolve } = require('electron').remote.require('url');
+const { remote } = require('electron');
+const fs = remote.require('fs');
+const { resolve } = remote.require('url');
 
 export const BASE_PATH = '../../../test/';
 
 export function remoteRequire(path) {
-    return require('electron').remote.require(resolve(BASE_PATH, path));
+    return remote.require(resolve(BASE_PATH, path));
 }
 
 export function delay(ms) {
