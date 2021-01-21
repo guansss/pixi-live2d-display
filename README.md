@@ -4,6 +4,8 @@
 ![Cubism version](https://img.shields.io/badge/Cubism-all-ff69b4?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/guansss/pixi-live2d-display/Test%20CI?style=flat-square)
 
+[:person_fencing: 中文版readme](README.zh.md)
+
 Live2D integration for [PixiJS](https://github.com/pixijs/pixi.js) v5.
 
 This project aims to be a universal Live2D framework on the web platform. While the official Live2D framework is just
@@ -22,7 +24,7 @@ Live2D models on a high level without the need to learn how the internal system 
 #### Demo
 
 - [Basic demo](https://codepen.io/guansss/pen/oNzoNoz/left?editors=1010)
-- [Advanced demo](https://codepen.io/guansss/pen/KKgXBOP/left?editors=0010)
+- [Interaction demo](https://codepen.io/guansss/pen/KKgXBOP/left?editors=0010)
 - [Render texture & filter demo](https://codepen.io/guansss/pen/qBaMNQV/left?editors=1010)
 - [Live2D Viewer Online](https://guansss.github.io/live2d-viewer-web/)
 
@@ -90,7 +92,6 @@ import { Live2DModel } from 'pixi-live2d-display/lib/cubism4';
 #### Via CDN
 
 ```html
-
 <script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/index.min.js"></script>
 
 <!-- if only Cubism 2.1 -->
@@ -114,8 +115,8 @@ import * as PIXI from 'pixi.js';
 window.PIXI = PIXI;
 
 // accordingly, here we should use require() to import the module,
-// instead of the import statement because it'll be hoisted
-// over the above assignment 
+// instead of the import statement because the latter will be hoisted
+// over the above assignment when compiling the script
 const { Live2DModel } = require('pixi-live2d-display');
 
 async function main() {
