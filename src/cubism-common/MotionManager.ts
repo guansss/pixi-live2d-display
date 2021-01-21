@@ -89,10 +89,6 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      */
     currentAudio?: HTMLAudioElement;
 
-    // TODO: remove it
-    /** @ignore */
-    motionPreload: MotionPreloadStrategy = MotionPreloadStrategy.IDLE;
-
     /**
      * Flags there's a motion playing.
      */
@@ -108,8 +104,6 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         this.settings = settings;
         this.tag = `MotionManager(${settings.name})`;
         this.state.tag = this.tag;
-
-        this.motionPreload = options?.motionPreload ?? this.motionPreload;
     }
 
     /**
@@ -120,14 +114,14 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             this.groups.idle = options.idleMotionGroup;
         }
 
-        this.setupMotions();
+        this.setupMotions(options);
         this.stopAllMotions();
     }
 
     /**
      * Sets up motions from the definitions, and preloads them according to the preload strategy.
      */
-    protected setupMotions(): void {
+    protected setupMotions(options?: MotionManagerOptions): void {
         for (const group of Object.keys(this.definitions)) {
             // init with the same structure of definitions
             this.motionGroups[group] = [];
@@ -137,7 +131,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
 
         let groups;
 
-        switch (this.motionPreload) {
+        switch (options?.motionPreload) {
             case MotionPreloadStrategy.NONE:
                 return;
 
