@@ -1,7 +1,7 @@
 # pixi-live2d-display
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/guansss/pixi-live2d-display?style=flat-square)
-![Cubism version](https://img.shields.io/badge/Cubism-all-ff69b4?style=flat-square)
+![Cubism version](https://img.shields.io/badge/Cubism-2/3/4-ff69b4?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/guansss/pixi-live2d-display/Test%20CI?style=flat-square)
 
 为 [PixiJS](https://github.com/pixijs/pixi.js) v5 提供的 Live2D 插件
@@ -12,10 +12,16 @@
 
 - 支持所有版本的 Live2D 模型
 - 支持 PIXI.RenderTexture 和 PIXI.Filter
-- Pixi 风格的变换 API: position, rotation, scale, anchor
-- 自动交互: 鼠标跟踪, 点击命中检测
+- Pixi 风格的变换 API：position, scale, rotation, skew, anchor
+- 自动交互：鼠标跟踪, 点击命中检测
 - 比官方框架更好的动作预约逻辑
 - 从上传的文件或 zip 文件中加载 (实验性功能)
+- 完善的类型定义 - 我们都喜欢类型！
+
+#### 要求
+
+- PixiJS：> 5.2.0 （更低的版本尚未测试）
+- 浏览器：WebGL， ES6
 
 #### 示例
 
@@ -35,7 +41,7 @@ Cubism 是 Live2D SDK 的名称，目前有3个版本：Cubism 2.1、Cubism 3、
 
 该插件使用 Cubism 2.1 和 Cubism 4，从而支持所有版本的 Live2D 模型
 
-#### 需求
+#### Cubism Core
 
 在使用该插件之前，你需要加载 Cubism 运行时，也就是 Cubism Core
 
@@ -45,7 +51,7 @@ Cubism 4 需要加载 `live2dcubismcore.min.js`，可以从 [Cubism 4 SDK](https
 
 Cubism 2.1 需要加载 `live2d.min.js`，[从 2019/9/4 起](https://help.live2d.com/en/other/other_20/)
 ，官方已经不再提供该版本 SDK 的下载，但是可以从 [这里](https://github.com/dylanNew/live2d/tree/master/webgl/Live2D/lib)
-找到，以及你大概想要的 [CDN 链接](http://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js)
+找到，以及你大概想要的 [CDN 链接](https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js)
 
 #### 单独的打包文件
 
@@ -63,7 +69,7 @@ Cubism 2.1 需要加载 `live2d.min.js`，[从 2019/9/4 起](https://help.live2d
 
 ## 安装
 
-#### 通过 NPM
+#### 通过 npm
 
 ```sh
 npm install pixi-live2d-display
@@ -122,6 +128,7 @@ async function main() {
     model.x = 100;
     model.y = 100;
     model.rotation = Math.PI;
+    model.skew.x = Math.PI;
     model.scale.set(2, 2);
     model.anchor.set(0.5, 0.5);
 

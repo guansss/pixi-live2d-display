@@ -107,10 +107,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      */
     textures: Texture[] = [];
 
-    /**
-     * Custom transform, currently useless.
-     * @ignore
-     */
+    /** @override */
     transform = new Live2DTransform();
 
     /**
@@ -121,9 +118,8 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
 
     /**
      * An ID of Gl context that syncs with `renderer.CONTEXT_UID`. Used to check if the GL context has changed.
-     * @ignore
      */
-    glContextID = -1;
+    protected glContextID = -1;
 
     /**
      * Elapsed time in milliseconds since created.
@@ -170,7 +166,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
 
     // TODO: rename
     /**
-     * A handler of the "modelLoaded" event, called when the internal model has been loaded.
+     * A handler of the "modelLoaded" event, invoked when the internal model has been loaded.
      */
     protected init(options?: Live2DModelOptions) {
         this.tag = `Live2DModel(${this.internalModel.settings.name})`;
@@ -189,7 +185,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     }
 
     /**
-     * A callback that observes {@link Live2DModel.anchor}, called when its values have been changed.
+     * A callback that observes {@link anchor}, invoked when the anchor's values have been changed.
      */
     protected onAnchorChange(): void {
         this.pivot.set(this.anchor.x * this.internalModel.width, this.anchor.y * this.internalModel.height);
@@ -324,7 +320,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     }
 
     /**
-     * Updates the model. Note this method just update the timer,
+     * Updates the model. Note this method just updates the timer,
      * and the actual update will be done right before rendering the model.
      * @param dt - The elapsed time in milliseconds since last frame.
      */
@@ -373,7 +369,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
             // bind the WebGLTexture into Live2D core.
             // because the Texture in Pixi can be shared between multiple DisplayObjects,
             // it's unable to know if the WebGLTexture in this Texture has been destroyed (GCed) and regenerated,
-            // and therefore we always bind the texture here no matter what
+            // and therefore we always bind the texture at this moment no matter what
             this.internalModel.bindTexture(i, (texture.baseTexture as any)._glTextures[this.glContextID].texture);
 
             // manually update the GC counter so they won't be GCed while using this model

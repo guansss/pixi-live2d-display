@@ -49,11 +49,15 @@ export class Cubism4InternalModel extends InternalModel {
     idParamBodyAngleX = ParamBodyAngleX;
     idParamBreath = ParamBreath;
 
-    pixelsPerUnit = 1;
+    /**
+     * The model's internal scale, defined in the moc3 file.
+     */
+    readonly pixelsPerUnit: number = 1;
 
     /**
-     * Matrix that moves the origin from top left to center.
-     * @protected
+     * Matrix that scales by {@link pixelsPerUnit}, and moves the origin from top-left to center.
+     *
+     * FIXME: This shouldn't be named as "centering"...
      */
     protected centeringTransform = new Matrix();
 
@@ -92,13 +96,14 @@ export class Cubism4InternalModel extends InternalModel {
 
     protected getLayout(): CommonLayout {
         // un-capitalize each key to satisfy the common layout format
+        // e.g. CenterX -> centerX
         return mapKeys({ ...this.settings.layout }, (_, key) => key.charAt(0).toLowerCase() + key.slice(1));
     }
 
     protected setupLayout() {
         super.setupLayout();
 
-        this.pixelsPerUnit = this.coreModel.getModel().canvasinfo.PixelsPerUnit;
+        (this as Mutable<this>).pixelsPerUnit = this.coreModel.getModel().canvasinfo.PixelsPerUnit;
 
         // move the origin from top left to center
         this.centeringTransform

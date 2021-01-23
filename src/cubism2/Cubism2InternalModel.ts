@@ -243,6 +243,7 @@ export class Cubism2InternalModel extends InternalModel {
 
         const matrix = this.drawingMatrix;
 
+        // set given 3x3 matrix into a 4x4 matrix
         tempMatrixArray[0] = matrix.a;
         tempMatrixArray[1] = matrix.b;
         tempMatrixArray[4] = matrix.c;

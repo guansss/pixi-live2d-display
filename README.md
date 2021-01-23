@@ -1,7 +1,7 @@
 # pixi-live2d-display
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/guansss/pixi-live2d-display?style=flat-square)
-![Cubism version](https://img.shields.io/badge/Cubism-all-ff69b4?style=flat-square)
+![Cubism version](https://img.shields.io/badge/Cubism-2/3/4-ff69b4?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/guansss/pixi-live2d-display/Test%20CI?style=flat-square)
 
 [:person_fencing: 中文版readme](README.zh.md)
@@ -16,10 +16,16 @@ Live2D models on a high level without the need to learn how the internal system 
 
 - Support for all versions of Live2D models
 - Support for PIXI.RenderTexture and PIXI.Filter
-- Pixi-style transform APIs: position, rotation, scale, anchor
+- Pixi-style transform APIs: position, scale, rotation, skew, anchor
 - Automatic interactions: focusing, hit-testing
 - Enhanced motion reserving logic compared to the official framework
 - Loading from uploaded files / zip files (experimental)
+- Fully typed - we all love types!
+
+#### Requirement
+
+- PixiJS: > 5.2.0 (lower versions were not tested)
+- Browser: WebGL, ES6
 
 #### Demo
 
@@ -40,7 +46,7 @@ Cubism is the name of Live2D SDK. There are so far three versions of it: Cubism 
 
 This plugin supports all variants of Live2D models by using Cubism 2.1 and Cubism 4.
 
-#### Requirement
+#### Cubism Core
 
 Before using the plugin, you'll need to include the Cubism runtime library, aka Cubism Core.
 
@@ -52,9 +58,9 @@ unreliable, don't use it in production!*).
 For Cubism 2.1, you need `live2d.min.js`. It's no longer downloadable from the official
 site [since 2019/9/4](https://help.live2d.com/en/other/other_20/), but can be
 found [here](https://github.com/dylanNew/live2d/tree/master/webgl/Live2D/lib), and with
-a [CDN link](http://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js) that you'll probably need.
+a [CDN link](https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js) that you'll probably need.
 
-#### Individual bundles
+#### Individual Bundles
 
 The plugin provides individual bundles for each Cubism version to reduce your app's size when you just want to use one
 of the versions.
@@ -133,6 +139,7 @@ async function main() {
     model.x = 100;
     model.y = 100;
     model.rotation = Math.PI;
+    model.skew.x = Math.PI;
     model.scale.set(2, 2);
     model.anchor.set(0.5, 0.5);
 
