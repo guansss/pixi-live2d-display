@@ -1,5 +1,6 @@
 import { Texture } from '@pixi/core';
 import { Sprite } from '@pixi/sprite';
+import { Live2DModel } from '@/Live2DModel';
 
 const { remote } = require('electron');
 const fs = remote.require('fs');
@@ -57,7 +58,7 @@ export function createApp(appClass, visible = true) {
 
 export async function createModel(modelDef, options = {}) {
     options = Object.assign({
-        modelClass: window.isHeadful ? require('@/Live2DModel').Live2DModel : null,
+        modelClass: Live2DModel,
         motionPreload: 'NONE',
         zIndex: 0,
     }, options);
