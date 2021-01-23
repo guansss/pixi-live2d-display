@@ -6,7 +6,7 @@ import { InteractionManager } from '@pixi/interaction';
 import { Ticker, TickerPlugin } from '@pixi/ticker';
 import merge from 'lodash/merge';
 import { RUNTIMES, TEST_MODEL, TEST_MODEL4 } from '../env';
-import { addBackground, callBefore, createApp, draggable } from '../utils';
+import { addBackground, callBefore, createApp, createModel, draggable } from '../utils';
 
 Application.registerPlugin(TickerPlugin);
 Renderer.registerPlugin('batch', BatchRenderer);
@@ -40,17 +40,9 @@ describe('Live2DModel', async () => {
 
     let app;
 
-    async function createModel(modelDef, options = {}) {
-        const model = await Live2DModel.from(modelDef.file);
-        model.zIndex = options.zIndex || 0;
-        options.app && options.app.stage.addChild(model);
-        return model;
-    }
-
     before(async function() {
         window.app = app = createApp(Application);
         app.stage.sortableChildren = true;
-        app.stage.interactive = true;
         // app.stage.on('pointerup', e => console.log(e.data.global.x, e.data.global.y));
 
         let modelLayer = 0;
@@ -59,10 +51,6 @@ describe('Live2DModel', async () => {
             runtime.model1 = await createModel(runtime.definition, { app, zIndex: modelLayer-- });
             runtime.model2 = await createModel(runtime.definition, { app, zIndex: runtime.model1.zIndex + 1 });
         });
-
-        // at least render the models once, otherwise hit testing will always fail
-        // because Live2DModelWebGL#getTransformedPoints will return an array of zeros
-        app.render();
     });
 
     after(function() {
@@ -133,26 +121,6 @@ describe('Live2DModel', async () => {
                 expect(bounds.y).to.be.closeTo(300 - runtime.nonScaledHeight * 3 * 0.3, 0.001);
                 expect(bounds.width).to.be.closeTo(runtime.nonScaledWidth * 2, 0.001);
                 expect(bounds.height).to.be.closeTo(runtime.nonScaledHeight * 3, 0.001);
-            });
-
-            it('should handle tapping', () => {
-                const listener = sinon.spy();
-
-                runtime.model1.on('hit', listener);
-
-                runtime.model1.tap(-1000, -1000);
-                expect(listener).to.not.be.called;
-
-                for (const { hitArea, x, y } of runtime.definition.hitTests) {
-                    runtime.model1.tap(x, y);
-                    expect(listener).to.be.calledOnceWith(hitArea);
-                    listener.resetHistory();
-
-                    // mimic an InteractionEvent
-                    runtime.model1.emit('pointertap', { data: { global: { x, y } } });
-                    expect(listener).to.be.calledOnceWith(hitArea);
-                    listener.resetHistory();
-                }
             });
         });
     });

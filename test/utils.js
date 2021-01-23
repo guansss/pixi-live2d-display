@@ -55,6 +55,19 @@ export function createApp(appClass, visible = true) {
     return app;
 }
 
+export async function createModel(modelDef, options = {}) {
+    options = Object.assign({
+        modelClass: window.isHeadful ? require('@/Live2DModel').Live2DModel : null,
+        motionPreload: 'NONE',
+        zIndex: 0,
+    }, options);
+
+    const model = await options.modelClass.from(modelDef.file, options);
+    model.zIndex = options.zIndex;
+    options.app && options.app.stage.addChild(model);
+    return model;
+}
+
 export function addBackground(model) {
     const foreground = Sprite.from(Texture.WHITE);
     foreground.width = model.internalModel.width;

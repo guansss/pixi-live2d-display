@@ -1,5 +1,5 @@
 const { getData, setData } = require('./utils').remoteRequire('./local');
-const isHeadful = console.log.toString().includes('native code');
+window.isHeadful = console.log.toString().includes('native code');
 
 if (isHeadful) {
     if (!getData().initialized) {

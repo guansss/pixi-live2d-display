@@ -6,4 +6,5 @@ export * from './MotionManager.test';
 export * from './InternalModel.test';
 export * from './Live2DFactory.test';
 export * from './loaders.test';
+export * from './interaction.test';
 export * from './Live2DModel.test';

@@ -19,9 +19,9 @@ export class InteractionMixin {
     set autoInteract(autoInteract: boolean) {
         if (autoInteract !== this._autoInteract) {
             if (autoInteract) {
-                (this as unknown as Live2DModel).on('pointertap', onTap, this);
+                (this as any as Live2DModel).on('pointertap', onTap, this);
             } else {
-                (this as unknown as Live2DModel).off('pointertap', onTap, this);
+                (this as any as Live2DModel).off('pointertap', onTap, this);
             }
 
             this._autoInteract = autoInteract;
@@ -53,8 +53,7 @@ export class InteractionMixin {
      */
     unregisterInteraction(this: Live2DModel): void {
         if (this.interactionManager) {
-            this.interactionManager?.off('pointermove', onPointerMove);
-            this.interactionManager?.off('pointertap', onTap);
+            this.interactionManager?.off('pointermove', onPointerMove, this);
             this.interactionManager = undefined;
         }
     }
