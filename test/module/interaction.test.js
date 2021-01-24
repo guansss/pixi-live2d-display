@@ -17,10 +17,6 @@ describe('Interactions', function() {
         await runtimes.each(async runtime => {
             runtime.model = await createModel(runtime.definition, { app });
         });
-
-        // at least render the models once, otherwise hit-testing will always fail
-        // because Live2DModelWebGL#getTransformedPoints will return an array of zeros
-        app.render();
     });
 
     afterEach(function() {
@@ -28,6 +24,12 @@ describe('Interactions', function() {
     });
 
     describe('should handle tapping', function() {
+        before(function() {
+            // at least render the models once, otherwise hit-testing will always fail
+            // because Live2DModelWebGL#getTransformedPoints will return an array of zeros
+            app.render();
+        });
+
         runtimes.each((runtime, name) => {
             it(name, async function() {
                 const listener = sinon.spy();

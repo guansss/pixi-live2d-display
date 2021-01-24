@@ -5,6 +5,7 @@ import { AlphaFilter } from '@pixi/filter-alpha';
 import { BaseRenderTexture, RenderTexture } from '@pixi/core';
 import chunk from 'lodash/chunk';
 import { TEST_TEXTURE } from '../env';
+import { delay } from '../utils';
 
 describe('Compatibility', function() {
     const ITEM_SIZE = 32;
@@ -87,29 +88,27 @@ describe('Compatibility', function() {
     describe('should work with PIXI.Filter', function() {
         runtimes.each((runtime, name) => {
             it(name, function() {
-                runtime.model2.filters = [new AlphaFilter(0.8)];
+                runtime.model2.filters = [new AlphaFilter(0.6)];
                 app.render();
             });
         });
     });
 
-    it('should work after losing and restoring WebGL context', function(done) {
-        setTimeout(() => {
-            console.log('==============WebGL lose context==============');
-            const ext = app.renderer.gl.getExtension('WEBGL_lose_context');
-            ext.loseContext();
+    it('should work after losing and restoring WebGL context', async function() {
+        await delay(100);
 
-            setTimeout(() => {
-                console.log('==============WebGL restore context==============');
-                ext.restoreContext();
+        console.log('===============WebGL lose context================');
+        const ext = app.renderer.gl.getExtension('WEBGL_lose_context');
+        ext.loseContext();
 
-                setTimeout(() => {
-                    expect(() => app.render()).to.not.throw();
+        await delay(100);
 
-                    done();
-                }, 100);
-            }, 100);
-        }, 200);
+        console.log('==============WebGL restore context==============');
+        ext.restoreContext();
+
+        await delay(100);
+
+        expect(() => app.render()).to.not.throw();
     });
 });
 
