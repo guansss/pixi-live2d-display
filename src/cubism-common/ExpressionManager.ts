@@ -5,6 +5,7 @@ import { EventEmitter } from '@pixi/utils';
 
 /**
  * Abstract expression manager.
+ * @emits {@link ExpressionManagerEvents}
  */
 export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> extends EventEmitter {
     /**

@@ -110,6 +110,24 @@ declare interface ExpressionManagerEvents<Expression = any> {
 
 declare interface InternalModelEvents {
     /**
+     * Before the model's parameters are updated by the motion.
+     * @event beforeMotionUpdate
+     */
+    beforeMotionUpdate: [];
+
+    /**
+     * After the model's parameters are updated by the motion.
+     * @event afterMotionUpdate
+     */
+    afterMotionUpdate: [];
+
+    /**
+     * Before the model is updated with its parameters applied.
+     * @event beforeModelUpdate
+     */
+    beforeModelUpdate: [];
+
+    /**
      * Before destroyed.
      * @event destroy
      */

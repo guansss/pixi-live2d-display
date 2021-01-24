@@ -36,6 +36,7 @@ export enum MotionPreloadStrategy {
 
 /**
  * Handles the motion playback.
+ * @emits {@link MotionManagerEvents}
  */
 export abstract class MotionManager<Motion = any, MotionSpec = any> extends EventEmitter {
     /**
