@@ -1,5 +1,3 @@
-import type { config as cubism4Config } from '@cubism/config';
-
 /**
  * Global configs.
  */
@@ -42,7 +40,14 @@ export namespace config {
      */
     export let expressionFadingDuration = 500;
 
-    export declare let cubism4: typeof cubism4Config | undefined;
+    export let cubism4: {
+        /**
+         * Should masks support 4x4 division, which is unofficial and experimental.
+         * See [official manual](https://docs.live2d.com/cubism-sdk-manual/ow-sdk-mask-premake-web/?locale=en_us).
+         * @default true
+         */
+        supportMoreMaskDivisions: boolean;
+    } | undefined;
 }
 
 declare const __VERSION__: string;
