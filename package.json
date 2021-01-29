@@ -51,7 +51,7 @@
     "chai-as-promised": "^7.1.1",
     "chalk": "^4.0.0",
     "dts-bundle-generator": "^5.5.0",
-    "electron": "^8.1.1",
+    "electron": "^9.4.0",
     "floss": "^3.0.0",
     "fork-ts-checker-webpack-plugin": "^6.0.7",
     "glob": "^7.1.6",
