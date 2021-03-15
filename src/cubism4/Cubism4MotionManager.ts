@@ -1,11 +1,12 @@
+import { config } from '@/config';
 import { MotionManager, MotionManagerOptions } from '@/cubism-common/MotionManager';
 import { Cubism4ExpressionManager } from '@/cubism4/Cubism4ExpressionManager';
 import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
 import { CubismModel } from '@cubism/model/cubismmodel';
 import { ACubismMotion } from '@cubism/motion/acubismmotion';
 import { CubismMotion } from '@cubism/motion/cubismmotion';
+import { CubismMotionJson } from '@cubism/motion/cubismmotionjson';
 import { CubismMotionQueueManager } from '@cubism/motion/cubismmotionqueuemanager';
-import { config } from '@/config';
 
 export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec.Motion> {
     readonly definitions: Partial<Record<string, CubismSpec.Motion[]>>;
@@ -63,6 +64,7 @@ export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec
 
     createMotion(data: object, group: string, definition: CubismSpec.Motion): CubismMotion {
         const motion = CubismMotion.create(data as unknown as CubismSpec.MotionJSON);
+        const json = new CubismMotionJson(data as unknown as CubismSpec.MotionJSON);
 
         const defaultFadingDuration = (
             group === this.groups.idle
@@ -70,8 +72,14 @@ export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec
                 : config.motionFadingDuration
         ) / 1000;
 
-        motion.setFadeInTime(definition.FadeInTime! > 0 ? definition.FadeInTime! : defaultFadingDuration);
-        motion.setFadeOutTime(definition.FadeOutTime! > 0 ? definition.FadeOutTime! : defaultFadingDuration);
+        // overwrite the fading duration only when it's not defined in the motion JSON
+        if (json.getMotionFadeInTime() === undefined) {
+            motion.setFadeInTime(definition.FadeInTime! > 0 ? definition.FadeInTime! : defaultFadingDuration);
+        }
+
+        if (json.getMotionFadeOutTime() === undefined) {
+            motion.setFadeOutTime(definition.FadeOutTime! > 0 ? definition.FadeOutTime! : defaultFadingDuration);
+        }
 
         motion.setEffectIds(this.eyeBlinkIds, this.lipSyncIds);
 

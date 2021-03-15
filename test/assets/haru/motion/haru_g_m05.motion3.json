@@ -9,7 +9,9 @@
 		"TotalSegmentCount": 179,
 		"TotalPointCount": 434,
 		"UserDataCount": 0,
-		"TotalUserDataSize": 0
+		"TotalUserDataSize": 0,
+		"FadeInTime": 1500,
+		"FadeOutTime": 1500
 	},
 	"Curves": [
 		{
