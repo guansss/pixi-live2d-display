@@ -10,8 +10,8 @@
 		"TotalPointCount": 434,
 		"UserDataCount": 0,
 		"TotalUserDataSize": 0,
-		"FadeInTime": 1500,
-		"FadeOutTime": 1500
+		"FadeInTime": 0.499,
+		"FadeOutTime": 0.499
 	},
 	"Curves": [
 		{

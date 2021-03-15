@@ -72,6 +72,8 @@ export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec
                 : config.motionFadingDuration
         ) / 1000;
 
+        // fading duration priorities: model.json > motion.json > config (default)
+
         // overwrite the fading duration only when it's not defined in the motion JSON
         if (json.getMotionFadeInTime() === undefined) {
             motion.setFadeInTime(definition.FadeInTime! > 0 ? definition.FadeInTime! : defaultFadingDuration);

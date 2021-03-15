@@ -415,7 +415,7 @@ describe('MotionManager', function() {
         const motionFile = url.resolve(TEST_MODEL4.file, TEST_MODEL4.json.FileReferences.Motions.Idle[0].File);
         const motionJSON = await fetch(motionFile).then(res => res.json());
 
-        // check if motion JSON has been set up correctly
+        // ensure the motion JSON has been set up correctly
         expect(motionJSON.Meta.UserDataCount).to.equal(1);
         expect(motionJSON.UserData[0].Value).to.equal('test');
 
@@ -429,5 +429,67 @@ describe('MotionManager', function() {
         updateManager(manager);
 
         expect(handler).to.be.called;
+    });
+
+    describe('Fading durations', function() {
+        const originalFadingDuration = config.motionFadingDuration;
+        const originalIdleFadingDuration = config.idleMotionFadingDuration;
+
+        afterEach(function() {
+            config.motionFadingDuration = originalFadingDuration;
+            config.idleMotionFadingDuration = originalIdleFadingDuration;
+        });
+
+        function assertFadingDurations(manager, group, index, fadeIn, fadeOut) {
+            return new Promise((resolve, reject) => {
+                manager.on('motionStart', () => {
+                    try {
+                        const motion = manager.motionGroups[group][index];
+
+                        expect(motion.getFadeInTime()).to.equal(fadeIn);
+                        expect(motion.getFadeOutTime()).to.equal(fadeOut);
+
+                        resolve();
+                    } catch (e) {
+                        reject(e);
+                    }
+                });
+
+                manager.startMotion(group, index);
+            });
+        }
+
+        it('should use default fading duration when not specified', async function() {
+            // some special values that will never collide with others
+            config.motionFadingDuration = 1234;
+            config.idleMotionFadingDuration = 5678;
+
+            let manager = createManager4();
+
+            await assertFadingDurations(manager, 'Tap', 0, config.motionFadingDuration / 1000, config.motionFadingDuration / 1000);
+            manager.stopAllMotions();
+            await assertFadingDurations(manager, 'Idle', 0, config.idleMotionFadingDuration / 1000, config.idleMotionFadingDuration / 1000);
+
+            manager = createManager4();
+            manager.definitions['Tap'][0].FadeInTime = 0.1;
+            manager.definitions['Idle'][0].FadeInTime = 0.2;
+
+            await assertFadingDurations(manager, 'Tap', 0, 0.1, config.motionFadingDuration / 1000);
+            manager.stopAllMotions();
+            await assertFadingDurations(manager, 'Idle', 0, 0.2, config.idleMotionFadingDuration / 1000);
+        });
+
+        it('should respect fading duration defined in Cubism 4 motion json', async function() {
+            const group = 'Tap';
+            const file = 'motion/haru_g_m05.motion3.json';
+            const index = TEST_MODEL4.json.FileReferences.Motions[group].findIndex(motion => motion.File === file);
+            const motionJSON = await fetch(url.resolve(TEST_MODEL4.file, file)).then(res => res.json());
+
+            config.motionFadingDuration = 1234;
+
+            const manager = createManager4();
+
+            await assertFadingDurations(manager, group, index, motionJSON.Meta.FadeInTime, motionJSON.Meta.FadeOutTime);
+        });
     });
 });
