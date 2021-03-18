@@ -17,8 +17,6 @@ describe('MotionManager', function() {
 
     const originalLogLevel = config.logLevel;
 
-    this.timeout(2000);
-
     function createManager2(options = { motionPreload: MotionPreloadStrategy.NONE }) {
         return new Cubism2MotionManager(new Cubism2ModelSettings({
             ...TEST_MODEL.json,

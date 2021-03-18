@@ -13,8 +13,6 @@ describe('Live2DFactory', function() {
     const fakeXHRs = [];
     let app;
 
-    this.timeout(1000);
-
     before(function() {
         app = createApp(Application, false);
 

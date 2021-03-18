@@ -3,8 +3,6 @@ import { TEST_MODEL } from '../env';
 import { createApp, loadScript } from '../utils';
 
 describe('Browser <script> tag', function() {
-    this.timeout(1000);
-
     it('should work with Pixi in browser', async function() {
         // provide globals for browser test, don't directly assign them to window
         // because that will confuse coding assistance in IDE
