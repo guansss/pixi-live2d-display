@@ -93,7 +93,10 @@ export const setupOptionals: Middleware<Live2DFactoryContext> = async (context, 
                             internalModel.pose = runtime.createPose(internalModel.coreModel, data);
                             context.live2dModel.emit('poseLoaded', internalModel.pose);
                         })
-                        .catch((e: Error) => logger.warn(TAG, 'Failed to load pose.\n', e)),
+                        .catch((e: Error) => {
+                            context.live2dModel.emit('poseLoadError', e);
+                            logger.warn(TAG, 'Failed to load pose.', e);
+                        }),
                 );
             }
 
@@ -109,7 +112,10 @@ export const setupOptionals: Middleware<Live2DFactoryContext> = async (context, 
                             internalModel.physics = runtime.createPhysics(internalModel.coreModel, data);
                             context.live2dModel.emit('physicsLoaded', internalModel.physics);
                         })
-                        .catch((e: Error) => logger.warn(TAG, 'Failed to load physics.\n', e)),
+                        .catch((e: Error) => {
+                            context.live2dModel.emit('physicsLoadError', e);
+                            logger.warn(TAG, 'Failed to load physics.', e);
+                        }),
                 );
             }
 
