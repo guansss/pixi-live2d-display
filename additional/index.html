@@ -524,45 +524,19 @@ to implement them before loading zip files, <em>otherwise a "Not implemented" er
 <div class="highlight"><pre><span></span><code><span class="c1">// the type `ZipReader` is an arbitrary object</span>
 
 <span class="c1">// accepts the zip&#39;s data and URL, returns a zip reader</span>
-<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">zipReader</span><span class="p">(</span><span class="nx">data</span>
-:
-<span class="kt">Blob</span><span class="p">,</span> <span class="nx">url</span>
-:
-<span class="kt">string</span>
-<span class="p">)</span><span class="o">:</span>
-<span class="nx">Promise</span> <span class="o">&lt;</span> <span class="nx">ZipReader</span> <span class="o">&gt;</span>
+<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">zipReader</span><span class="p">(</span><span class="nx">data</span>: <span class="kt">Blob</span><span class="p">,</span> <span class="nx">url</span>: <span class="kt">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="nx">ZipReader</span><span class="o">&gt;</span>
 
 <span class="c1">// retrieves relative paths of all the files in this zip</span>
-<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">getFilePaths</span><span class="p">(</span><span class="nx">reader</span>
-:
-<span class="kt">ZipReader</span>
-<span class="p">)</span><span class="o">:</span>
-<span class="nx">Promise</span> <span class="o">&lt;</span> <span class="kt">string</span><span class="p">[]</span> <span class="o">&gt;</span>
+<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">getFilePaths</span><span class="p">(</span><span class="nx">reader</span>: <span class="kt">ZipReader</span><span class="p">)</span><span class="o">:</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">[]</span><span class="o">&gt;</span>
 
 <span class="c1">// extracts specific files in this zip as `File` objects</span>
-<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">getFiles</span><span class="p">(</span><span class="nx">reader</span>
-:
-<span class="kt">ZipReader</span><span class="p">,</span> <span class="nx">paths</span>
-:
-<span class="kt">string</span><span class="p">[]</span>
-<span class="p">)</span><span class="o">:</span>
-<span class="nx">Promise</span> <span class="o">&lt;</span> <span class="nx">File</span><span class="p">[]</span> <span class="o">&gt;</span>
+<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">getFiles</span><span class="p">(</span><span class="nx">reader</span>: <span class="kt">ZipReader</span><span class="p">,</span> <span class="nx">paths</span>: <span class="kt">string</span><span class="p">[])</span><span class="o">:</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="nx">File</span><span class="p">[]</span><span class="o">&gt;</span>
 
 <span class="c1">// reads a file in this zip as text</span>
-<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">readText</span><span class="p">(</span><span class="nx">reader</span>
-:
-<span class="kt">ZipReader</span><span class="p">,</span> <span class="nx">path</span>
-:
-<span class="kt">string</span>
-<span class="p">)</span><span class="o">:</span>
-<span class="nx">Promise</span> <span class="o">&lt;</span> <span class="kt">string</span> <span class="o">&gt;</span>
+<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">readText</span><span class="p">(</span><span class="nx">reader</span>: <span class="kt">ZipReader</span><span class="p">,</span> <span class="nx">path</span>: <span class="kt">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span>
 
 <span class="c1">// releases the zip reader, this is optional</span>
-<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">releaseReader</span><span class="p">(</span><span class="nx">reader</span>
-:
-<span class="kt">ZipReader</span>
-<span class="p">)</span><span class="o">:</span>
-<span class="k">void</span>
+<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">releaseReader</span><span class="p">(</span><span class="nx">reader</span>: <span class="kt">ZipReader</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span>
 </code></pre></div>
 <p>An example for implementing them with <a href="https://github.com/Stuk/jszip">jszip</a> can be found in
 the <a href="https://github.com/guansss/live2d-viewer-web/blob/main/src/app/zip.ts">live2d-viewer-web</a> project.</p>
