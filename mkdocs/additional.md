@@ -98,45 +98,19 @@ to implement them before loading zip files, *otherwise a "Not implemented" error
 // the type `ZipReader` is an arbitrary object
 
 // accepts the zip's data and URL, returns a zip reader
-ZipLoader.zipReader(data
-:
-Blob, url
-:
-string
-):
-Promise < ZipReader >
+ZipLoader.zipReader(data: Blob, url: string): Promise<ZipReader>
 
 // retrieves relative paths of all the files in this zip
-ZipLoader.getFilePaths(reader
-:
-ZipReader
-):
-Promise < string[] >
+ZipLoader.getFilePaths(reader: ZipReader): Promise<string[]>
 
 // extracts specific files in this zip as `File` objects
-ZipLoader.getFiles(reader
-:
-ZipReader, paths
-:
-string[]
-):
-Promise < File[] >
+ZipLoader.getFiles(reader: ZipReader, paths: string[]): Promise<File[]>
 
 // reads a file in this zip as text
-ZipLoader.readText(reader
-:
-ZipReader, path
-:
-string
-):
-Promise < string >
+ZipLoader.readText(reader: ZipReader, path: string): Promise<string>
 
 // releases the zip reader, this is optional
-ZipLoader.releaseReader(reader
-:
-ZipReader
-):
-void
+ZipLoader.releaseReader(reader: ZipReader): void
 ```
 
 An example for implementing them with [jszip](https://github.com/Stuk/jszip) can be found in
