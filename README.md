@@ -12,10 +12,12 @@ This project aims to be a universal Live2D framework on the web platform. While 
 complex and problematic, this project has rewritten it to unify and simplify the APIs, which allows you to control the
 Live2D models on a high level without the need to learn how the internal system works.
 
+More details can be found in the [Documentation](https://guansss.github.io/pixi-live2d-display).
+
 #### Features
 
-- Support for all versions of Live2D models
-- Support for PIXI.RenderTexture and PIXI.Filter
+- Supports all versions of Live2D models
+- Supports PIXI.RenderTexture and PIXI.Filter
 - Pixi-style transform APIs: position, scale, rotation, skew, anchor
 - Automatic interactions: focusing, hit-testing
 - Enhanced motion reserving logic compared to the official framework
@@ -33,11 +35,6 @@ Live2D models on a high level without the need to learn how the internal system 
 - [Interaction demo](https://codepen.io/guansss/pen/KKgXBOP/left?editors=0010)
 - [Render texture & filter demo](https://codepen.io/guansss/pen/qBaMNQV/left?editors=1010)
 - [Live2D Viewer Online](https://guansss.github.io/live2d-viewer-web/)
-
-#### Documentation
-
-- [Wiki](https://github.com/guansss/pixi-live2d-display/wiki)
-- [API Documentation](https://guansss.github.io/pixi-live2d-display/)
 
 ## Cubism
 
@@ -77,7 +74,7 @@ To make it clear, here's how you would use these files:
 - Use `cubism4.js`+`live2dcubismcore.min.js` to support Cubism 3 and Cubism 4 models
 - Use `index.js`+`live2d.min.js`+`live2dcubismcore.min.js` to support all versions of models
 
-## Install
+## Installation
 
 #### Via npm
 
@@ -127,8 +124,7 @@ const { Live2DModel } = require('pixi-live2d-display');
 
 async function main() {
     const app = new PIXI.Application({
-        view: document.getElementById('canvas'),
-        autoStart: true
+        view: document.getElementById('canvas')
     });
 
     const model = await Live2DModel.from('shizuku.model.json');
@@ -172,15 +168,15 @@ Live2DModel.registerTicker(Ticker);
 Renderer.registerPlugin('interaction', InteractionManager);
 
 async function main() {
-    const app = new Application();
+    const app = new Application({
+        view: document.getElementById('canvas')
+    });
 
     const model = await Live2DModel.from('shizuku.model.json');
 
     app.stage.addChild(model);
 }
 ```
-
-For more information, please visit the [Wiki](https://github.com/guansss/pixi-live2d-display/wiki).
 
 ---
 
