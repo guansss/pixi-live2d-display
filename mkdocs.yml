@@ -1,0 +1,41 @@
+site_name: pixi-live2d-display
+
+docs_dir: mkdocs
+
+repo_url: https://github.com/guansss/pixi-live2d-display
+
+nav:
+  - Introduction: 'README.md'
+  - Models: 'models.md'
+  - Interactions: 'interactions.md'
+  - Motions and Expressions: 'motions_expressions.md'
+  - Additional Features: 'additional.md'
+  - Configs: 'configs.md'
+  - Graphs: 'graphs.md'
+
+plugins:
+  - search
+  - mermaid2
+
+theme:
+  name: material
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: True
+  - pymdownx.highlight
+  - sane_lists
+  - def_list
+  - pymdownx.superfences:
+      # make exceptions to highlighting of code:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mermaid@8.9.3/dist/mermaid.min.js
