@@ -251,13 +251,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
-    Documentation
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#cubism" class="md-nav__link">
     Cubism
   </a>
@@ -285,11 +278,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#install" class="md-nav__link">
-    Install
+  <a href="#installation" class="md-nav__link">
+    Installation
   </a>
   
-    <nav class="md-nav" aria-label="Install">
+    <nav class="md-nav" aria-label="Installation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -524,13 +517,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
-    Documentation
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#cubism" class="md-nav__link">
     Cubism
   </a>
@@ -558,11 +544,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#install" class="md-nav__link">
-    Install
+  <a href="#installation" class="md-nav__link">
+    Installation
   </a>
   
-    <nav class="md-nav" aria-label="Install">
+    <nav class="md-nav" aria-label="Installation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -637,10 +623,11 @@
 <p>This project aims to be a universal Live2D framework on the web platform. While the official Live2D framework is just
 complex and problematic, this project has rewritten it to unify and simplify the APIs, which allows you to control the
 Live2D models on a high level without the need to learn how the internal system works.</p>
+<p>More details can be found in the <a href="https://guansss.github.io/pixi-live2d-display">Documentation</a>.</p>
 <h4 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h4>
 <ul>
-<li>Support for all versions of Live2D models</li>
-<li>Support for PIXI.RenderTexture and PIXI.Filter</li>
+<li>Supports all versions of Live2D models</li>
+<li>Supports PIXI.RenderTexture and PIXI.Filter</li>
 <li>Pixi-style transform APIs: position, scale, rotation, skew, anchor</li>
 <li>Automatic interactions: focusing, hit-testing</li>
 <li>Enhanced motion reserving logic compared to the official framework</li>
@@ -658,11 +645,6 @@ Live2D models on a high level without the need to learn how the internal system 
 <li><a href="https://codepen.io/guansss/pen/KKgXBOP/left?editors=0010">Interaction demo</a></li>
 <li><a href="https://codepen.io/guansss/pen/qBaMNQV/left?editors=1010">Render texture &amp; filter demo</a></li>
 <li><a href="https://guansss.github.io/live2d-viewer-web/">Live2D Viewer Online</a></li>
-</ul>
-<h4 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h4>
-<ul>
-<li><a href="https://github.com/guansss/pixi-live2d-display/wiki">Wiki</a></li>
-<li><a href="https://guansss.github.io/pixi-live2d-display/">API Documentation</a></li>
 </ul>
 <h2 id="cubism">Cubism<a class="headerlink" href="#cubism" title="Permanent link">&para;</a></h2>
 <p>Cubism is the name of Live2D SDK. There are so far three versions of it: Cubism 2.1, Cubism 3 and Cubism 4; where Cubism
@@ -691,7 +673,7 @@ of <code>cubism2.js</code> and <code>cubism4.js</code>.</p>
 <li>Use <code>cubism4.js</code>+<code>live2dcubismcore.min.js</code> to support Cubism 3 and Cubism 4 models</li>
 <li>Use <code>index.js</code>+<code>live2d.min.js</code>+<code>live2dcubismcore.min.js</code> to support all versions of models</li>
 </ul>
-<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <h4 id="via-npm">Via npm<a class="headerlink" href="#via-npm" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>npm install pixi-live2d-display
 </code></pre></div>
@@ -728,8 +710,7 @@ of <code>cubism2.js</code> and <code>cubism4.js</code>.</p>
 
 <span class="k">async</span> <span class="kd">function</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PIXI</span><span class="p">.</span><span class="nx">Application</span><span class="p">({</span>
-        <span class="nx">view</span><span class="o">:</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;canvas&#39;</span><span class="p">),</span>
-        <span class="nx">autoStart</span><span class="o">:</span> <span class="kc">true</span>
+        <span class="nx">view</span><span class="o">:</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;canvas&#39;</span><span class="p">)</span>
     <span class="p">});</span>
 
     <span class="kd">const</span> <span class="nx">model</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">Live2DModel</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="s1">&#39;shizuku.model.json&#39;</span><span class="p">);</span>
@@ -769,14 +750,15 @@ In this case, you'll need to manually register the optional components if you wa
 <span class="nx">Renderer</span><span class="p">.</span><span class="nx">registerPlugin</span><span class="p">(</span><span class="s1">&#39;interaction&#39;</span><span class="p">,</span> <span class="nx">InteractionManager</span><span class="p">);</span>
 
 <span class="k">async</span> <span class="kd">function</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Application</span><span class="p">();</span>
+    <span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Application</span><span class="p">({</span>
+        <span class="nx">view</span><span class="o">:</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;canvas&#39;</span><span class="p">)</span>
+    <span class="p">});</span>
 
     <span class="kd">const</span> <span class="nx">model</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">Live2DModel</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="s1">&#39;shizuku.model.json&#39;</span><span class="p">);</span>
 
     <span class="nx">app</span><span class="p">.</span><span class="nx">stage</span><span class="p">.</span><span class="nx">addChild</span><span class="p">(</span><span class="nx">model</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>For more information, please visit the <a href="https://github.com/guansss/pixi-live2d-display/wiki">Wiki</a>.</p>
 <hr />
 <p>The example Live2D models, Shizuku (Cubism 2.1) and Haru (Cubism 4), are redistributed under
 Live2D's <a href="https://www.live2d.com/eula/live2d-free-material-license-agreement_en.html">Free Material License</a>.</p>
