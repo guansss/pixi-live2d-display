@@ -1,0 +1,619 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Live2DFactory | pixi-live2d-display</title>
+	<meta name="description" content="Documentation for pixi-live2d-display">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">pixi-live2d-display</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">pixi-live2d-display</a>
+				</li>
+				<li>
+					<a href="../modules/index.html">index</a>
+				</li>
+				<li>
+					<a href="index.live2dfactory.html">Live2DFactory</a>
+				</li>
+			</ul>
+			<h1>Class Live2DFactory</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Handles all the network load tasks.</p>
+					</div>
+					<ul>
+						<li>Model creation: requested by <a href="index.live2dmodel.html#from">Live2DModel.from</a>.</li>
+						<li>Motion loading: implements the load method of MotionManager.</li>
+						<li>Expression loading: implements the load method of ExpressionManager.</li>
+					</ul>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">Live2DFactory</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="index.live2dfactory.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="index.live2dfactory.html#createinternalmodel" class="tsd-kind-icon">create<wbr>Internal<wbr>Model</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="index.live2dfactory.html#expressiontasksmap" class="tsd-kind-icon">expression<wbr>Tasks<wbr>Map</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="index.live2dfactory.html#jsontosettings" class="tsd-kind-icon">json<wbr>ToSettings</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="index.live2dfactory.html#live2dmodelmiddlewares" class="tsd-kind-icon">live2DModel<wbr>Middlewares</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="index.live2dfactory.html#motiontasksmap" class="tsd-kind-icon">motion<wbr>Tasks<wbr>Map</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="index.live2dfactory.html#runtimes" class="tsd-kind-icon">runtimes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="index.live2dfactory.html#setupessentials" class="tsd-kind-icon">setup<wbr>Essentials</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="index.live2dfactory.html#setupoptionals" class="tsd-kind-icon">setup<wbr>Optionals</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="index.live2dfactory.html#urltojson" class="tsd-kind-icon">url<wbr>ToJSON</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="index.live2dfactory.html#waituntilready" class="tsd-kind-icon">wait<wbr>Until<wbr>Ready</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="index.live2dfactory.html#findruntime" class="tsd-kind-icon">find<wbr>Runtime</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="index.live2dfactory.html#loadexpression" class="tsd-kind-icon">load<wbr>Expression</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="index.live2dfactory.html#loadmotion" class="tsd-kind-icon">load<wbr>Motion</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="index.live2dfactory.html#registerruntime" class="tsd-kind-icon">register<wbr>Runtime</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="index.live2dfactory.html#releasetasks" class="tsd-kind-icon">release<wbr>Tasks</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="index.live2dfactory.html#setuplive2dmodel" class="tsd-kind-icon">setup<wbr>Live2DModel</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Live2DFactory<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.live2dfactory.html" class="tsd-signature-type" data-tsd-kind="Class">Live2DFactory</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="index.live2dfactory.html" class="tsd-signature-type" data-tsd-kind="Class">Live2DFactory</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="createinternalmodel" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> create<wbr>Internal<wbr>Model</h3>
+					<div class="tsd-signature tsd-kind-icon">create<wbr>Internal<wbr>Model<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/index.live2dfactorycontext.html" class="tsd-signature-type" data-tsd-kind="Interface">Live2DFactoryContext</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/b51b9cb/src/factory/Live2DFactory.ts#L130">src/factory/Live2DFactory.ts:130</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="expressiontasksmap" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> expression<wbr>Tasks<wbr>Map</h3>
+					<div class="tsd-signature tsd-kind-icon">expression<wbr>Tasks<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">WeakMap</span><span class="tsd-signature-symbol">&lt;</span><a href="index.expressionmanager.html" class="tsd-signature-type" data-tsd-kind="Class">ExpressionManager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/b51b9cb/src/factory/Live2DFactory.ts#L148">src/factory/Live2DFactory.ts:148</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Load tasks of each expression.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="jsontosettings" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> json<wbr>ToSettings</h3>
+					<div class="tsd-signature tsd-kind-icon">json<wbr>ToSettings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/index.live2dfactorycontext.html" class="tsd-signature-type" data-tsd-kind="Interface">Live2DFactoryContext</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/b51b9cb/src/factory/Live2DFactory.ts#L126">src/factory/Live2DFactory.ts:126</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="live2dmodelmiddlewares" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> live2DModel<wbr>Middlewares</h3>
+					<div class="tsd-signature tsd-kind-icon">live2DModel<wbr>Middlewares<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/index.live2dfactorycontext.html" class="tsd-signature-type" data-tsd-kind="Interface">Live2DFactoryContext</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/b51b9cb/src/factory/Live2DFactory.ts#L135">src/factory/Live2DFactory.ts:135</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Middlewares to run through when setting up a Live2DModel.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="motiontasksmap" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> motion<wbr>Tasks<wbr>Map</h3>
+					<div class="tsd-signature tsd-kind-icon">motion<wbr>Tasks<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">WeakMap</span><span class="tsd-signature-symbol">&lt;</span><a href="index.motionmanager.html" class="tsd-signature-type" data-tsd-kind="Class">MotionManager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/b51b9cb/src/factory/Live2DFactory.ts#L143">src/factory/Live2DFactory.ts:143</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>load tasks of each motion. The structure of each value in this map
+							is the same as respective <a href="index.motionmanager.html#definitions">MotionManager.definitions</a>.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="runtimes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> runtimes</h3>
+					<div class="tsd-signature tsd-kind-icon">runtimes<span class="tsd-signature-symbol">:</span> <a href="../interfaces/index.live2druntime.html" class="tsd-signature-type" data-tsd-kind="Interface">Live2DRuntime</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/b51b9cb/src/factory/Live2DFactory.ts#L123">src/factory/Live2DFactory.ts:123</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>All registered runtimes, sorted by versions in descending order.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="setupessentials" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> setup<wbr>Essentials</h3>
+					<div class="tsd-signature tsd-kind-icon">setup<wbr>Essentials<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/index.live2dfactorycontext.html" class="tsd-signature-type" data-tsd-kind="Interface">Live2DFactoryContext</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/b51b9cb/src/factory/Live2DFactory.ts#L129">src/factory/Live2DFactory.ts:129</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="setupoptionals" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> setup<wbr>Optionals</h3>
+					<div class="tsd-signature tsd-kind-icon">setup<wbr>Optionals<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/index.live2dfactorycontext.html" class="tsd-signature-type" data-tsd-kind="Interface">Live2DFactoryContext</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/b51b9cb/src/factory/Live2DFactory.ts#L128">src/factory/Live2DFactory.ts:128</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="urltojson" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> url<wbr>ToJSON</h3>
+					<div class="tsd-signature tsd-kind-icon">url<wbr>ToJSON<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/index.live2dfactorycontext.html" class="tsd-signature-type" data-tsd-kind="Interface">Live2DFactoryContext</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/b51b9cb/src/factory/Live2DFactory.ts#L125">src/factory/Live2DFactory.ts:125</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="waituntilready" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> wait<wbr>Until<wbr>Ready</h3>
+					<div class="tsd-signature tsd-kind-icon">wait<wbr>Until<wbr>Ready<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/index.live2dfactorycontext.html" class="tsd-signature-type" data-tsd-kind="Interface">Live2DFactoryContext</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/b51b9cb/src/factory/Live2DFactory.ts#L127">src/factory/Live2DFactory.ts:127</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="findruntime" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> find<wbr>Runtime</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">find<wbr>Runtime<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/index.live2druntime.html" class="tsd-signature-type" data-tsd-kind="Interface">Live2DRuntime</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/b51b9cb/src/factory/Live2DFactory.ts#L165">src/factory/Live2DFactory.ts:165</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Finds a runtime that matches given source.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>source: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Either a settings JSON object or a ModelSettings instance.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/index.live2druntime.html" class="tsd-signature-type" data-tsd-kind="Interface">Live2DRuntime</a></h4>
+							<p>The Live2DRuntime, or undefined if not found.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="loadexpression" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> load<wbr>Expression</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">load<wbr>Expression&lt;Expression, ExpressionSpec&gt;<span class="tsd-signature-symbol">(</span>expressionManager<span class="tsd-signature-symbol">: </span><a href="index.expressionmanager.html" class="tsd-signature-type" data-tsd-kind="Class">ExpressionManager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Expression</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">ExpressionSpec</span><span class="tsd-signature-symbol">&gt;</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Expression</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/b51b9cb/src/factory/Live2DFactory.ts#L281">src/factory/Live2DFactory.ts:281</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Loads an Expression and registers the task to <a href="index.live2dfactory.html#expressiontasksmap">expressionTasksMap</a>. The task will be automatically
+									canceled when its owner - the ExpressionManager instance - has been destroyed.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>Expression</h4>
+								</li>
+								<li>
+									<h4>ExpressionSpec</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>expressionManager: <a href="index.expressionmanager.html" class="tsd-signature-type" data-tsd-kind="Class">ExpressionManager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Expression</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">ExpressionSpec</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>ExpressionManager that owns this Expression.</p>
+									</div>
+								</li>
+								<li>
+									<h5>index: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Index of the Expression.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Expression</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Promise that resolves with the Expression, or with undefined if it can&#39;t be loaded.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="loadmotion" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> load<wbr>Motion</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">load<wbr>Motion&lt;Motion, MotionSpec&gt;<span class="tsd-signature-symbol">(</span>motionManager<span class="tsd-signature-symbol">: </span><a href="index.motionmanager.html" class="tsd-signature-type" data-tsd-kind="Class">MotionManager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Motion</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">MotionSpec</span><span class="tsd-signature-symbol">&gt;</span>, group<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Motion</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/b51b9cb/src/factory/Live2DFactory.ts#L210">src/factory/Live2DFactory.ts:210</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Loads a Motion and registers the task to <a href="index.live2dfactory.html#motiontasksmap">motionTasksMap</a>. The task will be automatically
+									canceled when its owner - the MotionManager instance - has been destroyed.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>Motion</h4>
+								</li>
+								<li>
+									<h4>MotionSpec</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>motionManager: <a href="index.motionmanager.html" class="tsd-signature-type" data-tsd-kind="Class">MotionManager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Motion</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">MotionSpec</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>MotionManager that owns this Motion.</p>
+									</div>
+								</li>
+								<li>
+									<h5>group: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The motion group.</p>
+									</div>
+								</li>
+								<li>
+									<h5>index: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Index in the motion group.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Motion</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Promise that resolves with the Motion, or with undefined if it can&#39;t be loaded.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="registerruntime" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> register<wbr>Runtime</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">register<wbr>Runtime<span class="tsd-signature-symbol">(</span>runtime<span class="tsd-signature-symbol">: </span><a href="../interfaces/index.live2druntime.html" class="tsd-signature-type" data-tsd-kind="Interface">Live2DRuntime</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/b51b9cb/src/factory/Live2DFactory.ts#L153">src/factory/Live2DFactory.ts:153</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Registers a Live2DRuntime.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>runtime: <a href="../interfaces/index.live2druntime.html" class="tsd-signature-type" data-tsd-kind="Interface">Live2DRuntime</a></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="releasetasks" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> release<wbr>Tasks</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">release<wbr>Tasks<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/b51b9cb/src/factory/Live2DFactory.ts#L338">src/factory/Live2DFactory.ts:338</a></li>
+								</ul>
+							</aside>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="setuplive2dmodel" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> setup<wbr>Live2DModel</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">setup<wbr>Live2DModel&lt;IM&gt;<span class="tsd-signature-symbol">(</span>live2dModel<span class="tsd-signature-symbol">: </span><a href="index.live2dmodel.html" class="tsd-signature-type" data-tsd-kind="Class">Live2DModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IM</span><span class="tsd-signature-symbol">&gt;</span>, source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">IM</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;settings&quot;</span><span class="tsd-signature-symbol">]</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/index.live2dfactoryoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">Live2DFactoryOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/b51b9cb/src/factory/Live2DFactory.ts#L180">src/factory/Live2DFactory.ts:180</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets up a Live2DModel, populating it with all defined resources.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>IM<span class="tsd-signature-symbol">: </span><a href="index.internalmodel.html" class="tsd-signature-type" data-tsd-kind="Class">InternalModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IM</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>live2dModel: <a href="index.live2dmodel.html" class="tsd-signature-type" data-tsd-kind="Class">Live2DModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IM</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The Live2DModel instance.</p>
+									</div>
+								</li>
+								<li>
+									<h5>source: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">IM</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;settings&quot;</span><span class="tsd-signature-symbol">]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Can be one of: settings file URL, settings JSON object, ModelSettings instance.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/index.live2dfactoryoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">Live2DFactoryOptions</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Options for the process.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Promise that resolves when all resources have been loaded, rejects when error occurs.</p>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Modules</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/index.html">index</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/types_events.html">types/events</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
+						<a href="index.live2dfactory.html" class="tsd-kind-icon">Live2DFactory</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="index.live2dfactory.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="index.live2dfactory.html#createinternalmodel" class="tsd-kind-icon">create<wbr>Internal<wbr>Model</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="index.live2dfactory.html#expressiontasksmap" class="tsd-kind-icon">expression<wbr>Tasks<wbr>Map</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="index.live2dfactory.html#jsontosettings" class="tsd-kind-icon">json<wbr>ToSettings</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="index.live2dfactory.html#live2dmodelmiddlewares" class="tsd-kind-icon">live2DModel<wbr>Middlewares</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="index.live2dfactory.html#motiontasksmap" class="tsd-kind-icon">motion<wbr>Tasks<wbr>Map</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="index.live2dfactory.html#runtimes" class="tsd-kind-icon">runtimes</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="index.live2dfactory.html#setupessentials" class="tsd-kind-icon">setup<wbr>Essentials</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="index.live2dfactory.html#setupoptionals" class="tsd-kind-icon">setup<wbr>Optionals</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="index.live2dfactory.html#urltojson" class="tsd-kind-icon">url<wbr>ToJSON</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="index.live2dfactory.html#waituntilready" class="tsd-kind-icon">wait<wbr>Until<wbr>Ready</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="index.live2dfactory.html#findruntime" class="tsd-kind-icon">find<wbr>Runtime</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="index.live2dfactory.html#loadexpression" class="tsd-kind-icon">load<wbr>Expression</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="index.live2dfactory.html#loadmotion" class="tsd-kind-icon">load<wbr>Motion</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="index.live2dfactory.html#registerruntime" class="tsd-kind-icon">register<wbr>Runtime</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="index.live2dfactory.html#releasetasks" class="tsd-kind-icon">release<wbr>Tasks</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="index.live2dfactory.html#setuplive2dmodel" class="tsd-kind-icon">setup<wbr>Live2DModel</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
