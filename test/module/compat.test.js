@@ -70,7 +70,7 @@ describe('Compatibility', function() {
                 const sprite = new Sprite(renderTexture);
 
                 app.stage.addChild(sprite);
-                app.renderer.render(runtime.model2, renderTexture);
+                app.renderer.render(runtime.model2, { renderTexture });
 
                 sprite.scale.set(0.1);
                 sprite.y = app.view.height - sprite.height - offsetY;

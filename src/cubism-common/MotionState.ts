@@ -233,7 +233,7 @@ export class MotionState {
      */
     dump(requestedGroup?: string, requestedIndex?: number): string {
         if (this.debug) {
-            const keys: (keyof this)[] = [
+            const keys: (keyof this & string)[] = [
                 'currentPriority',
                 'reservePriority',
                 'currentGroup',

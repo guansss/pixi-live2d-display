@@ -12,7 +12,7 @@ describe('Browser <script> tag', function() {
             window[key] = env[key];
         }
 
-        await loadScript('../node_modules/pixi.js/dist/pixi.min.js');
+        await loadScript('../node_modules/pixi.js/dist/browser/pixi.min.js');
 
         // prevent Pixi from flagging WebGL as unsupported in headless test
         // https://github.com/pixijs/pixi.js/issues/6109

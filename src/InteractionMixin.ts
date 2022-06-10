@@ -19,9 +19,9 @@ export class InteractionMixin {
     set autoInteract(autoInteract: boolean) {
         if (autoInteract !== this._autoInteract) {
             if (autoInteract) {
-                (this as any as Live2DModel).on('pointertap', onTap, this);
+                (this as any as Live2DModel<any>).on('pointertap', onTap, this);
             } else {
-                (this as any as Live2DModel).off('pointertap', onTap, this);
+                (this as any as Live2DModel<any>).off('pointertap', onTap, this);
             }
 
             this._autoInteract = autoInteract;
@@ -36,7 +36,7 @@ export class InteractionMixin {
     /**
      * Registers interaction by subscribing to the `PIXI.InteractionManager`.
      */
-    registerInteraction(this: Live2DModel, manager?: InteractionManager): void {
+    registerInteraction(this: Live2DModel<any>, manager?: InteractionManager): void {
         if (manager !== this.interactionManager) {
             this.unregisterInteraction();
 
@@ -51,7 +51,7 @@ export class InteractionMixin {
     /**
      * Unregisters interaction.
      */
-    unregisterInteraction(this: Live2DModel): void {
+    unregisterInteraction(this: Live2DModel<any>): void {
         if (this.interactionManager) {
             this.interactionManager?.off('pointermove', onPointerMove, this);
             this.interactionManager = undefined;
@@ -59,10 +59,10 @@ export class InteractionMixin {
     }
 }
 
-function onTap(this: Live2DModel, event: InteractionEvent): void {
+function onTap(this: Live2DModel<any>, event: InteractionEvent): void {
     this.tap(event.data.global.x, event.data.global.y);
 }
 
-function onPointerMove(this: Live2DModel, event: InteractionEvent) {
+function onPointerMove(this: Live2DModel<any>, event: InteractionEvent) {
     this.focus(event.data.global.x, event.data.global.y);
 }

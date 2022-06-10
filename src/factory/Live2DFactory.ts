@@ -188,7 +188,7 @@ export class Live2DFactory {
         const readyEventEmitted = Promise.all([textureLoaded, modelLoaded]).then(() => live2dModel.emit('ready'));
 
         await runMiddlewares(Live2DFactory.live2DModelMiddlewares, {
-            live2dModel,
+            live2dModel: live2dModel as Live2DModel<InternalModel>,
             source,
             options: options || {},
         });

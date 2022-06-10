@@ -114,7 +114,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * The anchor behaves like the one in `PIXI.Sprite`, where `(0, 0)` means the top left
      * and `(1, 1)` means the bottom right.
      */
-    anchor = new ObservablePoint(this.onAnchorChange, this, 0, 0);
+    anchor = new ObservablePoint(this.onAnchorChange, this, 0, 0) as ObservablePoint<any>; // cast the type because it breaks the casting of Live2DModel
 
     /**
      * An ID of Gl context that syncs with `renderer.CONTEXT_UID`. Used to check if the GL context has changed.

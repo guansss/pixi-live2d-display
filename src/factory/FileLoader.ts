@@ -5,7 +5,7 @@ import { url as urlUtils } from '@pixi/utils';
 
 declare global {
     interface File {
-        webkitRelativePath: string;
+        readonly webkitRelativePath: string;
     }
 }
 

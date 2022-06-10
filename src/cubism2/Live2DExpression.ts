@@ -31,7 +31,7 @@ export class Live2DExpression extends AMotion {
     }
 
     /** @override */
-    updateParamExe(model: Live2DModelWebGL, time: DOMTimeStamp, weight: number, motionQueueEnt: unknown) {
+    updateParamExe(model: Live2DModelWebGL, time: number, weight: number, motionQueueEnt: unknown) {
         this.params.forEach(param => {
             // this algorithm seems to be broken for newer Neptunia series models, have no idea
             //
