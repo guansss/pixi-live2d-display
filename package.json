@@ -58,7 +58,7 @@
     "handlebars": "^4.7.7",
     "jszip": "^3.10.0",
     "lodash": "latest",
-    "node-fetch": "^3.2.6",
+    "node-fetch": "^2",
     "pixi.js": "^6.4.2",
     "rimraf": "^3.0.2",
     "sinon": "^14.0.0",
