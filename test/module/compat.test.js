@@ -8,6 +8,9 @@ import { TEST_TEXTURE } from '../env';
 import { delay } from '../utils';
 
 describe('Compatibility', function() {
+    // for some reason these tests may exceed the default timeout (2000ms) in CI
+    this.timeout(5000);
+
     const ITEM_SIZE = 32;
     let itemOriginY = 0;
 

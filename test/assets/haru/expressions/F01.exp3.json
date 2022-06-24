@@ -2,7 +2,7 @@
   "Type": "Live2D Expression",
   "Parameters": [
     {
-      "Id": "ParamMouthForm",
+      "Id": "ParamMouthOpenY",
       "Value": 0.27,
       "Blend": "Add"
     }
