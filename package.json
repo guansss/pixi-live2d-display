@@ -13,7 +13,7 @@
     "setup": "node scripts/setup.js",
     "playground": "webpack serve --config=playground/webpack.playground.config.js",
     "test": "webpack --config=webpack.test.config.js && npx floss --path=build.test --reporter=tap",
-    "test:ci": "yarn build && yarn test",
+    "test:ci": "yarn build && yarn test && yarn type",
     "test:debug": "webpack --config=webpack.test.config.js && npx floss --path=build.test -d",
     "build": "rimraf lib && rimraf dist && webpack --mode=production",
     "pretype": "node scripts/patch-dts-generator.js",
