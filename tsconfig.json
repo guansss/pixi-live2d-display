@@ -17,7 +17,8 @@
       "@cubism/*": ["cubism/src/*"]
     },
     "types": [
-      "node"
+      "node",
+      "offscreencanvas"
     ],
     "lib": [
       "esnext",

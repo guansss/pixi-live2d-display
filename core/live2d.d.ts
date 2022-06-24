@@ -69,7 +69,7 @@ declare class AMotion {
 
     updateParam(model: Live2DModelWebGL, entry: Live2DObfuscated.MotionQueueEnt): void
 
-    updateParamExe(model: Live2DModelWebGL, time: DOMTimeStamp, weight: number, MotionQueueEnt: unknown): unknown;
+    updateParamExe(model: Live2DModelWebGL, time: number, weight: number, MotionQueueEnt: unknown): unknown;
 }
 
 declare class Live2DMotion extends AMotion {
@@ -113,7 +113,7 @@ declare class PhysicsHair {
 
     addTargetParam(type: string, id: string, scale: number, weight: number): unknown;
 
-    update(model: Live2DModelWebGL, time: DOMTimeStamp): unknown;
+    update(model: Live2DModelWebGL, time: number): unknown;
 }
 
 declare class PartsDataID {
