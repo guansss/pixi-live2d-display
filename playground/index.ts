@@ -2,7 +2,7 @@
 // git update-index --skip-worktree test/playground/index.ts
 
 import { Application, Ticker } from 'pixi.js';
-import { Live2DModel } from '../../src';
+import { Live2DModel } from '../src';
 
 Live2DModel.registerTicker(Ticker);
 
@@ -34,7 +34,7 @@ function checkbox(name: string, onChange: (checked: boolean) => void) {
 
     const checkbox = document.getElementById(id) as HTMLInputElement;
 
-    checkbox.addEventListener("change", (ev) => {
+    checkbox.addEventListener('change', (ev) => {
         onChange(checkbox.checked);
     });
 

@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const packageJSON = require('../../package.json');
+const packageJSON = require('../package.json');
 
 const definePlugin = new webpack.DefinePlugin({
     __PRODUCTION__: false,
@@ -8,7 +8,7 @@ const definePlugin = new webpack.DefinePlugin({
 });
 
 module.exports = {
-    entry: './test/playground/index.ts',
+    entry: './playground/index.ts',
     mode: 'development',
     devtool: 'inline-source-map',
     output: {
@@ -17,9 +17,8 @@ module.exports = {
     },
     devServer: {
         hot: true,
-        open: true,
-        openPage: 'test/playground/index.html',
-        contentBase: path.resolve(__dirname, '../../'),
+        open: 'playground/index.html',
+        static: path.resolve(__dirname, '../'),
         historyApiFallback: false,
     },
     module: {
@@ -43,8 +42,8 @@ module.exports = {
     },
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, '../../src'),
-            '@cubism': path.resolve(__dirname, '../../cubism/src'),
+            '@': path.resolve(__dirname, '../src'),
+            '@cubism': path.resolve(__dirname, '../cubism/src'),
         },
         extensions: ['.ts', '.js'],
     },

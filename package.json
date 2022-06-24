@@ -11,7 +11,7 @@
   "license": "MIT",
   "scripts": {
     "setup": "node scripts/setup.js",
-    "playground": "webpack serve --config=test/playground/webpack.playground.config.js",
+    "playground": "webpack serve --config=playground/webpack.playground.config.js",
     "test": "webpack --config=webpack.test.config.js && npx floss --path=build.test --reporter=tap",
     "test:ci": "yarn build && yarn test",
     "test:debug": "webpack --config=webpack.test.config.js && npx floss --path=build.test -d",
