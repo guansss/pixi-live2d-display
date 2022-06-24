@@ -346,11 +346,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             }
         }
 
-        let updated = this.updateParameters(model, now);
-
-        updated = this.expressionManager?.update(model, now) || updated;
-
-        return updated;
+        return this.updateParameters(model, now);
     }
 
     /**
