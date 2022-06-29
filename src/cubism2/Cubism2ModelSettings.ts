@@ -2,13 +2,14 @@ import { ModelSettings } from '@/cubism-common/ModelSettings';
 import { copyArray, copyProperty } from '../utils';
 
 export class Cubism2ModelSettings extends ModelSettings {
-    json!: Cubism2Spec.ModelJSON;
+    declare json: Cubism2Spec.ModelJSON;
 
     // files
     moc: string;
     textures!: string[];
-    pose?: string;
-    physics?: string;
+
+    declare pose?: string;
+    declare physics?: string;
 
     // metadata
     layout?: Cubism2Spec.Layout;

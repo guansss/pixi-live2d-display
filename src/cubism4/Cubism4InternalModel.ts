@@ -33,8 +33,9 @@ export class Cubism4InternalModel extends InternalModel {
 
     breath = CubismBreath.create();
     eyeBlink?: CubismEyeBlink;
-    pose?: CubismPose;
-    physics?: CubismPhysics;
+
+    declare pose?: CubismPose;
+    declare physics?: CubismPhysics;
 
     // what's this for?
     userData?: CubismModelUserData;

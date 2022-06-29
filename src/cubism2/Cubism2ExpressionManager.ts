@@ -8,7 +8,7 @@ export class Cubism2ExpressionManager extends ExpressionManager<Live2DExpression
 
     readonly definitions: Cubism2Spec.Expression[];
 
-    readonly settings!: Cubism2ModelSettings;
+    declare readonly settings: Cubism2ModelSettings;
 
     constructor(settings: Cubism2ModelSettings, options?: MotionManagerOptions) {
         super(settings, options);

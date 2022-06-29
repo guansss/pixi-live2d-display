@@ -21,8 +21,9 @@ export class Cubism2InternalModel extends InternalModel {
     motionManager: Cubism2MotionManager;
 
     eyeBlink?: Live2DEyeBlink;
-    physics?: Live2DPhysics;
-    pose?: Live2DPose;
+
+    declare physics?: Live2DPhysics;
+    declare pose?: Live2DPose;
 
     // parameter indices, cached for better performance
     eyeballXParamIndex: number;

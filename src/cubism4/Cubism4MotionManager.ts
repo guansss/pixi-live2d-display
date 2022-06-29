@@ -17,7 +17,7 @@ export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec
 
     readonly queueManager = new CubismMotionQueueManager();
 
-    readonly settings!: Cubism4ModelSettings;
+    declare readonly settings: Cubism4ModelSettings;
 
     expressionManager?: Cubism4ExpressionManager;
 
