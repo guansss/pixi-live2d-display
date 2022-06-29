@@ -39,6 +39,10 @@ export function readText(url) {
     return fs.readFileSync(resolve(process.cwd() + '/test/', url), 'utf-8');
 }
 
+export function readJSON(url) {
+    return JSON.parse(readText(url));
+}
+
 export function createApp(appClass, visible = true) {
     const app = new appClass({
         width: innerWidth,

@@ -3,7 +3,7 @@
     "experimentalDecorators": true,
     "declaration": true,
     "incremental": true,
-    "target": "ES6",
+    "target": "esnext",
     "module": "esnext",
     "strict": true,
     "moduleResolution": "node",

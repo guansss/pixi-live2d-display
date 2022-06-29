@@ -25,6 +25,7 @@ describe('Compatibility', function() {
         sprite.width = ITEM_SIZE;
         sprite.height = ITEM_SIZE;
         sprite.y = itemOriginY;
+        sprite.zIndex = 100;
 
         app.stage.addChild(sprite);
         app.render();
@@ -54,6 +55,7 @@ describe('Compatibility', function() {
         const graphics = new Graphics();
         graphics.beginFill(0xff0000);
         graphics.drawRect(0, itemOriginY, ITEM_SIZE, ITEM_SIZE);
+        graphics.zIndex = 100;
         app.stage.addChild(graphics);
         app.render();
 

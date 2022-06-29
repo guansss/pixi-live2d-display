@@ -3,6 +3,7 @@
 /// <reference path="../cubism/src/CubismSpec.d.ts"/>
 /// <reference path="types/Cubism2Spec.d.ts"/>
 /// <reference path="types/helpers.d.ts"/>
+/// <reference path="types/env.d.ts"/>
 
 export * from './cubism-common';
 export * from './Live2DModel';

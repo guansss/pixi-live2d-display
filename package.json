@@ -11,11 +11,11 @@
   "license": "MIT",
   "scripts": {
     "setup": "node scripts/setup.js",
-    "playground": "webpack serve --config=playground/webpack.playground.config.js",
-    "test": "webpack --config=webpack.test.config.js && npx floss --path=build.test --reporter=tap",
+    "playground": "vite",
+    "test": "node scripts/build-tests.js && npx floss --path=test.build --reporter=tap",
     "test:ci": "yarn build && yarn test && yarn type",
-    "test:debug": "webpack --config=webpack.test.config.js && npx floss --path=build.test -d",
-    "build": "rimraf lib && rimraf dist && webpack --mode=production",
+    "test:debug": "node scripts/build-tests.js && npx floss --path=test.build -d",
+    "build": "rimraf dist && node scripts/build.js",
     "pretype": "node scripts/patch-dts-generator.js",
     "type": "rimraf types && dts-bundle-generator src/index.ts --no-check --project=tsconfig.build.json -o=types/index.d.ts",
     "posttype": "node scripts/patch-types.js",
@@ -48,7 +48,6 @@
     "@types/lodash": "^4.14.182",
     "@types/node": "17.0.41",
     "@types/offscreencanvas": "^2019.7.0",
-    "@webpack-cli/serve": "^1.6.1",
     "adm-zip": "^0.5.9",
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
@@ -56,7 +55,6 @@
     "dts-bundle-generator": "^6.11.0",
     "electron": "^13",
     "floss": "^5.0.1",
-    "fork-ts-checker-webpack-plugin": "^7.2.11",
     "glob": "^8.0.3",
     "handlebars": "^4.7.7",
     "jszip": "^3.10.0",
@@ -66,12 +64,8 @@
     "rimraf": "^3.0.2",
     "sinon": "^14.0.0",
     "sinon-chai": "^3.7.0",
-    "ts-loader": "^9.3.0",
     "typedoc": "0.22.17",
     "typescript": "^4.7.3",
-    "webpack": "^5.73.0",
-    "webpack-bundle-analyzer": "^4.5.0",
-    "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.9.2"
+    "vite": "^2.9.13"
   }
 }

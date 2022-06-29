@@ -79,11 +79,6 @@ describe('Live2DModel', async () => {
         runtimes.cubism4.model1.x = 550;
         runtimes.cubism4.model2.x = runtimes.cubism2.model1.width;
 
-        // createModel(eksistere, { app, zIndex: 100 }).then(model => {
-        //     model.scale.set(0.5);
-        //     draggable(app, model);
-        // });
-
         app.start();
     });
 
@@ -135,5 +130,5 @@ describe('Live2DModel', async () => {
         app.render();
     });
 
-    require('./compat.test');
+    await import('./compat.test');
 });

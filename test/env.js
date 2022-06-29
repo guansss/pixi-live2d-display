@@ -79,12 +79,11 @@ model4JSON.Layout = TEST_MODEL4.Layout;
 
 Object.defineProperty(TEST_MODEL4, 'json', { get: () => merge({}, model4JSON) });
 
-// preload model data
-
-TEST_MODEL.modelData = readArrayBuffer(urlResolve(TEST_MODEL.file, TEST_MODEL.json.model));
-TEST_MODEL.coreModel = Live2DModelWebGL.loadModel(TEST_MODEL.modelData);
-
 export function setupENV() {
+    // preload model data
+    TEST_MODEL.modelData = readArrayBuffer(urlResolve(TEST_MODEL.file, TEST_MODEL.json.model));
+    TEST_MODEL.coreModel = Live2DModelWebGL.loadModel(TEST_MODEL.modelData);
+    
     TEST_MODEL4.modelData = readArrayBuffer(urlResolve(TEST_MODEL4.file, TEST_MODEL4.json.FileReferences.Moc));
     TEST_MODEL4.coreModel = CubismMoc.create(TEST_MODEL4.modelData).createModel();
 }

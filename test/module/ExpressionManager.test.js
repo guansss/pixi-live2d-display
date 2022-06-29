@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { Cubism4ExpressionManager } from '../../src';
 import { TEST_MODEL4 } from '../env';
+import { readJSON } from '../utils';
 
 describe('ExpressionManager', function () {
     let clock;
@@ -21,7 +22,7 @@ describe('ExpressionManager', function () {
         const epsilon = 1e-5;
 
         const expManager = new Cubism4ExpressionManager(new Cubism4ModelSettings(TEST_MODEL4.json));
-        const expJson = require('../assets/haru/expressions/F01.exp3.json');
+        const expJson = readJSON('assets/haru/expressions/F01.exp3.json');
         const expParamId = expJson.Parameters[0].Id;
         const expParamValue = expJson.Parameters[0].Value;
 

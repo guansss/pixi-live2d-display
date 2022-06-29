@@ -4,7 +4,8 @@ core
 !core/live2d.d.ts
 
 # artifacts
-/build*
+/build
+/*.build
 /lib
 /dist
 /types

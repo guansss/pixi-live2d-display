@@ -7,13 +7,11 @@ export namespace config {
     export const LOG_LEVEL_ERROR = 2;
     export const LOG_LEVEL_NONE = 999;
 
-    declare const __PRODUCTION__: boolean;
-
     /**
      * Global log level.
      * @default {@link LOG_LEVEL_WARNING}
      */
-    export let logLevel = __PRODUCTION__ ? LOG_LEVEL_WARNING : LOG_LEVEL_VERBOSE;
+    export let logLevel = __DEV__ ? LOG_LEVEL_VERBOSE : LOG_LEVEL_WARNING;
 
     /**
      * Enabling sound for motions.
@@ -49,8 +47,6 @@ export namespace config {
         supportMoreMaskDivisions: boolean;
     } | undefined;
 }
-
-declare const __VERSION__: string;
 
 /**
  * Consistent with the `version` in package.json.
