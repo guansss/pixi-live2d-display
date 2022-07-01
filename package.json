@@ -31,9 +31,6 @@
     "types"
   ],
   "types": "types/index.d.ts",
-  "dependencies": {
-    "lodash": "4.17.21"
-  },
   "peerDependencies": {
     "@pixi/core": "^6",
     "@pixi/display": "^6",
@@ -45,7 +42,7 @@
   "devDependencies": {
     "@types/chai": "^4.3.1",
     "@types/chai-as-promised": "^7.1.5",
-    "@types/lodash": "^4.14.182",
+    "@types/lodash-es": "^4.17.6",
     "@types/node": "17.0.41",
     "@types/offscreencanvas": "^2019.7.0",
     "adm-zip": "^0.5.9",
@@ -58,7 +55,7 @@
     "glob": "^8.0.3",
     "handlebars": "^4.7.7",
     "jszip": "^3.10.0",
-    "lodash": "latest",
+    "lodash-es": "^4.17.21",
     "node-fetch": "^2",
     "pixi.js": "^6.4.2",
     "rimraf": "^3.0.2",

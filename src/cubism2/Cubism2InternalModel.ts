@@ -110,13 +110,24 @@ export class Cubism2InternalModel extends InternalModel {
     }
 
     protected getLayout(): CommonLayout {
-        const layout = this.settings.layout || {};
+        const layout: CommonLayout = { ...this.settings.layout };
 
-        return {
-            ...layout,
-            centerX: layout.center_x,
-            centerY: layout.center_y,
-        };
+        if (this.settings.layout) {
+            for (const key of Object.keys(this.settings.layout)) {
+                let commonKey = key;
+
+                if (key === 'center_x') {
+                    commonKey = 'centerX';
+                } else if (key === 'center_y') {
+                    commonKey = 'centerY';
+                }
+
+                // @ts-ignore
+                layout[commonKey] = this.settings.layout[key];
+            }
+        }
+
+        return layout;
     }
 
     updateWebGLContext(gl: WebGLRenderingContext, glContextID: number): void {

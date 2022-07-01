@@ -1,8 +1,7 @@
 import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
 import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
 import { TEST_MODEL, TEST_MODEL4 } from '../env';
-import xor from 'lodash/xor';
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep, xor } from 'lodash-es';
 
 const basicCubism2SettingsJSON = {
     url: 'foo/bar',

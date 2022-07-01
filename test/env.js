@@ -1,7 +1,7 @@
 import { resolve as urlResolve } from 'url';
 import { readArrayBuffer, remoteRequire } from './utils';
 import { CubismMoc } from '@cubism/model/cubismmoc';
-import merge from 'lodash/merge';
+import { merge } from 'lodash-es';
 
 export const shizuku = {
     file: './assets/shizuku/shizuku.model.json',

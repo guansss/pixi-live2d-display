@@ -3,7 +3,7 @@ import { Graphics } from '@pixi/graphics';
 import { Sprite } from '@pixi/sprite';
 import { AlphaFilter } from '@pixi/filter-alpha';
 import { BaseRenderTexture, RenderTexture } from '@pixi/core';
-import chunk from 'lodash/chunk';
+import { chunk } from 'lodash-es';
 import { TEST_TEXTURE } from '../env';
 import { delay } from '../utils';
 

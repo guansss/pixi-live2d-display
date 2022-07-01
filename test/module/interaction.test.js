@@ -1,7 +1,7 @@
 import { RUNTIMES, TEST_MODEL } from '../env';
 import { createApp, createModel } from '../utils';
 import { Application } from '@pixi/app';
-import merge from 'lodash/merge';
+import { merge } from 'lodash-es';
 
 describe('Interactions', function() {
     let app;

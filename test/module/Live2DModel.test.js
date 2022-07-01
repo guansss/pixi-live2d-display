@@ -4,7 +4,7 @@ import { Application } from '@pixi/app';
 import { BatchRenderer, Renderer } from '@pixi/core';
 import { InteractionManager } from '@pixi/interaction';
 import { Ticker, TickerPlugin } from '@pixi/ticker';
-import merge from 'lodash/merge';
+import { merge } from 'lodash-es';
 import { RUNTIMES, TEST_MODEL, TEST_MODEL4 } from '../env';
 import { addBackground, callBefore, createApp, createModel, draggable } from '../utils';
 

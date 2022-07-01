@@ -20,7 +20,6 @@ import { CubismModelUserData } from '@cubism/model/cubismmodeluserdata';
 import { CubismPhysics } from '@cubism/physics/cubismphysics';
 import { CubismRenderer_WebGL, CubismShader_WebGL } from '@cubism/rendering/cubismrenderer_webgl';
 import { Matrix } from '@pixi/math';
-import mapKeys from 'lodash/mapKeys';
 
 const tempMatrix = new CubismMatrix44();
 
@@ -96,9 +95,20 @@ export class Cubism4InternalModel extends InternalModel {
     }
 
     protected getLayout(): CommonLayout {
-        // un-capitalize each key to satisfy the common layout format
-        // e.g. CenterX -> centerX
-        return mapKeys({ ...this.settings.layout }, (_, key) => key.charAt(0).toLowerCase() + key.slice(1));
+        const layout: CommonLayout = {};
+
+        if (this.settings.layout) {
+            // un-capitalize each key to satisfy the common layout format
+            // e.g. CenterX -> centerX
+            for (const key of Object.keys(this.settings.layout)) {
+                const commonKey = key.charAt(0).toLowerCase() + key.slice(1);
+
+                // @ts-ignore
+                layout[commonKey] = this.settings.layout[key];
+            }
+        }
+
+        return layout;
     }
 
     protected setupLayout() {

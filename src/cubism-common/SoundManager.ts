@@ -1,5 +1,4 @@
-import { logger } from '@/utils';
-import pull from 'lodash/pull';
+import { logger, remove } from '@/utils';
 
 const TAG = 'SoundManager';
 const VOLUME = 0.5;
@@ -86,7 +85,7 @@ export class SoundManager {
         audio.pause();
         audio.removeAttribute('src');
 
-        pull(this.audios, audio);
+        remove(this.audios, audio);
     }
 
     /**

@@ -2,7 +2,7 @@ import { config, Cubism2ModelSettings, Cubism4ModelSettings, Live2DModel, Motion
 import { createTexture } from '@/factory/texture';
 import { Application } from '@pixi/app';
 import { Texture } from '@pixi/core';
-import merge from 'lodash/merge';
+import { merge } from 'lodash-es';
 import sinon from 'sinon';
 import { hiyori, TEST_MODEL, TEST_MODEL4, TEST_TEXTURE } from '../env';
 import { createApp, delay } from '../utils';

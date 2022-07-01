@@ -7,7 +7,7 @@ import { Cubism4MotionManager } from '@/cubism4/Cubism4MotionManager';
 import { SoundManager } from '@/cubism-common/SoundManager';
 import { url } from '@pixi/utils';
 import '@/factory';
-import fromPairs from 'lodash/fromPairs';
+import { fromPairs } from 'lodash-es';
 import sinon from 'sinon';
 import { STT } from '../../scripts/motion-stt';
 import { TEST_MODEL, TEST_MODEL4 } from '../env';
