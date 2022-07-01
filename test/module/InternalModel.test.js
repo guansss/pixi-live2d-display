@@ -43,6 +43,23 @@ describe('InternalModel', function() {
         }
     });
 
+    it('should read layout from settings', function () {
+        const model2 = createModel2(TEST_MODEL);
+
+        expect(model2.getLayout()).to.eql({
+            centerX: 0,
+            y: 1.2,
+            width: 2.4,
+        });
+
+        const model4 = createModel4(TEST_MODEL4);
+
+        expect(model4.getLayout()).to.eql({
+            width: 1.8,
+            x: 0.9,
+        });
+    });
+
     it('should provide access to drawables', function() {
         for (const model of [createModel2(TEST_MODEL), createModel4(TEST_MODEL4)]) {
             const drawableIDs = model.getDrawableIDs();

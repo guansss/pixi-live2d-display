@@ -110,7 +110,7 @@ export class Cubism2InternalModel extends InternalModel {
     }
 
     protected getLayout(): CommonLayout {
-        const layout: CommonLayout = { ...this.settings.layout };
+        const layout: CommonLayout = {};
 
         if (this.settings.layout) {
             for (const key of Object.keys(this.settings.layout)) {
