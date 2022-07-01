@@ -5,6 +5,7 @@ const entries = [
     { entry: 'src/csm2.ts', name: 'cubism2' },
     { entry: 'src/csm4.ts', name: 'cubism4' },
     { entry: 'src/index.ts', name: 'index' },
+    { entry: 'src/extra.ts', name: 'extra' },
 ];
 
 const profiles = entries.flatMap(({ entry, name }) =>

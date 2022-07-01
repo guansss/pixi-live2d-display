@@ -62,10 +62,7 @@ export class HitAreaFrames extends Graphics {
         const scale = 1 / Math.sqrt(this.transform.worldTransform.a ** 2 + this.transform.worldTransform.b ** 2);
 
         this.texts.forEach(text => {
-            (
-                // correct the type definition of this method, the official definition is wrong!
-                this.lineStyle as any as (options: { width?: number, color?: number }) => void
-            )({
+            this.lineStyle({
                 width: this.strokeWidth * scale,
                 color: text.visible ? this.activeColor : this.normalColor,
             });
