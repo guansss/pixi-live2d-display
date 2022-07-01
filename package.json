@@ -2,7 +2,22 @@
   "name": "pixi-live2d-display",
   "version": "0.4.0-beta",
   "description": "Live2D plugin for PixiJS",
-  "main": "lib/index.js",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.js"
+    },
+    "./cubism2": {
+      "import": "./dist/cubism2.es.js",
+      "require": "./dist/cubism2.js"
+    },
+    "./cubism4": {
+      "import": "./dist/cubism4.es.js",
+      "require": "./dist/cubism4.js"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/guansss/pixi-live2d-display.git"
@@ -24,7 +39,6 @@
     "prepublishOnly": "yarn build && yarn test && yarn type"
   },
   "files": [
-    "lib",
     "dist",
     "src",
     "cubism/src",
