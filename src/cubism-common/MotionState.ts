@@ -1,4 +1,5 @@
 import { logger } from '@/utils';
+import { config } from '../config';
 
 /**
  * Indicates the motion priority.
@@ -225,7 +226,7 @@ export class MotionState {
      * Checks if the model's expression should be overridden by the motion.
      */
     shouldOverrideExpression(): boolean {
-        return this.currentPriority > MotionPriority.IDLE;
+        return !config.preserveExpressionOnMotion && this.currentPriority > MotionPriority.IDLE;
     }
 
     /**

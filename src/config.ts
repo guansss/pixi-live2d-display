@@ -38,6 +38,11 @@ export namespace config {
      */
     export let expressionFadingDuration = 500;
 
+    /**
+     * If false, expression will be reset to default when playing non-idle motions.
+     */
+    export let preserveExpressionOnMotion = true;
+
     export let cubism4: {
         /**
          * Should masks support 4x4 division, which is unofficial and experimental.
