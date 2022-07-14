@@ -26,6 +26,7 @@ export default defineConfig(({ command, mode }) => {
                     return id.startsWith('@pixi/');
                 },
                 output: {
+                    extend: true,
                     globals(id: string) {
                         if (id.startsWith('@pixi/')) {
                             return require(`./node_modules/${id}/package.json`).namespace || 'PIXI';
