@@ -1,6 +1,6 @@
 // required globals: assert, TEST_MODEL, createApp
 
-(function() {
+(function () {
     let model;
 
     const app = createApp(PIXI.Application);
@@ -14,12 +14,19 @@
 
         model.y = -100;
 
-        model.on('hit', hitAreas => hitAreas.includes('body') && model.motion('tap_body'));
+        model.on('hit', (hitAreas) => hitAreas.includes('body') && model.motion('tap_body'));
 
         app.stage.addChild(model);
     }
 
+    function useExtra() {
+        const hitAreaFrames = new PIXI.live2d.HitAreaFrames();
+
+        model.addChild(hitAreaFrames);
+    }
+
     window.BrowserTest = {
         loadModel,
+        useExtra,
     };
 })();
