@@ -46,7 +46,7 @@ eval(
 );
 
 async function startUp() {
-    await require('@/cubism4/setup').cubism4Ready();
+    await require('@/cubism4/startup').startUpCubism4();
     require('./env').setupENV();
 }
 
