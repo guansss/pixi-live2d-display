@@ -13,7 +13,9 @@ Renderer.registerPlugin('batch', BatchRenderer);
 Renderer.registerPlugin('interaction', InteractionManager);
 Live2DModel.registerTicker(Ticker);
 
-describe('Live2DModel', async () => {
+describe('Live2DModel', async function() {
+    this.timeout(5000);
+
     window.runtimes = merge({}, RUNTIMES, {
         cubism2: {
             model1: undefined,
