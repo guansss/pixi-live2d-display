@@ -5,7 +5,7 @@ import { Live2DFactory } from '@/factory/Live2DFactory';
 import { Renderer, Texture } from '@pixi/core';
 import { Container } from '@pixi/display';
 import { Matrix, ObservablePoint, Point, Rectangle } from '@pixi/math';
-import { Ticker } from '@pixi/ticker';
+import type { Ticker } from '@pixi/ticker';
 import { InteractionMixin } from './InteractionMixin';
 import { Live2DTransform } from './Live2DTransform';
 import { applyMixins, logger } from './utils';
@@ -28,8 +28,9 @@ export interface Live2DModelOptions extends MotionManagerOptions {
 const tempPoint = new Point();
 const tempMatrix = new Matrix();
 
-// a reference to Ticker class, defaults to window.PIXI.Ticker (when loaded by a <script> tag)
-let TickerClass: typeof Ticker | undefined = (window as any).PIXI?.Ticker;
+// a reference to Ticker class, defaults to window.PIXI.Ticker
+type TickerClass = typeof Ticker;
+let tickerRef: TickerClass | undefined;
 
 export interface Live2DModel<IM extends InternalModel = InternalModel> extends InteractionMixin {}
 
@@ -88,8 +89,8 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     /**
      * Registers the class of `PIXI.Ticker` for auto updating.
      */
-    static registerTicker(tickerClass: typeof Ticker): void {
-        TickerClass = tickerClass;
+    static registerTicker(tickerClass: TickerClass): void {
+        tickerRef = tickerClass;
     }
 
     /**
@@ -141,10 +142,12 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     }
 
     set autoUpdate(autoUpdate: boolean) {
+        tickerRef ||= (window as any).PIXI?.Ticker;
+
         if (autoUpdate) {
             if (!this._destroyed) {
-                if (TickerClass) {
-                    TickerClass.shared.add(this.onTickerUpdate, this);
+                if (tickerRef) {
+                    tickerRef.shared.add(this.onTickerUpdate, this);
 
                     this._autoUpdate = true;
                 } else {
@@ -152,7 +155,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
                 }
             }
         } else {
-            TickerClass?.shared.remove(this.onTickerUpdate, this);
+            tickerRef?.shared.remove(this.onTickerUpdate, this);
 
             this._autoUpdate = false;
         }
@@ -316,7 +319,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * An update callback to be added to `PIXI.Ticker` and invoked every tick.
      */
     onTickerUpdate(): void {
-        this.update(TickerClass!.shared.deltaMS);
+        this.update(tickerRef!.shared.deltaMS);
     }
 
     /**
