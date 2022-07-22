@@ -1,3 +1,4 @@
+import './check-runtime';
 import './patch-motion';
 
 export * from './Cubism2ExpressionManager';

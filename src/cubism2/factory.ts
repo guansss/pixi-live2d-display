@@ -3,7 +3,6 @@ import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
 import { Live2DPhysics } from '@/cubism2/Live2DPhysics';
 import { Live2DPose } from '@/cubism2/Live2DPose';
 import { Live2DFactory, Live2DFactoryOptions } from '@/factory/Live2DFactory';
-import { ensureRuntime } from './ensure-runtime';
 
 Live2DFactory.registerRuntime({
     version: 2,
@@ -12,8 +11,8 @@ Live2DFactory.registerRuntime({
         return source instanceof Cubism2ModelSettings || Cubism2ModelSettings.isValidJSON(source);
     },
 
-    async ready(): Promise<void> {
-        ensureRuntime();
+    ready(): Promise<void> {
+        return Promise.resolve();
     },
 
     isValidMoc(modelData: ArrayBuffer): boolean {
