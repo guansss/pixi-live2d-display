@@ -15,6 +15,9 @@ export default defineConfig(({ command, mode }) => {
                 '@cubism': path.resolve(__dirname, 'cubism/src'),
             },
         },
+        server: {
+            open: '/playground/index.html',
+        },
         build: {
             target: 'es6',
             lib: {
