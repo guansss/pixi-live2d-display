@@ -1,6 +1,6 @@
 {
   "name": "pixi-live2d-display",
-  "version": "0.4.0-beta",
+  "version": "0.4.0-beta.2",
   "description": "Live2D plugin for PixiJS",
   "main": "dist/index.js",
   "exports": {
