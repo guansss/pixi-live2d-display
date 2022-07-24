@@ -6,13 +6,13 @@
 
 [:person_fencing: 中文版readme](README.zh.md)
 
-Live2D integration for [PixiJS](https://github.com/pixijs/pixi.js) v5.
+> :warning: This readme is for v0.4.0, if you're looking for v0.3.1, see [this](https://github.com/guansss/pixi-live2d-display/blob/dfa7f764f241c1c802e92a7ab490206369746efd/README.md).
+
+Live2D integration for [PixiJS](https://github.com/pixijs/pixi.js) v6.
 
 This project aims to be a universal Live2D framework on the web platform. While the official Live2D framework is just
 complex and problematic, this project has rewritten it to unify and simplify the APIs, which allows you to control the
 Live2D models on a high level without the need to learn how the internal system works.
-
-More details can be found in the [Documentation](https://guansss.github.io/pixi-live2d-display).
 
 #### Features
 
@@ -24,17 +24,22 @@ More details can be found in the [Documentation](https://guansss.github.io/pixi-
 - Loading from uploaded files / zip files (experimental)
 - Fully typed - we all love types!
 
-#### Requirement
+#### Requirements
 
-- PixiJS: > 5.2.0 (lower versions were not tested)
+- PixiJS: >6
 - Browser: WebGL, ES6
 
-#### Demo
+#### Demos
 
 - [Basic demo](https://codepen.io/guansss/pen/oNzoNoz/left?editors=1010)
 - [Interaction demo](https://codepen.io/guansss/pen/KKgXBOP/left?editors=0010)
 - [Render texture & filter demo](https://codepen.io/guansss/pen/qBaMNQV/left?editors=1010)
 - [Live2D Viewer Online](https://guansss.github.io/live2d-viewer-web/)
+
+#### Documentations
+
+- [Documentation](https://guansss.github.io/pixi-live2d-display)
+- [API Documentation](https://guansss.github.io/pixi-live2d-display/api/index.html)
 
 ## Cubism
 
@@ -79,7 +84,7 @@ To make it clear, here's how you would use these files:
 #### Via npm
 
 ```sh
-npm install pixi-live2d-display
+npm install pixi-live2d-display@beta
 ```
 
 ```js
@@ -95,34 +100,28 @@ import { Live2DModel } from 'pixi-live2d-display/lib/cubism4';
 #### Via CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@beta/dist/index.min.js"></script>
 
 <!-- if only Cubism 2.1 -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@beta/dist/cubism2.min.js"></script>
 
 <!-- if only Cubism 4 -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@beta/dist/cubism4.min.js"></script>
 ```
 
 In this way, all the exported members are available under `PIXI.live2d` namespace, such as `PIXI.live2d.Live2DModel`.
 
-## Usage
-
-### Basic
+## Basic usage
 
 ```javascript
 import * as PIXI from 'pixi.js';
+import { Live2DModel } from 'pixi-live2d-display';
 
-// with a global PIXI variable, this plugin can automatically take
-// the needed functionality from it, such as window.PIXI.Ticker
+// expose PIXI to window so that this plugin is able to
+// reference window.PIXI.Ticker to automatically update Live2D models
 window.PIXI = PIXI;
 
-// accordingly, here we should use require() to import the module,
-// instead of the import statement because the latter will be hoisted
-// over the above assignment when compiling the script
-const { Live2DModel } = require('pixi-live2d-display');
-
-async function main() {
+(async function () {
     const app = new PIXI.Application({
         view: document.getElementById('canvas')
     });
@@ -145,29 +144,32 @@ async function main() {
             model.motion('tap_body');
         }
     });
-}
+})();
 ```
 
-### Package importing
+## Package importing
 
-Pixi provides separate packages, which allows you to import only the necessary packages rather than the entire bundle.
-In this case, you'll need to manually register the optional components if you want to make use of their features.
+When importing Pixi packages on-demand, you may need to manually register some plugins to enable optional features.
 
 ```javascript
 import { Application } from '@pixi/app';
-import { Renderer } from '@pixi/core';
-import { Ticker, TickerPlugin } from '@pixi/ticker';
+import { extensions } from '@pixi/core';
+import { Ticker } from '@pixi/ticker';
 import { InteractionManager } from '@pixi/interaction';
 import { Live2DModel } from 'pixi-live2d-display';
 
-// register the Ticker to support automatic updating of Live2D models
-Application.registerPlugin(TickerPlugin);
+extensions.add(
+    // register Ticker for Application
+    TickerPlugin,
+
+    // register InteractionManager to make Live2D models interactive
+    InteractionManager
+);
+
+// register Ticker for Live2DModel
 Live2DModel.registerTicker(Ticker);
 
-// register the InteractionManager to support automatic interaction of Live2D models
-Renderer.registerPlugin('interaction', InteractionManager);
-
-async function main() {
+(async function () {
     const app = new Application({
         view: document.getElementById('canvas')
     });
@@ -175,7 +177,7 @@ async function main() {
     const model = await Live2DModel.from('shizuku.model.json');
 
     app.stage.addChild(model);
-}
+})();
 ```
 
 ---

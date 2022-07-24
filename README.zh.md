@@ -4,7 +4,9 @@
 ![Cubism version](https://img.shields.io/badge/Cubism-2/3/4-ff69b4?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/guansss/pixi-live2d-display/Test%20CI?style=flat-square)
 
-为 [PixiJS](https://github.com/pixijs/pixi.js) v5 提供的 Live2D 插件
+> :warning: 该 readme 版本为 v0.4.0，如果要找 v0.3.1 版本的话, 请查看[这里](https://github.com/guansss/pixi-live2d-display/blob/dfa7f764f241c1c802e92a7ab490206369746efd/README.md).
+
+为 [PixiJS](https://github.com/pixijs/pixi.js) v6 提供的 Live2D 插件
 
 此项目旨在成为 web 平台上的通用 Live2D 框架。由于 Live2D 的官方框架非常复杂且不可靠，这个项目已将其重写以提供统一且简单的 API，使你可以从较高的层次来控制 Live2D 模型而无需了解其内部的工作原理
 
@@ -20,7 +22,7 @@
 
 #### 要求
 
-- PixiJS：> 5.2.0 （更低的版本尚未测试）
+- PixiJS：>6
 - 浏览器：WebGL， ES6
 
 #### 示例
@@ -32,8 +34,9 @@
 
 #### 文档
 
-- [Wiki](https://github.com/guansss/pixi-live2d-display/wiki)
-- [API 文档](https://guansss.github.io/pixi-live2d-display/)
+- [文档](https://guansss.github.io/pixi-live2d-display)（暂无中文翻译）
+- [API 文档](https://guansss.github.io/pixi-live2d-display/api/index.html)
+
 
 ## Cubism
 
@@ -72,7 +75,7 @@ Cubism 2.1 需要加载 `live2d.min.js`，[从 2019/9/4 起](https://help.live2d
 #### 通过 npm
 
 ```sh
-npm install pixi-live2d-display
+npm install pixi-live2d-display@beta
 ```
 
 ```js
@@ -89,35 +92,29 @@ import { Live2DModel } from 'pixi-live2d-display/lib/cubism4';
 
 ```html
 
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@beta/dist/index.min.js"></script>
 
 <!-- 如果只需要 Cubism 2.1 -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@beta/dist/cubism2.min.js"></script>
 
 <!-- 如果只需要 Cubism 4 -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@beta/dist/cubism4.min.js"></script>
 ```
 
 通过这种方式加载的话，所有成员都会被导出到 `PIXI.live2d` 命名空间下，比如 `PIXI.live2d.Live2DModel`
 
-## 使用
-
-### 基础
+## 基础使用
 
 ```javascript
 import * as PIXI from 'pixi.js';
+import { Live2DModel } from 'pixi-live2d-display';
 
-// 如果存在全局的 PIXI 变量，该插件会自动引用所需的功能，比如 window.PIXI.Ticker
+// 将 PIXI 暴露到 window 上，这样插件就可以通过 window.PIXI.Ticker 来自动更新模型
 window.PIXI = PIXI;
 
-// 所以，这里需要使用 require() 来导入模块而不是 import 语句，因为后者会在编译时被
-// 提升（hoist）到上面赋值语句的前面
-const { Live2DModel } = require('pixi-live2d-display');
-
-async function main() {
+(async function () {
     const app = new PIXI.Application({
-        view: document.getElementById('canvas'),
-        autoStart: true
+        view: document.getElementById('canvas')
     });
 
     const model = await Live2DModel.from('shizuku.model.json');
@@ -138,38 +135,41 @@ async function main() {
             model.motion('tap_body');
         }
     });
-}
+})();
 ```
 
-### 包导入
+## 包导入
 
-Pixi 提供了单独的包以支持按需导入，在这种情况下，如果想要使用某些功能，则需要手动注册相应的组件
+ 当按需导入 Pixi 的包时，需要手动注册相应的组件来启用可选功能
 
 ```javascript
 import { Application } from '@pixi/app';
-import { Renderer } from '@pixi/core';
-import { Ticker, TickerPlugin } from '@pixi/ticker';
+import { extensions } from '@pixi/core';
+import { Ticker } from '@pixi/ticker';
 import { InteractionManager } from '@pixi/interaction';
 import { Live2DModel } from 'pixi-live2d-display';
 
-// 注册 Ticker 以支持 Live2D 模型的自动更新
-Application.registerPlugin(TickerPlugin);
+extensions.add(
+    // 为 Application 注册 Ticker
+    TickerPlugin,
+
+    // 注册 InteractionManager 以支持 Live2D 模型的自动交互
+    InteractionManager
+);
+
+// 为 Live2DModel 注册 Ticker
 Live2DModel.registerTicker(Ticker);
 
-// 注册 InteractionManager 以支持 Live2D 模型的自动交互
-Renderer.registerPlugin('interaction', InteractionManager);
-
-async function main() {
-    const app = new Application();
+(async function () {
+    const app = new Application({
+        view: document.getElementById('canvas')
+    });
 
     const model = await Live2DModel.from('shizuku.model.json');
 
     app.stage.addChild(model);
-}
+})();
 ```
-
-有关更多信息，请访问 [Wiki](https://github.com/guansss/pixi-live2d-display/wiki)
-（暂无中文翻译）
 
 ---
 
