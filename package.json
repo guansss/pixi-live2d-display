@@ -5,16 +5,24 @@
   "main": "dist/index.js",
   "exports": {
     ".": {
+      "types": "./types/index.d.ts",
       "import": "./dist/index.es.js",
       "require": "./dist/index.js"
     },
     "./cubism2": {
+      "types": "./types/index.d.ts",
       "import": "./dist/cubism2.es.js",
       "require": "./dist/cubism2.js"
     },
     "./cubism4": {
+      "types": "./types/index.d.ts",
       "import": "./dist/cubism4.es.js",
       "require": "./dist/cubism4.js"
+    },
+    "./extra": {
+      "types": "./types/extra.d.ts",
+      "import": "./dist/extra.es.js",
+      "require": "./dist/extra.js"
     }
   },
   "repository": {
@@ -31,7 +39,7 @@
     "test:debug": "node scripts/build-tests.js && npx floss --path=test.build -d",
     "build": "rimraf dist && node scripts/build.js",
     "pretype": "node scripts/patch-dts-generator.js",
-    "type": "rimraf types && dts-bundle-generator src/index.ts --no-check --project=tsconfig.build.json -o=types/index.d.ts",
+    "type": "rimraf types && dts-bundle-generator src/index.ts --no-check --project=tsconfig.build.json -o=types/index.d.ts && dts-bundle-generator src/extra.ts --no-check --project=tsconfig.build.json -o=types/extra.d.ts ",
     "posttype": "node scripts/patch-types.js",
     "doc": "rimraf \"docs/!(.git|.nojekyll)\" && node scripts/gen-docs.js",
     "deploy": "cd docs && git add -A && git commit -m \"Update docs\" && git push",
