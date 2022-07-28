@@ -237,11 +237,10 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         // and a model being rendered will always get transform updated
         this.toModelPosition(tempPoint, tempPoint, true);
 
-        this.internalModel.focusController.focus(
-            (tempPoint.x / this.internalModel.originalWidth) * 2 - 1,
-            -((tempPoint.y / this.internalModel.originalHeight) * 2 - 1),
-            instant,
-        );
+        let tx = (tempPoint.x / this.internalModel.originalWidth) * 2 - 1
+        let ty = (tempPoint.y / this.internalModel.originalHeight) * 2 - 1
+        let radian = Math.atan2(ty, tx);
+        this.internalModel.focusController.focus(Math.cos(radian), -Math.sin(radian), instant);
     }
 
     /**
