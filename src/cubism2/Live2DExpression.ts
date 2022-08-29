@@ -1,4 +1,5 @@
 import { config } from '@/config';
+import { Cubism2Spec } from '../types/Cubism2Spec';
 
 export class Live2DExpression extends AMotion {
     readonly params: NonNullable<Cubism2Spec.ExpressionJSON['params']> = [];

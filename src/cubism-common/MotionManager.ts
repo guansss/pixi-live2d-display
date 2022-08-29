@@ -5,6 +5,8 @@ import { MotionPriority, MotionState } from '@/cubism-common/MotionState';
 import { SoundManager } from '@/cubism-common/SoundManager';
 import { logger } from '@/utils';
 import { EventEmitter } from '@pixi/utils';
+import { Live2DFactory } from '../factory';
+import { JSONObject, Mutable } from '../types/helpers';
 
 export interface MotionManagerOptions {
     /**
@@ -179,7 +181,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             return this.motionGroups[group]![index]!;
         }
 
-        const motion = await this._loadMotion(group, index);
+        const motion = await Live2DFactory.loadMotion(this, group, index);
 
         if (this.destroyed) {
             return;
@@ -188,15 +190,6 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         this.motionGroups[group]![index] = motion ?? null;
 
         return motion;
-    }
-
-    // TODO: remove
-    /**
-     * Loads the Motion. Will be implemented by Live2DFactory.
-     * @ignore
-     */
-    private _loadMotion(group: string, index: number): Promise<Motion | undefined> {
-        throw new Error('Not implemented.');
     }
 
     /**
@@ -372,7 +365,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
 
     /**
      * Creates a Motion from the data.
-     * @param data - Content of the motion file. The format must be consistent with {@link motionDataType}.
+     * @param data - Content of the motion file. The format must be consistent with {@link MotionManager#motionDataType}.
      * @param group - The motion group.
      * @param definition - The motion definition.
      * @return The created Motion.

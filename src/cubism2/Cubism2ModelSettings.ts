@@ -1,4 +1,5 @@
 import { ModelSettings } from '@/cubism-common/ModelSettings';
+import { Cubism2Spec } from '../types/Cubism2Spec';
 import { copyArray, copyProperty } from '../utils';
 
 export class Cubism2ModelSettings extends ModelSettings {

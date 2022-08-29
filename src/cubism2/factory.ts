@@ -3,6 +3,7 @@ import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
 import { Live2DPhysics } from '@/cubism2/Live2DPhysics';
 import { Live2DPose } from '@/cubism2/Live2DPose';
 import { Live2DFactory, Live2DFactoryOptions } from '@/factory/Live2DFactory';
+import { Cubism2Spec } from '../types/Cubism2Spec';
 
 Live2DFactory.registerRuntime({
     version: 2,

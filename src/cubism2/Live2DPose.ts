@@ -1,4 +1,5 @@
 import { clamp } from '@/utils';
+import { Cubism2Spec } from '../types/Cubism2Spec';
 
 class Live2DPartsParam {
     paramIndex = -1;

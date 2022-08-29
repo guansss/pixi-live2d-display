@@ -1,3 +1,5 @@
+import { Cubism2Spec } from "../types/Cubism2Spec";
+
 const SRC_TYPE_MAP = {
     x: PhysicsHair.Src.SRC_TO_X,
     y: PhysicsHair.Src.SRC_TO_Y,

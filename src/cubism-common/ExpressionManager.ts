@@ -2,12 +2,15 @@ import { ModelSettings } from '@/cubism-common/ModelSettings';
 import { MotionManagerOptions } from '@/cubism-common/MotionManager';
 import { logger } from '@/utils';
 import { EventEmitter } from '@pixi/utils';
+import { Live2DFactory } from '../factory';
+import { ExpressionManagerEvents } from '../types/events';
+import { JSONObject, Mutable } from '../types/helpers';
 
 /**
  * Abstract expression manager.
  * @emits {@link ExpressionManagerEvents}
  */
-export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> extends EventEmitter {
+export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> extends EventEmitter<keyof ExpressionManagerEvents> {
     /**
      * Tag for logging.
      */
@@ -37,7 +40,7 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
     defaultExpression!: Expression;
 
     /**
-     * Current Expression. This will not be overwritten by the {@link defaultExpression}.
+     * Current Expression. This will not be overwritten by {@link ExpressionManager#defaultExpression}.
      */
     currentExpression!: Expression;
 
@@ -90,19 +93,11 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
             return this.expressions[index] as Expression;
         }
 
-        const expression = await this._loadExpression(index);
+        const expression = await Live2DFactory.loadExpression(this, index);
 
         this.expressions[index] = expression;
 
         return expression;
-    }
-
-    /**
-     * Loads the Expression. Will be implemented by Live2DFactory.
-     * @ignore
-     */
-    private _loadExpression(index: number): Promise<Expression | undefined> {
-        throw new Error('Not implemented.');
     }
 
     /**
@@ -134,7 +129,7 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
     }
 
     /**
-     * Resets model's expression using {@link defaultExpression}.
+     * Resets model's expression using {@link ExpressionManager#defaultExpression}.
      */
     resetExpression(): void {
         this._setExpression(this.defaultExpression);
@@ -225,7 +220,7 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
     /**
      * Creates an Expression from the data.
      * @param data - Content of the expression file.
-     * @param definition - The expression definition. Can be undefined when creating the {@link defaultExpression}.
+     * @param definition - The expression definition. Can be undefined in order to create {@link ExpressionManager#defaultExpression}.
      * @return The created Expression.
      */
     abstract createExpression(data: JSONObject, definition: ExpressionSpec | undefined): Expression;

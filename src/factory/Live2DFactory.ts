@@ -11,6 +11,7 @@ import {
     urlToJSON,
     waitUntilReady,
 } from '@/factory/model-middlewares';
+import { JSONObject } from '../types/helpers';
 
 export interface Live2DFactoryOptions extends Live2DModelOptions {
     /**
@@ -343,11 +344,3 @@ export class Live2DFactory {
         }
     }
 }
-
-(MotionManager.prototype as any)._loadMotion = function(this: MotionManager, group: string, index: number) {
-    return Live2DFactory.loadMotion(this, group, index);
-};
-
-(ExpressionManager.prototype as any)._loadExpression = function(this: ExpressionManager, index: number) {
-    return Live2DFactory.loadExpression(this, index);
-};

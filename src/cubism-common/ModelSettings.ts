@@ -1,5 +1,6 @@
 import { folderName } from '@/utils';
 import { url } from '@pixi/utils';
+import { JSONObject } from '../types/helpers';
 
 /**
  * Parses, and provides access to the settings JSON.

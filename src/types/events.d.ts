@@ -1,135 +1,117 @@
 import { InternalModel, ModelSettings } from '@/cubism-common';
 import { Texture } from '@pixi/core';
+import { JSONObject } from './helpers';
 
-declare interface Live2DModelEvents {
+export interface Live2DModelEvents {
     /**
-     * One or more hit areas are hit.
-     * @event hit
-     * @param The names of *hit* hit areas.
+     * @event - One or more hit areas are hit.
+     * @param - The names of *hit* hit areas.
      */
     hit: [string[]];
 
     /**
-     * The settings JSON has been loaded.
-     * @event settingsJSONLoaded
-     * @param The settings JSON object.
+     * @event - The settings JSON has been loaded.
+     * @param - The settings JSON object.
      */
-    settingsJSONLoaded: [any];
+    settingsJSONLoaded: [JSONObject];
 
     /**
-     * The ModelSettings has been loaded.
-     * @event settingsLoaded
-     * @param The ModelSettings instance.
+     * @event - The ModelSettings has been loaded.
+     * @param - The ModelSettings instance.
      */
     settingsLoaded: [ModelSettings];
 
     /**
-     * The textures have all been loaded.
-     * @event textureLoaded
-     * @param The texture array.
+     * @event - The textures have all been loaded.
+     * @param - The texture array.
      */
     textureLoaded: [Texture[]];
 
     /**
-     * The InternalModel has been loaded.
-     * @event modelLoaded
-     * @param The InternalModel instance.
+     * @event - The InternalModel has been loaded.
+     * @param - The InternalModel instance.
      */
     modelLoaded: [InternalModel];
 
     /**
-     * The Pose has been loaded.
-     * @event poseLoaded
-     * @param The Pose instance, varies in different Cubism version.
+     * @event - The Pose has been loaded.
+     * @param - The Pose instance, varies in different Cubism version.
      */
-    poseLoaded: [any];
+    poseLoaded: [unknown];
 
     /**
-     * The Physics has been loaded.
-     * @event physicsLoaded
-     * @param The Physics instance, varies in different Cubism version.
+     * @event - The Physics has been loaded.
+     * @param - The Physics instance, varies in different Cubism version.
      */
-    physicsLoaded: [any];
+    physicsLoaded: [unknown];
 
     /**
-     * All the essential resources have been loaded.
-     * @event ready
+     * @event - All the essential resources have been loaded.
      */
     ready: [];
 
     /**
-     * All the resources have been loaded.
-     * @event load
+     * @event - All the resources have been loaded.
      */
     load: [];
 }
 
-declare interface MotionManagerEvents<Motion = any> {
+export interface MotionManagerEvents<Motion = any> {
     /**
-     * A Motion has been loaded.
-     * @event motionLoaded
-     * @param The Motion instance, varies in different Cubism version.
+     * @event - A Motion has been loaded.
+     * @param - The Motion instance, varies in different Cubism version.
      */
     motionLoaded: [Motion];
 
     /**
-     * An error occurs when loading a Motion.
-     * @event motionLoadError
-     * @param The error.
+     * @event - An error occurs when loading a Motion.
+     * @param - The error.
      */
-    motionLoadError: [any];
+    motionLoadError: [unknown];
 
     /**
-     * Before destroyed.
-     * @event destroy
+     * @event - Before destroyed.
      */
     destroy: [];
 }
 
-declare interface ExpressionManagerEvents<Expression = any> {
+export interface ExpressionManagerEvents<Expression = any> {
     /**
-     * An Expression has been loaded.
-     * @event expressionLoaded
-     * @param The Expression instance, varies in different Cubism version.
+     * @event - An Expression has been loaded.
+     * @param - The Expression instance, varies in different Cubism version.
      */
     expressionLoaded: [Expression];
 
     /**
-     * An error occurs when loading an Expression.
-     * @event expressionLoadError
-     * @param The error.
+     * @event - An error occurs when loading an Expression.
+     * @param - The error.
      */
-    expressionLoadError: [any];
+    expressionLoadError: [unknown];
 
     /**
-     * Before destroyed.
-     * @event destroy
+     * @event - Before destroyed.
      */
     destroy: [];
 }
 
-declare interface InternalModelEvents {
+export interface InternalModelEvents {
     /**
-     * Before the model's parameters are updated by the motion.
-     * @event beforeMotionUpdate
+     * @event - Before the model's parameters are updated by the motion.
      */
     beforeMotionUpdate: [];
 
     /**
-     * After the model's parameters are updated by the motion.
-     * @event afterMotionUpdate
+     * @event - After the model's parameters are updated by the motion.
      */
     afterMotionUpdate: [];
 
     /**
-     * Before the model is updated with its parameters applied.
-     * @event beforeModelUpdate
+     * @event - Before the model is updated with its parameters applied.
      */
     beforeModelUpdate: [];
 
     /**
-     * Before destroyed.
-     * @event destroy
+     * @event - Before destroyed.
      */
     destroy: [];
 }

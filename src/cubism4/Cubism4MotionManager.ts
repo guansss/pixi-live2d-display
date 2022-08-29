@@ -2,11 +2,13 @@ import { config } from '@/config';
 import { MotionManager, MotionManagerOptions } from '@/cubism-common/MotionManager';
 import { Cubism4ExpressionManager } from '@/cubism4/Cubism4ExpressionManager';
 import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
+import { CubismSpec } from '@cubism/CubismSpec';
 import { CubismModel } from '@cubism/model/cubismmodel';
 import { ACubismMotion } from '@cubism/motion/acubismmotion';
 import { CubismMotion } from '@cubism/motion/cubismmotion';
 import { CubismMotionJson } from '@cubism/motion/cubismmotionjson';
 import { CubismMotionQueueManager } from '@cubism/motion/cubismmotionqueuemanager';
+import { Mutable } from '../types/helpers';
 
 export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec.Motion> {
     readonly definitions: Partial<Record<string, CubismSpec.Motion[]>>;

@@ -3,6 +3,8 @@ import { Cubism2ExpressionManager } from '@/cubism2/Cubism2ExpressionManager';
 import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
 import './patch-motion';
 import { config } from '@/config';
+import { Cubism2Spec } from '../types/Cubism2Spec';
+import { Mutable } from '../types/helpers';
 
 export class Cubism2MotionManager extends MotionManager<Live2DMotion, Cubism2Spec.Motion> {
     readonly definitions: Partial<Record<string, Cubism2Spec.Motion[]>>;

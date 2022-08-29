@@ -20,6 +20,7 @@ import { CubismModelUserData } from '@cubism/model/cubismmodeluserdata';
 import { CubismPhysics } from '@cubism/physics/cubismphysics';
 import { CubismRenderer_WebGL, CubismShader_WebGL } from '@cubism/rendering/cubismrenderer_webgl';
 import { Matrix } from '@pixi/math';
+import { Mutable } from '../types/helpers';
 
 const tempMatrix = new CubismMatrix44();
 

@@ -1,6 +1,7 @@
 import { MotionManagerOptions } from '@/cubism-common';
 import { ExpressionManager } from '@/cubism-common/ExpressionManager';
 import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
+import { CubismSpec } from '@cubism/CubismSpec';
 import { CubismModel } from '@cubism/model/cubismmodel';
 import { CubismExpressionMotion } from '@cubism/motion/cubismexpressionmotion';
 import { CubismMotionQueueManager } from '@cubism/motion/cubismmotionqueuemanager';

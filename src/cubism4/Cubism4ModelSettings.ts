@@ -1,5 +1,6 @@
 import { ModelSettings } from '@/cubism-common/ModelSettings';
 import { applyMixins } from '@/utils';
+import { CubismSpec } from '@cubism/CubismSpec';
 import { CubismModelSettingsJson } from '@cubism/settings/cubismmodelsettingsjson';
 
 export interface Cubism4ModelSettings extends CubismModelSettingsJson {}

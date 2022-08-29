@@ -8,6 +8,7 @@ import { Matrix, ObservablePoint, Point, Rectangle } from '@pixi/math';
 import type { Ticker } from '@pixi/ticker';
 import { InteractionMixin } from './InteractionMixin';
 import { Live2DTransform } from './Live2DTransform';
+import { JSONObject } from './types/helpers';
 import { applyMixins, logger } from './utils';
 
 export interface Live2DModelOptions extends MotionManagerOptions {
@@ -333,8 +334,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         // don't call `this.internalModel.update()` here, because it requires WebGL context
     }
 
-    /** @override */
-    protected _render(renderer: Renderer): void {
+    override _render(renderer: Renderer): void {
         this.registerInteraction(renderer.plugins.interaction);
 
         // reset certain systems in renderer to make Live2D's drawing system compatible with Pixi

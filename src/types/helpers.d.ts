@@ -1,3 +1,3 @@
-type JSONObject = object;
+export type JSONObject = object;
 
-type Mutable<T> = { -readonly [P in keyof T]: T[P] };
+export type Mutable<T> = { -readonly [P in keyof T]: T[P] };

@@ -4,6 +4,7 @@ import { ModelSettings } from '@/cubism-common/ModelSettings';
 import { MotionManager, MotionManagerOptions } from '@/cubism-common/MotionManager';
 import { Matrix } from '@pixi/math';
 import { EventEmitter } from '@pixi/utils';
+import { Mutable } from '../types/helpers';
 
 /**
  * Common layout definition shared between all Cubism versions.

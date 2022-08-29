@@ -1,4 +1,4 @@
-declare namespace Cubism2Spec {
+export namespace Cubism2Spec {
     interface ModelJSON {
         name?: string;
 
