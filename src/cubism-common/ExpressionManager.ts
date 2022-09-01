@@ -2,7 +2,6 @@ import { ModelSettings } from '@/cubism-common/ModelSettings';
 import { MotionManagerOptions } from '@/cubism-common/MotionManager';
 import { logger } from '@/utils';
 import { EventEmitter } from '@pixi/utils';
-import { Live2DFactory } from '../factory';
 import { ExpressionManagerEvents } from '../types/events';
 import { JSONObject, Mutable } from '../types/helpers';
 
@@ -93,11 +92,19 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
             return this.expressions[index] as Expression;
         }
 
-        const expression = await Live2DFactory.loadExpression(this, index);
+        const expression = await this._loadExpression(index);
 
         this.expressions[index] = expression;
 
         return expression;
+    }
+
+    /**
+     * Loads the Expression. Will be implemented by Live2DFactory in order to avoid circular dependency.
+     * @ignore
+     */
+     private _loadExpression(index: number): Promise<Expression | undefined> {
+        throw new Error('Not implemented.');
     }
 
     /**

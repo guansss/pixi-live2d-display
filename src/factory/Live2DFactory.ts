@@ -21,13 +21,13 @@ export interface Live2DFactoryOptions extends Live2DModelOptions {
     crossOrigin?: string;
 
     /**
-     * Callback invokes when the model has been loaded.
+     * Callback invoked when the model has been loaded.
      * @default undefined
      */
     onLoad?(): void;
 
     /**
-     * Callback invokes when error occurs while loading the model.
+     * Callback invoked when error occurs while loading the model.
      * @default undefined
      */
     onError?(e: Error): void;
@@ -344,3 +344,11 @@ export class Live2DFactory {
         }
     }
 }
+
+MotionManager.prototype['_loadMotion'] = function(group, index) {
+    return Live2DFactory.loadMotion(this, group, index);
+};
+
+ExpressionManager.prototype['_loadExpression'] = function(index) {
+    return Live2DFactory.loadExpression(this, index);
+};

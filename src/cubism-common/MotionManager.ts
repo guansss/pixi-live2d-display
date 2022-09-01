@@ -5,7 +5,6 @@ import { MotionPriority, MotionState } from '@/cubism-common/MotionState';
 import { SoundManager } from '@/cubism-common/SoundManager';
 import { logger } from '@/utils';
 import { EventEmitter } from '@pixi/utils';
-import { Live2DFactory } from '../factory';
 import { JSONObject, Mutable } from '../types/helpers';
 
 export interface MotionManagerOptions {
@@ -181,7 +180,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             return this.motionGroups[group]![index]!;
         }
 
-        const motion = await Live2DFactory.loadMotion(this, group, index);
+        const motion = await this._loadMotion(group, index);
 
         if (this.destroyed) {
             return;
@@ -190,6 +189,14 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         this.motionGroups[group]![index] = motion ?? null;
 
         return motion;
+    }
+
+    /**
+     * Loads the Motion. Will be implemented by Live2DFactory in order to avoid circular dependency.
+     * @ignore
+     */
+     private _loadMotion(group: string, index: number): Promise<Motion | undefined> {
+        throw new Error('Not implemented.');
     }
 
     /**
