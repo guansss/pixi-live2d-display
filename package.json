@@ -35,13 +35,14 @@
     "setup": "node scripts/setup.js",
     "playground": "vite",
     "test": "node scripts/build-tests.js && npx floss --path=test.build --reporter=tap",
-    "test:ci": "yarn build && yarn test && yarn type",
+    "test:ci": "yarn type && yarn build && yarn test",
     "test:debug": "node scripts/build-tests.js && npx floss --path=test.build -d",
     "build": "rimraf dist && node scripts/build.js",
     "pretype": "node scripts/patch-dts-generator.js",
     "type": "rimraf types && dts-bundle-generator src/index.ts --no-check --project=tsconfig.build.json -o=types/index.d.ts && dts-bundle-generator src/extra.ts --no-check --project=tsconfig.build.json -o=types/extra.d.ts ",
     "posttype": "node scripts/patch-types.js",
-    "doc": "rimraf \"docs/!(.git|.nojekyll)\" && node scripts/gen-docs.js",
+    "doc": "node scripts/gen-docs.js",
+    "serve-docs": "mkdocs serve -f docs/mkdocs.yml",
     "deploy": "cd docs && git add -A && git commit -m \"Update docs\" && git push",
     "prepublishOnly": "yarn build && yarn test && yarn type"
   },
@@ -82,7 +83,7 @@
     "rimraf": "^3.0.2",
     "sinon": "^14.0.0",
     "sinon-chai": "^3.7.0",
-    "typedoc": "0.22.17",
+    "typedoc": "0.23.10",
     "typescript": "^4.7.3",
     "vite": "^2.9.13"
   }

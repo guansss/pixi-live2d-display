@@ -4,7 +4,7 @@
 ![Cubism version](https://img.shields.io/badge/Cubism-2/3/4-ff69b4?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/guansss/pixi-live2d-display/Test%20CI?style=flat-square)
 
-[:person_fencing: 中文版readme](README.zh.md)
+English | [中文](README.zh.md)
 
 > :warning: This readme is for v0.4.0, if you're looking for v0.3.1, see [this](https://github.com/guansss/pixi-live2d-display/blob/dfa7f764f241c1c802e92a7ab490206369746efd/README.md).
 
@@ -16,30 +16,30 @@ Live2D models on a high level without the need to learn how the internal system 
 
 #### Features
 
-- Supports all versions of Live2D models
-- Supports PIXI.RenderTexture and PIXI.Filter
-- Pixi-style transform APIs: position, scale, rotation, skew, anchor
-- Automatic interactions: focusing, hit-testing
-- Enhanced motion reserving logic compared to the official framework
-- Loading from uploaded files / zip files (experimental)
-- Fully typed - we all love types!
+-   Supports all versions of Live2D models
+-   Supports PIXI.RenderTexture and PIXI.Filter
+-   Pixi-style transform APIs: position, scale, rotation, skew, anchor
+-   Automatic interactions: focusing, hit-testing
+-   Enhanced motion reserving logic compared to the official framework
+-   Loading from uploaded files / zip files (experimental)
+-   Fully typed - we all love types!
 
 #### Requirements
 
-- PixiJS: >6
-- Browser: WebGL, ES6
+-   PixiJS: >6
+-   Browser: WebGL, ES6
 
 #### Demos
 
-- [Basic demo](https://codepen.io/guansss/pen/oNzoNoz/left?editors=1010)
-- [Interaction demo](https://codepen.io/guansss/pen/KKgXBOP/left?editors=0010)
-- [Render texture & filter demo](https://codepen.io/guansss/pen/qBaMNQV/left?editors=1010)
-- [Live2D Viewer Online](https://guansss.github.io/live2d-viewer-web/)
+-   [Basic demo](https://codepen.io/guansss/pen/oNzoNoz/left?editors=1010)
+-   [Interaction demo](https://codepen.io/guansss/pen/KKgXBOP/left?editors=0010)
+-   [Render texture & filter demo](https://codepen.io/guansss/pen/qBaMNQV/left?editors=1010)
+-   [Live2D Viewer Online](https://guansss.github.io/live2d-viewer-web/)
 
 #### Documentations
 
-- [Documentation](https://guansss.github.io/pixi-live2d-display)
-- [API Documentation](https://guansss.github.io/pixi-live2d-display/api/index.html)
+-   [Documentation](https://guansss.github.io/pixi-live2d-display)
+-   [API Documentation](https://guansss.github.io/pixi-live2d-display/api/index.html)
 
 ## Cubism
 
@@ -54,8 +54,8 @@ Before using the plugin, you'll need to include the Cubism runtime library, aka 
 
 For Cubism 4, you need `live2dcubismcore.min.js` that can be extracted from
 the [Cubism 4 SDK](https://www.live2d.com/download/cubism-sdk/download-web/), or be referred by
-a [direct link](https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js) (*however the direct link is quite
-unreliable, don't use it in production!*).
+a [direct link](https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js) (_however the direct link is quite
+unreliable, don't use it in production!_).
 
 For Cubism 2.1, you need `live2d.min.js`. It's no longer downloadable from the official
 site [since 2019/9/4](https://help.live2d.com/en/other/other_20/), but can be
@@ -70,43 +70,43 @@ of the versions.
 Specifically, there are `cubism2.js` and `cubism4.js` for respective runtime, along with an `index.js` that includes
 both of them.
 
-Note that if you want both the Cubism 2.1 and Cubism 4 support, use `index.js`, but *not* the combination
+Note that if you want both the Cubism 2.1 and Cubism 4 support, use `index.js`, but _not_ the combination
 of `cubism2.js` and `cubism4.js`.
 
 To make it clear, here's how you would use these files:
 
-- Use `cubism2.js`+`live2d.min.js` to support Cubism 2.1 models
-- Use `cubism4.js`+`live2dcubismcore.min.js` to support Cubism 3 and Cubism 4 models
-- Use `index.js`+`live2d.min.js`+`live2dcubismcore.min.js` to support all versions of models
+-   Use `cubism2.js`+`live2d.min.js` to support Cubism 2.1 models
+-   Use `cubism4.js`+`live2dcubismcore.min.js` to support Cubism 3 and Cubism 4 models
+-   Use `index.js`+`live2d.min.js`+`live2dcubismcore.min.js` to support all versions of models
 
 ## Installation
 
 #### Via npm
 
 ```sh
-npm install pixi-live2d-display@beta
+npm install pixi-live2d-display
 ```
 
 ```js
 import { Live2DModel } from 'pixi-live2d-display';
 
 // if only Cubism 2.1
-import { Live2DModel } from 'pixi-live2d-display/lib/cubism2';
+import { Live2DModel } from 'pixi-live2d-display/cubism2';
 
 // if only Cubism 4
-import { Live2DModel } from 'pixi-live2d-display/lib/cubism4';
+import { Live2DModel } from 'pixi-live2d-display/cubism4';
 ```
 
 #### Via CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@beta/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/index.min.js"></script>
 
 <!-- if only Cubism 2.1 -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@beta/dist/cubism2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism2.min.js"></script>
 
 <!-- if only Cubism 4 -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@beta/dist/cubism4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js"></script>
 ```
 
 In this way, all the exported members are available under `PIXI.live2d` namespace, such as `PIXI.live2d.Live2DModel`.
@@ -123,7 +123,7 @@ window.PIXI = PIXI;
 
 (async function () {
     const app = new PIXI.Application({
-        view: document.getElementById('canvas')
+        view: document.getElementById('canvas'),
     });
 
     const model = await Live2DModel.from('shizuku.model.json');
@@ -139,7 +139,7 @@ window.PIXI = PIXI;
     model.anchor.set(0.5, 0.5);
 
     // interaction
-    model.on('hit', hitAreas => {
+    model.on('hit', (hitAreas) => {
         if (hitAreas.includes('body')) {
             model.motion('tap_body');
         }
@@ -153,25 +153,22 @@ When importing Pixi packages on-demand, you may need to manually register some p
 
 ```javascript
 import { Application } from '@pixi/app';
-import { extensions } from '@pixi/core';
-import { Ticker } from '@pixi/ticker';
+import { Ticker, TickerPlugin } from '@pixi/ticker';
 import { InteractionManager } from '@pixi/interaction';
 import { Live2DModel } from 'pixi-live2d-display';
-
-extensions.add(
-    // register Ticker for Application
-    TickerPlugin,
-
-    // register InteractionManager to make Live2D models interactive
-    InteractionManager
-);
 
 // register Ticker for Live2DModel
 Live2DModel.registerTicker(Ticker);
 
+// register Ticker for Application
+Application.registerPlugin(TickerPlugin);
+
+// register InteractionManager to make Live2D models interactive
+Renderer.registerPlugin('interaction', InteractionManager);
+
 (async function () {
     const app = new Application({
-        view: document.getElementById('canvas')
+        view: document.getElementById('canvas'),
     });
 
     const model = await Live2DModel.from('shizuku.model.json');

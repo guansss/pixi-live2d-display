@@ -1,6 +1,6 @@
 ## Quick Start
 
-Here are some entries that you're most likely to look for:
+Here are some pages that you're most likely to look for:
 
 - [Live2DModel](classes/index.live2dmodel.html)
 - [InternalModel](classes/index.internalmodel.html)
@@ -9,6 +9,6 @@ Here are some entries that you're most likely to look for:
 - [ExpressionManager](classes/index.expressionmanager.html)
 - [config](modules/index.config.html)
 
-All exported members can be found in the [index module](modules/index.html).
+There are two modules in this doc - [index](modules/index.html) and [CubismWebFramework](modules/CubismWebFramework.html), where `index` is the library's main entry and re-exports everything from `CubismWebFramework`.
 
-You can uncheck the `Externals` at the top right ↗ to hide the members inherited from Pixi's classes.
+You can check `Externals` in Settings at top right ↗ to see class members which are inherited from Pixi's classes.
