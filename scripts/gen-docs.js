@@ -4,7 +4,7 @@ const { execSync } = require('child_process');
 mkdocs().then(typedoc);
 
 async function mkdocs() {
-    execSync(`mkdocs -f docs/mkdocs.yml`, { stdio: 'inherit' });
+    execSync(`mkdocs build -f docs/mkdocs.yml`, { stdio: 'inherit' });
 }
 
 // https://typedoc.org/guides/installation/#node-module
@@ -28,5 +28,5 @@ async function typedoc() {
         throw new Error('Project is not converted correctly');
     }
 
-    await app.generateDocs(project, 'docs.build/api');
+    await app.generateDocs(project, 'site/api');
 }

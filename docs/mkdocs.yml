@@ -2,7 +2,7 @@ site_name: pixi-live2d-display
 
 docs_dir: docs
 
-site_dir: docs.build
+site_dir: ../site
 
 repo_url: https://github.com/guansss/pixi-live2d-display
 

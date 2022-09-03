@@ -191,7 +191,7 @@ flowchart LR
 A[Load motion] & C[Load sound] --> B[Wait until both are done] --> D[Play motion and sound]
 ```
 
-This feature is enabled by default and can be toggled via [global config](/configs).
+This feature is enabled by default and can be toggled via [global config](../configs).
 
 ## Expressions
 

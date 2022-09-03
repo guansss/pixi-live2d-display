@@ -43,13 +43,11 @@
     "posttype": "node scripts/patch-types.js",
     "doc": "node scripts/gen-docs.js",
     "serve-docs": "mkdocs serve -f docs/mkdocs.yml",
-    "deploy": "cd docs && git add -A && git commit -m \"Update docs\" && git push",
+    "deploy": "gh-pages -d site",
     "prepublishOnly": "yarn build && yarn test && yarn type"
   },
   "files": [
     "dist",
-    "src",
-    "cubism/src",
     "types"
   ],
   "types": "types/index.d.ts",
@@ -86,5 +84,8 @@
     "typedoc": "0.23.10",
     "typescript": "^4.7.3",
     "vite": "^2.9.13"
+  },
+  "dependencies": {
+    "gh-pages": "^4.0.0"
   }
 }
