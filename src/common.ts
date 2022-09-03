@@ -1,5 +1,6 @@
 /// <reference path="../core/live2d.d.ts"/>
 /// <reference path="../core/live2dcubismcore.d.ts"/>
+/// <reference path="./types/env.d.ts"/>
 
 export * from './cubism-common';
 export * from './Live2DModel';

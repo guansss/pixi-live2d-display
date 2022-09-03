@@ -41,10 +41,14 @@ if (patchContent.includes(insertion)) {
 
 const patchContentLines = patchContent.split('\n');
 
-if (!patchContentLines[insertionLineIndex].includes('return declarations;')) {
-    throw new Error('The insertion line is not as expected');
+const lineIndex = patchContentLines.findIndex(
+    (line, i) => i >= insertionLineIndex && line.includes('return declarations;')
+);
+
+if (lineIndex < insertionLineIndex) {
+    throw new Error('Cannot find insertion point');
 }
 
-patchContentLines.splice(insertionLineIndex, 0, insertion);
+patchContentLines.splice(lineIndex, 0, insertion);
 
 fs.writeFileSync(patchFile, patchContentLines.join('\n'));

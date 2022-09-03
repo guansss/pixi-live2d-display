@@ -1,4 +1,4 @@
-import { config as cubism4Config } from "@cubism/config";
+import { CubismConfig } from "@cubism/config";
 
 /**
  * Global configs.
@@ -45,7 +45,7 @@ export namespace config {
      */
     export let preserveExpressionOnMotion = true;
 
-    export let cubism4 = cubism4Config;
+    export let cubism4 = CubismConfig;
 }
 
 /**
