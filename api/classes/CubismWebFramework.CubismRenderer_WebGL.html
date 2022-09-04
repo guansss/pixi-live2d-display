@@ -1,0 +1,736 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>CubismRenderer_WebGL | pixi-live2d-display - v0.4.0</title><meta name="description" content="Documentation for pixi-live2d-display - v0.4.0"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script async src="../assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container">
+<div class="table-cell" id="tsd-search" data-base="..">
+<div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
+<ul class="results">
+<li class="state loading">Preparing search index...</li>
+<li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">pixi-live2d-display - v0.4.0</a></div>
+<div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
+<div class="container container-main">
+<div class="col-8 col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb">
+<li><a href="../modules.html">pixi-live2d-display - v0.4.0</a></li>
+<li><a href="../modules/CubismWebFramework.html">CubismWebFramework</a></li>
+<li><a href="CubismWebFramework.CubismRenderer_WebGL.html">CubismRenderer_WebGL</a></li></ul>
+<h1>Class CubismRenderer_WebGL</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>WebGL用の描画命令を実装したクラス</p>
+</div></section>
+<section class="tsd-panel tsd-hierarchy">
+<h4>Hierarchy</h4>
+<ul class="tsd-hierarchy">
+<li><a href="CubismWebFramework.CubismRenderer.html" class="tsd-signature-type" data-tsd-kind="Class">CubismRenderer</a>
+<ul class="tsd-hierarchy">
+<li><span class="target">CubismRenderer_WebGL</span></li></ul></li></ul></section><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:1733</li></ul></aside>
+<section class="tsd-panel-group tsd-index-group">
+<section class="tsd-panel tsd-index-panel">
+<details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
+<h5 class="tsd-index-heading uppercase" role="button" aria-expanded="false" tabIndex=0><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1.5 5.50969L8 11.6609L14.5 5.50969L12.5466 3.66086L8 7.96494L3.45341 3.66086L1.5 5.50969Z" fill="var(--color-text)"></path></svg> Index</h5></summary>
+<div class="tsd-accordion-details">
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading">Constructors</h3>
+<div class="tsd-index-list"><a href="CubismWebFramework.CubismRenderer_WebGL.html#constructor" class="tsd-index-link tsd-kind-constructor tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#4D7FFF" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-512-path"></rect><path d="M11.898 16.1201C11.098 16.1201 10.466 15.8961 10.002 15.4481C9.53803 15.0001 9.30603 14.3841 9.30603 13.6001V9.64012C9.30603 8.85612 9.53803 8.24012 10.002 7.79212C10.466 7.34412 11.098 7.12012 11.898 7.12012C12.682 7.12012 13.306 7.34812 13.77 7.80412C14.234 8.25212 14.466 8.86412 14.466 9.64012H13.386C13.386 9.14412 13.254 8.76412 12.99 8.50012C12.734 8.22812 12.37 8.09212 11.898 8.09212C11.426 8.09212 11.054 8.22412 10.782 8.48812C10.518 8.75212 10.386 9.13212 10.386 9.62812V13.6001C10.386 14.0961 10.518 14.4801 10.782 14.7521C11.054 15.0161 11.426 15.1481 11.898 15.1481C12.37 15.1481 12.734 15.0161 12.99 14.7521C13.254 14.4801 13.386 14.0961 13.386 13.6001H14.466C14.466 14.3761 14.234 14.9921 13.77 15.4481C13.306 15.8961 12.682 16.1201 11.898 16.1201Z" fill="var(--color-text)" id="icon-512-text"></path></svg><span>constructor</span></a>
+</div></section>
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading">Properties</h3>
+<div class="tsd-index-list"><a href="CubismWebFramework.CubismRenderer_WebGL.html#_anisortopy" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF984D" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-1024-path"></rect><path d="M9.354 16V7.24H12.174C12.99 7.24 13.638 7.476 14.118 7.948C14.606 8.412 14.85 9.036 14.85 9.82C14.85 10.604 14.606 11.232 14.118 11.704C13.638 12.168 12.99 12.4 12.174 12.4H10.434V16H9.354ZM10.434 11.428H12.174C12.646 11.428 13.022 11.284 13.302 10.996C13.59 10.7 13.734 10.308 13.734 9.82C13.734 9.324 13.59 8.932 13.302 8.644C13.022 8.356 12.646 8.212 12.174 8.212H10.434V11.428Z" fill="var(--color-text)" id="icon-1024-text"></path></svg><span>_anisortopy</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#_bufferData" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>_buffer<wbr/>Data</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#_clippingContextBufferForDraw" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>_clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Draw</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#_clippingContextBufferForMask" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>_clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Mask</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#_clippingManager" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>_clipping<wbr/>Manager</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#_isCulling" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>_is<wbr/>Culling</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#_isPremultipliedAlpha" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>_is<wbr/>Premultiplied<wbr/>Alpha</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#_model" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>_model</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#_modelColor" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>_model<wbr/>Color</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#_mvpMatrix4x4" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>_mvp<wbr/>Matrix4x4</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#_sortedDrawableIndexList" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>_sorted<wbr/>Drawable<wbr/>Index<wbr/>List</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#_textures" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>_textures</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#firstDraw" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>first<wbr/>Draw</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#gl" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>gl</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#staticRelease" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>static<wbr/>Release</span></a>
+</div></section>
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading">Methods</h3>
+<div class="tsd-index-list"><a href="CubismWebFramework.CubismRenderer_WebGL.html#bindTexture" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF4DB8" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-2048-path"></rect><path d="M9.162 16V7.24H10.578L11.514 10.072C11.602 10.328 11.674 10.584 11.73 10.84C11.794 11.088 11.842 11.28 11.874 11.416C11.906 11.28 11.954 11.088 12.018 10.84C12.082 10.584 12.154 10.324 12.234 10.06L13.122 7.24H14.538V16H13.482V12.82C13.482 12.468 13.49 12.068 13.506 11.62C13.53 11.172 13.558 10.716 13.59 10.252C13.622 9.78 13.654 9.332 13.686 8.908C13.726 8.476 13.762 8.1 13.794 7.78L12.366 12.16H11.334L9.894 7.78C9.934 8.092 9.97 8.456 10.002 8.872C10.042 9.28 10.078 9.716 10.11 10.18C10.142 10.636 10.166 11.092 10.182 11.548C10.206 12.004 10.218 12.428 10.218 12.82V16H9.162Z" fill="var(--color-text)" id="icon-2048-text"></path></svg><span>bind<wbr/>Texture</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#doDrawModel" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>do<wbr/>Draw<wbr/>Model</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#drawMesh" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>draw<wbr/>Mesh</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#drawModel" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>draw<wbr/>Model</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#getAnisotropy" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Anisotropy</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#getBindedTextures" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Binded<wbr/>Textures</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#getClippingContextBufferForDraw" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Draw</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#getClippingContextBufferForMask" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Mask</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#getClippingMaskBufferSize" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Clipping<wbr/>Mask<wbr/>Buffer<wbr/>Size</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#getModel" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Model</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#getModelColor" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Model<wbr/>Color</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#getMvpMatrix" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Mvp<wbr/>Matrix</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#initialize" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>initialize</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#isCulling" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>is<wbr/>Culling</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#isPremultipliedAlpha" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>is<wbr/>Premultiplied<wbr/>Alpha</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#preDraw" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>pre<wbr/>Draw</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#release" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>release</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#setAnisotropy" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Anisotropy</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#setClippingContextBufferForDraw" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Draw</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#setClippingContextBufferForMask" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Mask</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#setClippingMaskBufferSize" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Clipping<wbr/>Mask<wbr/>Buffer<wbr/>Size</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#setIsCulling" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Is<wbr/>Culling</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#setIsPremultipliedAlpha" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Is<wbr/>Premultiplied<wbr/>Alpha</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#setModelColor" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Model<wbr/>Color</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#setMvpMatrix" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Mvp<wbr/>Matrix</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#setRenderState" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Render<wbr/>State</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#startUp" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>start<wbr/>Up</span></a>
+<a href="CubismWebFramework.CubismRenderer_WebGL.html#doStaticRelease" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>do<wbr/>Static<wbr/>Release</span></a>
+</div></section></div></details></section></section>
+<section class="tsd-panel-group tsd-member-group">
+<h2>Constructors</h2>
+<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class"><a id="constructor" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="constructor.new_CubismRenderer_WebGL">new <wbr/>Cubism<wbr/>Renderer_<wbr/>WebGL<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="CubismWebFramework.CubismRenderer_WebGL.html" class="tsd-signature-type" data-tsd-kind="Class">CubismRenderer_WebGL</a><a href="#constructor.new_CubismRenderer_WebGL" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>コンストラクタ</p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="CubismWebFramework.CubismRenderer_WebGL.html" class="tsd-signature-type" data-tsd-kind="Class">CubismRenderer_WebGL</a></h4><aside class="tsd-sources">
+<p>Overrides <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#constructor">constructor</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:1808</li></ul></aside></li></ul></section></section>
+<section class="tsd-panel-group tsd-member-group">
+<h2>Properties</h2>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a id="_anisortopy" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_anisortopy</span><a href="#_anisortopy" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">_anisortopy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#_anisortopy">_anisortopy</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:218</li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="_bufferData" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>_buffer<wbr/>Data</span><a href="#_bufferData" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">_buffer<wbr/>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">WebGLBuffer</span><span class="tsd-signature-symbol">; </span>uv<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">WebGLBuffer</span><span class="tsd-signature-symbol">; </span>vertex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">WebGLBuffer</span><span class="tsd-signature-symbol"> }</span></div>
+<div class="tsd-type-declaration">
+<h4>Type declaration</h4>
+<ul class="tsd-parameters">
+<li class="tsd-parameter">
+<h5>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">WebGLBuffer</span></h5></li>
+<li class="tsd-parameter">
+<h5>uv<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">WebGLBuffer</span></h5></li>
+<li class="tsd-parameter">
+<h5>vertex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">WebGLBuffer</span></h5></li></ul></div><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:2072</li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="_clippingContextBufferForDraw" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>_clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Draw</span><a href="#_clippingContextBufferForDraw" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">_clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Draw<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="CubismWebFramework.CubismClippingContext.html" class="tsd-signature-type" data-tsd-kind="Class">CubismClippingContext</a></div><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:2070</li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="_clippingContextBufferForMask" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>_clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Mask</span><a href="#_clippingContextBufferForMask" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">_clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Mask<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="CubismWebFramework.CubismClippingContext.html" class="tsd-signature-type" data-tsd-kind="Class">CubismClippingContext</a></div><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:2069</li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="_clippingManager" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>_clipping<wbr/>Manager</span><a href="#_clippingManager" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">_clipping<wbr/>Manager<span class="tsd-signature-symbol">:</span> <a href="CubismWebFramework.CubismClippingManager_WebGL.html" class="tsd-signature-type" data-tsd-kind="Class">CubismClippingManager_WebGL</a></div><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:2068</li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a id="_isCulling" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_is<wbr/>Culling</span><a href="#_isCulling" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">_is<wbr/>Culling<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#_isCulling">_isCulling</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:216</li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a id="_isPremultipliedAlpha" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_is<wbr/>Premultiplied<wbr/>Alpha</span><a href="#_isPremultipliedAlpha" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">_is<wbr/>Premultiplied<wbr/>Alpha<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#_isPremultipliedAlpha">_isPremultipliedAlpha</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:217</li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a id="_model" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_model</span><a href="#_model" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">_model<span class="tsd-signature-symbol">:</span> <a href="CubismWebFramework.CubismModel.html" class="tsd-signature-type" data-tsd-kind="Class">CubismModel</a></div><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#_model">_model</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:219</li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a id="_modelColor" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_model<wbr/>Color</span><a href="#_modelColor" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">_model<wbr/>Color<span class="tsd-signature-symbol">:</span> <a href="CubismWebFramework.CubismTextureColor.html" class="tsd-signature-type" data-tsd-kind="Class">CubismTextureColor</a></div><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#_modelColor">_modelColor</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:215</li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a id="_mvpMatrix4x4" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_mvp<wbr/>Matrix4x4</span><a href="#_mvpMatrix4x4" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">_mvp<wbr/>Matrix4x4<span class="tsd-signature-symbol">:</span> <a href="CubismWebFramework.CubismMatrix44.html" class="tsd-signature-type" data-tsd-kind="Class">CubismMatrix44</a></div><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#_mvpMatrix4x4">_mvpMatrix4x4</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:214</li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="_sortedDrawableIndexList" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>_sorted<wbr/>Drawable<wbr/>Index<wbr/>List</span><a href="#_sortedDrawableIndexList" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">_sorted<wbr/>Drawable<wbr/>Index<wbr/>List<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:2067</li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="_textures" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>_textures</span><a href="#_textures" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">_textures<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">WebGLTexture</span><span class="tsd-signature-symbol">&gt;</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:2066</li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="firstDraw" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>first<wbr/>Draw</span><a href="#firstDraw" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">first<wbr/>Draw<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:2071</li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="gl" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>gl</span><a href="#gl" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">gl<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">WebGLRenderingContext</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:2077</li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="staticRelease" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>static<wbr/>Release</span><a href="#staticRelease" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">static<wbr/>Release<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span></div>
+<div class="tsd-comment tsd-typography"><p>レンダラが保持する静的なリソースを開放する</p>
+</div><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#staticRelease">staticRelease</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:212</li></ul></aside></section></section>
+<section class="tsd-panel-group tsd-member-group">
+<h2>Methods</h2>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="bindTexture" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>bind<wbr/>Texture</span><a href="#bindTexture" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="bindTexture.bindTexture-1">bind<wbr/>Texture<span class="tsd-signature-symbol">(</span>modelTextureNo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, glTexture<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebGLTexture</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#bindTexture.bindTexture-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>WebGLテクスチャのバインド処理
+CubismRendererにテクスチャを設定し、CubismRenderer内でその画像を参照するためのIndex値を戻り値とする</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>modelTextureNo: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>セットするモデルテクスチャの番号</p>
+</div></li>
+<li>
+<h5>glTexture: <span class="tsd-signature-type">WebGLTexture</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:1764</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="doDrawModel" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>do<wbr/>Draw<wbr/>Model</span><a href="#doDrawModel" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="doDrawModel.doDrawModel-1">do<wbr/>Draw<wbr/>Model<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#doDrawModel.doDrawModel-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>モデルを描画する実際の処理</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Overrides <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#doDrawModel">doDrawModel</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:1846</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="drawMesh" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>draw<wbr/>Mesh</span><a href="#drawMesh" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="drawMesh.drawMesh-1">draw<wbr/>Mesh<span class="tsd-signature-symbol">(</span>textureNo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, indexCount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, vertexCount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, indexArray<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint16Array</span>, vertexArray<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Float32Array</span>, uvArray<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Float32Array</span>, opacity<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, colorBlendMode<span class="tsd-signature-symbol">: </span><a href="../enums/CubismWebFramework.CubismBlendMode.html" class="tsd-signature-type" data-tsd-kind="Enumeration">CubismBlendMode</a>, invertedMask<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#drawMesh.drawMesh-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>[オーバーライド]
+描画オブジェクト（アートメッシュ）を描画する。
+ポリゴンメッシュとテクスチャ番号をセットで渡す。</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>textureNo: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>描画するテクスチャ番号</p>
+</div></li>
+<li>
+<h5>indexCount: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>描画オブジェクトのインデックス値</p>
+</div></li>
+<li>
+<h5>vertexCount: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>ポリゴンメッシュの頂点数</p>
+</div></li>
+<li>
+<h5>indexArray: <span class="tsd-signature-type">Uint16Array</span></h5>
+<div class="tsd-comment tsd-typography"><p>ポリゴンメッシュのインデックス配列</p>
+</div></li>
+<li>
+<h5>vertexArray: <span class="tsd-signature-type">Float32Array</span></h5>
+<div class="tsd-comment tsd-typography"><p>ポリゴンメッシュの頂点配列</p>
+</div></li>
+<li>
+<h5>uvArray: <span class="tsd-signature-type">Float32Array</span></h5>
+<div class="tsd-comment tsd-typography"><p>uv配列</p>
+</div></li>
+<li>
+<h5>opacity: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>不透明度</p>
+</div></li>
+<li>
+<h5>colorBlendMode: <a href="../enums/CubismWebFramework.CubismBlendMode.html" class="tsd-signature-type" data-tsd-kind="Enumeration">CubismBlendMode</a></h5>
+<div class="tsd-comment tsd-typography"><p>カラー合成タイプ</p>
+</div></li>
+<li>
+<h5>invertedMask: <span class="tsd-signature-type">boolean</span></h5>
+<div class="tsd-comment tsd-typography"><p>マスク使用時のマスクの反転使用</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Overrides <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#drawMesh">drawMesh</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:1910</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="drawModel" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>draw<wbr/>Model</span><a href="#drawModel" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="drawModel.drawModel-1">draw<wbr/>Model<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#drawModel.drawModel-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>モデルを描画する</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#drawModel">drawModel</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:29</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="getAnisotropy" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Anisotropy</span><a href="#getAnisotropy" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="getAnisotropy.getAnisotropy-1">get<wbr/>Anisotropy<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getAnisotropy.getAnisotropy-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>テクスチャの異方性フィルタリングのパラメータをセットする</p>
+
+<h3>Returns</h3><p>異方性フィルタリングのパラメータ</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#getAnisotropy">getAnisotropy</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:153</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getBindedTextures" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Binded<wbr/>Textures</span><a href="#getBindedTextures" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getBindedTextures.getBindedTextures-1">get<wbr/>Binded<wbr/>Textures<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">WebGLTexture</span><span class="tsd-signature-symbol">&gt;</span><a href="#getBindedTextures.getBindedTextures-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>WebGLにバインドされたテクスチャのリストを取得する</p>
+
+<h3>Returns</h3><p>テクスチャのリスト</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">WebGLTexture</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:1772</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getClippingContextBufferForDraw" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Draw</span><a href="#getClippingContextBufferForDraw" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getClippingContextBufferForDraw.getClippingContextBufferForDraw-1">get<wbr/>Clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Draw<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="CubismWebFramework.CubismClippingContext.html" class="tsd-signature-type" data-tsd-kind="Class">CubismClippingContext</a><a href="#getClippingContextBufferForDraw.getClippingContextBufferForDraw-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>画面上に描画するクリッピングコンテキストを取得する</p>
+
+<h3>Returns</h3><p>画面上に描画するクリッピングコンテキスト</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="CubismWebFramework.CubismClippingContext.html" class="tsd-signature-type" data-tsd-kind="Class">CubismClippingContext</a></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:2053</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getClippingContextBufferForMask" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Mask</span><a href="#getClippingContextBufferForMask" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getClippingContextBufferForMask.getClippingContextBufferForMask-1">get<wbr/>Clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Mask<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="CubismWebFramework.CubismClippingContext.html" class="tsd-signature-type" data-tsd-kind="Class">CubismClippingContext</a><a href="#getClippingContextBufferForMask.getClippingContextBufferForMask-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>マスクテクスチャに描画するクリッピングコンテキストを取得する</p>
+
+<h3>Returns</h3><p>マスクテクスチャに描画するクリッピングコンテキスト</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="CubismWebFramework.CubismClippingContext.html" class="tsd-signature-type" data-tsd-kind="Class">CubismClippingContext</a></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:2038</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getClippingMaskBufferSize" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Clipping<wbr/>Mask<wbr/>Buffer<wbr/>Size</span><a href="#getClippingMaskBufferSize" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getClippingMaskBufferSize.getClippingMaskBufferSize-1">get<wbr/>Clipping<wbr/>Mask<wbr/>Buffer<wbr/>Size<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getClippingMaskBufferSize.getClippingMaskBufferSize-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>クリッピングマスクバッファのサイズを取得する</p>
+
+<h3>Returns</h3><p>クリッピングマスクバッファのサイズ</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:1801</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="getModel" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Model</span><a href="#getModel" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="getModel.getModel-1">get<wbr/>Model<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="CubismWebFramework.CubismModel.html" class="tsd-signature-type" data-tsd-kind="Class">CubismModel</a><a href="#getModel.getModel-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>レンダリングするモデルを取得する</p>
+
+<h3>Returns</h3><p>レンダリングするモデル</p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="CubismWebFramework.CubismModel.html" class="tsd-signature-type" data-tsd-kind="Class">CubismModel</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#getModel">getModel</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:161</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="getModelColor" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Model<wbr/>Color</span><a href="#getModelColor" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="getModelColor.getModelColor-1">get<wbr/>Model<wbr/>Color<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="CubismWebFramework.CubismTextureColor.html" class="tsd-signature-type" data-tsd-kind="Class">CubismTextureColor</a><a href="#getModelColor.getModelColor-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>モデルの色を取得する
+各色0.0~1.0の間で指定する(1.0が標準の状態)</p>
+
+<h3>Returns</h3><p>RGBAのカラー情報</p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="CubismWebFramework.CubismTextureColor.html" class="tsd-signature-type" data-tsd-kind="Class">CubismTextureColor</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#getModelColor">getModelColor</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:102</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="getMvpMatrix" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Mvp<wbr/>Matrix</span><a href="#getMvpMatrix" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="getMvpMatrix.getMvpMatrix-1">get<wbr/>Mvp<wbr/>Matrix<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="CubismWebFramework.CubismMatrix44.html" class="tsd-signature-type" data-tsd-kind="Class">CubismMatrix44</a><a href="#getMvpMatrix.getMvpMatrix-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Model-View-Projection 行列を取得する</p>
+
+<h3>Returns</h3><p>Model-View-Projection 行列</p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="CubismWebFramework.CubismMatrix44.html" class="tsd-signature-type" data-tsd-kind="Class">CubismMatrix44</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#getMvpMatrix">getMvpMatrix</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:48</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="initialize" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>initialize</span><a href="#initialize" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="initialize.initialize-1">initialize<span class="tsd-signature-symbol">(</span>model<span class="tsd-signature-symbol">: </span><a href="CubismWebFramework.CubismModel.html" class="tsd-signature-type" data-tsd-kind="Class">CubismModel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#initialize.initialize-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>レンダラの初期化処理を実行する
+引数に渡したモデルからレンダラの初期化処理に必要な情報を取り出すことができる</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>model: <a href="CubismWebFramework.CubismModel.html" class="tsd-signature-type" data-tsd-kind="Class">CubismModel</a></h5>
+<div class="tsd-comment tsd-typography"><p>モデルのインスタンス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Overrides <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#initialize">initialize</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:1740</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="isCulling" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>is<wbr/>Culling</span><a href="#isCulling" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="isCulling.isCulling-1">is<wbr/>Culling<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#isCulling.isCulling-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>カリング（片面描画）の有効・無効を取得する。</p>
+
+<h3>Returns</h3><p>true カリング有効</p>
+
+<h3>Returns</h3><p>false カリング無効</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#isCulling">isCulling</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:136</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="isPremultipliedAlpha" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>is<wbr/>Premultiplied<wbr/>Alpha</span><a href="#isPremultipliedAlpha" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="isPremultipliedAlpha.isPremultipliedAlpha-1">is<wbr/>Premultiplied<wbr/>Alpha<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#isPremultipliedAlpha.isPremultipliedAlpha-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>乗算済みαの有効・無効を取得する</p>
+
+<h3>Returns</h3><p>true 乗算済みのα有効</p>
+
+<h3>Returns</h3><p>false 乗算済みのα無効</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#isPremultipliedAlpha">isPremultipliedAlpha</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:119</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="preDraw" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>pre<wbr/>Draw</span><a href="#preDraw" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="preDraw.preDraw-1">pre<wbr/>Draw<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#preDraw.preDraw-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>描画開始時の追加処理
+モデルを描画する前にクリッピングマスクに必要な処理を実装している</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:2002</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="release" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>release</span><a href="#release" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="release.release-1">release<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#release.release-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>デストラクタ相当の処理</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:1826</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="setAnisotropy" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>set<wbr/>Anisotropy</span><a href="#setAnisotropy" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="setAnisotropy.setAnisotropy-1">set<wbr/>Anisotropy<span class="tsd-signature-symbol">(</span>n<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#setAnisotropy.setAnisotropy-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>テクスチャの異方性フィルタリングのパラメータをセットする
+パラメータ値の影響度はレンダラの実装に依存する</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>n: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>パラメータの値</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#setAnisotropy">setAnisotropy</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:145</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setClippingContextBufferForDraw" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>set<wbr/>Clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Draw</span><a href="#setClippingContextBufferForDraw" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="setClippingContextBufferForDraw.setClippingContextBufferForDraw-1">set<wbr/>Clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Draw<span class="tsd-signature-symbol">(</span>clip<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="CubismWebFramework.CubismClippingContext.html" class="tsd-signature-type" data-tsd-kind="Class">CubismClippingContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#setClippingContextBufferForDraw.setClippingContextBufferForDraw-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>画面上に描画するクリッピングコンテキストをセットする</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>clip: <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="CubismWebFramework.CubismClippingContext.html" class="tsd-signature-type" data-tsd-kind="Class">CubismClippingContext</a></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:2045</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setClippingContextBufferForMask" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>set<wbr/>Clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Mask</span><a href="#setClippingContextBufferForMask" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="setClippingContextBufferForMask.setClippingContextBufferForMask-1">set<wbr/>Clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Mask<span class="tsd-signature-symbol">(</span>clip<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="CubismWebFramework.CubismClippingContext.html" class="tsd-signature-type" data-tsd-kind="Class">CubismClippingContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#setClippingContextBufferForMask.setClippingContextBufferForMask-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>マスクテクスチャに描画するクリッピングコンテキストをセットする</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>clip: <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="CubismWebFramework.CubismClippingContext.html" class="tsd-signature-type" data-tsd-kind="Class">CubismClippingContext</a></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:2030</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setClippingMaskBufferSize" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>set<wbr/>Clipping<wbr/>Mask<wbr/>Buffer<wbr/>Size</span><a href="#setClippingMaskBufferSize" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="setClippingMaskBufferSize.setClippingMaskBufferSize-1">set<wbr/>Clipping<wbr/>Mask<wbr/>Buffer<wbr/>Size<span class="tsd-signature-symbol">(</span>size<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#setClippingMaskBufferSize.setClippingMaskBufferSize-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>クリッピングマスクバッファのサイズを設定する
+マスク用のFrameBufferを破棄、再作成する為処理コストは高い</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>size: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>クリッピングマスクバッファのサイズ</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:1781</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="setIsCulling" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>set<wbr/>Is<wbr/>Culling</span><a href="#setIsCulling" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="setIsCulling.setIsCulling-1">set<wbr/>Is<wbr/>Culling<span class="tsd-signature-symbol">(</span>culling<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#setIsCulling.setIsCulling-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>カリング（片面描画）の有効・無効をセットする。
+有効にするならtrue、無効にするならfalseをセットする</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>culling: <span class="tsd-signature-type">boolean</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#setIsCulling">setIsCulling</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:127</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="setIsPremultipliedAlpha" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>set<wbr/>Is<wbr/>Premultiplied<wbr/>Alpha</span><a href="#setIsPremultipliedAlpha" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="setIsPremultipliedAlpha.setIsPremultipliedAlpha-1">set<wbr/>Is<wbr/>Premultiplied<wbr/>Alpha<span class="tsd-signature-symbol">(</span>enable<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#setIsPremultipliedAlpha.setIsPremultipliedAlpha-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>乗算済みαの有効・無効をセットする
+有効にするならtrue、無効にするならfalseをセットする</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>enable: <span class="tsd-signature-type">boolean</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#setIsPremultipliedAlpha">setIsPremultipliedAlpha</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:110</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="setModelColor" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>set<wbr/>Model<wbr/>Color</span><a href="#setModelColor" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="setModelColor.setModelColor-1">set<wbr/>Model<wbr/>Color<span class="tsd-signature-symbol">(</span>red<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, green<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, blue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, alpha<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#setModelColor.setModelColor-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>モデルの色をセットする
+各色0.0~1.0の間で指定する（1.0が標準の状態）</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>red: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>赤チャンネルの値</p>
+</div></li>
+<li>
+<h5>green: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>緑チャンネルの値</p>
+</div></li>
+<li>
+<h5>blue: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>青チャンネルの値</p>
+</div></li>
+<li>
+<h5>alpha: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>αチャンネルの値</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#setModelColor">setModelColor</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:60</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="setMvpMatrix" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>set<wbr/>Mvp<wbr/>Matrix</span><a href="#setMvpMatrix" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="setMvpMatrix.setMvpMatrix-1">set<wbr/>Mvp<wbr/>Matrix<span class="tsd-signature-symbol">(</span>matrix44<span class="tsd-signature-symbol">: </span><a href="CubismWebFramework.CubismMatrix44.html" class="tsd-signature-type" data-tsd-kind="Class">CubismMatrix44</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#setMvpMatrix.setMvpMatrix-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Model-View-Projection 行列をセットする
+配列は複製されるので、元の配列は外で破棄して良い</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>matrix44: <a href="CubismWebFramework.CubismMatrix44.html" class="tsd-signature-type" data-tsd-kind="Class">CubismMatrix44</a></h5>
+<div class="tsd-comment tsd-typography"><p>Model-View-Projection 行列</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="CubismWebFramework.CubismRenderer.html">CubismRenderer</a>.<a href="CubismWebFramework.CubismRenderer.html#setMvpMatrix">setMvpMatrix</a></p>
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer.ts:40</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setRenderState" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>set<wbr/>Render<wbr/>State</span><a href="#setRenderState" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="setRenderState.setRenderState-1">set<wbr/>Render<wbr/>State<span class="tsd-signature-symbol">(</span>fbo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebGLFramebuffer</span>, viewport<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#setRenderState.setRenderState-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>レンダーステートを設定する</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>fbo: <span class="tsd-signature-type">WebGLFramebuffer</span></h5>
+<div class="tsd-comment tsd-typography"><p>アプリケーション側で指定しているフレームバッファ</p>
+</div></li>
+<li>
+<h5>viewport: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+<div class="tsd-comment tsd-typography"><p>ビューポート</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:1993</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="startUp" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>start<wbr/>Up</span><a href="#startUp" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="startUp.startUp-1">start<wbr/>Up<span class="tsd-signature-symbol">(</span>gl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebGLRenderingContext</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#startUp.startUp-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>glの設定</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>gl: <span class="tsd-signature-type">WebGLRenderingContext</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:2060</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="doStaticRelease" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>do<wbr/>Static<wbr/>Release</span><a href="#doStaticRelease" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="doStaticRelease.doStaticRelease-1">do<wbr/>Static<wbr/>Release<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#doStaticRelease.doStaticRelease-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>レンダラが保持する静的なリソースを解放する
+WebGLの静的なシェーダープログラムを解放する</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/rendering/cubismrenderer_webgl.ts:1984</li></ul></aside></li></ul></section></section></div>
+<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+<div class="tsd-navigation settings">
+<details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility">
+<h4 class="uppercase">Member Visibility</h4><form>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div>
+<div class="tsd-theme-toggle">
+<h4 class="uppercase">Theme</h4><select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<nav class="tsd-navigation primary">
+<details class="tsd-index-accordion" open><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Modules</h3></summary>
+<div class="tsd-accordion-details">
+<ul>
+<li class="current"><a href="../modules.html">pixi-<wbr/>live2d-<wbr/>display -<wbr/> v0.4.0</a>
+<ul>
+<li class="current tsd-kind-module"><a href="../modules/CubismWebFramework.html">Cubism<wbr/>Web<wbr/>Framework</a>
+<ul>
+<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="../modules/CubismWebFramework.CubismConfig.html">Cubism<wbr/>Config</a></li>
+<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="../modules/CubismWebFramework.CubismSpec.html">Cubism<wbr/>Spec</a></li></ul></li>
+<li class="tsd-kind-module"><a href="../modules/index.html">index</a>
+<ul>
+<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="../modules/index.config.html">config</a></li></ul></li></ul></li></ul></div></details></nav>
+<nav class="tsd-navigation secondary menu-sticky">
+<ul>
+<li class="current tsd-kind-class tsd-parent-kind-module"><a href="CubismWebFramework.CubismRenderer_WebGL.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-class)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-128-path"></rect><path d="M11.898 16.1201C11.098 16.1201 10.466 15.8961 10.002 15.4481C9.53803 15.0001 9.30603 14.3841 9.30603 13.6001V9.64012C9.30603 8.85612 9.53803 8.24012 10.002 7.79212C10.466 7.34412 11.098 7.12012 11.898 7.12012C12.682 7.12012 13.306 7.34812 13.77 7.80412C14.234 8.25212 14.466 8.86412 14.466 9.64012H13.386C13.386 9.14412 13.254 8.76412 12.99 8.50012C12.734 8.22812 12.37 8.09212 11.898 8.09212C11.426 8.09212 11.054 8.22412 10.782 8.48812C10.518 8.75212 10.386 9.13212 10.386 9.62812V13.6001C10.386 14.0961 10.518 14.4801 10.782 14.7521C11.054 15.0161 11.426 15.1481 11.898 15.1481C12.37 15.1481 12.734 15.0161 12.99 14.7521C13.254 14.4801 13.386 14.0961 13.386 13.6001H14.466C14.466 14.3761 14.234 14.9921 13.77 15.4481C13.306 15.8961 12.682 16.1201 11.898 16.1201Z" fill="var(--color-text)" id="icon-128-text"></path></svg><span>Cubism<wbr/>Renderer_<wbr/>WebGL</span></a>
+<ul>
+<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#constructor" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-512-path"></use><use href="#icon-512-text"></use></svg>constructor</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#_anisortopy" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_anisortopy</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#_bufferData" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_buffer<wbr/>Data</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#_clippingContextBufferForDraw" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Draw</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#_clippingContextBufferForMask" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Mask</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#_clippingManager" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_clipping<wbr/>Manager</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#_isCulling" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_is<wbr/>Culling</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#_isPremultipliedAlpha" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_is<wbr/>Premultiplied<wbr/>Alpha</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#_model" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_model</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#_modelColor" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_model<wbr/>Color</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#_mvpMatrix4x4" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_mvp<wbr/>Matrix4x4</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#_sortedDrawableIndexList" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_sorted<wbr/>Drawable<wbr/>Index<wbr/>List</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#_textures" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_textures</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#firstDraw" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>first<wbr/>Draw</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#gl" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>gl</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#staticRelease" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>static<wbr/>Release</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#bindTexture" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>bind<wbr/>Texture</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#doDrawModel" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>do<wbr/>Draw<wbr/>Model</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#drawMesh" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>draw<wbr/>Mesh</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#drawModel" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>draw<wbr/>Model</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#getAnisotropy" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Anisotropy</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#getBindedTextures" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Binded<wbr/>Textures</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#getClippingContextBufferForDraw" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Draw</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#getClippingContextBufferForMask" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Mask</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#getClippingMaskBufferSize" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Clipping<wbr/>Mask<wbr/>Buffer<wbr/>Size</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#getModel" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Model</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#getModelColor" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Model<wbr/>Color</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#getMvpMatrix" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Mvp<wbr/>Matrix</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#initialize" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>initialize</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#isCulling" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>is<wbr/>Culling</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#isPremultipliedAlpha" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>is<wbr/>Premultiplied<wbr/>Alpha</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#preDraw" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>pre<wbr/>Draw</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#release" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>release</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#setAnisotropy" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Anisotropy</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#setClippingContextBufferForDraw" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Draw</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#setClippingContextBufferForMask" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Clipping<wbr/>Context<wbr/>Buffer<wbr/>For<wbr/>Mask</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#setClippingMaskBufferSize" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Clipping<wbr/>Mask<wbr/>Buffer<wbr/>Size</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#setIsCulling" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Is<wbr/>Culling</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#setIsPremultipliedAlpha" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Is<wbr/>Premultiplied<wbr/>Alpha</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#setModelColor" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Model<wbr/>Color</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="CubismWebFramework.CubismRenderer_WebGL.html#setMvpMatrix" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Mvp<wbr/>Matrix</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#setRenderState" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Render<wbr/>State</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#startUp" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>start<wbr/>Up</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismRenderer_WebGL.html#doStaticRelease" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>do<wbr/>Static<wbr/>Release</a></li></ul></li></ul></nav></div></div>
+<div class="container tsd-generator">
+<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
+<div class="overlay"></div><script src="../assets/main.js"></script></body></html>

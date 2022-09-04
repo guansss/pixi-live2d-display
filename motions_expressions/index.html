@@ -1,618 +1,347 @@
 
-<!doctype html>
-<html lang="en" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      
-      
-      
-      
-      <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
-    
-    
-      
-        <title>Motions and Expressions - pixi-live2d-display</title>
-      
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/main.2c0c5eaf.min.css">
-      
-        
-        <link rel="stylesheet" href="../assets/stylesheets/palette.7fa14f5b.min.css">
-        
-      
-    
-    
-    
-      
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
-      
-    
-    
-    
-    
-      
-        
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-KH8XQ1VPZW","guansss.github.io"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
-    
-    
-  </head>
-  
-  
-    
-    
-    
-    
-    
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
-      
-  
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
-        
-        <a href="#idle-motions" class="md-skip">
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.1, mkdocs-material-8.4.2" name="generator"/>
+<title>Motions and Expressions - pixi-live2d-display</title>
+<link href="../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#idle-motions">
           Skip to content
         </a>
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
-    
-      <header class="md-header" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="pixi-live2d-display" class="md-header__button md-logo" aria-label="pixi-live2d-display" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
-
-    </a>
-    <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
-    </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="pixi-live2d-display" class="md-header__button md-logo" data-md-component="logo" href=".." title="pixi-live2d-display">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
             pixi-live2d-display
           </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
             
               Motions and Expressions
             
           </span>
-        </div>
-      </div>
-    </div>
-    <div class="md-header__options">
-      
-    </div>
-    
-      <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-      </label>
-      
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
 <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
-      <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
+<ol class="md-search-result__list"></ol>
 </div>
-    
-    
-      <div class="md-header__source">
-        
-<a href="https://github.com/guansss/pixi-live2d-display/" title="Go to repository" class="md-source" data-md-component="source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
-  </div>
-  <div class="md-source__repository">
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/guansss/pixi-live2d-display" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
     GitHub
   </div>
 </a>
-      </div>
-    
-  </nav>
+</div>
+</nav>
 </header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href=".." title="pixi-live2d-display" class="md-nav__button md-logo" aria-label="pixi-live2d-display" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
-
-    </a>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="pixi-live2d-display" class="md-nav__button md-logo" data-md-component="logo" href=".." title="pixi-live2d-display">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
     pixi-live2d-display
   </label>
-  
-    <div class="md-nav__source">
-      
-<a href="https://github.com/guansss/pixi-live2d-display/" title="Go to repository" class="md-source" data-md-component="source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
-  </div>
-  <div class="md-source__repository">
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/guansss/pixi-live2d-display" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
     GitHub
   </div>
 </a>
-    </div>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../README.md">
         Introduction
       </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-    
-  
-  
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
-      
-      <label class="md-nav__link" for="__nav_2">
-        References
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="References" data-md-level="1">
-        <label class="md-nav__title" for="__nav_2">
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2">
+          References
           <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="References" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
           References
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../models/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../models/">
         Models
       </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../interactions/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../interactions/">
         Interactions
       </a>
-    </li>
-  
-
-          
-            
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
           Motions and Expressions
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         Motions and Expressions
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#idle-motions" class="md-nav__link">
-    Idle Motions
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#idle-motions">
+    Idle motions
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#preloading" class="md-nav__link">
-    Preloading
+<li class="md-nav__item">
+<a class="md-nav__link" href="#preloading-motions">
+    Preloading motions
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#starting-motions" class="md-nav__link">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#starting-motions">
     Starting Motions
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#priorities" class="md-nav__link">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#priorities">
     Priorities
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#sounds" class="md-nav__link">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#state-management">
+    State management
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sounds">
     Sounds
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#motion-sync" class="md-nav__link">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#motion-sync">
     Motion Sync
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#state-transition-table" class="md-nav__link">
-    State-transition Table
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#expressions" class="md-nav__link">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#expressions">
     Expressions
   </a>
-  
 </li>
-      
-    </ul>
-  
+</ul>
 </nav>
-      
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../additional/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../additional/">
         Additional Features
       </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../configs/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../configs/">
         Configs
       </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../graphs/" class="md-nav__link">
-        Graphs
-      </a>
-    </li>
-  
-
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../development/" class="md-nav__link">
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../development/">
         Development
       </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/index.html" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
         API Documentation
       </a>
-    </li>
-  
-
-    
-  </ul>
+</li>
+</ul>
 </nav>
-                  </div>
-                </div>
-              </div>
-            
-            
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#idle-motions" class="md-nav__link">
-    Idle Motions
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#idle-motions">
+    Idle motions
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#preloading" class="md-nav__link">
-    Preloading
+<li class="md-nav__item">
+<a class="md-nav__link" href="#preloading-motions">
+    Preloading motions
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#starting-motions" class="md-nav__link">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#starting-motions">
     Starting Motions
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#priorities" class="md-nav__link">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#priorities">
     Priorities
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#sounds" class="md-nav__link">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#state-management">
+    State management
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sounds">
     Sounds
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#motion-sync" class="md-nav__link">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#motion-sync">
     Motion Sync
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#state-transition-table" class="md-nav__link">
-    State-transition Table
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#expressions" class="md-nav__link">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#expressions">
     Expressions
   </a>
-  
 </li>
-      
-    </ul>
-  
+</ul>
 </nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset">
-              
-                
-                  <a href="https://github.com/guansss/pixi-live2d-display/edit/master/docs/motions_expressions.md" title="Edit this page" class="md-content__button md-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
-                  </a>
-                
-                
-                  <h1>Motions and Expressions</h1>
-                
-                <p>Motions are managed by the <code>MotionManager</code> of each model.</p>
-<h3 id="idle-motions">Idle Motions<a class="headerlink" href="#idle-motions" title="Permanent link">&para;</a></h3>
-<p>When the model is not playing any motion, it's considered idle, and then its motion manager will randomly start an idle
-motion as the idle priority.</p>
-<p>Idle motions refer to the ones defined in a particular motion group: <code>"idle"</code> on Cubism 2, and <code>"Idle"</code> on Cubism 4. But
-you can specify another group according to the model's definition.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">model</span><span class="p">.</span><span class="nx">internalModel</span><span class="p">.</span><span class="nx">motionManager</span><span class="p">.</span><span class="nx">groups</span><span class="p">.</span><span class="nx">idle</span> <span class="o">=</span> <span class="s1">&#39;main_idle&#39;</span><span class="p">;</span>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/guansss/pixi-live2d-display/edit/master/docs/motions_expressions.md" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
+</a>
+<h1>Motions and Expressions</h1>
+<p>Motions are managed by the <code>MotionManager</code> of each model.</p>
+<h3 id="idle-motions">Idle motions<a class="headerlink" href="#idle-motions" title="Permanent link">¶</a></h3>
+<p>When the model is not playing any motion, it's considered <em>idle</em>, and then its motion manager will randomly start an idle motion as "idle" priority.</p>
+<p>Idle motions refer to the ones defined in a dedicated motion group: <code>"idle"</code> on Cubism 2, and <code>"Idle"</code> on Cubism 4. But you can specify a custom group to read idle motions from:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">model</span><span class="p">.</span><span class="nx">internalModel</span><span class="p">.</span><span class="nx">motionManager</span><span class="p">.</span><span class="nx">groups</span><span class="p">.</span><span class="nx">idle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'main_idle'</span><span class="p">;</span><span class="w"></span>
 </code></pre></div>
-<p>You can also specify it just when creating the model so this group can be correctly preloaded.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">model</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">Live2DModel</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="s1">&#39;shizuku.model.json&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">idleMotionGroup</span><span class="o">:</span> <span class="s1">&#39;main_idle&#39;</span> <span class="p">});</span>
+<p>You can also specify it when creating the model, in order to preload this group according to the preload strategy.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Live2DModel</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="s1">'shizuku.model.json'</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">idleMotionGroup</span><span class="o">:</span><span class="w"> </span><span class="s1">'main_idle'</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
 </code></pre></div>
-<h3 id="preloading">Preloading<a class="headerlink" href="#preloading" title="Permanent link">&para;</a></h3>
-<p>Motions can be preloaded to provide a seamless experience for users, but that may result in too many XHR requests that
-block the network.</p>
-<p>By default, only the idle motions will be preloaded. You can change this by setting the <code>motionPreload</code> option.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="p">{</span> <span class="nx">MotionPreloadStrategy</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;pixi-live2d-display&#39;</span><span class="p">;</span>
+<h3 id="preloading-motions">Preloading motions<a class="headerlink" href="#preloading-motions" title="Permanent link">¶</a></h3>
+<p>Motions are separate files and will be lazy loaded, so when you start a motion for the first time, it will be fetched from server. Depending on the network speed, this may cause a noticeable delay.</p>
+<p>Motion preloading is here to help. It preloads motion during model creation to ensure motions can be played seamlessly (except for the first played motion because it may not have been loaded as soon as the model creation completes).</p>
+<p>By default, only idle motions will be preloaded. You can change this by setting the <code>motionPreload</code> option.</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">MotionPreloadStrategy</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'pixi-live2d-display'</span><span class="p">;</span><span class="w"></span>
 
-<span class="c1">// MotionPreloadStrategy.ALL</span>
-<span class="c1">// MotionPreloadStrategy.IDLE</span>
-<span class="c1">// MotionPreloadStrategy.NONE</span>
+<span class="c1">// MotionPreloadStrategy.ALL</span><span class="w"></span>
+<span class="c1">// MotionPreloadStrategy.IDLE</span><span class="w"></span>
+<span class="c1">// MotionPreloadStrategy.NONE</span><span class="w"></span>
 
-<span class="kd">const</span> <span class="nx">model</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">Live2DModel</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="s1">&#39;shizuku.model.json&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">motionPreload</span><span class="o">:</span> <span class="nx">MotionPreloadStrategy</span><span class="p">.</span><span class="nx">NONE</span> <span class="p">});</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Live2DModel</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="s1">'shizuku.model.json'</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">motionPreload</span><span class="o">:</span><span class="w"> </span><span class="nx">MotionPreloadStrategy</span><span class="p">.</span><span class="nx">NONE</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
 </code></pre></div>
-<h3 id="starting-motions">Starting Motions<a class="headerlink" href="#starting-motions" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1">// start the first motion in the &quot;tap_body&quot; group</span>
-<span class="nx">model</span><span class="p">.</span><span class="nx">motion</span><span class="p">(</span><span class="s1">&#39;tap_body&#39;</span><span class="p">,</span> <span class="mf">0</span><span class="p">);</span>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Be careful of using <code>MotionPreloadStrategy.ALL</code>. Loading too many motions at the same time will send a lot of HTTP requests that may block the network from loading other resources due to the browser's concurrent connection limit.</p>
+</div>
+<h3 id="starting-motions">Starting Motions<a class="headerlink" href="#starting-motions" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// start the first motion in "tap_body" group</span><span class="w"></span>
+<span class="nx">model</span><span class="p">.</span><span class="nx">motion</span><span class="p">(</span><span class="s1">'tap_body'</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span><span class="w"></span>
 
-<span class="c1">// when the index is omitted, it starts a random motion in given group</span>
-<span class="nx">model</span><span class="p">.</span><span class="nx">motion</span><span class="p">(</span><span class="s1">&#39;tap_body&#39;</span><span class="p">);</span>
+<span class="c1">// start a random motion in "tap_body" group</span><span class="w"></span>
+<span class="nx">model</span><span class="p">.</span><span class="nx">motion</span><span class="p">(</span><span class="s1">'tap_body'</span><span class="p">);</span><span class="w"></span>
 
-<span class="c1">// the above calls are shorthands of these methods</span>
-<span class="nx">model</span><span class="p">.</span><span class="nx">internalModel</span><span class="p">.</span><span class="nx">motionManager</span><span class="p">.</span><span class="nx">startMotion</span><span class="p">(</span><span class="s1">&#39;tap_body&#39;</span><span class="p">,</span> <span class="mf">0</span><span class="p">);</span>
-<span class="nx">model</span><span class="p">.</span><span class="nx">internalModel</span><span class="p">.</span><span class="nx">motionManager</span><span class="p">.</span><span class="nx">startRandomMotion</span><span class="p">(</span><span class="s1">&#39;tap_body&#39;</span><span class="p">);</span>
+<span class="c1">// the above calls are shorthands of these methods</span><span class="w"></span>
+<span class="nx">model</span><span class="p">.</span><span class="nx">internalModel</span><span class="p">.</span><span class="nx">motionManager</span><span class="p">.</span><span class="nx">startMotion</span><span class="p">(</span><span class="s1">'tap_body'</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span><span class="w"></span>
+<span class="nx">model</span><span class="p">.</span><span class="nx">internalModel</span><span class="p">.</span><span class="nx">motionManager</span><span class="p">.</span><span class="nx">startRandomMotion</span><span class="p">(</span><span class="s1">'tap_body'</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
-<h3 id="priorities">Priorities<a class="headerlink" href="#priorities" title="Permanent link">&para;</a></h3>
-<p>A motion will be started as one of these priorities: <code>IDLE</code>, <code>NORMAL</code> and <code>FORCE</code>.</p>
-<dl>
-<dt><code>IDLE</code></dt>
-<dd>Low priority. A Live2D model will typically have a set of idle motions, they will be automatically played when there's
-no other motion playing.</dd>
-<dt><code>NORMAL</code></dt>
-<dd>Medium priority. This is the default value if you don't provide one.</dd>
-<dt><code>FORCE</code></dt>
-<dd>High priority. This makes sure the motion will always be played regardless of the current priority, except that it
-meets a race condition where a subsequent motion with the same priority is loaded before this motion.</dd>
-</dl>
-<p>There's also a <code>NONE</code> priority which cannot be assigned to a motion, it's used to state that this model is currently not
-playing any motion.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="p">{</span> <span class="nx">MotionPriority</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;pixi-live2d-display&#39;</span><span class="p">;</span>
+<p>These methods return a <code>Promise</code> that resolves with <code>true</code> when the motion is successfully started, and <code>false</code> otherwise.</p>
+<h3 id="priorities">Priorities<a class="headerlink" href="#priorities" title="Permanent link">¶</a></h3>
+<p>A motion can be started as one of these priorities: <code>IDLE</code>, <code>NORMAL</code> and <code>FORCE</code>.</p>
+<p><code>IDLE</code>: Low priority. Each model typically has a set of idle motions, which will be automatically played as such priority when the model is idle.</p>
+<p><code>NORMAL</code>: Medium priority. This is the default value if you don't provide one.</p>
+<p><code>FORCE</code>: High priority. This makes sure the motion will always be played regardless of the current priority, except for meeting a race condition where a subsequent motion with the same priority is loaded before this motion.</p>
+<p><code>NONE</code>: No priority. This cannot be assigned to a motion, it's internally used to represent the state that there's no any motion playing.</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">MotionPriority</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'pixi-live2d-display'</span><span class="p">;</span><span class="w"></span>
 
-<span class="nx">model</span><span class="p">.</span><span class="nx">motion</span><span class="p">(</span><span class="s1">&#39;tap_body&#39;</span><span class="p">,</span> <span class="mf">0</span><span class="p">,</span> <span class="nx">MotionPriority</span><span class="p">.</span><span class="nx">NORMAL</span><span class="p">);</span>
+<span class="nx">model</span><span class="p">.</span><span class="nx">motion</span><span class="p">(</span><span class="s1">'tap_body'</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">MotionPriority</span><span class="p">.</span><span class="nx">NORMAL</span><span class="p">);</span><span class="w"></span>
 
-<span class="c1">// a random motion as normal priority</span>
-<span class="nx">model</span><span class="p">.</span><span class="nx">motion</span><span class="p">(</span><span class="s1">&#39;tap_body&#39;</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="nx">MotionPriority</span><span class="p">.</span><span class="nx">NORMAL</span><span class="p">);</span>
+<span class="c1">// start a random motion</span><span class="w"></span>
+<span class="nx">model</span><span class="p">.</span><span class="nx">motion</span><span class="p">(</span><span class="s1">'tap_body'</span><span class="p">,</span><span class="w"> </span><span class="kc">undefined</span><span class="p">,</span><span class="w"> </span><span class="nx">MotionPriority</span><span class="p">.</span><span class="nx">NORMAL</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
-<p>When a motion has been requested, and been approved to play, but meanwhile there's already a playing motion, it will not
-immediately take the place of the current motion, instead it <em>reserves</em> the place and starts to load. The current motion
-will keep playing until the reserved motion has finished loading.</p>
-<p>That said, the actual rules are more complicated, see the <a href="#state-transition-table">State-transition Table</a> section for
-all the cases.</p>
-<h3 id="sounds">Sounds<a class="headerlink" href="#sounds" title="Permanent link">&para;</a></h3>
-<p>If a sound file is specified within a motion definition, it'll be played together with this motion.</p>
-<p>During the playback, you can take control of all the created <code>&lt;audio&gt;</code> elements in <code>SoundManager</code>, like setting a global
-volume.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="p">{</span> <span class="nx">SoundManager</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;pixi-live2d-display&#39;</span><span class="p">;</span>
-
-<span class="nx">SoundManager</span><span class="p">.</span><span class="nx">volume</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>
-</code></pre></div>
-<p>To handle the audios separately, you can listen to the <code>motionStart</code> event.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">model</span><span class="p">.</span><span class="nx">internalModel</span><span class="p">.</span><span class="nx">motionManager</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;motionStart&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">group</span><span class="p">,</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">audio</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">audio</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// assume you&#39;ve implemented a feature to show subtitles</span>
-    <span class="nx">showSubtitle</span><span class="p">(</span><span class="nx">group</span><span class="p">,</span> <span class="nx">index</span><span class="p">);</span>
-
-    <span class="nx">audio</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;ended&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">dismissSubtitle</span><span class="p">());</span>
-  <span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-<h3 id="motion-sync">Motion Sync<a class="headerlink" href="#motion-sync" title="Permanent link">&para;</a></h3>
-<p>There are two parallel tasks while attempting to start a motion with sound:</p>
-<ul>
-<li>Load the motion, then play it</li>
-<li>Load the sound, then play it</li>
-</ul>
-<p>Typically, the playbacks of motion and its sound are supposed to start at the same time, that's what motion sync does:
-it defers the playbacks until the motion and sound have both been loaded.</p>
-<ul>
-<li>Load the motion and sound, then play both</li>
-</ul>
-<p>This feature can be toggled via <a href="#global-config">global config</a>, by default it's enabled.</p>
-<h3 id="state-transition-table">State-transition Table<a class="headerlink" href="#state-transition-table" title="Permanent link">&para;</a></h3>
-<p>This table specifies which motion will <em>finally</em> be played when attempting to start a motion in a particular situation,
-assuming the loading will never fail and will be finished in a relatively short time.</p>
+<h3 id="state-management">State management<a class="headerlink" href="#state-management" title="Permanent link">¶</a></h3>
+<p>If a motion is requested to play when there's already another motion playing, then the current motion will not be canceled immediately, instead, the new motion <em>reserves</em> the place and starts to load, and the current motion will keep playing until the new motion has been loaded.</p>
+<p>The actual rules are a bit more complicated, below is a state-transition table specifying that which motion will <em>eventually</em> be played when attempting to start a motion in a particular situation, assuming the loading will never fail and will be finished in a relatively short time.</p>
 <table>
 <tr><th rowspan="2">When:</th><td colspan="4">Start motion C as:</td></tr>
 <tr>
@@ -623,145 +352,162 @@ assuming the loading will never fail and will be finished in a relatively short 
 </tr>
 <tr>
 <th>Playing none 
-<br>Reserved none </th>
+<br/>Reserved none </th>
 <td align="center">none</td><td align="center">C</td><td align="center">C</td><td align="center">C</td>
 </tr>
 <tr>
-<th>Playing A  as <code>IDLE</code> 
-<br>Reserved none </th>
+<th>Playing A  as <code>IDLE</code>
+<br/>Reserved none </th>
 <td align="center">A</td><td align="center">A</td><td align="center">C</td><td align="center">C</td>
 </tr>
 <tr>
-<th>Playing A  as <code>NORMAL</code> 
-<br>Reserved none </th>
+<th>Playing A  as <code>NORMAL</code>
+<br/>Reserved none </th>
 <td align="center">A</td><td align="center">A</td><td align="center">A</td><td align="center">C</td>
 </tr>
 <tr>
-<th>Playing A  as <code>FORCE</code> 
-<br>Reserved none </th>
+<th>Playing A  as <code>FORCE</code>
+<br/>Reserved none </th>
 <td align="center">A</td><td align="center">A</td><td align="center">A</td><td align="center">C</td>
 </tr>
 <tr>
-<th>Playing A  as <code>IDLE</code> 
-<br>Reserved B  as <code>NORMAL</code> </th>
+<th>Playing A  as <code>IDLE</code>
+<br/>Reserved B  as <code>NORMAL</code> </th>
 <td align="center">B</td><td align="center">B</td><td align="center">B</td><td align="center">C</td>
 </tr>
 <tr>
-<th>Playing A  as <code>NORMAL</code> 
-<br>Reserved B  as <code>FORCE</code> </th>
+<th>Playing A  as <code>NORMAL</code>
+<br/>Reserved B  as <code>FORCE</code> </th>
 <td align="center">B</td><td align="center">B</td><td align="center">B</td><td align="center">C</td>
 </tr>
 <tr>
-<th>Playing A  as <code>FORCE</code> 
-<br>Reserved B  as <code>FORCE</code> </th>
+<th>Playing A  as <code>FORCE</code>
+<br/>Reserved B  as <code>FORCE</code> </th>
 <td align="center">B</td><td align="center">B</td><td align="center">B</td><td align="center">C</td>
 </tr>
 <tr>
 <th>Playing none 
-<br>Reserved B  as <code>IDLE</code> </th>
+<br/>Reserved B  as <code>IDLE</code> </th>
 <td align="center">B</td><td align="center">B</td><td align="center">C</td><td align="center">C</td>
 </tr>
 <tr>
 <th>Playing none 
-<br>Reserved B  as <code>FORCE</code> </th>
+<br/>Reserved B  as <code>FORCE</code> </th>
 <td align="center">B</td><td align="center">B</td><td align="center">B</td><td align="center">C</td>
 </tr>
 <tr>
 <th>Playing none 
-<br>Reserved B  as <code>FORCE</code> </th>
+<br/>Reserved B  as <code>FORCE</code> </th>
 <td align="center">B</td><td align="center">B</td><td align="center">B</td><td align="center">C</td>
 </tr>
 </table>
+<p>Note that these rules are different with Live2D's official samples in some cases:</p>
+<ul>
+<li>Race conditions will be correctly handled.</li>
+<li>Playing motions in parallel is not yet supported.</li>
+</ul>
+<h3 id="sounds">Sounds<a class="headerlink" href="#sounds" title="Permanent link">¶</a></h3>
+<p>If the motion is specified with a sound file, it'll be played together with this motion.</p>
+<p><code>&lt;audio&gt;</code> elements are all managed by the singleton <code>SoundManager</code>. During playback, you can access those audios from <code>SoundManager.audios</code>.</p>
+<p>You can also set a global volume to all active audios, and it will also affect audios created in the future.</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">SoundManager</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'pixi-live2d-display'</span><span class="p">;</span><span class="w"></span>
 
-<h2 id="expressions">Expressions<a class="headerlink" href="#expressions" title="Permanent link">&para;</a></h2>
-<p>Expressions are managed by <code>ExpressionManager</code> in <code>MotionManager</code>.</p>
-<p>If the model has no expression defined in its settings, the <code>ExpressionManager</code> will not be created.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// apply the first expression</span>
-<span class="nx">model</span><span class="p">.</span><span class="nx">expression</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
-
-<span class="c1">// apply the expression named &quot;smile&quot;</span>
-<span class="nx">model</span><span class="p">.</span><span class="nx">expression</span><span class="p">(</span><span class="s1">&#39;smile&#39;</span><span class="p">);</span>
-
-<span class="c1">// when the argument is omitted, it applies a random expression</span>
-<span class="nx">model</span><span class="p">.</span><span class="nx">expression</span><span class="p">();</span>
-
-<span class="c1">// the above calls are shorthands of these methods</span>
-<span class="nx">model</span><span class="p">.</span><span class="nx">internalModel</span><span class="p">.</span><span class="nx">motionManager</span><span class="p">.</span><span class="nx">expressionManager</span><span class="p">.</span><span class="nx">setExpression</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
-<span class="nx">model</span><span class="p">.</span><span class="nx">internalModel</span><span class="p">.</span><span class="nx">motionManager</span><span class="p">.</span><span class="nx">expressionManager</span><span class="p">.</span><span class="nx">setExpression</span><span class="p">(</span><span class="s1">&#39;smile&#39;</span><span class="p">);</span>
-<span class="nx">model</span><span class="p">.</span><span class="nx">internalModel</span><span class="p">.</span><span class="nx">motionManager</span><span class="p">.</span><span class="nx">expressionManager</span><span class="p">.</span><span class="nx">setRandomExpression</span><span class="p">();</span>
+<span class="nx">SoundManager</span><span class="p">.</span><span class="nx">volume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
 </code></pre></div>
-                
-              
-              
-                
+<p>To handle the audios separately, you can listen for the <code>motionStart</code> event.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">model</span><span class="p">.</span><span class="nx">internalModel</span><span class="p">.</span><span class="nx">motionManager</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'motionStart'</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">group</span><span class="p">,</span><span class="w"> </span><span class="nx">index</span><span class="p">,</span><span class="w"> </span><span class="nx">audio</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">audio</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// e.g. show subtitle for this audio</span><span class="w"></span>
+<span class="w">    </span><span class="nx">showSubtitle</span><span class="p">(</span><span class="nx">group</span><span class="p">,</span><span class="w"> </span><span class="nx">index</span><span class="p">);</span><span class="w"></span>
 
+<span class="w">    </span><span class="nx">audio</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'ended'</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">dismissSubtitle</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">});</span><span class="w"></span>
+</code></pre></div>
+<h3 id="motion-sync">Motion Sync<a class="headerlink" href="#motion-sync" title="Permanent link">¶</a></h3>
+<p>There are two concurrent tasks while starting a motion with sound:</p>
+<div class="mermaid">flowchart LR
+A[Load motion] --&gt; B[Play motion]
+C[Load sound] --&gt; D[Play sound]</div>
+<p>This can easily cause the sound to be out of sync with the motion because they are not always going to be loaded at the same time.</p>
+<p>With motion sync, playbacks will be deferred until both the motion and sound have been loaded, looking like this:</p>
+<div class="mermaid">flowchart LR
+A[Load motion] &amp; C[Load sound] --&gt; B[Wait until both are done] --&gt; D[Play motion and sound]</div>
+<p>This feature is enabled by default and can be toggled via <a href="../configs">global config</a>.</p>
+<h2 id="expressions">Expressions<a class="headerlink" href="#expressions" title="Permanent link">¶</a></h2>
+<p>Expressions are managed by <code>ExpressionManager</code> inside <code>MotionManager</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// apply the first expression</span><span class="w"></span>
+<span class="nx">model</span><span class="p">.</span><span class="nx">expression</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span><span class="w"></span>
 
-              
-            </article>
-          </div>
-        </div>
-      </main>
-      
-        
+<span class="c1">// apply the expression named "smile"</span><span class="w"></span>
+<span class="nx">model</span><span class="p">.</span><span class="nx">expression</span><span class="p">(</span><span class="s1">'smile'</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// when the argument is omitted, it applies a random expression</span><span class="w"></span>
+<span class="nx">model</span><span class="p">.</span><span class="nx">expression</span><span class="p">();</span><span class="w"></span>
+
+<span class="c1">// the above calls are shorthands of these methods</span><span class="w"></span>
+<span class="nx">model</span><span class="p">.</span><span class="nx">internalModel</span><span class="p">.</span><span class="nx">motionManager</span><span class="p">.</span><span class="nx">expressionManager</span><span class="p">.</span><span class="nx">setExpression</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span><span class="w"></span>
+<span class="nx">model</span><span class="p">.</span><span class="nx">internalModel</span><span class="p">.</span><span class="nx">motionManager</span><span class="p">.</span><span class="nx">expressionManager</span><span class="p">.</span><span class="nx">setExpression</span><span class="p">(</span><span class="s1">'smile'</span><span class="p">);</span><span class="w"></span>
+<span class="nx">model</span><span class="p">.</span><span class="nx">internalModel</span><span class="p">.</span><span class="nx">motionManager</span><span class="p">.</span><span class="nx">expressionManager</span><span class="p">.</span><span class="nx">setRandomExpression</span><span class="p">();</span><span class="w"></span>
+</code></pre></div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>If a model has no expression defined in its settings, <code>ExpressionManager</code> will not be created at all, meaning that <code>model.internalModel.motionManager.expressionManager</code> is undefined.</p>
+</div>
+</article>
+</div>
+</div>
+</main>
 <footer class="md-footer">
-  
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
-      
-        <a href="../interactions/" class="md-footer__link md-footer__link--prev" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Interactions" class="md-footer__link md-footer__link--prev" href="../interactions/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
                 Previous
               </span>
               Interactions
             </div>
-          </div>
-        </a>
-      
-      
-        <a href="../additional/" class="md-footer__link md-footer__link--next" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
+</div>
+</a>
+<a aria-label="Next: Additional Features" class="md-footer__link md-footer__link--next" href="../additional/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
                 Next
               </span>
               Additional Features
             </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
   
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
-        
-      </div>
-      
-    </div>
-  </div>
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
 </footer>
-      
-    </div>
-    <div class="md-dialog" data-md-component="dialog">
-      <div class="md-dialog__inner md-typeset"></div>
-    </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fb4a9340.min.js", "version": null}</script>
-    
-    
-      <script src="../assets/javascripts/bundle.a1c7c35e.min.js"></script>
-      
-    
-  </body>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand"], "search": "../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../assets/javascripts/bundle.9c69f0bc.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({
+    theme: "dark"
+});</script></body>
 </html>

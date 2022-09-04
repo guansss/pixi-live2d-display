@@ -1,630 +1,281 @@
 
-<!doctype html>
-<html lang="en" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      
-      
-      
-      
-      <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
-    
-    
-      
-        <title>pixi-live2d-display</title>
-      
-    
-    
-      <link rel="stylesheet" href="assets/stylesheets/main.2c0c5eaf.min.css">
-      
-        
-        <link rel="stylesheet" href="assets/stylesheets/palette.7fa14f5b.min.css">
-        
-      
-    
-    
-    
-      
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
-      
-    
-    
-    
-    
-      
-        
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-KH8XQ1VPZW","guansss.github.io"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
-    
-    
-  </head>
-  
-  
-    
-    
-    
-    
-    
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
-      
-  
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
-        
-        <a href="#pixi-live2d-display" class="md-skip">
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.1, mkdocs-material-8.4.2" name="generator"/>
+<title>pixi-live2d-display</title>
+<link href="assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
+<link href="assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#pixi-live2d-display">
           Skip to content
         </a>
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
-    
-      <header class="md-header" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="pixi-live2d-display" class="md-header__button md-logo" aria-label="pixi-live2d-display" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
-
-    </a>
-    <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
-    </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="pixi-live2d-display" class="md-header__button md-logo" data-md-component="logo" href="." title="pixi-live2d-display">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
             pixi-live2d-display
           </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
             
-              Introduction
+              Home
             
           </span>
-        </div>
-      </div>
-    </div>
-    <div class="md-header__options">
-      
-    </div>
-    
-      <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-      </label>
-      
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
 <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
-      <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
+<ol class="md-search-result__list"></ol>
 </div>
-    
-    
-      <div class="md-header__source">
-        
-<a href="https://github.com/guansss/pixi-live2d-display/" title="Go to repository" class="md-source" data-md-component="source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
-  </div>
-  <div class="md-source__repository">
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/guansss/pixi-live2d-display" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
     GitHub
   </div>
 </a>
-      </div>
-    
-  </nav>
+</div>
+</nav>
 </header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href="." title="pixi-live2d-display" class="md-nav__button md-logo" aria-label="pixi-live2d-display" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
-
-    </a>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="pixi-live2d-display" class="md-nav__button md-logo" data-md-component="logo" href="." title="pixi-live2d-display">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
     pixi-live2d-display
   </label>
-  
-    <div class="md-nav__source">
-      
-<a href="https://github.com/guansss/pixi-live2d-display/" title="Go to repository" class="md-source" data-md-component="source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
-  </div>
-  <div class="md-source__repository">
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/guansss/pixi-live2d-display" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
     GitHub
   </div>
 </a>
-    </div>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-      
-
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Introduction
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="README.md">
         Introduction
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
-    Features
-  </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#requirement" class="md-nav__link">
-    Requirement
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#demo" class="md-nav__link">
-    Demo
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cubism" class="md-nav__link">
-    Cubism
-  </a>
-  
-    <nav class="md-nav" aria-label="Cubism">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#cubism-core" class="md-nav__link">
-    Cubism Core
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#individual-bundles" class="md-nav__link">
-    Individual Bundles
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    Installation
-  </a>
-  
-    <nav class="md-nav" aria-label="Installation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#via-npm" class="md-nav__link">
-    Via npm
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#via-cdn" class="md-nav__link">
-    Via CDN
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    Usage
-  </a>
-  
-    <nav class="md-nav" aria-label="Usage">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#basic" class="md-nav__link">
-    Basic
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#package-importing" class="md-nav__link">
-    Package importing
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" data-md-state="indeterminate" type="checkbox" id="__nav_2" checked>
-      
-      <label class="md-nav__link" for="__nav_2">
-        References
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="References" data-md-level="1">
-        <label class="md-nav__title" for="__nav_2">
+<li class="md-nav__item md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2">
+          References
           <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="References" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
           References
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="models/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="models/">
         Models
       </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="interactions/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="interactions/">
         Interactions
       </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="motions_expressions/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="motions_expressions/">
         Motions and Expressions
       </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="additional/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="additional/">
         Additional Features
       </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="configs/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="configs/">
         Configs
       </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="graphs/" class="md-nav__link">
-        Graphs
-      </a>
-    </li>
-  
-
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="development/" class="md-nav__link">
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="development/">
         Development
       </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="api/index.html" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="api/index.html">
         API Documentation
       </a>
-    </li>
-  
-
-    
-  </ul>
+</li>
+</ul>
 </nav>
-                  </div>
-                </div>
-              </div>
-            
-            
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#features">
     Features
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#requirement" class="md-nav__link">
-    Requirement
+<li class="md-nav__item">
+<a class="md-nav__link" href="#requirements">
+    Requirements
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#demo" class="md-nav__link">
-    Demo
+<li class="md-nav__item">
+<a class="md-nav__link" href="#demos">
+    Demos
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#cubism" class="md-nav__link">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#documentations">
+    Documentations
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cubism">
     Cubism
   </a>
-  
-    <nav class="md-nav" aria-label="Cubism">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#cubism-core" class="md-nav__link">
+<nav aria-label="Cubism" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cubism-core">
     Cubism Core
   </a>
-  
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#individual-bundles" class="md-nav__link">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#individual-bundles">
     Individual Bundles
   </a>
-  
 </li>
-        
-      </ul>
-    </nav>
-  
+</ul>
+</nav>
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#installation">
     Installation
   </a>
-  
-    <nav class="md-nav" aria-label="Installation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#via-npm" class="md-nav__link">
+<nav aria-label="Installation" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#via-npm">
     Via npm
   </a>
-  
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#via-cdn" class="md-nav__link">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#via-cdn">
     Via CDN
   </a>
-  
 </li>
-        
-      </ul>
-    </nav>
-  
+</ul>
+</nav>
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    Usage
+<li class="md-nav__item">
+<a class="md-nav__link" href="#basic-usage">
+    Basic usage
   </a>
-  
-    <nav class="md-nav" aria-label="Usage">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#basic" class="md-nav__link">
-    Basic
-  </a>
-  
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#package-importing" class="md-nav__link">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#package-importing">
     Package importing
   </a>
-  
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
+</ul>
 </nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset">
-              
-                
-                  <a href="https://github.com/guansss/pixi-live2d-display/edit/master/docs/README.md" title="Edit this page" class="md-content__button md-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
-                  </a>
-                
-                
-                <h1 id="pixi-live2d-display">pixi-live2d-display<a class="headerlink" href="#pixi-live2d-display" title="Permanent link">&para;</a></h1>
-<p><img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/guansss/pixi-live2d-display?style=flat-square" />
-<img alt="Cubism version" src="https://img.shields.io/badge/Cubism-2/3/4-ff69b4?style=flat-square" />
-<img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/guansss/pixi-live2d-display/Test%20CI?style=flat-square" /></p>
-<p><a href="README.zh/"><img alt="🤺" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f93a.svg" title=":person_fencing:" /> 中文版readme</a></p>
-<p>Live2D integration for <a href="https://github.com/pixijs/pixi.js">PixiJS</a> v5.</p>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/guansss/pixi-live2d-display/edit/master/docs/index.md" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
+</a>
+<h1 id="pixi-live2d-display">pixi-live2d-display<a class="headerlink" href="#pixi-live2d-display" title="Permanent link">¶</a></h1>
+<p><img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/guansss/pixi-live2d-display?style=flat-square"/>
+<img alt="Cubism version" src="https://img.shields.io/badge/Cubism-2/3/4-ff69b4?style=flat-square"/>
+<img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/guansss/pixi-live2d-display/Test%20CI?style=flat-square"/></p>
+<p>English | <a href="README.zh.md">中文</a></p>
+<blockquote>
+<p><img alt="⚠" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26a0.svg" title=":warning:"/> This readme is for v0.4.0, if you're looking for v0.3.1, see <a href="https://github.com/guansss/pixi-live2d-display/blob/dfa7f764f241c1c802e92a7ab490206369746efd/README.md">this</a>.</p>
+</blockquote>
+<p>Live2D integration for <a href="https://github.com/pixijs/pixi.js">PixiJS</a> v6.</p>
 <p>This project aims to be a universal Live2D framework on the web platform. While the official Live2D framework is just
 complex and problematic, this project has rewritten it to unify and simplify the APIs, which allows you to control the
 Live2D models on a high level without the need to learn how the internal system works.</p>
-<p>More details can be found in the <a href="https://guansss.github.io/pixi-live2d-display">Documentation</a>.</p>
-<h4 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h4>
+<h4 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h4>
 <ul>
 <li>Supports all versions of Live2D models</li>
 <li>Supports PIXI.RenderTexture and PIXI.Filter</li>
@@ -634,23 +285,28 @@ Live2D models on a high level without the need to learn how the internal system 
 <li>Loading from uploaded files / zip files (experimental)</li>
 <li>Fully typed - we all love types!</li>
 </ul>
-<h4 id="requirement">Requirement<a class="headerlink" href="#requirement" title="Permanent link">&para;</a></h4>
+<h4 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">¶</a></h4>
 <ul>
-<li>PixiJS: &gt; 5.2.0 (lower versions were not tested)</li>
+<li>PixiJS: &gt;6</li>
 <li>Browser: WebGL, ES6</li>
 </ul>
-<h4 id="demo">Demo<a class="headerlink" href="#demo" title="Permanent link">&para;</a></h4>
+<h4 id="demos">Demos<a class="headerlink" href="#demos" title="Permanent link">¶</a></h4>
 <ul>
 <li><a href="https://codepen.io/guansss/pen/oNzoNoz/left?editors=1010">Basic demo</a></li>
 <li><a href="https://codepen.io/guansss/pen/KKgXBOP/left?editors=0010">Interaction demo</a></li>
 <li><a href="https://codepen.io/guansss/pen/qBaMNQV/left?editors=1010">Render texture &amp; filter demo</a></li>
 <li><a href="https://guansss.github.io/live2d-viewer-web/">Live2D Viewer Online</a></li>
 </ul>
-<h2 id="cubism">Cubism<a class="headerlink" href="#cubism" title="Permanent link">&para;</a></h2>
+<h4 id="documentations">Documentations<a class="headerlink" href="#documentations" title="Permanent link">¶</a></h4>
+<ul>
+<li><a href="https://guansss.github.io/pixi-live2d-display">Documentation</a></li>
+<li><a href="https://guansss.github.io/pixi-live2d-display/api/index.html">API Documentation</a></li>
+</ul>
+<h2 id="cubism">Cubism<a class="headerlink" href="#cubism" title="Permanent link">¶</a></h2>
 <p>Cubism is the name of Live2D SDK. There are so far three versions of it: Cubism 2.1, Cubism 3 and Cubism 4; where Cubism
 4 is backward-compatible with Cubism 3 models.</p>
 <p>This plugin supports all variants of Live2D models by using Cubism 2.1 and Cubism 4.</p>
-<h4 id="cubism-core">Cubism Core<a class="headerlink" href="#cubism-core" title="Permanent link">&para;</a></h4>
+<h4 id="cubism-core">Cubism Core<a class="headerlink" href="#cubism-core" title="Permanent link">¶</a></h4>
 <p>Before using the plugin, you'll need to include the Cubism runtime library, aka Cubism Core.</p>
 <p>For Cubism 4, you need <code>live2dcubismcore.min.js</code> that can be extracted from
 the <a href="https://www.live2d.com/download/cubism-sdk/download-web/">Cubism 4 SDK</a>, or be referred by
@@ -660,7 +316,7 @@ unreliable, don't use it in production!</em>).</p>
 site <a href="https://help.live2d.com/en/other/other_20/">since 2019/9/4</a>, but can be
 found <a href="https://github.com/dylanNew/live2d/tree/master/webgl/Live2D/lib">here</a>, and with
 a <a href="https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js">CDN link</a> that you'll probably need.</p>
-<h4 id="individual-bundles">Individual Bundles<a class="headerlink" href="#individual-bundles" title="Permanent link">&para;</a></h4>
+<h4 id="individual-bundles">Individual Bundles<a class="headerlink" href="#individual-bundles" title="Permanent link">¶</a></h4>
 <p>The plugin provides individual bundles for each Cubism version to reduce your app's size when you just want to use one
 of the versions.</p>
 <p>Specifically, there are <code>cubism2.js</code> and <code>cubism4.js</code> for respective runtime, along with an <code>index.js</code> that includes
@@ -673,153 +329,114 @@ of <code>cubism2.js</code> and <code>cubism4.js</code>.</p>
 <li>Use <code>cubism4.js</code>+<code>live2dcubismcore.min.js</code> to support Cubism 3 and Cubism 4 models</li>
 <li>Use <code>index.js</code>+<code>live2d.min.js</code>+<code>live2dcubismcore.min.js</code> to support all versions of models</li>
 </ul>
-<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<h4 id="via-npm">Via npm<a class="headerlink" href="#via-npm" title="Permanent link">&para;</a></h4>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h2>
+<h4 id="via-npm">Via npm<a class="headerlink" href="#via-npm" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code>npm install pixi-live2d-display
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Live2DModel</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;pixi-live2d-display&#39;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Live2DModel</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'pixi-live2d-display'</span><span class="p">;</span><span class="w"></span>
 
-<span class="c1">// if only Cubism 2.1</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">Live2DModel</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;pixi-live2d-display/lib/cubism2&#39;</span><span class="p">;</span>
+<span class="c1">// if only Cubism 2.1</span><span class="w"></span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Live2DModel</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'pixi-live2d-display/cubism2'</span><span class="p">;</span><span class="w"></span>
 
-<span class="c1">// if only Cubism 4</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">Live2DModel</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;pixi-live2d-display/lib/cubism4&#39;</span><span class="p">;</span>
+<span class="c1">// if only Cubism 4</span><span class="w"></span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Live2DModel</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'pixi-live2d-display/cubism4'</span><span class="p">;</span><span class="w"></span>
 </code></pre></div>
-<h4 id="via-cdn">Via CDN<a class="headerlink" href="#via-cdn" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/index.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<h4 id="via-cdn">Via CDN<a class="headerlink" href="#via-cdn" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/index.min.js"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
-<span class="c">&lt;!-- if only Cubism 2.1 --&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism2.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="cm">&lt;!-- if only Cubism 2.1 --&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism2.min.js"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
-<span class="c">&lt;!-- if only Cubism 4 --&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="cm">&lt;!-- if only Cubism 4 --&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>In this way, all the exported members are available under <code>PIXI.live2d</code> namespace, such as <code>PIXI.live2d.Live2DModel</code>.</p>
-<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
-<h3 id="basic">Basic<a class="headerlink" href="#basic" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">PIXI</span> <span class="nx">from</span> <span class="s1">&#39;pixi.js&#39;</span><span class="p">;</span>
+<h2 id="basic-usage">Basic usage<a class="headerlink" href="#basic-usage" title="Permanent link">¶</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">PIXI</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'pixi.js'</span><span class="p">;</span><span class="w"></span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Live2DModel</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'pixi-live2d-display'</span><span class="p">;</span><span class="w"></span>
 
-<span class="c1">// with a global PIXI variable, this plugin can automatically take</span>
-<span class="c1">// the needed functionality from it, such as window.PIXI.Ticker</span>
-<span class="nb">window</span><span class="p">.</span><span class="nx">PIXI</span> <span class="o">=</span> <span class="nx">PIXI</span><span class="p">;</span>
+<span class="c1">// expose PIXI to window so that this plugin is able to</span><span class="w"></span>
+<span class="c1">// reference window.PIXI.Ticker to automatically update Live2D models</span><span class="w"></span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">PIXI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">PIXI</span><span class="p">;</span><span class="w"></span>
 
-<span class="c1">// accordingly, here we should use require() to import the module,</span>
-<span class="c1">// instead of the import statement because the latter will be hoisted</span>
-<span class="c1">// over the above assignment when compiling the script</span>
-<span class="kd">const</span> <span class="p">{</span> <span class="nx">Live2DModel</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;pixi-live2d-display&#39;</span><span class="p">);</span>
+<span class="p">(</span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">PIXI</span><span class="p">.</span><span class="nx">Application</span><span class="p">({</span><span class="w"></span>
+<span class="w">        </span><span class="nx">view</span><span class="o">:</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'canvas'</span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="p">});</span><span class="w"></span>
 
-<span class="k">async</span> <span class="kd">function</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PIXI</span><span class="p">.</span><span class="nx">Application</span><span class="p">({</span>
-        <span class="nx">view</span><span class="o">:</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;canvas&#39;</span><span class="p">)</span>
-    <span class="p">});</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Live2DModel</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="s1">'shizuku.model.json'</span><span class="p">);</span><span class="w"></span>
 
-    <span class="kd">const</span> <span class="nx">model</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">Live2DModel</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="s1">&#39;shizuku.model.json&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">app</span><span class="p">.</span><span class="nx">stage</span><span class="p">.</span><span class="nx">addChild</span><span class="p">(</span><span class="nx">model</span><span class="p">);</span><span class="w"></span>
 
-    <span class="nx">app</span><span class="p">.</span><span class="nx">stage</span><span class="p">.</span><span class="nx">addChild</span><span class="p">(</span><span class="nx">model</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// transforms</span><span class="w"></span>
+<span class="w">    </span><span class="nx">model</span><span class="p">.</span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">100</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">model</span><span class="p">.</span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">100</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">model</span><span class="p">.</span><span class="nx">rotation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">model</span><span class="p">.</span><span class="nx">skew</span><span class="p">.</span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">model</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nx">model</span><span class="p">.</span><span class="nx">anchor</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">);</span><span class="w"></span>
 
-    <span class="c1">// transforms</span>
-    <span class="nx">model</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="mf">100</span><span class="p">;</span>
-    <span class="nx">model</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="mf">100</span><span class="p">;</span>
-    <span class="nx">model</span><span class="p">.</span><span class="nx">rotation</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">;</span>
-    <span class="nx">model</span><span class="p">.</span><span class="nx">skew</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">;</span>
-    <span class="nx">model</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span> <span class="mf">2</span><span class="p">);</span>
-    <span class="nx">model</span><span class="p">.</span><span class="nx">anchor</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">);</span>
-
-    <span class="c1">// interaction</span>
-    <span class="nx">model</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;hit&#39;</span><span class="p">,</span> <span class="nx">hitAreas</span> <span class="p">=&gt;</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">hitAreas</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">))</span> <span class="p">{</span>
-            <span class="nx">model</span><span class="p">.</span><span class="nx">motion</span><span class="p">(</span><span class="s1">&#39;tap_body&#39;</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">});</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="c1">// interaction</span><span class="w"></span>
+<span class="w">    </span><span class="nx">model</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'hit'</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">hitAreas</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">hitAreas</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">'body'</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nx">model</span><span class="p">.</span><span class="nx">motion</span><span class="p">(</span><span class="s1">'tap_body'</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">});</span><span class="w"></span>
+<span class="p">})();</span><span class="w"></span>
 </code></pre></div>
-<h3 id="package-importing">Package importing<a class="headerlink" href="#package-importing" title="Permanent link">&para;</a></h3>
-<p>Pixi provides separate packages, which allows you to import only the necessary packages rather than the entire bundle.
-In this case, you'll need to manually register the optional components if you want to make use of their features.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Application</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@pixi/app&#39;</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">Renderer</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@pixi/core&#39;</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">Ticker</span><span class="p">,</span> <span class="nx">TickerPlugin</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@pixi/ticker&#39;</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">InteractionManager</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@pixi/interaction&#39;</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">Live2DModel</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;pixi-live2d-display&#39;</span><span class="p">;</span>
+<h2 id="package-importing">Package importing<a class="headerlink" href="#package-importing" title="Permanent link">¶</a></h2>
+<p>When importing Pixi packages on-demand, you may need to manually register some plugins to enable optional features.</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Application</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@pixi/app'</span><span class="p">;</span><span class="w"></span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Ticker</span><span class="p">,</span><span class="w"> </span><span class="nx">TickerPlugin</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@pixi/ticker'</span><span class="p">;</span><span class="w"></span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">InteractionManager</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@pixi/interaction'</span><span class="p">;</span><span class="w"></span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Live2DModel</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'pixi-live2d-display'</span><span class="p">;</span><span class="w"></span>
 
-<span class="c1">// register the Ticker to support automatic updating of Live2D models</span>
-<span class="nx">Application</span><span class="p">.</span><span class="nx">registerPlugin</span><span class="p">(</span><span class="nx">TickerPlugin</span><span class="p">);</span>
-<span class="nx">Live2DModel</span><span class="p">.</span><span class="nx">registerTicker</span><span class="p">(</span><span class="nx">Ticker</span><span class="p">);</span>
+<span class="c1">// register Ticker for Live2DModel</span><span class="w"></span>
+<span class="nx">Live2DModel</span><span class="p">.</span><span class="nx">registerTicker</span><span class="p">(</span><span class="nx">Ticker</span><span class="p">);</span><span class="w"></span>
 
-<span class="c1">// register the InteractionManager to support automatic interaction of Live2D models</span>
-<span class="nx">Renderer</span><span class="p">.</span><span class="nx">registerPlugin</span><span class="p">(</span><span class="s1">&#39;interaction&#39;</span><span class="p">,</span> <span class="nx">InteractionManager</span><span class="p">);</span>
+<span class="c1">// register Ticker for Application</span><span class="w"></span>
+<span class="nx">Application</span><span class="p">.</span><span class="nx">registerPlugin</span><span class="p">(</span><span class="nx">TickerPlugin</span><span class="p">);</span><span class="w"></span>
 
-<span class="k">async</span> <span class="kd">function</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Application</span><span class="p">({</span>
-        <span class="nx">view</span><span class="o">:</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;canvas&#39;</span><span class="p">)</span>
-    <span class="p">});</span>
+<span class="c1">// register InteractionManager to make Live2D models interactive</span><span class="w"></span>
+<span class="nx">Renderer</span><span class="p">.</span><span class="nx">registerPlugin</span><span class="p">(</span><span class="s1">'interaction'</span><span class="p">,</span><span class="w"> </span><span class="nx">InteractionManager</span><span class="p">);</span><span class="w"></span>
 
-    <span class="kd">const</span> <span class="nx">model</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">Live2DModel</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="s1">&#39;shizuku.model.json&#39;</span><span class="p">);</span>
+<span class="p">(</span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Application</span><span class="p">({</span><span class="w"></span>
+<span class="w">        </span><span class="nx">view</span><span class="o">:</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'canvas'</span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="p">});</span><span class="w"></span>
 
-    <span class="nx">app</span><span class="p">.</span><span class="nx">stage</span><span class="p">.</span><span class="nx">addChild</span><span class="p">(</span><span class="nx">model</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Live2DModel</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="s1">'shizuku.model.json'</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="nx">app</span><span class="p">.</span><span class="nx">stage</span><span class="p">.</span><span class="nx">addChild</span><span class="p">(</span><span class="nx">model</span><span class="p">);</span><span class="w"></span>
+<span class="p">})();</span><span class="w"></span>
 </code></pre></div>
-<hr />
+<hr/>
 <p>The example Live2D models, Shizuku (Cubism 2.1) and Haru (Cubism 4), are redistributed under
 Live2D's <a href="https://www.live2d.com/eula/live2d-free-material-license-agreement_en.html">Free Material License</a>.</p>
-                
-              
-              
-                
-
-
-              
-            </article>
-          </div>
-        </div>
-      </main>
-      
-        
+</article>
+</div>
+</div>
+</main>
 <footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
   
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
-      
-      
-        <a href="models/" class="md-footer__link md-footer__link--next" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Models
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
-        
-      </div>
-      
-    </div>
-  </div>
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
 </footer>
-      
-    </div>
-    <div class="md-dialog" data-md-component="dialog">
-      <div class="md-dialog__inner md-typeset"></div>
-    </div>
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.expand"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "assets/javascripts/workers/search.fb4a9340.min.js", "version": null}</script>
-    
-    
-      <script src="assets/javascripts/bundle.a1c7c35e.min.js"></script>
-      
-    
-  </body>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": ".", "features": ["navigation.expand"], "search": "assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="assets/javascripts/bundle.9c69f0bc.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</body>
 </html>

@@ -1,640 +1,413 @@
 
-<!doctype html>
-<html lang="en" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      
-      
-      
-      
-      <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
-    
-    
-      
-        <title>Additional Features - pixi-live2d-display</title>
-      
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/main.2c0c5eaf.min.css">
-      
-        
-        <link rel="stylesheet" href="../assets/stylesheets/palette.7fa14f5b.min.css">
-        
-      
-    
-    
-    
-      
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
-      
-    
-    
-    
-    
-      
-        
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-KH8XQ1VPZW","guansss.github.io"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
-    
-    
-  </head>
-  
-  
-    
-    
-    
-    
-    
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
-      
-  
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
-        
-        <a href="#hitareaframes" class="md-skip">
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.1, mkdocs-material-8.4.2" name="generator"/>
+<title>Additional Features - pixi-live2d-display</title>
+<link href="../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#hitareaframes">
           Skip to content
         </a>
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
-    
-      <header class="md-header" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="pixi-live2d-display" class="md-header__button md-logo" aria-label="pixi-live2d-display" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
-
-    </a>
-    <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
-    </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="pixi-live2d-display" class="md-header__button md-logo" data-md-component="logo" href=".." title="pixi-live2d-display">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
             pixi-live2d-display
           </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
             
               Additional Features
             
           </span>
-        </div>
-      </div>
-    </div>
-    <div class="md-header__options">
-      
-    </div>
-    
-      <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-      </label>
-      
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
 <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
-      <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
+<ol class="md-search-result__list"></ol>
 </div>
-    
-    
-      <div class="md-header__source">
-        
-<a href="https://github.com/guansss/pixi-live2d-display/" title="Go to repository" class="md-source" data-md-component="source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
-  </div>
-  <div class="md-source__repository">
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/guansss/pixi-live2d-display" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
     GitHub
   </div>
 </a>
-      </div>
-    
-  </nav>
+</div>
+</nav>
 </header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href=".." title="pixi-live2d-display" class="md-nav__button md-logo" aria-label="pixi-live2d-display" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
-
-    </a>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="pixi-live2d-display" class="md-nav__button md-logo" data-md-component="logo" href=".." title="pixi-live2d-display">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
     pixi-live2d-display
   </label>
-  
-    <div class="md-nav__source">
-      
-<a href="https://github.com/guansss/pixi-live2d-display/" title="Go to repository" class="md-source" data-md-component="source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
-  </div>
-  <div class="md-source__repository">
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/guansss/pixi-live2d-display" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
     GitHub
   </div>
 </a>
-    </div>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../README.md">
         Introduction
       </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-    
-  
-  
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
-      
-      <label class="md-nav__link" for="__nav_2">
-        References
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="References" data-md-level="1">
-        <label class="md-nav__title" for="__nav_2">
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2">
+          References
           <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="References" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
           References
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../models/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../models/">
         Models
       </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../interactions/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../interactions/">
         Interactions
       </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../motions_expressions/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../motions_expressions/">
         Motions and Expressions
       </a>
-    </li>
-  
-
-          
-            
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
           Additional Features
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         Additional Features
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#hitareaframes" class="md-nav__link">
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hitareaframes">
     HitAreaFrames
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#loading-from-uploaded-files-experimental" class="md-nav__link">
-    Loading from uploaded files (experimental)
+<li class="md-nav__item">
+<a class="md-nav__link" href="#loading-model-from-uploaded-files-experimental">
+    Loading model from uploaded files (experimental)
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#loading-from-a-zip-file-experimental" class="md-nav__link">
-    Loading from a zip file (experimental)
+<li class="md-nav__item">
+<a class="md-nav__link" href="#loading-model-from-a-zip-file-experimental">
+    Loading model from a zip file (experimental)
   </a>
-  
 </li>
-      
-    </ul>
-  
+</ul>
 </nav>
-      
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../configs/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../configs/">
         Configs
       </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../graphs/" class="md-nav__link">
-        Graphs
-      </a>
-    </li>
-  
-
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../development/" class="md-nav__link">
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../development/">
         Development
       </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/index.html" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
         API Documentation
       </a>
-    </li>
-  
-
-    
-  </ul>
+</li>
+</ul>
 </nav>
-                  </div>
-                </div>
-              </div>
-            
-            
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#hitareaframes" class="md-nav__link">
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hitareaframes">
     HitAreaFrames
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#loading-from-uploaded-files-experimental" class="md-nav__link">
-    Loading from uploaded files (experimental)
+<li class="md-nav__item">
+<a class="md-nav__link" href="#loading-model-from-uploaded-files-experimental">
+    Loading model from uploaded files (experimental)
   </a>
-  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#loading-from-a-zip-file-experimental" class="md-nav__link">
-    Loading from a zip file (experimental)
+<li class="md-nav__item">
+<a class="md-nav__link" href="#loading-model-from-a-zip-file-experimental">
+    Loading model from a zip file (experimental)
   </a>
-  
 </li>
-      
-    </ul>
-  
+</ul>
 </nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset">
-              
-                
-                  <a href="https://github.com/guansss/pixi-live2d-display/edit/master/docs/additional.md" title="Edit this page" class="md-content__button md-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
-                  </a>
-                
-                
-                  <h1>Additional Features</h1>
-                
-                <p>These features are not strongly related to the subject of this project - "displaying Live2D", but can be useful
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/guansss/pixi-live2d-display/edit/master/docs/additional.md" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
+</a>
+<h1>Additional Features</h1>
+<p>These features are not strongly related to this project's main goal - "displaying Live2D", but can be useful
 sometimes.</p>
-<h2 id="hitareaframes">HitAreaFrames<a class="headerlink" href="#hitareaframes" title="Permanent link">&para;</a></h2>
-<p>Displays a frame for model's each hit area. You can see this in
-the <a href="https://codepen.io/guansss/pen/KKgXBOP/left?editors=0010">interaction demo</a>.</p>
-<p>The <code>HitAreaFrames</code> must be used as a direct child of <code>Live2DModel</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">hitAreaFrames</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">HitAreaFrames</span><span class="p">();</span>
+<h2 id="hitareaframes">HitAreaFrames<a class="headerlink" href="#hitareaframes" title="Permanent link">¶</a></h2>
+<p>Displays frames for model's hit areas. You can see this in the <a href="https://codepen.io/guansss/pen/KKgXBOP/left?editors=0010">interaction demo</a>.</p>
+<p><code>HitAreaFrames</code> must be used as a direct child of <code>Live2DModel</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">hitAreaFrames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">HitAreaFrames</span><span class="p">();</span><span class="w"></span>
 
-<span class="nx">model</span><span class="p">.</span><span class="nx">addChild</span><span class="p">(</span><span class="nx">hitAreaFrames</span><span class="p">);</span>
+<span class="nx">model</span><span class="p">.</span><span class="nx">addChild</span><span class="p">(</span><span class="nx">hitAreaFrames</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
-<p>Because this class involves the dependency of <code>PIXI.Graphics</code>, it's included in the browser build, but not in the module
-system build.</p>
-<p>In browser, you can directly use the <code>PIXI.live2d.HitAreaFrames</code>.</p>
-<p>In Node, you can import the source file:</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="p">{</span> <span class="nx">HitAreaFrames</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;pixi-live2d-display/src/tools/HitAreaFrames&#39;</span><span class="p">;</span>
+<p>This class depends on <code>@pixi/graphics</code> and <code>@pixi/text</code>, therefore it's excluded from the main bundle to avoid involving unnecessary dependency.</p>
+<p>You can import it from the <code>extra</code> bundle.</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">HitAreaFrames</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'pixi-live2d-display/extra'</span><span class="p">;</span><span class="w"></span>
 </code></pre></div>
-<p>However it's a TypeScript file, so you'll need an appropriate loader, such as ts-loader when using webpack.</p>
-<p>And unfortunately, while importing this file works, the TypeScript compiler will report an error due to the path
-alias <code>@</code> in this file. This can be fixed
-once <a href="https://github.com/webpack/webpack/issues/2933">webpack supports ES module output</a>. For now, I'd suggest copying
-this file to your project and replacing <code>@/Live2DModel</code> with <code>../Live2DModel</code> in the first line.</p>
-<h2 id="loading-from-uploaded-files-experimental">Loading from uploaded files (experimental)<a class="headerlink" href="#loading-from-uploaded-files-experimental" title="Permanent link">&para;</a></h2>
-<p>You can create a model by an array of <code>File</code> objects, each of which has
-a <a href="https://developer.mozilla.org/en-US/docs/Web/API/File/webkitRelativePath"><code>webkitRelativePath</code></a> property.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;filepicker&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;change&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">const</span> <span class="nx">files</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">files</span><span class="p">;</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="nx">files</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">const</span> <span class="nx">model</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">Live2DModel</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="nx">files</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">});</span>
+<p>For using CDNs, you can load it like this:</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/extra.min.js"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
-<p>Files will be handled by the <code>FileLoader</code>. From given files, it looks for the model settings file by matching
-the <code>model.json</code> or <code>model3.json</code> extension, then creates a lookup table for the resource files defined in the settings,
-where the keys are the files' paths and the values are their object URLs.</p>
-<p>If there are more than one settings file, only the first one will be chosen by default, but you can specify it by
-attaching a <code>ModelSettings</code> to the file array.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// files:</span>
-<span class="c1">// shizuku-normal.model.json</span>
-<span class="c1">// shizuku-special.model.json</span>
-<span class="c1">// shizuku.moc</span>
-<span class="c1">// texture_0.png</span>
-<span class="c1">// ...</span>
-
-<span class="kd">const</span> <span class="nx">files</span> <span class="o">=</span> <span class="nx">getUploadedFiles</span><span class="p">();</span>
-
-<span class="c1">// if you do this, the model will be created by &quot;shizuku-normal.model.json&quot; as it&#39;s the first matched settings file</span>
-<span class="c1">// const model = await Live2DModel.from(files);</span>
-
-<span class="kd">const</span> <span class="nx">settingsFile</span> <span class="o">=</span> <span class="nx">files</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">file</span> <span class="p">=&gt;</span> <span class="nx">file</span><span class="p">.</span><span class="nx">name</span> <span class="o">===</span> <span class="s1">&#39;shizuku-special.model.json&#39;</span><span class="p">);</span>
-
-<span class="c1">// load JSON from the file</span>
-<span class="kd">const</span> <span class="nx">settingsJSON</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="nx">URL</span><span class="p">.</span><span class="nx">createObjectURL</span><span class="p">(</span><span class="nx">settingsFile</span><span class="p">)).</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span>
-
-<span class="c1">// don&#39;t forget to specify the url</span>
-<span class="nx">settingsJSON</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="nx">settingsFile</span><span class="p">.</span><span class="nx">webkitRelativePath</span><span class="p">;</span>
-
-<span class="nx">files</span><span class="p">.</span><span class="nx">settings</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cubism2ModelSettings</span><span class="p">(</span><span class="nx">settingsJSON</span><span class="p">);</span>
-
-<span class="c1">// now the model will be created by &quot;shizuku-special.model.json&quot;</span>
-<span class="kd">const</span> <span class="nx">model</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">Live2DModel</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="nx">files</span><span class="p">);</span>
-
-<span class="c1">// to be honest, I just found myself so dumb when writing this guide...</span>
-<span class="c1">// why didn&#39;t I just add an option to the `options` of Live2DModel.from()?</span>
+<p>Then, access it from <code>PIXI.live2d.HitAreaFrames</code>.</p>
+<h2 id="loading-model-from-uploaded-files-experimental">Loading model from uploaded files (experimental)<a class="headerlink" href="#loading-model-from-uploaded-files-experimental" title="Permanent link">¶</a></h2>
+<p><code>Live2DModel</code> can be created from an array of <code>File</code>s. Each <code>File</code> must have a <a href="https://developer.mozilla.org/en-US/docs/Web/API/File/webkitRelativePath"><code>webkitRelativePath</code></a> property that represents relative path of the file.</p>
+<p>You can get the <code>File</code>s from a directory picker:</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"file"</span> <span class="na">id</span><span class="o">=</span><span class="s">"filepicker"</span> <span class="na">webkitdirectory</span> <span class="na">multiple</span> <span class="p">/&gt;</span>
 </code></pre></div>
-<p>If the given files include no settings file, an error will be thrown.</p>
-<h2 id="loading-from-a-zip-file-experimental">Loading from a zip file (experimental)<a class="headerlink" href="#loading-from-a-zip-file-experimental" title="Permanent link">&para;</a></h2>
-<p>Zip files will be handled by the <code>ZipLoader</code>. It looks for the model settings file in the zip, extracts the resource
-files as <code>File</code>s, then simply passes them to the <code>FileLoader</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"filepicker"</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"change"</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">files</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">files</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Live2DModel</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="nx">files</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">});</span><span class="w"></span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">How this works</p>
+<p>Source files are handled by an internal helper <code>FileLoader</code>.</p>
+<p>From given files, it looks for model settings file by matching <code>.model.json</code> or <code>.model3.json</code> extension, then creates a lookup table for resource files defined in the settings, where the keys are the file paths and the values are their <a href="https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL">object URLs</a>.</p>
+<p>Then, it overrides the <code>model.modelSettings.resolveURL()</code> method so that the resource files can be resolved to corresponding <code>File</code>s using the lookup table.</p>
+</div>
+<p>If given files include more than one settings file, only the first one will be chosen. To use another one, you need to manually create a <code>ModelSettings</code>, and attach it to the array:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// collected files:</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// shizuku-normal.model.json</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// shizuku-special.model.json</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// shizuku.moc</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// texture_0.png</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// ...</span><span class="w"></span>
+<span class="p">];</span><span class="w"></span>
+
+<span class="c1">// if you do this, the model will be created by "shizuku-normal.model.json" as it's the first matched settings file</span><span class="w"></span>
+<span class="c1">// const model = await Live2DModel.from(files);</span><span class="w"></span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">settingsFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">files</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">file</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">file</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">'shizuku-special.model.json'</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// read JSON from the file</span><span class="w"></span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">settingsJSON</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">URL</span><span class="p">.</span><span class="nx">createObjectURL</span><span class="p">(</span><span class="nx">settingsFile</span><span class="p">)).</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span><span class="w"></span>
+
+<span class="c1">// don't forget to specify url!</span><span class="w"></span>
+<span class="nx">settingsJSON</span><span class="p">.</span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">settingsFile</span><span class="p">.</span><span class="nx">webkitRelativePath</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// attach the settings to the array</span><span class="w"></span>
+<span class="nx">files</span><span class="p">.</span><span class="nx">settings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Cubism2ModelSettings</span><span class="p">(</span><span class="nx">settingsJSON</span><span class="p">);</span><span class="w"></span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Live2DModel</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="nx">files</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// to be honest, I just found myself so dumb when writing this guide...</span><span class="w"></span>
+<span class="c1">// why didn't I just add an option to the `options` of Live2DModel.from()?</span><span class="w"></span>
+</code></pre></div>
+<p>If given files include no settings file, an error will be thrown.</p>
+<h2 id="loading-model-from-a-zip-file-experimental">Loading model from a zip file (experimental)<a class="headerlink" href="#loading-model-from-a-zip-file-experimental" title="Permanent link">¶</a></h2>
+<div class="admonition info">
+<p class="admonition-title">How this works</p>
+<p>Zip files are handled by an internal helper <code>ZipLoader</code>. It looks for the model settings file inside the zip, extracts referenced resource
+files as <code>File</code>s, then simply passes them to <code>FileLoader</code>.</p>
+</div>
 <p>To avoid depending on a zipping library, <code>ZipLoader</code> has left several static methods unimplemented, therefore you need
 to implement them before loading zip files, <em>otherwise a "Not implemented" error will be thrown</em>.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// the type `ZipReader` is an arbitrary object</span>
+<p>Typings:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// this can be anything depending on the zipping library you're using</span><span class="w"></span>
+<span class="kr">type</span><span class="w"> </span><span class="nx">ZipReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">any</span><span class="p">;</span><span class="w"></span>
 
-<span class="c1">// accepts the zip&#39;s data and URL, returns a zip reader</span>
-<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">zipReader</span><span class="p">(</span><span class="nx">data</span>: <span class="kt">Blob</span><span class="p">,</span> <span class="nx">url</span>: <span class="kt">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="nx">ZipReader</span><span class="o">&gt;</span>
+<span class="c1">// accepts the zip's data and URL, returns a zip reader</span><span class="w"></span>
+<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">zipReader</span><span class="p">(</span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">Blob</span><span class="p">,</span><span class="w"> </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">ZipReader</span><span class="o">&gt;</span><span class="w"></span>
 
-<span class="c1">// retrieves relative paths of all the files in this zip</span>
-<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">getFilePaths</span><span class="p">(</span><span class="nx">reader</span>: <span class="kt">ZipReader</span><span class="p">)</span><span class="o">:</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">[]</span><span class="o">&gt;</span>
+<span class="c1">// retrieves relative paths of all the files in this zip</span><span class="w"></span>
+<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">getFilePaths</span><span class="p">(</span><span class="nx">reader</span><span class="o">:</span><span class="w"> </span><span class="kt">ZipReader</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">[]</span><span class="o">&gt;</span><span class="w"></span>
 
-<span class="c1">// extracts specific files in this zip as `File` objects</span>
-<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">getFiles</span><span class="p">(</span><span class="nx">reader</span>: <span class="kt">ZipReader</span><span class="p">,</span> <span class="nx">paths</span>: <span class="kt">string</span><span class="p">[])</span><span class="o">:</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="nx">File</span><span class="p">[]</span><span class="o">&gt;</span>
+<span class="c1">// extracts specific files in this zip as Files</span><span class="w"></span>
+<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">getFiles</span><span class="p">(</span><span class="nx">reader</span><span class="o">:</span><span class="w"> </span><span class="kt">ZipReader</span><span class="p">,</span><span class="w"> </span><span class="nx">paths</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">[])</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">File</span><span class="p">[]</span><span class="o">&gt;</span><span class="w"></span>
 
-<span class="c1">// reads a file in this zip as text</span>
-<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">readText</span><span class="p">(</span><span class="nx">reader</span>: <span class="kt">ZipReader</span><span class="p">,</span> <span class="nx">path</span>: <span class="kt">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span>
+<span class="c1">// reads a file in this zip as text</span><span class="w"></span>
+<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">readText</span><span class="p">(</span><span class="nx">reader</span><span class="o">:</span><span class="w"> </span><span class="kt">ZipReader</span><span class="p">,</span><span class="w"> </span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"></span>
 
-<span class="c1">// releases the zip reader, this is optional</span>
-<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">releaseReader</span><span class="p">(</span><span class="nx">reader</span>: <span class="kt">ZipReader</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span>
+<span class="c1">// releases the zip reader, this is optional</span><span class="w"></span>
+<span class="nx">ZipLoader</span><span class="p">.</span><span class="nx">releaseReader</span><span class="p">(</span><span class="nx">reader</span><span class="o">:</span><span class="w"> </span><span class="kt">ZipReader</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"></span>
 </code></pre></div>
-<p>An example for implementing them with <a href="https://github.com/Stuk/jszip">jszip</a> can be found in
-the <a href="https://github.com/guansss/live2d-viewer-web/blob/main/src/app/zip.ts">live2d-viewer-web</a> project.</p>
-<p>Then, you can create model from a zip file.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">Live2DModel</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="s1">&#39;path/to/shizuku.zip&#39;</span><span class="p">);</span>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>An implementation example using <a href="https://github.com/Stuk/jszip">jszip</a> can be found in the <a href="https://github.com/guansss/live2d-viewer-web/blob/main/src/app/zip.ts">live2d-viewer-web</a> project.</p>
+</div>
+<p>Then, you can create model from a zip file using its URL.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">Live2DModel</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="s1">'path/to/shizuku.zip'</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
-<p>If the zip file's URL is not ended with <code>.zip</code>, you can prepend the URL with a fake protocol <code>zip://</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">Live2DModel</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="s1">&#39;zip://path/to/shizuku&#39;</span><span class="p">);</span>
+<p>If the zip file's URL does not end with <code>.zip</code>, you can prepend it with a fake protocol <code>zip://</code> to get it recognized.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">Live2DModel</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="s1">'zip://path/to/shizuku'</span><span class="p">);</span><span class="w"></span>
 
-<span class="nx">Live2DModel</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="s1">&#39;zip://http://example.com/give-me-a-random-model&#39;</span><span class="p">);</span>
+<span class="nx">Live2DModel</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="s1">'zip://http://example.com/give-me-a-random-model'</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <p>Additionally, you can even pass an uploaded zip file.</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;file&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;zippicker&quot;</span> <span class="na">accept</span><span class="o">=</span><span class="s">&quot;.zip&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"file"</span> <span class="na">id</span><span class="o">=</span><span class="s">"zippicker"</span> <span class="na">accept</span><span class="o">=</span><span class="s">".zip"</span><span class="p">&gt;</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;zippicker&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;change&quot;</span><span class="p">,</span> <span class="k">async</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">const</span> <span class="nx">files</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">files</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"zippicker"</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"change"</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">files</span><span class="p">;</span><span class="w"></span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="nx">files</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// the zip source is a one-length array containing a single zip file</span>
-        <span class="kd">const</span> <span class="nx">zipSource</span> <span class="o">=</span> <span class="p">[</span><span class="nx">files</span><span class="p">[</span><span class="mf">0</span><span class="p">]];</span>
-
-        <span class="kd">const</span> <span class="nx">model</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">Live2DModel</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="nx">zipSource</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">});</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">files</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Live2DModel</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="nx">files</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">});</span><span class="w"></span>
 </code></pre></div>
 <p>In this way, you're also able to specify the target settings file with the same approach as above.</p>
-                
-              
-              
-                
-
-
-              
-            </article>
-          </div>
-        </div>
-      </main>
-      
-        
+</article>
+</div>
+</div>
+</main>
 <footer class="md-footer">
-  
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
-      
-        <a href="../motions_expressions/" class="md-footer__link md-footer__link--prev" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Motions and Expressions" class="md-footer__link md-footer__link--prev" href="../motions_expressions/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
                 Previous
               </span>
               Motions and Expressions
             </div>
-          </div>
-        </a>
-      
-      
-        <a href="../configs/" class="md-footer__link md-footer__link--next" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
+</div>
+</a>
+<a aria-label="Next: Configs" class="md-footer__link md-footer__link--next" href="../configs/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
                 Next
               </span>
               Configs
             </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
   
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
-        
-      </div>
-      
-    </div>
-  </div>
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
 </footer>
-      
-    </div>
-    <div class="md-dialog" data-md-component="dialog">
-      <div class="md-dialog__inner md-typeset"></div>
-    </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fb4a9340.min.js", "version": null}</script>
-    
-    
-      <script src="../assets/javascripts/bundle.a1c7c35e.min.js"></script>
-      
-    
-  </body>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand"], "search": "../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../assets/javascripts/bundle.9c69f0bc.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</body>
 </html>

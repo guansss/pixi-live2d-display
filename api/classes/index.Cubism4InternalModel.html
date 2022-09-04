@@ -1,0 +1,936 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>Cubism4InternalModel | pixi-live2d-display - v0.4.0</title><meta name="description" content="Documentation for pixi-live2d-display - v0.4.0"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script async src="../assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container">
+<div class="table-cell" id="tsd-search" data-base="..">
+<div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
+<ul class="results">
+<li class="state loading">Preparing search index...</li>
+<li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">pixi-live2d-display - v0.4.0</a></div>
+<div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
+<div class="container container-main">
+<div class="col-8 col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb">
+<li><a href="../modules.html">pixi-live2d-display - v0.4.0</a></li>
+<li><a href="../modules/index.html">index</a></li>
+<li><a href="index.Cubism4InternalModel.html">Cubism4InternalModel</a></li></ul>
+<h1>Class Cubism4InternalModel</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>A wrapper that manages the states of a Live2D core model, and delegates all operations to it.</p>
+
+<h3>Emits</h3><p><a href="../interfaces/index.InternalModelEvents.html">InternalModelEvents</a></p>
+</div></section>
+<section class="tsd-panel tsd-hierarchy">
+<h4>Hierarchy</h4>
+<ul class="tsd-hierarchy">
+<li><a href="index.InternalModel.html" class="tsd-signature-type" data-tsd-kind="Class">InternalModel</a>
+<ul class="tsd-hierarchy">
+<li><span class="target">Cubism4InternalModel</span></li></ul></li></ul></section><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L27">src/cubism4/Cubism4InternalModel.ts:27</a></li></ul></aside>
+<section class="tsd-panel-group tsd-index-group">
+<section class="tsd-panel tsd-index-panel">
+<details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
+<h5 class="tsd-index-heading uppercase" role="button" aria-expanded="false" tabIndex=0><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1.5 5.50969L8 11.6609L14.5 5.50969L12.5466 3.66086L8 7.96494L3.45341 3.66086L1.5 5.50969Z" fill="var(--color-text)"></path></svg> Index</h5></summary>
+<div class="tsd-accordion-details">
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading">Constructors</h3>
+<div class="tsd-index-list"><a href="index.Cubism4InternalModel.html#constructor" class="tsd-index-link tsd-kind-constructor tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#4D7FFF" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-512-path"></rect><path d="M11.898 16.1201C11.098 16.1201 10.466 15.8961 10.002 15.4481C9.53803 15.0001 9.30603 14.3841 9.30603 13.6001V9.64012C9.30603 8.85612 9.53803 8.24012 10.002 7.79212C10.466 7.34412 11.098 7.12012 11.898 7.12012C12.682 7.12012 13.306 7.34812 13.77 7.80412C14.234 8.25212 14.466 8.86412 14.466 9.64012H13.386C13.386 9.14412 13.254 8.76412 12.99 8.50012C12.734 8.22812 12.37 8.09212 11.898 8.09212C11.426 8.09212 11.054 8.22412 10.782 8.48812C10.518 8.75212 10.386 9.13212 10.386 9.62812V13.6001C10.386 14.0961 10.518 14.4801 10.782 14.7521C11.054 15.0161 11.426 15.1481 11.898 15.1481C12.37 15.1481 12.734 15.0161 12.99 14.7521C13.254 14.4801 13.386 14.0961 13.386 13.6001H14.466C14.466 14.3761 14.234 14.9921 13.77 15.4481C13.306 15.8961 12.682 16.1201 11.898 16.1201Z" fill="var(--color-text)" id="icon-512-text"></path></svg><span>constructor</span></a>
+</div></section>
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading">Properties</h3>
+<div class="tsd-index-list"><a href="index.Cubism4InternalModel.html#breath" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF984D" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-1024-path"></rect><path d="M9.354 16V7.24H12.174C12.99 7.24 13.638 7.476 14.118 7.948C14.606 8.412 14.85 9.036 14.85 9.82C14.85 10.604 14.606 11.232 14.118 11.704C13.638 12.168 12.99 12.4 12.174 12.4H10.434V16H9.354ZM10.434 11.428H12.174C12.646 11.428 13.022 11.284 13.302 10.996C13.59 10.7 13.734 10.308 13.734 9.82C13.734 9.324 13.59 8.932 13.302 8.644C13.022 8.356 12.646 8.212 12.174 8.212H10.434V11.428Z" fill="var(--color-text)" id="icon-1024-text"></path></svg><span>breath</span></a>
+<a href="index.Cubism4InternalModel.html#centeringTransform" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>centering<wbr/>Transform</span></a>
+<a href="index.Cubism4InternalModel.html#coreModel" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>core<wbr/>Model</span></a>
+<a href="index.Cubism4InternalModel.html#destroyed" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>destroyed</span></a>
+<a href="index.Cubism4InternalModel.html#drawingMatrix" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>drawing<wbr/>Matrix</span></a>
+<a href="index.Cubism4InternalModel.html#eyeBlink" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>eye<wbr/>Blink?</span></a>
+<a href="index.Cubism4InternalModel.html#focusController" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>focus<wbr/>Controller</span></a>
+<a href="index.Cubism4InternalModel.html#height" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>height</span></a>
+<a href="index.Cubism4InternalModel.html#hitAreas" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>hit<wbr/>Areas</span></a>
+<a href="index.Cubism4InternalModel.html#idParamAngleX" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>id<wbr/>Param<wbr/>AngleX</span></a>
+<a href="index.Cubism4InternalModel.html#idParamAngleY" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>id<wbr/>Param<wbr/>AngleY</span></a>
+<a href="index.Cubism4InternalModel.html#idParamAngleZ" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>id<wbr/>Param<wbr/>AngleZ</span></a>
+<a href="index.Cubism4InternalModel.html#idParamBodyAngleX" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>id<wbr/>Param<wbr/>Body<wbr/>AngleX</span></a>
+<a href="index.Cubism4InternalModel.html#idParamBreath" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>id<wbr/>Param<wbr/>Breath</span></a>
+<a href="index.Cubism4InternalModel.html#idParamEyeBallX" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>id<wbr/>Param<wbr/>Eye<wbr/>BallX</span></a>
+<a href="index.Cubism4InternalModel.html#idParamEyeBallY" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>id<wbr/>Param<wbr/>Eye<wbr/>BallY</span></a>
+<a href="index.Cubism4InternalModel.html#lipSync" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>lip<wbr/>Sync</span></a>
+<a href="index.Cubism4InternalModel.html#localTransform" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>local<wbr/>Transform</span></a>
+<a href="index.Cubism4InternalModel.html#motionManager" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>motion<wbr/>Manager</span></a>
+<a href="index.Cubism4InternalModel.html#originalHeight" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>original<wbr/>Height</span></a>
+<a href="index.Cubism4InternalModel.html#originalWidth" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>original<wbr/>Width</span></a>
+<a href="index.Cubism4InternalModel.html#physics" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>physics?</span></a>
+<a href="index.Cubism4InternalModel.html#pixelsPerUnit" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>pixels<wbr/>Per<wbr/>Unit</span></a>
+<a href="index.Cubism4InternalModel.html#pose" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>pose?</span></a>
+<a href="index.Cubism4InternalModel.html#renderer" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>renderer</span></a>
+<a href="index.Cubism4InternalModel.html#settings" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>settings</span></a>
+<a href="index.Cubism4InternalModel.html#textureFlipY" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>texture<wbr/>FlipY</span></a>
+<a href="index.Cubism4InternalModel.html#userData" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>user<wbr/>Data?</span></a>
+<a href="index.Cubism4InternalModel.html#viewport" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>viewport</span></a>
+<a href="index.Cubism4InternalModel.html#width" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>width</span></a>
+<a href="index.Cubism4InternalModel.html#prefixed" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>prefixed</span></a>
+</div></section>
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading">Methods</h3>
+<div class="tsd-index-list"><a href="index.Cubism4InternalModel.html#addListener" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF4DB8" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-2048-path"></rect><path d="M9.162 16V7.24H10.578L11.514 10.072C11.602 10.328 11.674 10.584 11.73 10.84C11.794 11.088 11.842 11.28 11.874 11.416C11.906 11.28 11.954 11.088 12.018 10.84C12.082 10.584 12.154 10.324 12.234 10.06L13.122 7.24H14.538V16H13.482V12.82C13.482 12.468 13.49 12.068 13.506 11.62C13.53 11.172 13.558 10.716 13.59 10.252C13.622 9.78 13.654 9.332 13.686 8.908C13.726 8.476 13.762 8.1 13.794 7.78L12.366 12.16H11.334L9.894 7.78C9.934 8.092 9.97 8.456 10.002 8.872C10.042 9.28 10.078 9.716 10.11 10.18C10.142 10.636 10.166 11.092 10.182 11.548C10.206 12.004 10.218 12.428 10.218 12.82V16H9.162Z" fill="var(--color-text)" id="icon-2048-text"></path></svg><span>add<wbr/>Listener</span></a>
+<a href="index.Cubism4InternalModel.html#bindTexture" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>bind<wbr/>Texture</span></a>
+<a href="index.Cubism4InternalModel.html#destroy" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>destroy</span></a>
+<a href="index.Cubism4InternalModel.html#draw" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>draw</span></a>
+<a href="index.Cubism4InternalModel.html#emit" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>emit</span></a>
+<a href="index.Cubism4InternalModel.html#eventNames" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>event<wbr/>Names</span></a>
+<a href="index.Cubism4InternalModel.html#getDrawableBounds" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Bounds</span></a>
+<a href="index.Cubism4InternalModel.html#getDrawableIDs" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>DrawableIDs</span></a>
+<a href="index.Cubism4InternalModel.html#getDrawableIndex" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Index</span></a>
+<a href="index.Cubism4InternalModel.html#getDrawableVertices" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Vertices</span></a>
+<a href="index.Cubism4InternalModel.html#getHitAreaDefs" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Hit<wbr/>Area<wbr/>Defs</span></a>
+<a href="index.Cubism4InternalModel.html#getLayout" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Layout</span></a>
+<a href="index.Cubism4InternalModel.html#getSize" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Size</span></a>
+<a href="index.Cubism4InternalModel.html#hitTest" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>hit<wbr/>Test</span></a>
+<a href="index.Cubism4InternalModel.html#init" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>init</span></a>
+<a href="index.Cubism4InternalModel.html#isHit" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>is<wbr/>Hit</span></a>
+<a href="index.Cubism4InternalModel.html#listenerCount" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>listener<wbr/>Count</span></a>
+<a href="index.Cubism4InternalModel.html#listeners" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>listeners</span></a>
+<a href="index.Cubism4InternalModel.html#off" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>off</span></a>
+<a href="index.Cubism4InternalModel.html#on" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>on</span></a>
+<a href="index.Cubism4InternalModel.html#once" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>once</span></a>
+<a href="index.Cubism4InternalModel.html#removeAllListeners" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>remove<wbr/>All<wbr/>Listeners</span></a>
+<a href="index.Cubism4InternalModel.html#removeListener" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>remove<wbr/>Listener</span></a>
+<a href="index.Cubism4InternalModel.html#setupHitAreas" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>setup<wbr/>Hit<wbr/>Areas</span></a>
+<a href="index.Cubism4InternalModel.html#setupLayout" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>setup<wbr/>Layout</span></a>
+<a href="index.Cubism4InternalModel.html#update" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>update</span></a>
+<a href="index.Cubism4InternalModel.html#updateFocus" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>update<wbr/>Focus</span></a>
+<a href="index.Cubism4InternalModel.html#updateNaturalMovements" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>update<wbr/>Natural<wbr/>Movements</span></a>
+<a href="index.Cubism4InternalModel.html#updateTransform" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>update<wbr/>Transform</span></a>
+<a href="index.Cubism4InternalModel.html#updateWebGLContext" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>update<wbr/>WebGLContext</span></a>
+</div></section></div></details></section></section>
+<section class="tsd-panel-group tsd-member-group">
+<h2>Constructors</h2>
+<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class"><a id="constructor" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="constructor.new_Cubism4InternalModel">new <wbr/>Cubism4<wbr/>Internal<wbr/>Model<span class="tsd-signature-symbol">(</span>coreModel<span class="tsd-signature-symbol">: </span><a href="CubismWebFramework.CubismModel.html" class="tsd-signature-type" data-tsd-kind="Class">CubismModel</a>, settings<span class="tsd-signature-symbol">: </span><a href="index.Cubism4ModelSettings.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4ModelSettings</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/index.InternalModelOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">InternalModelOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.Cubism4InternalModel.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4InternalModel</a><a href="#constructor.new_Cubism4InternalModel" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>coreModel: <a href="CubismWebFramework.CubismModel.html" class="tsd-signature-type" data-tsd-kind="Class">CubismModel</a></h5></li>
+<li>
+<h5>settings: <a href="index.Cubism4ModelSettings.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4ModelSettings</a></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> options: <a href="../interfaces/index.InternalModelOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">InternalModelOptions</a></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="index.Cubism4InternalModel.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4InternalModel</a></h4><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#constructor">constructor</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L65">src/cubism4/Cubism4InternalModel.ts:65</a></li></ul></aside></li></ul></section></section>
+<section class="tsd-panel-group tsd-member-group">
+<h2>Properties</h2>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="breath" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>breath</span><a href="#breath" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">breath<span class="tsd-signature-symbol">:</span> <a href="CubismWebFramework.CubismBreath.html" class="tsd-signature-type" data-tsd-kind="Class">CubismBreath</a><span class="tsd-signature-symbol"> = ...</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L34">src/cubism4/Cubism4InternalModel.ts:34</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a id="centeringTransform" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>centering<wbr/>Transform</span><a href="#centeringTransform" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">centering<wbr/>Transform<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Matrix</span><span class="tsd-signature-symbol"> = ...</span></div>
+<div class="tsd-comment tsd-typography"><p>Matrix that scales by <a href="index.Cubism4InternalModel.html#pixelsPerUnit">pixelsPerUnit</a>, and moves the origin from top-left to center.</p>
+<p>FIXME: This shouldn&#39;t be named as &quot;centering&quot;...</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L63">src/cubism4/Cubism4InternalModel.ts:63</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="coreModel" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>core<wbr/>Model</span><a href="#coreModel" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">core<wbr/>Model<span class="tsd-signature-symbol">:</span> <a href="CubismWebFramework.CubismModel.html" class="tsd-signature-type" data-tsd-kind="Class">CubismModel</a></div>
+<div class="tsd-comment tsd-typography"><p>The managed Live2D core model.</p>
+</div><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#coreModel">coreModel</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L29">src/cubism4/Cubism4InternalModel.ts:29</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="destroyed" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>destroyed</span><a href="#destroyed" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">destroyed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
+<div class="tsd-comment tsd-typography"><p>Flags this instance has been destroyed.</p>
+</div><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#destroyed">destroyed</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism-common/InternalModel.ts#L115">src/cubism-common/InternalModel.ts:115</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="drawingMatrix" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>drawing<wbr/>Matrix</span><a href="#drawingMatrix" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">drawing<wbr/>Matrix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Matrix</span><span class="tsd-signature-symbol"> = ...</span></div>
+<div class="tsd-comment tsd-typography"><p>The final matrix to draw the model.</p>
+</div><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#drawingMatrix">drawingMatrix</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism-common/InternalModel.ts#L94">src/cubism-common/InternalModel.ts:94</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="eyeBlink" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>eye<wbr/>Blink</span><a href="#eyeBlink" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">eye<wbr/>Blink<span class="tsd-signature-symbol">?:</span> <a href="CubismWebFramework.CubismEyeBlink.html" class="tsd-signature-type" data-tsd-kind="Class">CubismEyeBlink</a></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L35">src/cubism4/Cubism4InternalModel.ts:35</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="focusController" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>focus<wbr/>Controller</span><a href="#focusController" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">focus<wbr/>Controller<span class="tsd-signature-symbol">:</span> <a href="index.FocusController.html" class="tsd-signature-type" data-tsd-kind="Class">FocusController</a><span class="tsd-signature-symbol"> = ...</span></div><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#focusController">focusController</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism-common/InternalModel.ts#L57">src/cubism-common/InternalModel.ts:57</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="height" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagReadonly">Readonly</code> <span>height</span><a href="#height" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+<div class="tsd-comment tsd-typography"><p>Canvas height of the model, scaled by the <code>height</code> of the model&#39;s layout.</p>
+</div><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#height">height</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism-common/InternalModel.ts#L84">src/cubism-common/InternalModel.ts:84</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="hitAreas" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>hit<wbr/>Areas</span><a href="#hitAreas" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">hit<wbr/>Areas<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/index.CommonHitArea.html" class="tsd-signature-type" data-tsd-kind="Interface">CommonHitArea</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = {}</span></div>
+<div class="tsd-comment tsd-typography"><p>The hit area definitions, keyed by their names.</p>
+</div><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#hitAreas">hitAreas</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism-common/InternalModel.ts#L100">src/cubism-common/InternalModel.ts:100</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="idParamAngleX" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>id<wbr/>Param<wbr/>AngleX</span><a href="#idParamAngleX" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">id<wbr/>Param<wbr/>AngleX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = ParamAngleX</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L45">src/cubism4/Cubism4InternalModel.ts:45</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="idParamAngleY" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>id<wbr/>Param<wbr/>AngleY</span><a href="#idParamAngleY" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">id<wbr/>Param<wbr/>AngleY<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = ParamAngleY</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L46">src/cubism4/Cubism4InternalModel.ts:46</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="idParamAngleZ" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>id<wbr/>Param<wbr/>AngleZ</span><a href="#idParamAngleZ" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">id<wbr/>Param<wbr/>AngleZ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = ParamAngleZ</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L47">src/cubism4/Cubism4InternalModel.ts:47</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="idParamBodyAngleX" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>id<wbr/>Param<wbr/>Body<wbr/>AngleX</span><a href="#idParamBodyAngleX" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">id<wbr/>Param<wbr/>Body<wbr/>AngleX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = ParamBodyAngleX</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L50">src/cubism4/Cubism4InternalModel.ts:50</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="idParamBreath" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>id<wbr/>Param<wbr/>Breath</span><a href="#idParamBreath" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">id<wbr/>Param<wbr/>Breath<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = ParamBreath</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L51">src/cubism4/Cubism4InternalModel.ts:51</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="idParamEyeBallX" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>id<wbr/>Param<wbr/>Eye<wbr/>BallX</span><a href="#idParamEyeBallX" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">id<wbr/>Param<wbr/>Eye<wbr/>BallX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = ParamEyeBallX</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L48">src/cubism4/Cubism4InternalModel.ts:48</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="idParamEyeBallY" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>id<wbr/>Param<wbr/>Eye<wbr/>BallY</span><a href="#idParamEyeBallY" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">id<wbr/>Param<wbr/>Eye<wbr/>BallY<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = ParamEyeBallY</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L49">src/cubism4/Cubism4InternalModel.ts:49</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="lipSync" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>lip<wbr/>Sync</span><a href="#lipSync" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">lip<wbr/>Sync<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = true</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L32">src/cubism4/Cubism4InternalModel.ts:32</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="localTransform" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>local<wbr/>Transform</span><a href="#localTransform" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">local<wbr/>Transform<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Matrix</span><span class="tsd-signature-symbol"> = ...</span></div>
+<div class="tsd-comment tsd-typography"><p>Local transformation, calculated from the model&#39;s layout.</p>
+</div><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#localTransform">localTransform</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism-common/InternalModel.ts#L89">src/cubism-common/InternalModel.ts:89</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="motionManager" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>motion<wbr/>Manager</span><a href="#motionManager" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">motion<wbr/>Manager<span class="tsd-signature-symbol">:</span> <a href="index.Cubism4MotionManager.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4MotionManager</a></div><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#motionManager">motionManager</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L30">src/cubism4/Cubism4InternalModel.ts:30</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="originalHeight" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagReadonly">Readonly</code> <span>original<wbr/>Height</span><a href="#originalHeight" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">original<wbr/>Height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+<div class="tsd-comment tsd-typography"><p>Original canvas height of the model. Note this doesn&#39;t represent the model&#39;s real size,
+as the model can overflow from its canvas.</p>
+</div><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#originalHeight">originalHeight</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism-common/InternalModel.ts#L74">src/cubism-common/InternalModel.ts:74</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="originalWidth" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagReadonly">Readonly</code> <span>original<wbr/>Width</span><a href="#originalWidth" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">original<wbr/>Width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+<div class="tsd-comment tsd-typography"><p>Original canvas width of the model. Note this doesn&#39;t represent the model&#39;s real size,
+as the model can overflow from its canvas.</p>
+</div><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#originalWidth">originalWidth</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism-common/InternalModel.ts#L68">src/cubism-common/InternalModel.ts:68</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="physics" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>physics</span><a href="#physics" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">physics<span class="tsd-signature-symbol">?:</span> <a href="CubismWebFramework.CubismPhysics.html" class="tsd-signature-type" data-tsd-kind="Class">CubismPhysics</a></div><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#physics">physics</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L38">src/cubism4/Cubism4InternalModel.ts:38</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="pixelsPerUnit" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagReadonly">Readonly</code> <span>pixels<wbr/>Per<wbr/>Unit</span><a href="#pixelsPerUnit" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">pixels<wbr/>Per<wbr/>Unit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></div>
+<div class="tsd-comment tsd-typography"><p>The model&#39;s internal scale, defined in the moc3 file.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L56">src/cubism4/Cubism4InternalModel.ts:56</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="pose" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>pose</span><a href="#pose" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">pose<span class="tsd-signature-symbol">?:</span> <a href="CubismWebFramework.CubismPose.html" class="tsd-signature-type" data-tsd-kind="Class">CubismPose</a></div><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#pose">pose</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L37">src/cubism4/Cubism4InternalModel.ts:37</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="renderer" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>renderer</span><a href="#renderer" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">renderer<span class="tsd-signature-symbol">:</span> <a href="CubismWebFramework.CubismRenderer_WebGL.html" class="tsd-signature-type" data-tsd-kind="Class">CubismRenderer_WebGL</a><span class="tsd-signature-symbol"> = ...</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L43">src/cubism4/Cubism4InternalModel.ts:43</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="settings" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>settings</span><a href="#settings" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">settings<span class="tsd-signature-symbol">:</span> <a href="index.Cubism4ModelSettings.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4ModelSettings</a></div><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#settings">settings</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L28">src/cubism4/Cubism4InternalModel.ts:28</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="textureFlipY" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>texture<wbr/>FlipY</span><a href="#textureFlipY" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">texture<wbr/>FlipY<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
+<div class="tsd-comment tsd-typography"><p>Flags whether <code>gl.UNPACK_FLIP_Y_WEBGL</code> should be enabled when binding the textures.</p>
+</div><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#textureFlipY">textureFlipY</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism-common/InternalModel.ts#L105">src/cubism-common/InternalModel.ts:105</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="userData" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>user<wbr/>Data</span><a href="#userData" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">user<wbr/>Data<span class="tsd-signature-symbol">?:</span> <a href="CubismWebFramework.CubismModelUserData.html" class="tsd-signature-type" data-tsd-kind="Class">CubismModelUserData</a></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L41">src/cubism4/Cubism4InternalModel.ts:41</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="viewport" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>viewport</span><a href="#viewport" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">viewport<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> = ...</span></div>
+<div class="tsd-comment tsd-typography"><p>WebGL viewport when drawing the model. The format is <code>[x, y, width, height]</code>.</p>
+</div><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#viewport">viewport</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism-common/InternalModel.ts#L110">src/cubism-common/InternalModel.ts:110</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="width" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagReadonly">Readonly</code> <span>width</span><a href="#width" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+<div class="tsd-comment tsd-typography"><p>Canvas width of the model, scaled by the <code>width</code> of the model&#39;s layout.</p>
+</div><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#width">width</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism-common/InternalModel.ts#L79">src/cubism-common/InternalModel.ts:79</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a id="prefixed" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>prefixed</span><a href="#prefixed" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">prefixed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span></div><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#prefixed">prefixed</a></p>
+<ul>
+<li>Defined in node_modules/eventemitter3/index.d.ts:6</li></ul></aside></section></section>
+<section class="tsd-panel-group tsd-member-group">
+<h2>Methods</h2>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a id="addListener" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>add<wbr/>Listener</span><a href="#addListener" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+<li class="tsd-signature tsd-anchor-link" id="addListener.addListener-1">add<wbr/>Listener<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span>, fn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ListenerFn</span>, context<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.Cubism4InternalModel.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4InternalModel</a><a href="#addListener.addListener-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>event: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span></h5></li>
+<li>
+<h5>fn: <span class="tsd-signature-type">ListenerFn</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> context: <span class="tsd-signature-type">any</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="index.Cubism4InternalModel.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4InternalModel</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#addListener">addListener</a></p>
+<ul>
+<li>Defined in node_modules/eventemitter3/index.d.ts:33</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="bindTexture" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>bind<wbr/>Texture</span><a href="#bindTexture" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="bindTexture.bindTexture-1">bind<wbr/>Texture<span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, texture<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebGLTexture</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#bindTexture.bindTexture-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Binds a texture to the model. The index must be the same as that of this texture
+in the <a href="index.ModelSettings.html#textures">textures</a> array.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>index: <span class="tsd-signature-type">number</span></h5></li>
+<li>
+<h5>texture: <span class="tsd-signature-type">WebGLTexture</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#bindTexture">bindTexture</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L140">src/cubism4/Cubism4InternalModel.ts:140</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="destroy" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>destroy</span><a href="#destroy" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="destroy.destroy-1">destroy<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#destroy.destroy-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Destroys the model and all related resources.</p>
+
+<h3>Emits</h3><p><a href="../interfaces/index.InternalModelEvents.html#destroy">destroy</a></p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#destroy">destroy</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L260">src/cubism4/Cubism4InternalModel.ts:260</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="draw" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>draw</span><a href="#draw" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="draw.draw-1">draw<span class="tsd-signature-symbol">(</span>gl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebGLRenderingContext</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#draw.draw-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Draws the model.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>gl: <span class="tsd-signature-type">WebGLRenderingContext</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#draw">draw</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L243">src/cubism4/Cubism4InternalModel.ts:243</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a id="emit" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>emit</span><a href="#emit" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+<li class="tsd-signature tsd-anchor-link" id="emit.emit-1">emit<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#emit.emit-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Calls each of the listeners registered for a given event.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>event: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagRest">Rest</code> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#emit">emit</a></p>
+<ul>
+<li>Defined in node_modules/eventemitter3/index.d.ts:27</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a id="eventNames" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>event<wbr/>Names</span><a href="#eventNames" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+<li class="tsd-signature tsd-anchor-link" id="eventNames.eventNames-1">event<wbr/>Names<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><a href="#eventNames.eventNames-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Return an array listing the events for which the emitter has registered
+listeners.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#eventNames">eventNames</a></p>
+<ul>
+<li>Defined in node_modules/eventemitter3/index.d.ts:12</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="getDrawableBounds" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Bounds</span><a href="#getDrawableBounds" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableBounds.getDrawableBounds-1">get<wbr/>Drawable<wbr/>Bounds<span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, bounds<span class="tsd-signature-symbol">?: </span><a href="../interfaces/index.Bounds.html" class="tsd-signature-type" data-tsd-kind="Interface">Bounds</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/index.Bounds.html" class="tsd-signature-type" data-tsd-kind="Interface">Bounds</a><a href="#getDrawableBounds.getDrawableBounds-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Gets a drawable&#39;s bounds.</p>
+
+<h3>Returns</h3><p>The bounds in model canvas space.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>index: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Index of the drawable.</p>
+</div></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> bounds: <a href="../interfaces/index.Bounds.html" class="tsd-signature-type" data-tsd-kind="Interface">Bounds</a></h5>
+<div class="tsd-comment tsd-typography"><p>Object to store the output values.</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="../interfaces/index.Bounds.html" class="tsd-signature-type" data-tsd-kind="Interface">Bounds</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#getDrawableBounds">getDrawableBounds</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism-common/InternalModel.ts#L212">src/cubism-common/InternalModel.ts:212</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableIDs" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>DrawableIDs</span><a href="#getDrawableIDs" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableIDs.getDrawableIDs-1">get<wbr/>DrawableIDs<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><a href="#getDrawableIDs.getDrawableIDs-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Gets all the drawables&#39; IDs.</p>
+
+<h3>Returns</h3><p>IDs.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#getDrawableIDs">getDrawableIDs</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L152">src/cubism4/Cubism4InternalModel.ts:152</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableIndex" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Index</span><a href="#getDrawableIndex" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableIndex.getDrawableIndex-1">get<wbr/>Drawable<wbr/>Index<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getDrawableIndex.getDrawableIndex-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Finds the index of a drawable by its ID.</p>
+
+<h3>Returns</h3><p>The index.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>id: <span class="tsd-signature-type">string</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#getDrawableIndex">getDrawableIndex</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L156">src/cubism4/Cubism4InternalModel.ts:156</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableVertices" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Vertices</span><a href="#getDrawableVertices" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableVertices.getDrawableVertices-1">get<wbr/>Drawable<wbr/>Vertices<span class="tsd-signature-symbol">(</span>drawIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Float32Array</span><a href="#getDrawableVertices.getDrawableVertices-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Gets a drawable&#39;s vertices.</p>
+
+<h3>Throws</h3><p>Error when the drawable cannot be found.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawIndex: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Either the index or the ID of the drawable.</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Float32Array</span></h4><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#getDrawableVertices">getDrawableVertices</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L160">src/cubism4/Cubism4InternalModel.ts:160</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="getHitAreaDefs" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>get<wbr/>Hit<wbr/>Area<wbr/>Defs</span><a href="#getHitAreaDefs" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+<li class="tsd-signature tsd-anchor-link" id="getHitAreaDefs.getHitAreaDefs-1">get<wbr/>Hit<wbr/>Area<wbr/>Defs<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/index.CommonHitArea.html" class="tsd-signature-type" data-tsd-kind="Interface">CommonHitArea</a><span class="tsd-signature-symbol">[]</span><a href="#getHitAreaDefs.getHitAreaDefs-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Gets all the hit area definitions.</p>
+
+<h3>Returns</h3><p>Normalized definitions.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="../interfaces/index.CommonHitArea.html" class="tsd-signature-type" data-tsd-kind="Interface">CommonHitArea</a><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#getHitAreaDefs">getHitAreaDefs</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L144">src/cubism4/Cubism4InternalModel.ts:144</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="getLayout" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>get<wbr/>Layout</span><a href="#getLayout" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+<li class="tsd-signature tsd-anchor-link" id="getLayout.getLayout-1">get<wbr/>Layout<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/index.CommonLayout.html" class="tsd-signature-type" data-tsd-kind="Interface">CommonLayout</a><a href="#getLayout.getLayout-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Gets the layout definition.</p>
+
+<h3>Returns</h3><p>Normalized definition.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="../interfaces/index.CommonLayout.html" class="tsd-signature-type" data-tsd-kind="Interface">CommonLayout</a></h4><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#getLayout">getLayout</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L98">src/cubism4/Cubism4InternalModel.ts:98</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="getSize" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>get<wbr/>Size</span><a href="#getSize" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+<li class="tsd-signature tsd-anchor-link" id="getSize.getSize-1">get<wbr/>Size<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><a href="#getSize.getSize-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Gets the model&#39;s original canvas size.</p>
+
+<h3>Returns</h3><p><code>[width, height]</code></p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span></h4><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#getSize">getSize</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L94">src/cubism4/Cubism4InternalModel.ts:94</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="hitTest" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>hit<wbr/>Test</span><a href="#hitTest" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="hitTest.hitTest-1">hit<wbr/>Test<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, y<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><a href="#hitTest.hitTest-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Hit-test on the model.</p>
+
+<h3>Returns</h3><p>The names of the <em>hit</em> hit areas. Can be empty if none is hit.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>x: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Position in model canvas.</p>
+</div></li>
+<li>
+<h5>y: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Position in model canvas.</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#hitTest">hitTest</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism-common/InternalModel.ts#L183">src/cubism-common/InternalModel.ts:183</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="init" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>init</span><a href="#init" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+<li class="tsd-signature tsd-anchor-link" id="init.init-1">init<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#init.init-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Should be called in the constructor of derived class.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#init">init</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L75">src/cubism4/Cubism4InternalModel.ts:75</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="isHit" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>is<wbr/>Hit</span><a href="#isHit" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="isHit.isHit-1">is<wbr/>Hit<span class="tsd-signature-symbol">(</span>hitAreaName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, x<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, y<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#isHit.isHit-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Hit-test for a single hit area.</p>
+
+<h3>Returns</h3><p>True if hit.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>hitAreaName: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>The hit area&#39;s name.</p>
+</div></li>
+<li>
+<h5>x: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Position in model canvas.</p>
+</div></li>
+<li>
+<h5>y: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Position in model canvas.</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#isHit">isHit</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism-common/InternalModel.ts#L194">src/cubism-common/InternalModel.ts:194</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a id="listenerCount" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>listener<wbr/>Count</span><a href="#listenerCount" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+<li class="tsd-signature tsd-anchor-link" id="listenerCount.listenerCount-1">listener<wbr/>Count<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#listenerCount.listenerCount-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Return the number of listeners listening to a given event.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>event: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#listenerCount">listenerCount</a></p>
+<ul>
+<li>Defined in node_modules/eventemitter3/index.d.ts:22</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a id="listeners" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>listeners</span><a href="#listeners" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+<li class="tsd-signature tsd-anchor-link" id="listeners.listeners-1">listeners<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ListenerFn</span><span class="tsd-signature-symbol">[]</span><a href="#listeners.listeners-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Return the listeners registered for a given event.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>event: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ListenerFn</span><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#listeners">listeners</a></p>
+<ul>
+<li>Defined in node_modules/eventemitter3/index.d.ts:17</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a id="off" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>off</span><a href="#off" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+<li class="tsd-signature tsd-anchor-link" id="off.off-1">off<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span>, fn<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ListenerFn</span>, context<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span>, once<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.Cubism4InternalModel.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4InternalModel</a><a href="#off.off-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>event: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> fn: <span class="tsd-signature-type">ListenerFn</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> context: <span class="tsd-signature-type">any</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> once: <span class="tsd-signature-type">boolean</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="index.Cubism4InternalModel.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4InternalModel</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#off">off</a></p>
+<ul>
+<li>Defined in node_modules/eventemitter3/index.d.ts:44</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a id="on" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>on</span><a href="#on" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+<li class="tsd-signature tsd-anchor-link" id="on.on-1">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span>, fn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ListenerFn</span>, context<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.Cubism4InternalModel.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4InternalModel</a><a href="#on.on-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Add a listener for a given event.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>event: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span></h5></li>
+<li>
+<h5>fn: <span class="tsd-signature-type">ListenerFn</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> context: <span class="tsd-signature-type">any</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="index.Cubism4InternalModel.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4InternalModel</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#on">on</a></p>
+<ul>
+<li>Defined in node_modules/eventemitter3/index.d.ts:32</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a id="once" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>once</span><a href="#once" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+<li class="tsd-signature tsd-anchor-link" id="once.once-1">once<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span>, fn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ListenerFn</span>, context<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.Cubism4InternalModel.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4InternalModel</a><a href="#once.once-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Add a one-time listener for a given event.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>event: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span></h5></li>
+<li>
+<h5>fn: <span class="tsd-signature-type">ListenerFn</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> context: <span class="tsd-signature-type">any</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="index.Cubism4InternalModel.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4InternalModel</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#once">once</a></p>
+<ul>
+<li>Defined in node_modules/eventemitter3/index.d.ts:38</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a id="removeAllListeners" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>remove<wbr/>All<wbr/>Listeners</span><a href="#removeAllListeners" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+<li class="tsd-signature tsd-anchor-link" id="removeAllListeners.removeAllListeners-1">remove<wbr/>All<wbr/>Listeners<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.Cubism4InternalModel.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4InternalModel</a><a href="#removeAllListeners.removeAllListeners-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Remove all listeners, or those of the specified event.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> event: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="index.Cubism4InternalModel.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4InternalModel</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#removeAllListeners">removeAllListeners</a></p>
+<ul>
+<li>Defined in node_modules/eventemitter3/index.d.ts:49</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a id="removeListener" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>remove<wbr/>Listener</span><a href="#removeListener" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+<li class="tsd-signature tsd-anchor-link" id="removeListener.removeListener-1">remove<wbr/>Listener<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span>, fn<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ListenerFn</span>, context<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span>, once<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.Cubism4InternalModel.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4InternalModel</a><a href="#removeListener.removeListener-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Remove the listeners of a given event.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>event: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> fn: <span class="tsd-signature-type">ListenerFn</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> context: <span class="tsd-signature-type">any</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> once: <span class="tsd-signature-type">boolean</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="index.Cubism4InternalModel.html" class="tsd-signature-type" data-tsd-kind="Class">Cubism4InternalModel</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#removeListener">removeListener</a></p>
+<ul>
+<li>Defined in node_modules/eventemitter3/index.d.ts:43</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a id="setupHitAreas" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>setup<wbr/>Hit<wbr/>Areas</span><a href="#setupHitAreas" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="setupHitAreas.setupHitAreas-1">setup<wbr/>Hit<wbr/>Areas<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#setupHitAreas.setupHitAreas-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Sets up the hit areas by their definitions in settings.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#setupHitAreas">setupHitAreas</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism-common/InternalModel.ts#L169">src/cubism-common/InternalModel.ts:169</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="setupLayout" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>setup<wbr/>Layout</span><a href="#setupLayout" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+<li class="tsd-signature tsd-anchor-link" id="setupLayout.setupLayout-1">setup<wbr/>Layout<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#setupLayout.setupLayout-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Sets up the model&#39;s size and local transform by the model&#39;s layout.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#setupLayout">setupLayout</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L115">src/cubism4/Cubism4InternalModel.ts:115</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="update" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>update</span><a href="#update" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="update.update-1">update<span class="tsd-signature-symbol">(</span>dt<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, now<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#update.update-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Updates the model&#39;s parameters.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>dt: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Elapsed time in milliseconds from last frame.</p>
+</div></li>
+<li>
+<h5>now: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Current time in milliseconds.</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#update">update</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L184">src/cubism4/Cubism4InternalModel.ts:184</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateFocus" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>update<wbr/>Focus</span><a href="#updateFocus" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="updateFocus.updateFocus-1">update<wbr/>Focus<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#updateFocus.updateFocus-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L230">src/cubism4/Cubism4InternalModel.ts:230</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateNaturalMovements" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>update<wbr/>Natural<wbr/>Movements</span><a href="#updateNaturalMovements" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="updateNaturalMovements.updateNaturalMovements-1">update<wbr/>Natural<wbr/>Movements<span class="tsd-signature-symbol">(</span>dt<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, now<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#updateNaturalMovements.updateNaturalMovements-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>dt: <span class="tsd-signature-type">number</span></h5></li>
+<li>
+<h5>now: <span class="tsd-signature-type">number</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L239">src/cubism4/Cubism4InternalModel.ts:239</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateTransform" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>update<wbr/>Transform</span><a href="#updateTransform" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="updateTransform.updateTransform-1">update<wbr/>Transform<span class="tsd-signature-symbol">(</span>transform<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Matrix</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#updateTransform.updateTransform-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Updates the model&#39;s transform.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>transform: <span class="tsd-signature-type">Matrix</span></h5>
+<div class="tsd-comment tsd-typography"><p>The world transform.</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#updateTransform">updateTransform</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L177">src/cubism4/Cubism4InternalModel.ts:177</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateWebGLContext" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>update<wbr/>WebGLContext</span><a href="#updateWebGLContext" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="updateWebGLContext.updateWebGLContext-1">update<wbr/>WebGLContext<span class="tsd-signature-symbol">(</span>gl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebGLRenderingContext</span>, glContextID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#updateWebGLContext.updateWebGLContext-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Updates WebGL context bound to this model.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>gl: <span class="tsd-signature-type">WebGLRenderingContext</span></h5>
+<div class="tsd-comment tsd-typography"><p>WebGL context.</p>
+</div></li>
+<li>
+<h5>glContextID: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Unique ID for given WebGL context.</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Overrides <a href="index.InternalModel.html">InternalModel</a>.<a href="index.InternalModel.html#updateWebGLContext">updateWebGLContext</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/guansss/pixi-live2d-display/blob/1214833/src/cubism4/Cubism4InternalModel.ts#L126">src/cubism4/Cubism4InternalModel.ts:126</a></li></ul></aside></li></ul></section></section></div>
+<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+<div class="tsd-navigation settings">
+<details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility">
+<h4 class="uppercase">Member Visibility</h4><form>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div>
+<div class="tsd-theme-toggle">
+<h4 class="uppercase">Theme</h4><select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<nav class="tsd-navigation primary">
+<details class="tsd-index-accordion" open><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Modules</h3></summary>
+<div class="tsd-accordion-details">
+<ul>
+<li class="current"><a href="../modules.html">pixi-<wbr/>live2d-<wbr/>display -<wbr/> v0.4.0</a>
+<ul>
+<li class="tsd-kind-module"><a href="../modules/CubismWebFramework.html">Cubism<wbr/>Web<wbr/>Framework</a>
+<ul>
+<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="../modules/CubismWebFramework.CubismConfig.html">Cubism<wbr/>Config</a></li>
+<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="../modules/CubismWebFramework.CubismSpec.html">Cubism<wbr/>Spec</a></li></ul></li>
+<li class="current tsd-kind-module"><a href="../modules/index.html">index</a>
+<ul>
+<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="../modules/index.config.html">config</a></li></ul></li></ul></li></ul></div></details></nav>
+<nav class="tsd-navigation secondary menu-sticky">
+<ul>
+<li class="current tsd-kind-class tsd-parent-kind-module"><a href="index.Cubism4InternalModel.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-class)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-128-path"></rect><path d="M11.898 16.1201C11.098 16.1201 10.466 15.8961 10.002 15.4481C9.53803 15.0001 9.30603 14.3841 9.30603 13.6001V9.64012C9.30603 8.85612 9.53803 8.24012 10.002 7.79212C10.466 7.34412 11.098 7.12012 11.898 7.12012C12.682 7.12012 13.306 7.34812 13.77 7.80412C14.234 8.25212 14.466 8.86412 14.466 9.64012H13.386C13.386 9.14412 13.254 8.76412 12.99 8.50012C12.734 8.22812 12.37 8.09212 11.898 8.09212C11.426 8.09212 11.054 8.22412 10.782 8.48812C10.518 8.75212 10.386 9.13212 10.386 9.62812V13.6001C10.386 14.0961 10.518 14.4801 10.782 14.7521C11.054 15.0161 11.426 15.1481 11.898 15.1481C12.37 15.1481 12.734 15.0161 12.99 14.7521C13.254 14.4801 13.386 14.0961 13.386 13.6001H14.466C14.466 14.3761 14.234 14.9921 13.77 15.4481C13.306 15.8961 12.682 16.1201 11.898 16.1201Z" fill="var(--color-text)" id="icon-128-text"></path></svg><span>Cubism4<wbr/>Internal<wbr/>Model</span></a>
+<ul>
+<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#constructor" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-512-path"></use><use href="#icon-512-text"></use></svg>constructor</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#breath" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>breath</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="index.Cubism4InternalModel.html#centeringTransform" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>centering<wbr/>Transform</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#coreModel" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>core<wbr/>Model</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="index.Cubism4InternalModel.html#destroyed" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>destroyed</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="index.Cubism4InternalModel.html#drawingMatrix" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>drawing<wbr/>Matrix</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#eyeBlink" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>eye<wbr/>Blink?</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="index.Cubism4InternalModel.html#focusController" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>focus<wbr/>Controller</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="index.Cubism4InternalModel.html#height" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>height</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="index.Cubism4InternalModel.html#hitAreas" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>hit<wbr/>Areas</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#idParamAngleX" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>id<wbr/>Param<wbr/>AngleX</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#idParamAngleY" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>id<wbr/>Param<wbr/>AngleY</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#idParamAngleZ" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>id<wbr/>Param<wbr/>AngleZ</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#idParamBodyAngleX" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>id<wbr/>Param<wbr/>Body<wbr/>AngleX</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#idParamBreath" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>id<wbr/>Param<wbr/>Breath</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#idParamEyeBallX" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>id<wbr/>Param<wbr/>Eye<wbr/>BallX</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#idParamEyeBallY" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>id<wbr/>Param<wbr/>Eye<wbr/>BallY</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#lipSync" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>lip<wbr/>Sync</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="index.Cubism4InternalModel.html#localTransform" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>local<wbr/>Transform</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#motionManager" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>motion<wbr/>Manager</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="index.Cubism4InternalModel.html#originalHeight" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>original<wbr/>Height</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="index.Cubism4InternalModel.html#originalWidth" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>original<wbr/>Width</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#physics" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>physics?</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#pixelsPerUnit" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>pixels<wbr/>Per<wbr/>Unit</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#pose" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>pose?</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#renderer" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>renderer</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#settings" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>settings</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="index.Cubism4InternalModel.html#textureFlipY" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>texture<wbr/>FlipY</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#userData" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>user<wbr/>Data?</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="index.Cubism4InternalModel.html#viewport" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>viewport</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="index.Cubism4InternalModel.html#width" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>width</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="index.Cubism4InternalModel.html#prefixed" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>prefixed</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="index.Cubism4InternalModel.html#addListener" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>add<wbr/>Listener</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#bindTexture" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>bind<wbr/>Texture</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#destroy" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>destroy</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#draw" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>draw</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="index.Cubism4InternalModel.html#emit" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>emit</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="index.Cubism4InternalModel.html#eventNames" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>event<wbr/>Names</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="index.Cubism4InternalModel.html#getDrawableBounds" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Bounds</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#getDrawableIDs" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>DrawableIDs</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#getDrawableIndex" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Index</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#getDrawableVertices" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Vertices</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="index.Cubism4InternalModel.html#getHitAreaDefs" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Hit<wbr/>Area<wbr/>Defs</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="index.Cubism4InternalModel.html#getLayout" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Layout</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="index.Cubism4InternalModel.html#getSize" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Size</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="index.Cubism4InternalModel.html#hitTest" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>hit<wbr/>Test</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="index.Cubism4InternalModel.html#init" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>init</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="index.Cubism4InternalModel.html#isHit" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>is<wbr/>Hit</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="index.Cubism4InternalModel.html#listenerCount" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>listener<wbr/>Count</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="index.Cubism4InternalModel.html#listeners" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>listeners</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="index.Cubism4InternalModel.html#off" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>off</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="index.Cubism4InternalModel.html#on" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>on</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="index.Cubism4InternalModel.html#once" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>once</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="index.Cubism4InternalModel.html#removeAllListeners" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>remove<wbr/>All<wbr/>Listeners</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="index.Cubism4InternalModel.html#removeListener" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>remove<wbr/>Listener</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a href="index.Cubism4InternalModel.html#setupHitAreas" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>setup<wbr/>Hit<wbr/>Areas</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="index.Cubism4InternalModel.html#setupLayout" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>setup<wbr/>Layout</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#update" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>update</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#updateFocus" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>update<wbr/>Focus</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#updateNaturalMovements" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>update<wbr/>Natural<wbr/>Movements</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#updateTransform" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>update<wbr/>Transform</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Cubism4InternalModel.html#updateWebGLContext" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>update<wbr/>WebGLContext</a></li></ul></li></ul></nav></div></div>
+<div class="container tsd-generator">
+<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
+<div class="overlay"></div><script src="../assets/main.js"></script></body></html>

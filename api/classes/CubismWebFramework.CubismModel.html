@@ -1,0 +1,1088 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>CubismModel | pixi-live2d-display - v0.4.0</title><meta name="description" content="Documentation for pixi-live2d-display - v0.4.0"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script async src="../assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container">
+<div class="table-cell" id="tsd-search" data-base="..">
+<div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
+<ul class="results">
+<li class="state loading">Preparing search index...</li>
+<li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">pixi-live2d-display - v0.4.0</a></div>
+<div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
+<div class="container container-main">
+<div class="col-8 col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb">
+<li><a href="../modules.html">pixi-live2d-display - v0.4.0</a></li>
+<li><a href="../modules/CubismWebFramework.html">CubismWebFramework</a></li>
+<li><a href="CubismWebFramework.CubismModel.html">CubismModel</a></li></ul>
+<h1>Class CubismModel</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>モデル</p>
+<p>Mocデータから生成されるモデルのクラス。</p>
+</div></section>
+<section class="tsd-panel tsd-hierarchy">
+<h4>Hierarchy</h4>
+<ul class="tsd-hierarchy">
+<li><span class="target">CubismModel</span></li></ul></section><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:16</li></ul></aside>
+<section class="tsd-panel-group tsd-index-group">
+<section class="tsd-panel tsd-index-panel">
+<details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
+<h5 class="tsd-index-heading uppercase" role="button" aria-expanded="false" tabIndex=0><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1.5 5.50969L8 11.6609L14.5 5.50969L12.5466 3.66086L8 7.96494L3.45341 3.66086L1.5 5.50969Z" fill="var(--color-text)"></path></svg> Index</h5></summary>
+<div class="tsd-accordion-details">
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading">Constructors</h3>
+<div class="tsd-index-list"><a href="CubismWebFramework.CubismModel.html#constructor" class="tsd-index-link tsd-kind-constructor tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#4D7FFF" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-512-path"></rect><path d="M11.898 16.1201C11.098 16.1201 10.466 15.8961 10.002 15.4481C9.53803 15.0001 9.30603 14.3841 9.30603 13.6001V9.64012C9.30603 8.85612 9.53803 8.24012 10.002 7.79212C10.466 7.34412 11.098 7.12012 11.898 7.12012C12.682 7.12012 13.306 7.34812 13.77 7.80412C14.234 8.25212 14.466 8.86412 14.466 9.64012H13.386C13.386 9.14412 13.254 8.76412 12.99 8.50012C12.734 8.22812 12.37 8.09212 11.898 8.09212C11.426 8.09212 11.054 8.22412 10.782 8.48812C10.518 8.75212 10.386 9.13212 10.386 9.62812V13.6001C10.386 14.0961 10.518 14.4801 10.782 14.7521C11.054 15.0161 11.426 15.1481 11.898 15.1481C12.37 15.1481 12.734 15.0161 12.99 14.7521C13.254 14.4801 13.386 14.0961 13.386 13.6001H14.466C14.466 14.3761 14.234 14.9921 13.77 15.4481C13.306 15.8961 12.682 16.1201 11.898 16.1201Z" fill="var(--color-text)" id="icon-512-text"></path></svg><span>constructor</span></a>
+</div></section>
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading">Methods</h3>
+<div class="tsd-index-list"><a href="CubismWebFramework.CubismModel.html#addParameterValueById" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF4DB8" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-2048-path"></rect><path d="M9.162 16V7.24H10.578L11.514 10.072C11.602 10.328 11.674 10.584 11.73 10.84C11.794 11.088 11.842 11.28 11.874 11.416C11.906 11.28 11.954 11.088 12.018 10.84C12.082 10.584 12.154 10.324 12.234 10.06L13.122 7.24H14.538V16H13.482V12.82C13.482 12.468 13.49 12.068 13.506 11.62C13.53 11.172 13.558 10.716 13.59 10.252C13.622 9.78 13.654 9.332 13.686 8.908C13.726 8.476 13.762 8.1 13.794 7.78L12.366 12.16H11.334L9.894 7.78C9.934 8.092 9.97 8.456 10.002 8.872C10.042 9.28 10.078 9.716 10.11 10.18C10.142 10.636 10.166 11.092 10.182 11.548C10.206 12.004 10.218 12.428 10.218 12.82V16H9.162Z" fill="var(--color-text)" id="icon-2048-text"></path></svg><span>add<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Id</span></a>
+<a href="CubismWebFramework.CubismModel.html#addParameterValueByIndex" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>add<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Index</span></a>
+<a href="CubismWebFramework.CubismModel.html#getCanvasHeight" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Canvas<wbr/>Height</span></a>
+<a href="CubismWebFramework.CubismModel.html#getCanvasWidth" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Canvas<wbr/>Width</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableBlendMode" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Blend<wbr/>Mode</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableCount" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Count</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableCulling" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Culling</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableDynamicFlagIsVisible" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Is<wbr/>Visible</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableDynamicFlagOpacityDidChange" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Opacity<wbr/>Did<wbr/>Change</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableDynamicFlagRenderOrderDidChange" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Render<wbr/>Order<wbr/>Did<wbr/>Change</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableDynamicFlagVertexPositionsDidChange" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Vertex<wbr/>Positions<wbr/>Did<wbr/>Change</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableDynamicFlagVisibilityDidChange" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Visibility<wbr/>Did<wbr/>Change</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableId" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Id</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableIds" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Ids</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableIndex" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Index</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableInvertedMaskBit" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Inverted<wbr/>Mask<wbr/>Bit</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableMaskCounts" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Mask<wbr/>Counts</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableMasks" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Masks</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableOpacity" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Opacity</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableRenderOrders" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Render<wbr/>Orders</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableTextureIndices" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Texture<wbr/>Indices</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableVertexCount" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Vertex<wbr/>Count</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableVertexIndexCount" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Vertex<wbr/>Index<wbr/>Count</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableVertexIndices" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Vertex<wbr/>Indices</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableVertexPositions" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Vertex<wbr/>Positions</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableVertexUvs" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Vertex<wbr/>Uvs</span></a>
+<a href="CubismWebFramework.CubismModel.html#getDrawableVertices" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Drawable<wbr/>Vertices</span></a>
+<a href="CubismWebFramework.CubismModel.html#getModel" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Model</span></a>
+<a href="CubismWebFramework.CubismModel.html#getParameterCount" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Parameter<wbr/>Count</span></a>
+<a href="CubismWebFramework.CubismModel.html#getParameterDefaultValue" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Parameter<wbr/>Default<wbr/>Value</span></a>
+<a href="CubismWebFramework.CubismModel.html#getParameterIndex" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Parameter<wbr/>Index</span></a>
+<a href="CubismWebFramework.CubismModel.html#getParameterMaximumValue" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Parameter<wbr/>Maximum<wbr/>Value</span></a>
+<a href="CubismWebFramework.CubismModel.html#getParameterMinimumValue" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Parameter<wbr/>Minimum<wbr/>Value</span></a>
+<a href="CubismWebFramework.CubismModel.html#getParameterValueById" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Id</span></a>
+<a href="CubismWebFramework.CubismModel.html#getParameterValueByIndex" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Index</span></a>
+<a href="CubismWebFramework.CubismModel.html#getPartCount" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Part<wbr/>Count</span></a>
+<a href="CubismWebFramework.CubismModel.html#getPartIndex" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Part<wbr/>Index</span></a>
+<a href="CubismWebFramework.CubismModel.html#getPartOpacityById" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Part<wbr/>Opacity<wbr/>By<wbr/>Id</span></a>
+<a href="CubismWebFramework.CubismModel.html#getPartOpacityByIndex" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Part<wbr/>Opacity<wbr/>By<wbr/>Index</span></a>
+<a href="CubismWebFramework.CubismModel.html#initialize" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>initialize</span></a>
+<a href="CubismWebFramework.CubismModel.html#isUsingMasking" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>is<wbr/>Using<wbr/>Masking</span></a>
+<a href="CubismWebFramework.CubismModel.html#loadParameters" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>load<wbr/>Parameters</span></a>
+<a href="CubismWebFramework.CubismModel.html#multiplyParameterValueById" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>multiply<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Id</span></a>
+<a href="CubismWebFramework.CubismModel.html#multiplyParameterValueByIndex" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>multiply<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Index</span></a>
+<a href="CubismWebFramework.CubismModel.html#release" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>release</span></a>
+<a href="CubismWebFramework.CubismModel.html#saveParameters" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>save<wbr/>Parameters</span></a>
+<a href="CubismWebFramework.CubismModel.html#setParameterValueById" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Id</span></a>
+<a href="CubismWebFramework.CubismModel.html#setParameterValueByIndex" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Index</span></a>
+<a href="CubismWebFramework.CubismModel.html#setPartOpacityById" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Part<wbr/>Opacity<wbr/>By<wbr/>Id</span></a>
+<a href="CubismWebFramework.CubismModel.html#setPartOpacityByIndex" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Part<wbr/>Opacity<wbr/>By<wbr/>Index</span></a>
+<a href="CubismWebFramework.CubismModel.html#update" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>update</span></a>
+</div></section></div></details></section></section>
+<section class="tsd-panel-group tsd-member-group">
+<h2>Constructors</h2>
+<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class"><a id="constructor" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="constructor.new_CubismModel">new <wbr/>Cubism<wbr/>Model<span class="tsd-signature-symbol">(</span>model<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Model</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="CubismWebFramework.CubismModel.html" class="tsd-signature-type" data-tsd-kind="Class">CubismModel</a><a href="#constructor.new_CubismModel" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>コンストラクタ</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>model: <span class="tsd-signature-type">Model</span></h5>
+<div class="tsd-comment tsd-typography"><p>モデル</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="CubismWebFramework.CubismModel.html" class="tsd-signature-type" data-tsd-kind="Class">CubismModel</a></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:739</li></ul></aside></li></ul></section></section>
+<section class="tsd-panel-group tsd-member-group">
+<h2>Methods</h2>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="addParameterValueById" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>add<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Id</span><a href="#addParameterValueById" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="addParameterValueById.addParameterValueById-1">add<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Id<span class="tsd-signature-symbol">(</span>parameterId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, weight<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#addParameterValueById.addParameterValueById-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パラメータの値の加算(id)</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>parameterId: <span class="tsd-signature-type">any</span></h5>
+<div class="tsd-comment tsd-typography"><p>パラメータＩＤ</p>
+</div></li>
+<li>
+<h5>value: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>加算する値</p>
+</div></li>
+<li>
+<h5>weight: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1.0</span></h5>
+<div class="tsd-comment tsd-typography"><p>重み</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:351</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="addParameterValueByIndex" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>add<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Index</span><a href="#addParameterValueByIndex" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="addParameterValueByIndex.addParameterValueByIndex-1">add<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Index<span class="tsd-signature-symbol">(</span>parameterIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, weight<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#addParameterValueByIndex.addParameterValueByIndex-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パラメータの値の加算(index)</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>parameterIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>パラメータインデックス</p>
+</div></li>
+<li>
+<h5>value: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>加算する値</p>
+</div></li>
+<li>
+<h5>weight: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1.0</span></h5>
+<div class="tsd-comment tsd-typography"><p>重み</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:334</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getCanvasHeight" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Canvas<wbr/>Height</span><a href="#getCanvasHeight" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getCanvasHeight.getCanvasHeight-1">get<wbr/>Canvas<wbr/>Height<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getCanvasHeight.getCanvasHeight-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>キャンバスの高さを取得する</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:44</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getCanvasWidth" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Canvas<wbr/>Width</span><a href="#getCanvasWidth" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getCanvasWidth.getCanvasWidth-1">get<wbr/>Canvas<wbr/>Width<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getCanvasWidth.getCanvasWidth-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>キャンバスの幅を取得する</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:30</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableBlendMode" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Blend<wbr/>Mode</span><a href="#getDrawableBlendMode" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableBlendMode.getDrawableBlendMode-1">get<wbr/>Drawable<wbr/>Blend<wbr/>Mode<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../enums/CubismWebFramework.CubismBlendMode.html" class="tsd-signature-type" data-tsd-kind="Enumeration">CubismBlendMode</a><a href="#getDrawableBlendMode.getDrawableBlendMode-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableのブレンドモードを取得</p>
+
+<h3>Returns</h3><p>drawableのブレンドモード</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Drawableのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="../enums/CubismWebFramework.CubismBlendMode.html" class="tsd-signature-type" data-tsd-kind="Enumeration">CubismBlendMode</a></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:551</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableCount" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Count</span><a href="#getDrawableCount" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableCount.getDrawableCount-1">get<wbr/>Drawable<wbr/>Count<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getDrawableCount.getDrawableCount-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableの個数の取得</p>
+
+<h3>Returns</h3><p>drawableの個数</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:422</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableCulling" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Culling</span><a href="#getDrawableCulling" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableCulling.getDrawableCulling-1">get<wbr/>Drawable<wbr/>Culling<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#getDrawableCulling.getDrawableCulling-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableのカリング情報の取得</p>
+
+<h3>Returns</h3><p>drawableのカリング情報</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Drawableのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:538</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableDynamicFlagIsVisible" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Is<wbr/>Visible</span><a href="#getDrawableDynamicFlagIsVisible" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableDynamicFlagIsVisible.getDrawableDynamicFlagIsVisible-1">get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Is<wbr/>Visible<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#getDrawableDynamicFlagIsVisible.getDrawableDynamicFlagIsVisible-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableの表示情報を取得する</p>
+
+<h3>Returns</h3><p>true Drawableが表示</p>
+
+<h3>Returns</h3><p>false Drawableが非表示</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Drawableのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:621</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableDynamicFlagOpacityDidChange" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Opacity<wbr/>Did<wbr/>Change</span><a href="#getDrawableDynamicFlagOpacityDidChange" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableDynamicFlagOpacityDidChange.getDrawableDynamicFlagOpacityDidChange-1">get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Opacity<wbr/>Did<wbr/>Change<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#getDrawableDynamicFlagOpacityDidChange.getDrawableDynamicFlagOpacityDidChange-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableの不透明度の変化情報の取得</p>
+<p>直近のCubismModel.update関数でdrawableの不透明度が変化したかを取得する。</p>
+
+<h3>Returns</h3><p>true Drawableの不透明度が直近のCubismModel.update関数で変化した</p>
+
+<h3>Returns</h3><p>false Drawableの不透明度が直近のCubismModel.update関数で変化してない</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>drawableのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:655</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableDynamicFlagRenderOrderDidChange" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Render<wbr/>Order<wbr/>Did<wbr/>Change</span><a href="#getDrawableDynamicFlagRenderOrderDidChange" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableDynamicFlagRenderOrderDidChange.getDrawableDynamicFlagRenderOrderDidChange-1">get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Render<wbr/>Order<wbr/>Did<wbr/>Change<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#getDrawableDynamicFlagRenderOrderDidChange.getDrawableDynamicFlagRenderOrderDidChange-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableの描画順序の変化情報の取得</p>
+<p>直近のCubismModel.update関数でDrawableの描画の順序が変化したかを取得する。</p>
+
+<h3>Returns</h3><p>true Drawableの描画の順序が直近のCubismModel.update関数で変化した</p>
+
+<h3>Returns</h3><p>false Drawableの描画の順序が直近のCubismModel.update関数で変化してない</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Drawableのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:673</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableDynamicFlagVertexPositionsDidChange" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Vertex<wbr/>Positions<wbr/>Did<wbr/>Change</span><a href="#getDrawableDynamicFlagVertexPositionsDidChange" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableDynamicFlagVertexPositionsDidChange.getDrawableDynamicFlagVertexPositionsDidChange-1">get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Vertex<wbr/>Positions<wbr/>Did<wbr/>Change<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#getDrawableDynamicFlagVertexPositionsDidChange.getDrawableDynamicFlagVertexPositionsDidChange-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>DrawableのVertexPositionsの変化情報の取得</p>
+<p>直近のCubismModel.update関数でDrawableの頂点情報が変化したかを取得する。</p>
+
+<h3>Retval</h3><p>true    Drawableの頂点情報が直近のCubismModel.update関数で変化した</p>
+
+<h3>Retval</h3><p>false   Drawableの頂点情報が直近のCubismModel.update関数で変化していない</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Drawableのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:461</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableDynamicFlagVisibilityDidChange" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Visibility<wbr/>Did<wbr/>Change</span><a href="#getDrawableDynamicFlagVisibilityDidChange" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableDynamicFlagVisibilityDidChange.getDrawableDynamicFlagVisibilityDidChange-1">get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Visibility<wbr/>Did<wbr/>Change<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#getDrawableDynamicFlagVisibilityDidChange.getDrawableDynamicFlagVisibilityDidChange-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>DrawableのDrawOrderの変化情報の取得</p>
+<p>直近のCubismModel.update関数でdrawableのdrawOrderが変化したかを取得する。
+drawOrderはartMesh上で指定する0から1000の情報</p>
+
+<h3>Returns</h3><p>true drawableの不透明度が直近のCubismModel.update関数で変化した</p>
+
+<h3>Returns</h3><p>false drawableの不透明度が直近のCubismModel.update関数で変化している</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>drawableのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:637</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableId" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Id</span><a href="#getDrawableId" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableId.getDrawableId-1">get<wbr/>Drawable<wbr/>Id<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#getDrawableId.getDrawableId-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>DrawableのIDを取得する</p>
+
+<h3>Returns</h3><p>drawableのID</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Drawableのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:431</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableIds" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Ids</span><a href="#getDrawableIds" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableIds.getDrawableIds-1">get<wbr/>Drawable<wbr/>Ids<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><a href="#getDrawableIds.getDrawableIds-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:393</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableIndex" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Index</span><a href="#getDrawableIndex" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableIndex.getDrawableIndex-1">get<wbr/>Drawable<wbr/>Index<span class="tsd-signature-symbol">(</span>drawableId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getDrawableIndex.getDrawableIndex-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableのインデックスの取得</p>
+
+<h3>Returns</h3><p>Drawableのインデックス</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableId: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>DrawableのID</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:402</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableInvertedMaskBit" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Inverted<wbr/>Mask<wbr/>Bit</span><a href="#getDrawableInvertedMaskBit" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableInvertedMaskBit.getDrawableInvertedMaskBit-1">get<wbr/>Drawable<wbr/>Inverted<wbr/>Mask<wbr/>Bit<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#getDrawableInvertedMaskBit.getDrawableInvertedMaskBit-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableのマスクの反転使用の取得</p>
+<p>Drawableのマスク使用時の反転設定を取得する。
+マスクを使用しない場合は無視される。</p>
+
+<h3>Returns</h3><p>Drawableの反転設定</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Drawableのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:574</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableMaskCounts" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Mask<wbr/>Counts</span><a href="#getDrawableMaskCounts" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableMaskCounts.getDrawableMaskCounts-1">get<wbr/>Drawable<wbr/>Mask<wbr/>Counts<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Int32Array</span><a href="#getDrawableMaskCounts.getDrawableMaskCounts-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableのクリッピングマスクの個数リストの取得</p>
+
+<h3>Returns</h3><p>Drawableのクリッピングマスクの個数リスト</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Int32Array</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:594</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableMasks" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Masks</span><a href="#getDrawableMasks" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableMasks.getDrawableMasks-1">get<wbr/>Drawable<wbr/>Masks<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Int32Array</span><span class="tsd-signature-symbol">[]</span><a href="#getDrawableMasks.getDrawableMasks-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableのクリッピングマスクリストの取得</p>
+
+<h3>Returns</h3><p>Drawableのクリッピングマスクリスト</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Int32Array</span><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:586</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableOpacity" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Opacity</span><a href="#getDrawableOpacity" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableOpacity.getDrawableOpacity-1">get<wbr/>Drawable<wbr/>Opacity<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getDrawableOpacity.getDrawableOpacity-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableの不透明度の取得</p>
+
+<h3>Returns</h3><p>drawableの不透明度</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Drawableのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:529</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableRenderOrders" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Render<wbr/>Orders</span><a href="#getDrawableRenderOrders" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableRenderOrders.getDrawableRenderOrders-1">get<wbr/>Drawable<wbr/>Render<wbr/>Orders<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Int32Array</span><a href="#getDrawableRenderOrders.getDrawableRenderOrders-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableの描画順リストの取得</p>
+
+<h3>Returns</h3><p>Drawableの描画順リスト</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Int32Array</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:439</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableTextureIndices" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Texture<wbr/>Indices</span><a href="#getDrawableTextureIndices" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableTextureIndices.getDrawableTextureIndices-1">get<wbr/>Drawable<wbr/>Texture<wbr/>Indices<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getDrawableTextureIndices.getDrawableTextureIndices-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableのテクスチャインデックスリストの取得</p>
+
+<h3>Returns</h3><p>drawableのテクスチャインデックスリスト</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Drawableのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:448</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableVertexCount" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Vertex<wbr/>Count</span><a href="#getDrawableVertexCount" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableVertexCount.getDrawableVertexCount-1">get<wbr/>Drawable<wbr/>Vertex<wbr/>Count<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getDrawableVertexCount.getDrawableVertexCount-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableの頂点の個数の取得</p>
+
+<h3>Returns</h3><p>drawableの頂点の個数</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Drawableのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:484</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableVertexIndexCount" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Vertex<wbr/>Index<wbr/>Count</span><a href="#getDrawableVertexIndexCount" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableVertexIndexCount.getDrawableVertexIndexCount-1">get<wbr/>Drawable<wbr/>Vertex<wbr/>Index<wbr/>Count<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getDrawableVertexIndexCount.getDrawableVertexIndexCount-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableの頂点インデックスの個数の取得</p>
+
+<h3>Returns</h3><p>drawableの頂点インデックスの個数</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Drawableのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:475</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableVertexIndices" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Vertex<wbr/>Indices</span><a href="#getDrawableVertexIndices" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableVertexIndices.getDrawableVertexIndices-1">get<wbr/>Drawable<wbr/>Vertex<wbr/>Indices<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint16Array</span><a href="#getDrawableVertexIndices.getDrawableVertexIndices-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableの頂点インデックスリストの取得</p>
+
+<h3>Returns</h3><p>drawableの頂点インデックスリスト</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint16Array</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:502</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableVertexPositions" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Vertex<wbr/>Positions</span><a href="#getDrawableVertexPositions" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableVertexPositions.getDrawableVertexPositions-1">get<wbr/>Drawable<wbr/>Vertex<wbr/>Positions<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Float32Array</span><a href="#getDrawableVertexPositions.getDrawableVertexPositions-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableの頂点リストの取得</p>
+
+<h3>Returns</h3><p>drawableの頂点リスト</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Drawableのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Float32Array</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:511</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableVertexUvs" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Vertex<wbr/>Uvs</span><a href="#getDrawableVertexUvs" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableVertexUvs.getDrawableVertexUvs-1">get<wbr/>Drawable<wbr/>Vertex<wbr/>Uvs<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Float32Array</span><a href="#getDrawableVertexUvs.getDrawableVertexUvs-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableの頂点のUVリストの取得</p>
+
+<h3>Returns</h3><p>drawableの頂点UVリスト</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>Drawableのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Float32Array</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:520</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDrawableVertices" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Drawable<wbr/>Vertices</span><a href="#getDrawableVertices" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getDrawableVertices.getDrawableVertices-1">get<wbr/>Drawable<wbr/>Vertices<span class="tsd-signature-symbol">(</span>drawableIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Float32Array</span><a href="#getDrawableVertices.getDrawableVertices-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Drawableの頂点リストの取得</p>
+
+<h3>Returns</h3><p>drawableの頂点リスト</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>drawableIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>drawableのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Float32Array</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:493</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getModel" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Model</span><a href="#getModel" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getModel.getModel-1">get<wbr/>Model<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Model</span><a href="#getModel.getModel-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>モデルを取得</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Model</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:74</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getParameterCount" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Parameter<wbr/>Count</span><a href="#getParameterCount" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getParameterCount.getParameterCount-1">get<wbr/>Parameter<wbr/>Count<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getParameterCount.getParameterCount-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パラメータの個数の取得</p>
+
+<h3>Returns</h3><p>パラメータの個数</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:215</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getParameterDefaultValue" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Parameter<wbr/>Default<wbr/>Value</span><a href="#getParameterDefaultValue" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getParameterDefaultValue.getParameterDefaultValue-1">get<wbr/>Parameter<wbr/>Default<wbr/>Value<span class="tsd-signature-symbol">(</span>parameterIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getParameterDefaultValue.getParameterDefaultValue-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パラメータのデフォルト値の取得</p>
+
+<h3>Returns</h3><p>パラメータのデフォルト値</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>parameterIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>パラメータのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:242</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getParameterIndex" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Parameter<wbr/>Index</span><a href="#getParameterIndex" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getParameterIndex.getParameterIndex-1">get<wbr/>Parameter<wbr/>Index<span class="tsd-signature-symbol">(</span>parameterId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getParameterIndex.getParameterIndex-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パラメータのインデックスの取得</p>
+
+<h3>Returns</h3><p>パラメータのインデックス</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>parameterId: <span class="tsd-signature-type">string</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:185</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getParameterMaximumValue" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Parameter<wbr/>Maximum<wbr/>Value</span><a href="#getParameterMaximumValue" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getParameterMaximumValue.getParameterMaximumValue-1">get<wbr/>Parameter<wbr/>Maximum<wbr/>Value<span class="tsd-signature-symbol">(</span>parameterIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getParameterMaximumValue.getParameterMaximumValue-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パラメータの最大値の取得</p>
+
+<h3>Returns</h3><p>パラメータの最大値</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>parameterIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>パラメータのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:224</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getParameterMinimumValue" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Parameter<wbr/>Minimum<wbr/>Value</span><a href="#getParameterMinimumValue" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getParameterMinimumValue.getParameterMinimumValue-1">get<wbr/>Parameter<wbr/>Minimum<wbr/>Value<span class="tsd-signature-symbol">(</span>parameterIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getParameterMinimumValue.getParameterMinimumValue-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パラメータの最小値の取得</p>
+
+<h3>Returns</h3><p>パラメータの最小値</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>parameterIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>パラメータのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:233</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getParameterValueById" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Id</span><a href="#getParameterValueById" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getParameterValueById.getParameterValueById-1">get<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Id<span class="tsd-signature-symbol">(</span>parameterId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getParameterValueById.getParameterValueById-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パラメータの値の取得</p>
+
+<h3>Returns</h3><p>パラメータの値</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>parameterId: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>パラメータのID</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:267</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getParameterValueByIndex" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Index</span><a href="#getParameterValueByIndex" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getParameterValueByIndex.getParameterValueByIndex-1">get<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Index<span class="tsd-signature-symbol">(</span>parameterIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getParameterValueByIndex.getParameterValueByIndex-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パラメータの値の取得</p>
+
+<h3>Returns</h3><p>パラメータの値</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>parameterIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>パラメータのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:251</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getPartCount" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Part<wbr/>Count</span><a href="#getPartCount" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getPartCount.getPartCount-1">get<wbr/>Part<wbr/>Count<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getPartCount.getPartCount-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パーツの個数の取得</p>
+
+<h3>Returns</h3><p>パーツの個数</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:110</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getPartIndex" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Part<wbr/>Index</span><a href="#getPartIndex" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getPartIndex.getPartIndex-1">get<wbr/>Part<wbr/>Index<span class="tsd-signature-symbol">(</span>partId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getPartIndex.getPartIndex-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パーツのインデックスを取得</p>
+
+<h3>Returns</h3><p>パーツのインデックス</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>partId: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>パーツのID</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:83</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getPartOpacityById" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Part<wbr/>Opacity<wbr/>By<wbr/>Id</span><a href="#getPartOpacityById" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getPartOpacityById.getPartOpacityById-1">get<wbr/>Part<wbr/>Opacity<wbr/>By<wbr/>Id<span class="tsd-signature-symbol">(</span>partId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getPartOpacityById.getPartOpacityById-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パーツの不透明度の取得(id)</p>
+
+<h3>Returns</h3><p>パーツの不透明度</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>partId: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>パーツのＩｄ</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:169</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getPartOpacityByIndex" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Part<wbr/>Opacity<wbr/>By<wbr/>Index</span><a href="#getPartOpacityByIndex" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="getPartOpacityByIndex.getPartOpacityByIndex-1">get<wbr/>Part<wbr/>Opacity<wbr/>By<wbr/>Index<span class="tsd-signature-symbol">(</span>partIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getPartOpacityByIndex.getPartOpacityByIndex-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パーツの不透明度の取得(index)</p>
+
+<h3>Returns</h3><p>パーツの不透明度</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>partIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>パーツのインデックス</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:152</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="initialize" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>initialize</span><a href="#initialize" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="initialize.initialize-1">initialize<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#initialize.initialize-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>初期化する</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:701</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="isUsingMasking" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>is<wbr/>Using<wbr/>Masking</span><a href="#isUsingMasking" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="isUsingMasking.isUsingMasking-1">is<wbr/>Using<wbr/>Masking<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#isUsingMasking.isUsingMasking-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>クリッピングマスクの使用状態</p>
+
+<h3>Returns</h3><p>true クリッピングマスクを使用している</p>
+
+<h3>Returns</h3><p>false クリッピングマスクを使用していない</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:604</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="loadParameters" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>load<wbr/>Parameters</span><a href="#loadParameters" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="loadParameters.loadParameters-1">load<wbr/>Parameters<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#loadParameters.loadParameters-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>保存されたパラメータの読み込み</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:685</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="multiplyParameterValueById" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>multiply<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Id</span><a href="#multiplyParameterValueById" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="multiplyParameterValueById.multiplyParameterValueById-1">multiply<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Id<span class="tsd-signature-symbol">(</span>parameterId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, weight<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#multiplyParameterValueById.multiplyParameterValueById-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パラメータの値の乗算</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>parameterId: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>パラメータのID</p>
+</div></li>
+<li>
+<h5>value: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>乗算する値</p>
+</div></li>
+<li>
+<h5>weight: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1.0</span></h5>
+<div class="tsd-comment tsd-typography"><p>重み</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:366</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="multiplyParameterValueByIndex" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>multiply<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Index</span><a href="#multiplyParameterValueByIndex" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="multiplyParameterValueByIndex.multiplyParameterValueByIndex-1">multiply<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Index<span class="tsd-signature-symbol">(</span>parameterIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, weight<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#multiplyParameterValueByIndex.multiplyParameterValueByIndex-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パラメータの値の乗算</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>parameterIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>パラメータのインデックス</p>
+</div></li>
+<li>
+<h5>value: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>乗算する値</p>
+</div></li>
+<li>
+<h5>weight: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1.0</span></h5>
+<div class="tsd-comment tsd-typography"><p>重み</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:381</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="release" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>release</span><a href="#release" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="release.release-1">release<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#release.release-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>デストラクタ相当の処理</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:757</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="saveParameters" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>save<wbr/>Parameters</span><a href="#saveParameters" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="saveParameters.saveParameters-1">save<wbr/>Parameters<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#saveParameters.saveParameters-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パラメータを保存する</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:58</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setParameterValueById" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>set<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Id</span><a href="#setParameterValueById" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="setParameterValueById.setParameterValueById-1">set<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Id<span class="tsd-signature-symbol">(</span>parameterId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, weight<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#setParameterValueById.setParameterValueById-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パラメータの値の設定</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>parameterId: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>パラメータのID</p>
+</div></li>
+<li>
+<h5>value: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>パラメータの値</p>
+</div></li>
+<li>
+<h5>weight: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1.0</span></h5>
+<div class="tsd-comment tsd-typography"><p>重み</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:319</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setParameterValueByIndex" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>set<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Index</span><a href="#setParameterValueByIndex" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="setParameterValueByIndex.setParameterValueByIndex-1">set<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Index<span class="tsd-signature-symbol">(</span>parameterIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, weight<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#setParameterValueByIndex.setParameterValueByIndex-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パラメータの値の設定</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>parameterIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>パラメータのインデックス</p>
+</div></li>
+<li>
+<h5>value: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>パラメータの値</p>
+</div></li>
+<li>
+<h5>weight: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1.0</span></h5>
+<div class="tsd-comment tsd-typography"><p>重み</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:279</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setPartOpacityById" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>set<wbr/>Part<wbr/>Opacity<wbr/>By<wbr/>Id</span><a href="#setPartOpacityById" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="setPartOpacityById.setPartOpacityById-1">set<wbr/>Part<wbr/>Opacity<wbr/>By<wbr/>Id<span class="tsd-signature-symbol">(</span>partId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, opacity<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#setPartOpacityById.setPartOpacityById-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パーツの不透明度の設定(Id)</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>partId: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>パーツのID</p>
+</div></li>
+<li>
+<h5>opacity: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>パーツの不透明度</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:136</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setPartOpacityByIndex" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>set<wbr/>Part<wbr/>Opacity<wbr/>By<wbr/>Index</span><a href="#setPartOpacityByIndex" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="setPartOpacityByIndex.setPartOpacityByIndex-1">set<wbr/>Part<wbr/>Opacity<wbr/>By<wbr/>Index<span class="tsd-signature-symbol">(</span>partIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, opacity<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#setPartOpacityByIndex.setPartOpacityByIndex-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>パーツの不透明度の設定(Index)</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>partIndex: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>パーツのインデックス</p>
+</div></li>
+<li>
+<h5>opacity: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>不透明度</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:119</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="update" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>update</span><a href="#update" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="update.update-1">update<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#update.update-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>モデルのパラメータの更新</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in cubism/src/model/cubismmodel.ts:20</li></ul></aside></li></ul></section></section></div>
+<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+<div class="tsd-navigation settings">
+<details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility">
+<h4 class="uppercase">Member Visibility</h4><form>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div>
+<div class="tsd-theme-toggle">
+<h4 class="uppercase">Theme</h4><select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<nav class="tsd-navigation primary">
+<details class="tsd-index-accordion" open><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Modules</h3></summary>
+<div class="tsd-accordion-details">
+<ul>
+<li class="current"><a href="../modules.html">pixi-<wbr/>live2d-<wbr/>display -<wbr/> v0.4.0</a>
+<ul>
+<li class="current tsd-kind-module"><a href="../modules/CubismWebFramework.html">Cubism<wbr/>Web<wbr/>Framework</a>
+<ul>
+<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="../modules/CubismWebFramework.CubismConfig.html">Cubism<wbr/>Config</a></li>
+<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="../modules/CubismWebFramework.CubismSpec.html">Cubism<wbr/>Spec</a></li></ul></li>
+<li class="tsd-kind-module"><a href="../modules/index.html">index</a>
+<ul>
+<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="../modules/index.config.html">config</a></li></ul></li></ul></li></ul></div></details></nav>
+<nav class="tsd-navigation secondary menu-sticky">
+<ul>
+<li class="current tsd-kind-class tsd-parent-kind-module"><a href="CubismWebFramework.CubismModel.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-class)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-128-path"></rect><path d="M11.898 16.1201C11.098 16.1201 10.466 15.8961 10.002 15.4481C9.53803 15.0001 9.30603 14.3841 9.30603 13.6001V9.64012C9.30603 8.85612 9.53803 8.24012 10.002 7.79212C10.466 7.34412 11.098 7.12012 11.898 7.12012C12.682 7.12012 13.306 7.34812 13.77 7.80412C14.234 8.25212 14.466 8.86412 14.466 9.64012H13.386C13.386 9.14412 13.254 8.76412 12.99 8.50012C12.734 8.22812 12.37 8.09212 11.898 8.09212C11.426 8.09212 11.054 8.22412 10.782 8.48812C10.518 8.75212 10.386 9.13212 10.386 9.62812V13.6001C10.386 14.0961 10.518 14.4801 10.782 14.7521C11.054 15.0161 11.426 15.1481 11.898 15.1481C12.37 15.1481 12.734 15.0161 12.99 14.7521C13.254 14.4801 13.386 14.0961 13.386 13.6001H14.466C14.466 14.3761 14.234 14.9921 13.77 15.4481C13.306 15.8961 12.682 16.1201 11.898 16.1201Z" fill="var(--color-text)" id="icon-128-text"></path></svg><span>Cubism<wbr/>Model</span></a>
+<ul>
+<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#constructor" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-512-path"></use><use href="#icon-512-text"></use></svg>constructor</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#addParameterValueById" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>add<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Id</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#addParameterValueByIndex" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>add<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Index</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getCanvasHeight" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Canvas<wbr/>Height</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getCanvasWidth" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Canvas<wbr/>Width</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableBlendMode" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Blend<wbr/>Mode</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableCount" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Count</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableCulling" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Culling</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableDynamicFlagIsVisible" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Is<wbr/>Visible</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableDynamicFlagOpacityDidChange" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Opacity<wbr/>Did<wbr/>Change</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableDynamicFlagRenderOrderDidChange" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Render<wbr/>Order<wbr/>Did<wbr/>Change</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableDynamicFlagVertexPositionsDidChange" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Vertex<wbr/>Positions<wbr/>Did<wbr/>Change</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableDynamicFlagVisibilityDidChange" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Dynamic<wbr/>Flag<wbr/>Visibility<wbr/>Did<wbr/>Change</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableId" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Id</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableIds" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Ids</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableIndex" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Index</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableInvertedMaskBit" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Inverted<wbr/>Mask<wbr/>Bit</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableMaskCounts" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Mask<wbr/>Counts</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableMasks" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Masks</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableOpacity" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Opacity</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableRenderOrders" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Render<wbr/>Orders</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableTextureIndices" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Texture<wbr/>Indices</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableVertexCount" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Vertex<wbr/>Count</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableVertexIndexCount" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Vertex<wbr/>Index<wbr/>Count</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableVertexIndices" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Vertex<wbr/>Indices</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableVertexPositions" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Vertex<wbr/>Positions</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableVertexUvs" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Vertex<wbr/>Uvs</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getDrawableVertices" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Drawable<wbr/>Vertices</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getModel" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Model</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getParameterCount" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Parameter<wbr/>Count</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getParameterDefaultValue" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Parameter<wbr/>Default<wbr/>Value</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getParameterIndex" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Parameter<wbr/>Index</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getParameterMaximumValue" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Parameter<wbr/>Maximum<wbr/>Value</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getParameterMinimumValue" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Parameter<wbr/>Minimum<wbr/>Value</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getParameterValueById" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Id</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getParameterValueByIndex" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Index</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getPartCount" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Part<wbr/>Count</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getPartIndex" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Part<wbr/>Index</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getPartOpacityById" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Part<wbr/>Opacity<wbr/>By<wbr/>Id</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#getPartOpacityByIndex" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Part<wbr/>Opacity<wbr/>By<wbr/>Index</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#initialize" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>initialize</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#isUsingMasking" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>is<wbr/>Using<wbr/>Masking</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#loadParameters" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>load<wbr/>Parameters</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#multiplyParameterValueById" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>multiply<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Id</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#multiplyParameterValueByIndex" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>multiply<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Index</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#release" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>release</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#saveParameters" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>save<wbr/>Parameters</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#setParameterValueById" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Id</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#setParameterValueByIndex" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Parameter<wbr/>Value<wbr/>By<wbr/>Index</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#setPartOpacityById" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Part<wbr/>Opacity<wbr/>By<wbr/>Id</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#setPartOpacityByIndex" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Part<wbr/>Opacity<wbr/>By<wbr/>Index</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="CubismWebFramework.CubismModel.html#update" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>update</a></li></ul></li></ul></nav></div></div>
+<div class="container tsd-generator">
+<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
+<div class="overlay"></div><script src="../assets/main.js"></script></body></html>
