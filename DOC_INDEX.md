@@ -2,11 +2,11 @@
 
 Here are some pages that you're most likely to look for:
 
-- [Live2DModel](classes/index.live2dmodel.html)
-- [InternalModel](classes/index.internalmodel.html)
-- [ModelSettings](classes/index.modelsettings.html)
-- [MotionManager](classes/index.motionmanager.html)
-- [ExpressionManager](classes/index.expressionmanager.html)
+- [Live2DModel](classes/index.Live2DModel.html)
+- [InternalModel](classes/index.InternalModel.html)
+- [ModelSettings](classes/index.ModelSettings.html)
+- [MotionManager](classes/index.MotionManager.html)
+- [ExpressionManager](classes/index.ExpressionManager.html)
 - [config](modules/index.config.html)
 
 There are two modules in this doc - [index](modules/index.html) and [CubismWebFramework](modules/CubismWebFramework.html), where `index` is the library's main entry and re-exports everything from `CubismWebFramework`.

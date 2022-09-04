@@ -7,7 +7,7 @@ site_dir: ../site
 repo_url: https://github.com/guansss/pixi-live2d-display
 
 nav:
-  - Introduction: 'README.md'
+  - Introduction: .
   - References:
     - Models: 'models.md'
     - Interactions: 'interactions.md'
