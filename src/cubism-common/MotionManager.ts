@@ -92,6 +92,16 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
     currentAudio?: HTMLAudioElement;
 
     /**
+     * Analyzer element for the current sound being played.
+     */
+    currentAnalyzer?: AnalyserNode;
+
+    /**
+     * Context element for the current sound being played.
+     */
+    currentContext?: AudioContext;
+
+    /**
      * Flags there's a motion playing.
      */
     playing = false;
@@ -207,6 +217,13 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
     async startMotion(group: string, index: number, priority = MotionPriority.NORMAL): Promise<boolean> {
+        // Do not start a new motion if audio is still playing
+        if(this.currentAudio){
+            if (!this.currentAudio.ended){
+                return false;
+            }
+        }
+
         if (!this.state.reserve(group, index, priority)) {
             return false;
         }
@@ -223,6 +240,8 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         }
 
         let audio: HTMLAudioElement | undefined;
+        let analyzer: AnalyserNode | undefined;
+        let context: AudioContext | undefined;
 
         if (config.sound) {
             const soundURL = this.getSoundFile(definition);
@@ -231,12 +250,21 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
                 try {
                     // start to load the audio
                     audio = SoundManager.add(
-                        this.settings.resolveURL(soundURL),
+                        this.settings.resolveURL(soundURL)+"?cache-buster=" + new Date().getTime(),
                         () => this.currentAudio = undefined,
                         () => this.currentAudio = undefined,
                     );
 
                     this.currentAudio = audio;
+
+                    // Add context
+                    context = SoundManager.addContext(this.currentAudio);
+                    this.currentContext = context;
+                    
+                    // Add analyzer
+                    analyzer = SoundManager.addAnalyzer(this.currentAudio, this.currentContext);
+                    this.currentAnalyzer = analyzer;
+
                 } catch (e) {
                     logger.warn(this.tag, 'Failed to create audio', soundURL, e);
                 }
@@ -347,6 +375,18 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         }
 
         return this.updateParameters(model, now);
+    }
+
+    /**
+     * Move the mouth
+     * 
+     */
+     mouthSync(): number {
+        if (this.currentAnalyzer) {
+            return SoundManager.analyze(this.currentAnalyzer);
+        } else {
+            return 0;
+        }
     }
 
     /**

@@ -10,6 +10,7 @@ import {
     ParamBreath,
     ParamEyeBallX,
     ParamEyeBallY,
+    ParamMouthForm,
 } from '@cubism/cubismdefaultparameterid';
 import { BreathParameterData, CubismBreath } from '@cubism/effect/cubismbreath';
 import { CubismEyeBlink } from '@cubism/effect/cubismeyeblink';
@@ -49,6 +50,7 @@ export class Cubism4InternalModel extends InternalModel {
     idParamEyeBallY = ParamEyeBallY;
     idParamBodyAngleX = ParamBodyAngleX;
     idParamBreath = ParamBreath;
+    idParamMouthForm = ParamMouthForm;
 
     /**
      * The model's internal scale, defined in the moc3 file.
@@ -210,13 +212,14 @@ export class Cubism4InternalModel extends InternalModel {
         this.updateNaturalMovements(dt * 1000, now * 1000);
 
         // TODO: Add lip sync API
-        // if (this.lipSync) {
-        //     const value = 0; // 0 ~ 1
-        //
-        //     for (let i = 0; i < this.lipSyncIds.length; ++i) {
-        //         model.addParameterValueById(this.lipSyncIds[i], value, 0.8);
-        //     }
-        // }
+        if (this.lipSync) {
+            //let value = parseFloat(Math.random().toFixed(1));
+            let value = this.motionManager.mouthSync()
+        
+            for (let i = 0; i < this.motionManager.lipSyncIds.length; ++i) {
+                model.addParameterValueById(this.motionManager.lipSyncIds[i], value, 0.8);
+            }
+        }
 
         this.physics?.evaluate(model, dt);
         this.pose?.updateParameters(model, dt);
@@ -234,6 +237,10 @@ export class Cubism4InternalModel extends InternalModel {
         this.coreModel.addParameterValueById(this.idParamAngleY, this.focusController.y * 30);
         this.coreModel.addParameterValueById(this.idParamAngleZ, this.focusController.x * this.focusController.y * -30);
         this.coreModel.addParameterValueById(this.idParamBodyAngleX, this.focusController.x * 10); // -10 ~ 10
+    }
+
+    updateFacialEmotion(mouthForm: number) {
+        this.coreModel.addParameterValueById(this.idParamMouthForm, mouthForm); // -1 ~ 1
     }
 
     updateNaturalMovements(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp) {
