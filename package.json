@@ -33,6 +33,7 @@
   "license": "MIT",
   "scripts": {
     "setup": "node scripts/setup.js",
+    "prepare": "yarn build && yarn type",
     "playground": "vite",
     "test": "node scripts/build-tests.js && npx floss --path=test.build --reporter=tap",
     "test:ci": "yarn type && yarn build && yarn test",
@@ -63,7 +64,7 @@
     "@types/chai": "^4.3.1",
     "@types/chai-as-promised": "^7.1.5",
     "@types/lodash-es": "^4.17.6",
-    "@types/node": "17.0.41",
+    "@types/node": "^18.13.0",
     "@types/offscreencanvas": "^2019.7.0",
     "adm-zip": "^0.5.9",
     "chai": "^4.3.6",
