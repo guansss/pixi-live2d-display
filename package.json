@@ -33,7 +33,7 @@
   "license": "MIT",
   "scripts": {
     "setup": "node scripts/setup.js",
-    "prepare": "yarn build && yarn type",
+    "prepare": "yarn setup && yarn build && yarn type",
     "playground": "vite",
     "test": "node scripts/build-tests.js && npx floss --path=test.build --reporter=tap",
     "test:ci": "yarn type && yarn build && yarn test",
