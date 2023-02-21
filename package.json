@@ -46,7 +46,7 @@
     "serve-docs": "mkdocs serve -f docs/mkdocs.yml",
     "deploy": "gh-pages -d site",
     "prepublishOnly": "yarn build && yarn test && yarn type",
-    "postinstall": "cd cubism && git reset --hard 1f9cdfd140e87ba0ae68a356bb5ec339a0e65f99"
+    "postinstall": "git submodule update --remote && cd cubism && git reset --hard 1f9cdfd140e87ba0ae68a356bb5ec339a0e65f99"
   },
   "files": [
     "dist",
