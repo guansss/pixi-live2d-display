@@ -33,7 +33,7 @@
   "license": "MIT",
   "scripts": {
     "setup": "node scripts/setup.js",
-    "prepare": "yarn setup && yarn build && yarn type",
+    "prepare": "git submodule update --init --recursive && yarn setup && yarn build && yarn type",
     "playground": "vite",
     "test": "node scripts/build-tests.js && npx floss --path=test.build --reporter=tap",
     "test:ci": "yarn type && yarn build && yarn test",
@@ -45,8 +45,7 @@
     "doc": "node scripts/gen-docs.js",
     "serve-docs": "mkdocs serve -f docs/mkdocs.yml",
     "deploy": "gh-pages -d site",
-    "prepublishOnly": "yarn build && yarn test && yarn type",
-    "postinstall": "git submodule update --init --recursive"
+    "prepublishOnly": "yarn build && yarn test && yarn type"
   },
   "files": [
     "dist",
