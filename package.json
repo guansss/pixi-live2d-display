@@ -45,7 +45,8 @@
     "doc": "node scripts/gen-docs.js",
     "serve-docs": "mkdocs serve -f docs/mkdocs.yml",
     "deploy": "gh-pages -d site",
-    "prepublishOnly": "yarn build && yarn test && yarn type"
+    "prepublishOnly": "yarn build && yarn test && yarn type",
+    "postinstall": "git submodule update --init --recursive"
   },
   "files": [
     "dist",
