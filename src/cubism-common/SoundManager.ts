@@ -40,7 +40,8 @@ export class SoundManager {
         const audio = new Audio(file);
 
         audio.volume = this._volume;
-        audio.preload = 'none';
+        audio.preload = 'auto';
+        audio.autoplay = true;
 
         audio.addEventListener('ended', () => {
             this.dispose(audio);
