@@ -739,16 +739,18 @@ export declare abstract class MotionManager<Motion = any, MotionSpec = any> exte
 	 * @param group - The motion group.
 	 * @param index - Index in the motion group.
 	 * @param priority - The priority to be applied.
+	 * @param sound - The wav url file or base64 content
 	 * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
 	 */
-	startMotion(group: string, index: number, priority?: MotionPriority): Promise<boolean>;
+	startMotion(group: string, index: number, priority?: MotionPriority, sound?: string): Promise<boolean>;
 	/**
 	 * Starts a random Motion as given priority.
 	 * @param group - The motion group.
 	 * @param priority - The priority to be applied.
+	 * @param sound - The wav url file or base64 content
 	 * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
 	 */
-	startRandomMotion(group: string, priority?: MotionPriority): Promise<boolean>;
+	startRandomMotion(group: string, priority?: MotionPriority, sound?: string): Promise<boolean>;
 	/**
 	 * Stops all playing motions as well as the sound.
 	 */
@@ -1628,9 +1630,10 @@ export declare class Live2DModel<IM extends InternalModel = InternalModel> exten
 	 * @param group - The motion group.
 	 * @param index - The index in this group. If not presented, a random motion will be started.
 	 * @param priority - The motion priority. Defaults to `MotionPriority.NORMAL`.
+	 * @param sound - The wav url file or base64 content
 	 * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
 	 */
-	motion(group: string, index?: number, priority?: MotionPriority): Promise<boolean>;
+	motion(group: string, index?: number, priority?: MotionPriority, sound?: string): Promise<boolean>;
 	/**
 	 * Shorthand to set an expression.
 	 * @param id - Either the index, or the name of the expression. If not presented, a random expression will be set.

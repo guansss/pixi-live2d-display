@@ -4887,7 +4887,7 @@ var __async = (__this, __arguments, generator) => {
       throw new Error("Not implemented.");
     }
     startMotion(_0, _1) {
-      return __async(this, arguments, function* (group, index, priority = MotionPriority.NORMAL) {
+      return __async(this, arguments, function* (group, index, priority = MotionPriority.NORMAL, sound) {
         var _a;
         if (this.currentAudio) {
           if (!this.currentAudio.ended) {
@@ -4908,11 +4908,20 @@ var __async = (__this, __arguments, generator) => {
         let analyzer;
         let context;
         if (exports2.config.sound) {
+          const isUrlPath = sound && sound.startsWith("http");
+          const isBase64Content = sound && sound.startsWith("data:audio/wav;base64");
           const soundURL = this.getSoundFile(definition);
+          let file = soundURL;
           if (soundURL) {
+            file = this.settings.resolveURL(soundURL) + "?cache-buster=" + new Date().getTime();
+          }
+          if (isUrlPath || isBase64Content) {
+            file = sound;
+          }
+          if (file) {
             try {
               audio = SoundManager.add(
-                this.settings.resolveURL(soundURL) + "?cache-buster=" + new Date().getTime(),
+                file,
                 () => this.currentAudio = void 0,
                 () => this.currentAudio = void 0
               );
@@ -4950,7 +4959,7 @@ var __async = (__this, __arguments, generator) => {
         return true;
       });
     }
-    startRandomMotion(group, priority) {
+    startRandomMotion(group, priority, sound) {
       return __async(this, null, function* () {
         const groupDefs = this.definitions[group];
         if (groupDefs == null ? void 0 : groupDefs.length) {
@@ -4962,7 +4971,7 @@ var __async = (__this, __arguments, generator) => {
           }
           if (availableIndices.length) {
             const index = Math.floor(Math.random() * availableIndices.length);
-            return this.startMotion(group, availableIndices[index], priority);
+            return this.startMotion(group, availableIndices[index], priority, sound);
           }
         }
         return false;
@@ -5619,8 +5628,8 @@ var __async = (__this, __arguments, generator) => {
     onAnchorChange() {
       this.pivot.set(this.anchor.x * this.internalModel.width, this.anchor.y * this.internalModel.height);
     }
-    motion(group, index, priority) {
-      return index === void 0 ? this.internalModel.motionManager.startRandomMotion(group, priority) : this.internalModel.motionManager.startMotion(group, index, priority);
+    motion(group, index, priority, sound) {
+      return index === void 0 ? this.internalModel.motionManager.startRandomMotion(group, priority, sound) : this.internalModel.motionManager.startMotion(group, index, priority, sound);
     }
     expression(id) {
       if (this.internalModel.motionManager.expressionManager) {
