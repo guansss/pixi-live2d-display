@@ -205,12 +205,13 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * @param group - The motion group.
      * @param index - The index in this group. If not presented, a random motion will be started.
      * @param priority - The motion priority. Defaults to `MotionPriority.NORMAL`.
+     * @param sound - The wav url file or base64 content 
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    motion(group: string, index?: number, priority?: MotionPriority): Promise<boolean> {
+    motion(group: string, index?: number, priority?: MotionPriority, sound?: string): Promise<boolean> {
         return index === undefined
-            ? this.internalModel.motionManager.startRandomMotion(group, priority)
-            : this.internalModel.motionManager.startMotion(group, index, priority);
+            ? this.internalModel.motionManager.startRandomMotion(group, priority, sound)
+            : this.internalModel.motionManager.startMotion(group, index, priority, sound);
     }
 
     /**
