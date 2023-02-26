@@ -432,7 +432,8 @@ var __async = (__this, __arguments, generator) => {
     static add(file, onFinish, onError) {
       const audio = new Audio(file);
       audio.volume = this._volume;
-      audio.preload = "none";
+      audio.preload = "auto";
+      audio.autoplay = true;
       audio.addEventListener("ended", () => {
         this.dispose(audio);
         onFinish == null ? void 0 : onFinish();
@@ -596,7 +597,7 @@ var __async = (__this, __arguments, generator) => {
           return false;
         }
         if (this.currentAudio) {
-          this.currentAudio.pause();
+          SoundManager.dispose(this.currentAudio);
         }
         let audio;
         let analyzer;
@@ -614,14 +615,9 @@ var __async = (__this, __arguments, generator) => {
           }
           if (file) {
             try {
-              if (this.currentAudio) {
-                audio = this.currentAudio;
-                audio.src = file;
-              } else {
-                audio = SoundManager.add(
-                  file
-                );
-              }
+              audio = SoundManager.add(
+                file
+              );
               this.currentAudio = audio;
               context = SoundManager.addContext(this.currentAudio);
               this.currentContext = context;
