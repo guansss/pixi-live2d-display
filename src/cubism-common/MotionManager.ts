@@ -237,7 +237,8 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
 
         if (this.currentAudio) {
             // TODO: reuse the audio?
-            SoundManager.dispose(this.currentAudio);
+            // SoundManager.dispose(this.currentAudio);
+            this.currentAudio.pause();
         }
 
         let audio: HTMLAudioElement | undefined;
@@ -258,11 +259,16 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             if (file) {
                 try {
                     // start to load the audio
-                    audio = SoundManager.add(
-                        file,
-                        () => this.currentAudio = undefined,
-                        () => this.currentAudio = undefined,
-                    );
+                    if (this.currentAudio) {
+                        audio = this.currentAudio;
+                        audio.src = file;
+                    } else {
+                        audio = SoundManager.add(
+                            file,
+                            // () => this.currentAudio = undefined,
+                            // () => this.currentAudio = undefined,
+                        );
+                    }
                     this.currentAudio = audio!;
 
                     // Add context

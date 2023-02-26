@@ -596,7 +596,7 @@ var __async = (__this, __arguments, generator) => {
           return false;
         }
         if (this.currentAudio) {
-          SoundManager.dispose(this.currentAudio);
+          this.currentAudio.pause();
         }
         let audio;
         let analyzer;
@@ -614,11 +614,14 @@ var __async = (__this, __arguments, generator) => {
           }
           if (file) {
             try {
-              audio = SoundManager.add(
-                file,
-                () => this.currentAudio = void 0,
-                () => this.currentAudio = void 0
-              );
+              if (this.currentAudio) {
+                audio = this.currentAudio;
+                audio.src = file;
+              } else {
+                audio = SoundManager.add(
+                  file
+                );
+              }
               this.currentAudio = audio;
               context = SoundManager.addContext(this.currentAudio);
               this.currentContext = context;

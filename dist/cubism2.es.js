@@ -596,7 +596,7 @@ class MotionManager extends EventEmitter {
         return false;
       }
       if (this.currentAudio) {
-        SoundManager.dispose(this.currentAudio);
+        this.currentAudio.pause();
       }
       let audio;
       let analyzer;
@@ -614,11 +614,14 @@ class MotionManager extends EventEmitter {
         }
         if (file) {
           try {
-            audio = SoundManager.add(
-              file,
-              () => this.currentAudio = void 0,
-              () => this.currentAudio = void 0
-            );
+            if (this.currentAudio) {
+              audio = this.currentAudio;
+              audio.src = file;
+            } else {
+              audio = SoundManager.add(
+                file
+              );
+            }
             this.currentAudio = audio;
             context = SoundManager.addContext(this.currentAudio);
             this.currentContext = context;
