@@ -48,3 +48,8 @@ jobs:
       - uses: GabrielBB/xvfb-action@v1.0
         with:
           run: yarn test:ci
+
+      - uses: actions/upload-artifact@v3
+          with:
+              name: my-artifact
+              path: ${{ github.workspace }}
