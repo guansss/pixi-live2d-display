@@ -234,7 +234,7 @@ export class Cubism2InternalModel extends InternalModel {
             value = clamp(value, 0, 1)
         
             for (let i = 0; i < this.motionManager.lipSyncIds.length; ++i) {
-            		this.coreModel.setParamFloat(this.coreModel.getParamInde(this.motionManager.lipSyncIds[i]), value * 0.8);
+            		this.coreModel.setParamFloat(this.coreModel.getParamIndex(this.motionManager.lipSyncIds[i]), value * 0.8);
             }
         }
         
