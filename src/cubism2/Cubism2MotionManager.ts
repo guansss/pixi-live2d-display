@@ -16,6 +16,8 @@ export class Cubism2MotionManager extends MotionManager<Live2DMotion, Cubism2Spe
     readonly queueManager = new MotionQueueManager();
 
     declare readonly settings: Cubism2ModelSettings;
+    
+    lipSyncIds: string[];
 
     expressionManager?: Cubism2ExpressionManager;
 
