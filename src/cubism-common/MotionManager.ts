@@ -214,9 +214,10 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * @param group - The motion group.
      * @param index - Index in the motion group.
      * @param priority - The priority to be applied.
+     * @param sound - The wav url file or base64 content
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    async startMotion(group: string, index: number, priority = MotionPriority.NORMAL): Promise<boolean> {
+    async startMotion(group: string, index: number, priority = MotionPriority.NORMAL, sound?: string): Promise<boolean> {
         // Do not start a new motion if audio is still playing
         if(this.currentAudio){
             if (!this.currentAudio.ended){
@@ -244,18 +245,25 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         let context: AudioContext | undefined;
 
         if (config.sound) {
+            const isUrlPath = sound && sound.startsWith('http');
+            const isBase64Content = sound && sound.startsWith('data:audio/wav;base64');
             const soundURL = this.getSoundFile(definition);
-
+            let file = soundURL;
             if (soundURL) {
+                file = this.settings.resolveURL(soundURL) + "?cache-buster=" + new Date().getTime();
+            }
+            if (isUrlPath || isBase64Content) {
+                file = sound;
+            }
+            if (file) {
                 try {
                     // start to load the audio
                     audio = SoundManager.add(
-                        this.settings.resolveURL(soundURL)+"?cache-buster=" + new Date().getTime(),
-                        () => this.currentAudio = undefined,
-                        () => this.currentAudio = undefined,
+                        file,
+                        // () => this.currentAudio = undefined,
+                        // () => this.currentAudio = undefined,
                     );
-
-                    this.currentAudio = audio;
+                    this.currentAudio = audio!;
 
                     // Add context
                     context = SoundManager.addContext(this.currentAudio);
@@ -311,9 +319,10 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * Starts a random Motion as given priority.
      * @param group - The motion group.
      * @param priority - The priority to be applied.
+     * @param sound - The wav url file or base64 content
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    async startRandomMotion(group: string, priority?: MotionPriority): Promise<boolean> {
+    async startRandomMotion(group: string, priority?: MotionPriority, sound?: string): Promise<boolean> {
         const groupDefs = this.definitions[group];
 
         if (groupDefs?.length) {
@@ -328,7 +337,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             if (availableIndices.length) {
                 const index = Math.floor(Math.random() * availableIndices.length);
 
-                return this.startMotion(group, availableIndices[index]!, priority);
+                return this.startMotion(group, availableIndices[index]!, priority, sound);
             }
         }
 
