@@ -28,7 +28,7 @@ export class Cubism2MotionManager extends MotionManager<Live2DMotion, Cubism2Spe
 
         this.init(options);
         
-        this.lipSyncIds = ["ParamMouthOpenY"]
+        this.lipSyncIds = ["PARAM_MOUTH_OPEN_Y"]
     }
 
     protected init(options?: MotionManagerOptions) {
