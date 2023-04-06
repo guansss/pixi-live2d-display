@@ -20,6 +20,8 @@ export class Cubism2InternalModel extends InternalModel {
     coreModel: Live2DModelWebGL;
     motionManager: Cubism2MotionManager;
 
+
+		lipSync = true;
     eyeBlink?: Live2DEyeBlink;
 
     declare physics?: Live2DPhysics;
@@ -33,6 +35,7 @@ export class Cubism2InternalModel extends InternalModel {
     angleZParamIndex: number;
     bodyAngleXParamIndex: number;
     breathParamIndex: number;
+    mouthFormIndex: number;
 
     textureFlipY = true;
 
@@ -62,6 +65,8 @@ export class Cubism2InternalModel extends InternalModel {
         this.angleZParamIndex = coreModel.getParamIndex('PARAM_ANGLE_Z');
         this.bodyAngleXParamIndex = coreModel.getParamIndex('PARAM_BODY_ANGLE_X');
         this.breathParamIndex = coreModel.getParamIndex('PARAM_BREATH');
+        this.mouthFormIndex = coreModel.getParamIndex('PARAM_MOUTH_FORM');
+        
 
         this.init();
     }
@@ -217,6 +222,18 @@ export class Cubism2InternalModel extends InternalModel {
 
         this.updateFocus();
         this.updateNaturalMovements(dt, now);
+        
+        
+        // TODO: Add lip sync API
+        if (this.lipSync) {
+            //let value = parseFloat(Math.random().toFixed(1));
+            let value = this.motionManager.mouthSync()
+        
+            for (let i = 0; i < this.motionManager.lipSyncIds.length; ++i) {
+                model.addParameterValueById(this.motionManager.lipSyncIds[i], value, 0.8);
+            }
+        }
+        
 
         this.physics?.update(now);
         this.pose?.update(dt);
