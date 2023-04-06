@@ -6,6 +6,8 @@ import { Live2DEyeBlink } from './Live2DEyeBlink';
 import { Live2DPhysics } from './Live2DPhysics';
 import { Live2DPose } from './Live2DPose';
 
+import { clamp, rand } from '@/utils';
+
 // prettier-ignore
 const tempMatrixArray = new Float32Array([
     1, 0, 0, 0,
@@ -228,9 +230,11 @@ export class Cubism2InternalModel extends InternalModel {
         if (this.lipSync) {
             //let value = parseFloat(Math.random().toFixed(1));
             let value = this.motionManager.mouthSync()
+            
+            value = clamp(value, 0, 1)
         
             for (let i = 0; i < this.motionManager.lipSyncIds.length; ++i) {
-                model.addParameterValueById(this.motionManager.lipSyncIds[i], value, 0.8);
+            		this.coreModel.setParamFloat(this.coreModel.getParamInde(this.motionManager.lipSyncIds[i]), value * 0.8);
             }
         }
         
