@@ -4267,6 +4267,7 @@ class MotionManager extends EventEmitter {
       }
       const motion = yield this.loadMotion(group, index);
       if (audio) {
+        priority = 3;
         const readyToPlay = SoundManager.play(audio).catch((e) => logger.warn(this.tag, "Failed to play audio", audio.src, e));
         if (config.motionSync) {
           yield readyToPlay;
@@ -5498,10 +5499,17 @@ class Cubism4InternalModel extends InternalModel {
     }
     this.updateFocus();
     this.updateNaturalMovements(dt * 1e3, now * 1e3);
-    if (this.lipSync) {
+    if (this.lipSync && this.motionManager.currentAudio) {
       let value = this.motionManager.mouthSync();
+      let min_ = 0;
+      let max_ = 1;
+      let weight = 1.2;
+      if (value > 0) {
+        min_ = 0.4;
+      }
+      value = clamp(value * weight, min_, max_);
       for (let i = 0; i < this.motionManager.lipSyncIds.length; ++i) {
-        model.addParameterValueById(this.motionManager.lipSyncIds[i], value, 0.8);
+        model.addParameterValueById(this.motionManager.lipSyncIds[i], value, 1);
       }
     }
     (_c = this.physics) == null ? void 0 : _c.evaluate(model, dt);

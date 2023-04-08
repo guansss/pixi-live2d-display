@@ -1332,7 +1332,7 @@ export declare abstract class InternalModel extends EventEmitter {
 	 */
 	abstract draw(gl: WebGLRenderingContext): void;
 }
-export type Middleware<T> = (context: T, next: (err?: any) => Promise<void>) => Promise<void>;
+export declare type Middleware<T> = (context: T, next: (err?: any) => Promise<void>) => Promise<void>;
 export interface Live2DFactoryOptions extends Live2DModelOptions {
 	/**
 	 * String to use for crossOrigin properties on `<img>` elements when loading textures.
@@ -1527,10 +1527,10 @@ export interface Live2DModelOptions extends MotionManagerOptions {
 	 */
 	autoInteract?: boolean;
 }
-export type TickerClass = typeof Ticker;
+export declare type TickerClass = typeof Ticker;
 export interface Live2DModel<IM extends InternalModel = InternalModel> extends InteractionMixin {
 }
-export type Live2DConstructor = {
+export declare type Live2DConstructor = {
 	new (options?: Live2DModelOptions): Live2DModel;
 };
 /**
@@ -1766,7 +1766,7 @@ export declare namespace config {
  * Consistent with the `version` in package.json.
  */
 export declare const VERSION: string;
-export type Live2DLoaderTarget = Live2DModel | InternalModel | MotionManager | ExpressionManager;
+export declare type Live2DLoaderTarget = Live2DModel | InternalModel | MotionManager | ExpressionManager;
 /**
  * The context transferred through Live2DLoader middlewares.
  */
@@ -1832,7 +1832,7 @@ export declare class XHRLoader {
 	 */
 	static release(): void;
 }
-export type ExtendedFileList = File[] & {
+export declare type ExtendedFileList = File[] & {
 	settings?: ModelSettings;
 };
 /**
@@ -1879,7 +1879,7 @@ export declare class FileLoader {
 	 */
 	static readText(file: File): Promise<string>;
 }
-export type ZipReader = any;
+export declare type ZipReader = any;
 /**
  * Experimental loader to load resources from a zip file.
  *
@@ -2107,6 +2107,7 @@ export declare class Cubism2MotionManager extends MotionManager<Live2DMotion, Cu
 	readonly motionDataType = "arraybuffer";
 	readonly queueManager: MotionQueueManager;
 	readonly settings: Cubism2ModelSettings;
+	lipSyncIds: string[];
 	expressionManager?: Cubism2ExpressionManager;
 	constructor(settings: Cubism2ModelSettings, options?: MotionManagerOptions);
 	protected init(options?: MotionManagerOptions): void;
@@ -2170,6 +2171,7 @@ export declare class Cubism2InternalModel extends InternalModel {
 	settings: Cubism2ModelSettings;
 	coreModel: Live2DModelWebGL;
 	motionManager: Cubism2MotionManager;
+	lipSync: boolean;
 	eyeBlink?: Live2DEyeBlink;
 	physics?: Live2DPhysics;
 	pose?: Live2DPose;
@@ -2180,6 +2182,7 @@ export declare class Cubism2InternalModel extends InternalModel {
 	angleZParamIndex: number;
 	bodyAngleXParamIndex: number;
 	breathParamIndex: number;
+	mouthFormIndex: number;
 	textureFlipY: boolean;
 	/**
 	 * Number of the drawables in this model.
