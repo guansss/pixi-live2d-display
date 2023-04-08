@@ -282,6 +282,8 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         const motion = await this.loadMotion(group, index);
 
         if (audio) {
+            priority = 3; // FORCED: MAKE SURE SOUND IS PLAYED
+            
             const readyToPlay = SoundManager.play(audio)
                 .catch(e => logger.warn(this.tag, 'Failed to play audio', audio!.src, e));
 

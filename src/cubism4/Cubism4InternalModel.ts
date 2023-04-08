@@ -23,6 +23,9 @@ import { CubismRenderer_WebGL, CubismShader_WebGL } from '@cubism/rendering/cubi
 import { Matrix } from '@pixi/math';
 import { Mutable } from '../types/helpers';
 
+
+import { clamp } from '@/utils';
+
 const tempMatrix = new CubismMatrix44();
 
 export class Cubism4InternalModel extends InternalModel {
@@ -212,12 +215,21 @@ export class Cubism4InternalModel extends InternalModel {
         this.updateNaturalMovements(dt * 1000, now * 1000);
 
         // TODO: Add lip sync API
-        if (this.lipSync) {
+        if (this.lipSync && this.motionManager.currentAudio) {
             //let value = parseFloat(Math.random().toFixed(1));
             let value = this.motionManager.mouthSync()
+            let min_ = 0;
+            let max_ = 1;
+            let weight = 1.2;  // Fix small mouth when speaking
+            
+            if (value > 0) {
+                min_ = 0.4; // Fix small mouth when speaking
+            }
+    
+            value = clamp(value * weight, min_, max_); // must be between 0 (min) and 1 (max)
         
             for (let i = 0; i < this.motionManager.lipSyncIds.length; ++i) {
-                model.addParameterValueById(this.motionManager.lipSyncIds[i], value, 0.8);
+                model.addParameterValueById(this.motionManager.lipSyncIds[i], value, 1);
             }
         }
 

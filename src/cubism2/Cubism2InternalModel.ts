@@ -226,15 +226,23 @@ export class Cubism2InternalModel extends InternalModel {
         this.updateNaturalMovements(dt, now);
         
         
-        // TODO: Add lip sync API
-        if (this.lipSync) {
+        // CHECK lip sync API
+        // and IF audio is playing
+        if (this.lipSync && this.motionManager.currentAudio) {
             //let value = parseFloat(Math.random().toFixed(1));
             let value = this.motionManager.mouthSync()
+            let min_ = 0;
+            let max_ = 1;
+            let weight = 1.2;  // Fix small mouth when speaking
             
-            value = clamp(value, 0, 1)
+            if (value > 0) {
+                min_ = 0.4; // Fix small mouth when speaking
+            }
+    
+            value = clamp(value * weight, min_, max_); // must be between 0 (min) and 1 (max)
         
             for (let i = 0; i < this.motionManager.lipSyncIds.length; ++i) {
-            		this.coreModel.setParamFloat(this.coreModel.getParamIndex(this.motionManager.lipSyncIds[i]), value * 0.8);
+            		this.coreModel.setParamFloat(this.coreModel.getParamIndex(this.motionManager.lipSyncIds[i]), value);
             }
         }
         
