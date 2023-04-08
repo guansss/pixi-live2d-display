@@ -42,11 +42,7 @@ class CubismBreath {
     const t = this._currentTime * 2 * 3.14159;
     for (let i = 0; i < this._breathParameters.length; ++i) {
       const data = this._breathParameters[i];
-      model.addParameterValueById(
-        data.parameterId,
-        data.offset + data.peak * Math.sin(t / data.cycle),
-        data.weight
-      );
+      model.addParameterValueById(data.parameterId, data.offset + data.peak * Math.sin(t / data.cycle), data.weight);
     }
   }
 }
@@ -225,10 +221,7 @@ class CubismPose {
           continue;
         }
         model.setPartOpacityByIndex(partsIndex, j == beginIndex ? 1 : 0);
-        model.setParameterValueByIndex(
-          paramIndex,
-          j == beginIndex ? 1 : 0
-        );
+        model.setParameterValueByIndex(paramIndex, j == beginIndex ? 1 : 0);
         for (let k = 0; k < this._partGroups[j].link.length; ++k) {
           this._partGroups[j].link[k].initialize(model);
         }
@@ -376,9 +369,7 @@ class CubismVector2 {
     return Math.sqrt(this.x * this.x + this.y * this.y);
   }
   getDistanceWith(a) {
-    return Math.sqrt(
-      (this.x - a.x) * (this.x - a.x) + (this.y - a.y) * (this.y - a.y)
-    );
+    return Math.sqrt((this.x - a.x) * (this.x - a.x) + (this.y - a.y) * (this.y - a.y));
   }
   dot(a) {
     return this.x * a.x + this.y * a.y;
@@ -821,13 +812,7 @@ class CubismFramework {
       const minor = (version & 16711680) >> 16;
       const patch = version & 65535;
       const versionNumber = version;
-      CubismLogInfo(
-        `Live2D Cubism Core version: {0}.{1}.{2} ({3})`,
-        ("00" + major).slice(-2),
-        ("00" + minor).slice(-2),
-        ("0000" + patch).slice(-4),
-        versionNumber
-      );
+      CubismLogInfo(`Live2D Cubism Core version: {0}.{1}.{2} ({3})`, ("00" + major).slice(-2), ("00" + minor).slice(-2), ("0000" + patch).slice(-4), versionNumber);
     }
     CubismLogInfo("CubismFramework.startUp() is complete.");
     return s_isStarted;
@@ -843,9 +828,7 @@ class CubismFramework {
       return;
     }
     if (s_isInitialized) {
-      CubismLogWarning(
-        "CubismFramework.initialize() skipped, already initialized."
-      );
+      CubismLogWarning("CubismFramework.initialize() skipped, already initialized.");
       return;
     }
     s_isInitialized = true;
@@ -1075,10 +1058,7 @@ class CubismModel {
     this.setParameterValueByIndex(index, value, weight);
   }
   addParameterValueByIndex(parameterIndex, value, weight = 1) {
-    this.setParameterValueByIndex(
-      parameterIndex,
-      this.getParameterValueByIndex(parameterIndex) + value * weight
-    );
+    this.setParameterValueByIndex(parameterIndex, this.getParameterValueByIndex(parameterIndex) + value * weight);
   }
   addParameterValueById(parameterId, value, weight = 1) {
     const index = this.getParameterIndex(parameterId);
@@ -1089,10 +1069,7 @@ class CubismModel {
     this.multiplyParameterValueByIndex(index, value, weight);
   }
   multiplyParameterValueByIndex(parameterIndex, value, weight = 1) {
-    this.setParameterValueByIndex(
-      parameterIndex,
-      this.getParameterValueByIndex(parameterIndex) * (1 + (value - 1) * weight)
-    );
+    this.setParameterValueByIndex(parameterIndex, this.getParameterValueByIndex(parameterIndex) * (1 + (value - 1) * weight));
   }
   getDrawableIds() {
     return this._drawableIds.slice();
@@ -1120,9 +1097,7 @@ class CubismModel {
   }
   getDrawableDynamicFlagVertexPositionsDidChange(drawableIndex) {
     const dynamicFlags = this._model.drawables.dynamicFlags;
-    return Live2DCubismCore.Utils.hasVertexPositionsDidChangeBit(
-      dynamicFlags[drawableIndex]
-    );
+    return Live2DCubismCore.Utils.hasVertexPositionsDidChangeBit(dynamicFlags[drawableIndex]);
   }
   getDrawableVertexIndexCount(drawableIndex) {
     return this._model.drawables.indexCounts[drawableIndex];
@@ -1147,23 +1122,15 @@ class CubismModel {
   }
   getDrawableCulling(drawableIndex) {
     const constantFlags = this._model.drawables.constantFlags;
-    return !Live2DCubismCore.Utils.hasIsDoubleSidedBit(
-      constantFlags[drawableIndex]
-    );
+    return !Live2DCubismCore.Utils.hasIsDoubleSidedBit(constantFlags[drawableIndex]);
   }
   getDrawableBlendMode(drawableIndex) {
     const constantFlags = this._model.drawables.constantFlags;
-    return Live2DCubismCore.Utils.hasBlendAdditiveBit(
-      constantFlags[drawableIndex]
-    ) ? CubismBlendMode.CubismBlendMode_Additive : Live2DCubismCore.Utils.hasBlendMultiplicativeBit(
-      constantFlags[drawableIndex]
-    ) ? CubismBlendMode.CubismBlendMode_Multiplicative : CubismBlendMode.CubismBlendMode_Normal;
+    return Live2DCubismCore.Utils.hasBlendAdditiveBit(constantFlags[drawableIndex]) ? CubismBlendMode.CubismBlendMode_Additive : Live2DCubismCore.Utils.hasBlendMultiplicativeBit(constantFlags[drawableIndex]) ? CubismBlendMode.CubismBlendMode_Multiplicative : CubismBlendMode.CubismBlendMode_Normal;
   }
   getDrawableInvertedMaskBit(drawableIndex) {
     const constantFlags = this._model.drawables.constantFlags;
-    return Live2DCubismCore.Utils.hasIsInvertedMaskBit(
-      constantFlags[drawableIndex]
-    );
+    return Live2DCubismCore.Utils.hasIsInvertedMaskBit(constantFlags[drawableIndex]);
   }
   getDrawableMasks() {
     return this._model.drawables.masks;
@@ -1182,27 +1149,19 @@ class CubismModel {
   }
   getDrawableDynamicFlagIsVisible(drawableIndex) {
     const dynamicFlags = this._model.drawables.dynamicFlags;
-    return Live2DCubismCore.Utils.hasIsVisibleBit(
-      dynamicFlags[drawableIndex]
-    );
+    return Live2DCubismCore.Utils.hasIsVisibleBit(dynamicFlags[drawableIndex]);
   }
   getDrawableDynamicFlagVisibilityDidChange(drawableIndex) {
     const dynamicFlags = this._model.drawables.dynamicFlags;
-    return Live2DCubismCore.Utils.hasVisibilityDidChangeBit(
-      dynamicFlags[drawableIndex]
-    );
+    return Live2DCubismCore.Utils.hasVisibilityDidChangeBit(dynamicFlags[drawableIndex]);
   }
   getDrawableDynamicFlagOpacityDidChange(drawableIndex) {
     const dynamicFlags = this._model.drawables.dynamicFlags;
-    return Live2DCubismCore.Utils.hasOpacityDidChangeBit(
-      dynamicFlags[drawableIndex]
-    );
+    return Live2DCubismCore.Utils.hasOpacityDidChangeBit(dynamicFlags[drawableIndex]);
   }
   getDrawableDynamicFlagRenderOrderDidChange(drawableIndex) {
     const dynamicFlags = this._model.drawables.dynamicFlags;
-    return Live2DCubismCore.Utils.hasRenderOrderDidChangeBit(
-      dynamicFlags[drawableIndex]
-    );
+    return Live2DCubismCore.Utils.hasRenderOrderDidChangeBit(dynamicFlags[drawableIndex]);
   }
   loadParameters() {
     let parameterCount = this._model.parameters.count;
@@ -1369,26 +1328,15 @@ class ACubismMotion {
       motionQueueEntry.setFadeInStartTime(userTimeSeconds);
       const duration = this.getDuration();
       if (motionQueueEntry.getEndTime() < 0) {
-        motionQueueEntry.setEndTime(
-          duration <= 0 ? -1 : motionQueueEntry.getStartTime() + duration
-        );
+        motionQueueEntry.setEndTime(duration <= 0 ? -1 : motionQueueEntry.getStartTime() + duration);
       }
     }
     let fadeWeight = this._weight;
-    const fadeIn = this._fadeInSeconds == 0 ? 1 : CubismMath.getEasingSine(
-      (userTimeSeconds - motionQueueEntry.getFadeInStartTime()) / this._fadeInSeconds
-    );
-    const fadeOut = this._fadeOutSeconds == 0 || motionQueueEntry.getEndTime() < 0 ? 1 : CubismMath.getEasingSine(
-      (motionQueueEntry.getEndTime() - userTimeSeconds) / this._fadeOutSeconds
-    );
+    const fadeIn = this._fadeInSeconds == 0 ? 1 : CubismMath.getEasingSine((userTimeSeconds - motionQueueEntry.getFadeInStartTime()) / this._fadeInSeconds);
+    const fadeOut = this._fadeOutSeconds == 0 || motionQueueEntry.getEndTime() < 0 ? 1 : CubismMath.getEasingSine((motionQueueEntry.getEndTime() - userTimeSeconds) / this._fadeOutSeconds);
     fadeWeight = fadeWeight * fadeIn * fadeOut;
     motionQueueEntry.setState(userTimeSeconds, fadeWeight);
-    this.doUpdateParameters(
-      model,
-      userTimeSeconds,
-      fadeWeight,
-      motionQueueEntry
-    );
+    this.doUpdateParameters(model, userTimeSeconds, fadeWeight, motionQueueEntry);
     if (motionQueueEntry.getEndTime() > 0 && motionQueueEntry.getEndTime() < userTimeSeconds) {
       motionQueueEntry.setIsFinished(true);
     }
@@ -1474,27 +1422,15 @@ class CubismExpressionMotion extends ACubismMotion {
       const parameter = this._parameters[i];
       switch (parameter.blendType) {
         case ExpressionBlendType.ExpressionBlendType_Add: {
-          model.addParameterValueById(
-            parameter.parameterId,
-            parameter.value,
-            weight
-          );
+          model.addParameterValueById(parameter.parameterId, parameter.value, weight);
           break;
         }
         case ExpressionBlendType.ExpressionBlendType_Multiply: {
-          model.multiplyParameterValueById(
-            parameter.parameterId,
-            parameter.value,
-            weight
-          );
+          model.multiplyParameterValueById(parameter.parameterId, parameter.value, weight);
           break;
         }
         case ExpressionBlendType.ExpressionBlendType_Overwrite: {
-          model.setParameterValueById(
-            parameter.parameterId,
-            parameter.value,
-            weight
-          );
+          model.setParameterValueById(parameter.parameterId, parameter.value, weight);
           break;
         }
       }
@@ -1709,10 +1645,7 @@ function evaluateCurve(motionData, index, time) {
     return motionData.points[pointPosition].value;
   }
   const segment = motionData.segments[target];
-  return segment.evaluate(
-    motionData.points.slice(segment.basePointIndex),
-    time
-  );
+  return segment.evaluate(motionData.points.slice(segment.basePointIndex), time);
 }
 class CubismMotion extends ACubismMotion {
   constructor() {
@@ -1750,23 +1683,13 @@ class CubismMotion extends ACubismMotion {
     let lipSyncFlags = 0;
     let eyeBlinkFlags = 0;
     if (this._eyeBlinkParameterIds.length > MaxTargetSize) {
-      CubismLogDebug(
-        "too many eye blink targets : {0}",
-        this._eyeBlinkParameterIds.length
-      );
+      CubismLogDebug("too many eye blink targets : {0}", this._eyeBlinkParameterIds.length);
     }
     if (this._lipSyncParameterIds.length > MaxTargetSize) {
-      CubismLogDebug(
-        "too many lip sync targets : {0}",
-        this._lipSyncParameterIds.length
-      );
+      CubismLogDebug("too many lip sync targets : {0}", this._lipSyncParameterIds.length);
     }
-    const tmpFadeIn = this._fadeInSeconds <= 0 ? 1 : CubismMath.getEasingSine(
-      (userTimeSeconds - motionQueueEntry.getFadeInStartTime()) / this._fadeInSeconds
-    );
-    const tmpFadeOut = this._fadeOutSeconds <= 0 || motionQueueEntry.getEndTime() < 0 ? 1 : CubismMath.getEasingSine(
-      (motionQueueEntry.getEndTime() - userTimeSeconds) / this._fadeOutSeconds
-    );
+    const tmpFadeIn = this._fadeInSeconds <= 0 ? 1 : CubismMath.getEasingSine((userTimeSeconds - motionQueueEntry.getFadeInStartTime()) / this._fadeInSeconds);
+    const tmpFadeOut = this._fadeOutSeconds <= 0 || motionQueueEntry.getEndTime() < 0 ? 1 : CubismMath.getEasingSine((motionQueueEntry.getEndTime() - userTimeSeconds) / this._fadeOutSeconds);
     let value;
     let c, parameterIndex;
     let time = timeOffsetSeconds;
@@ -1789,9 +1712,7 @@ class CubismMotion extends ACubismMotion {
       if (parameterIndex == -1) {
         continue;
       }
-      const sourceValue = model.getParameterValueByIndex(
-        parameterIndex
-      );
+      const sourceValue = model.getParameterValueByIndex(parameterIndex);
       value = evaluateCurve(this._motionData, c, time);
       if (eyeBlinkValue != Number.MAX_VALUE) {
         for (let i = 0; i < this._eyeBlinkParameterIds.length && i < MaxTargetSize; ++i) {
@@ -1820,16 +1741,12 @@ class CubismMotion extends ACubismMotion {
         if (curves[c].fadeInTime < 0) {
           fin = tmpFadeIn;
         } else {
-          fin = curves[c].fadeInTime == 0 ? 1 : CubismMath.getEasingSine(
-            (userTimeSeconds - motionQueueEntry.getFadeInStartTime()) / curves[c].fadeInTime
-          );
+          fin = curves[c].fadeInTime == 0 ? 1 : CubismMath.getEasingSine((userTimeSeconds - motionQueueEntry.getFadeInStartTime()) / curves[c].fadeInTime);
         }
         if (curves[c].fadeOutTime < 0) {
           fout = tmpFadeOut;
         } else {
-          fout = curves[c].fadeOutTime == 0 || motionQueueEntry.getEndTime() < 0 ? 1 : CubismMath.getEasingSine(
-            (motionQueueEntry.getEndTime() - userTimeSeconds) / curves[c].fadeOutTime
-          );
+          fout = curves[c].fadeOutTime == 0 || motionQueueEntry.getEndTime() < 0 ? 1 : CubismMath.getEasingSine((motionQueueEntry.getEndTime() - userTimeSeconds) / curves[c].fadeOutTime);
         }
         const paramWeight = this._weight * fin * fout;
         v = sourceValue + (value - sourceValue) * paramWeight;
@@ -1839,9 +1756,7 @@ class CubismMotion extends ACubismMotion {
     {
       if (eyeBlinkValue != Number.MAX_VALUE) {
         for (let i = 0; i < this._eyeBlinkParameterIds.length && i < MaxTargetSize; ++i) {
-          const sourceValue = model.getParameterValueById(
-            this._eyeBlinkParameterIds[i]
-          );
+          const sourceValue = model.getParameterValueById(this._eyeBlinkParameterIds[i]);
           if (eyeBlinkFlags >> i & 1) {
             continue;
           }
@@ -1851,9 +1766,7 @@ class CubismMotion extends ACubismMotion {
       }
       if (lipSyncValue != Number.MAX_VALUE) {
         for (let i = 0; i < this._lipSyncParameterIds.length && i < MaxTargetSize; ++i) {
-          const sourceValue = model.getParameterValueById(
-            this._lipSyncParameterIds[i]
-          );
+          const sourceValue = model.getParameterValueById(this._lipSyncParameterIds[i]);
           if (lipSyncFlags >> i & 1) {
             continue;
           }
@@ -1958,9 +1871,7 @@ class CubismMotion extends ACubismMotion {
     this._motionData.curveCount = json.getMotionCurveCount();
     this._motionData.fps = json.getMotionFps();
     this._motionData.eventCount = json.getEventCount();
-    const areBeziersRestructed = json.getEvaluationOptionFlag(
-      EvaluationOptionFlag.EvaluationOptionFlag_AreBeziersRistricted
-    );
+    const areBeziersRestructed = json.getEvaluationOptionFlag(EvaluationOptionFlag.EvaluationOptionFlag_AreBeziersRistricted);
     const fadeInSeconds = json.getMotionFadeInTime();
     const fadeOutSeconds = json.getMotionFadeOutTime();
     if (fadeInSeconds !== void 0) {
@@ -1992,9 +1903,7 @@ class CubismMotion extends ACubismMotion {
           curve.type = CubismMotionCurveTarget.CubismMotionCurveTarget_PartOpacity;
           break;
         default:
-          CubismLogWarning(
-            'Warning : Unable to get segment type from Curve! The number of "CurveCount" may be incorrect!'
-          );
+          CubismLogWarning('Warning : Unable to get segment type from Curve! The number of "CurveCount" may be incorrect!');
       }
       curve.id = json.getMotionCurveId(curveCount);
       curve.baseSegmentIndex = totalSegmentCount;
@@ -2005,27 +1914,18 @@ class CubismMotion extends ACubismMotion {
       for (let segmentPosition = 0; segmentPosition < json.getMotionCurveSegmentCount(curveCount); ) {
         if (segmentPosition == 0) {
           this._motionData.segments[totalSegmentCount].basePointIndex = totalPointCount;
-          this._motionData.points[totalPointCount] = new CubismMotionPoint(
-            json.getMotionCurveSegment(curveCount, segmentPosition),
-            json.getMotionCurveSegment(curveCount, segmentPosition + 1)
-          );
+          this._motionData.points[totalPointCount] = new CubismMotionPoint(json.getMotionCurveSegment(curveCount, segmentPosition), json.getMotionCurveSegment(curveCount, segmentPosition + 1));
           totalPointCount += 1;
           segmentPosition += 2;
         } else {
           this._motionData.segments[totalSegmentCount].basePointIndex = totalPointCount - 1;
         }
-        const segment = json.getMotionCurveSegment(
-          curveCount,
-          segmentPosition
-        );
+        const segment = json.getMotionCurveSegment(curveCount, segmentPosition);
         switch (segment) {
           case CubismMotionSegmentType.CubismMotionSegmentType_Linear: {
             this._motionData.segments[totalSegmentCount].segmentType = CubismMotionSegmentType.CubismMotionSegmentType_Linear;
             this._motionData.segments[totalSegmentCount].evaluate = linearEvaluate;
-            this._motionData.points[totalPointCount] = new CubismMotionPoint(
-              json.getMotionCurveSegment(curveCount, segmentPosition + 1),
-              json.getMotionCurveSegment(curveCount, segmentPosition + 2)
-            );
+            this._motionData.points[totalPointCount] = new CubismMotionPoint(json.getMotionCurveSegment(curveCount, segmentPosition + 1), json.getMotionCurveSegment(curveCount, segmentPosition + 2));
             totalPointCount += 1;
             segmentPosition += 3;
             break;
@@ -2037,18 +1937,9 @@ class CubismMotion extends ACubismMotion {
             } else {
               this._motionData.segments[totalSegmentCount].evaluate = bezierEvaluateCardanoInterpretation;
             }
-            this._motionData.points[totalPointCount] = new CubismMotionPoint(
-              json.getMotionCurveSegment(curveCount, segmentPosition + 1),
-              json.getMotionCurveSegment(curveCount, segmentPosition + 2)
-            );
-            this._motionData.points[totalPointCount + 1] = new CubismMotionPoint(
-              json.getMotionCurveSegment(curveCount, segmentPosition + 3),
-              json.getMotionCurveSegment(curveCount, segmentPosition + 4)
-            );
-            this._motionData.points[totalPointCount + 2] = new CubismMotionPoint(
-              json.getMotionCurveSegment(curveCount, segmentPosition + 5),
-              json.getMotionCurveSegment(curveCount, segmentPosition + 6)
-            );
+            this._motionData.points[totalPointCount] = new CubismMotionPoint(json.getMotionCurveSegment(curveCount, segmentPosition + 1), json.getMotionCurveSegment(curveCount, segmentPosition + 2));
+            this._motionData.points[totalPointCount + 1] = new CubismMotionPoint(json.getMotionCurveSegment(curveCount, segmentPosition + 3), json.getMotionCurveSegment(curveCount, segmentPosition + 4));
+            this._motionData.points[totalPointCount + 2] = new CubismMotionPoint(json.getMotionCurveSegment(curveCount, segmentPosition + 5), json.getMotionCurveSegment(curveCount, segmentPosition + 6));
             totalPointCount += 3;
             segmentPosition += 7;
             break;
@@ -2056,10 +1947,7 @@ class CubismMotion extends ACubismMotion {
           case CubismMotionSegmentType.CubismMotionSegmentType_Stepped: {
             this._motionData.segments[totalSegmentCount].segmentType = CubismMotionSegmentType.CubismMotionSegmentType_Stepped;
             this._motionData.segments[totalSegmentCount].evaluate = steppedEvaluate;
-            this._motionData.points[totalPointCount] = new CubismMotionPoint(
-              json.getMotionCurveSegment(curveCount, segmentPosition + 1),
-              json.getMotionCurveSegment(curveCount, segmentPosition + 2)
-            );
+            this._motionData.points[totalPointCount] = new CubismMotionPoint(json.getMotionCurveSegment(curveCount, segmentPosition + 1), json.getMotionCurveSegment(curveCount, segmentPosition + 2));
             totalPointCount += 1;
             segmentPosition += 3;
             break;
@@ -2067,10 +1955,7 @@ class CubismMotion extends ACubismMotion {
           case CubismMotionSegmentType.CubismMotionSegmentType_InverseStepped: {
             this._motionData.segments[totalSegmentCount].segmentType = CubismMotionSegmentType.CubismMotionSegmentType_InverseStepped;
             this._motionData.segments[totalSegmentCount].evaluate = inverseSteppedEvaluate;
-            this._motionData.points[totalPointCount] = new CubismMotionPoint(
-              json.getMotionCurveSegment(curveCount, segmentPosition + 1),
-              json.getMotionCurveSegment(curveCount, segmentPosition + 2)
-            );
+            this._motionData.points[totalPointCount] = new CubismMotionPoint(json.getMotionCurveSegment(curveCount, segmentPosition + 1), json.getMotionCurveSegment(curveCount, segmentPosition + 2));
             totalPointCount += 1;
             segmentPosition += 3;
             break;
@@ -2082,12 +1967,8 @@ class CubismMotion extends ACubismMotion {
       this._motionData.curves.push(curve);
     }
     for (let userdatacount = 0; userdatacount < json.getEventCount(); ++userdatacount) {
-      this._motionData.events[userdatacount].fireTime = json.getEventTime(
-        userdatacount
-      );
-      this._motionData.events[userdatacount].value = json.getEventValue(
-        userdatacount
-      );
+      this._motionData.events[userdatacount].fireTime = json.getEventTime(userdatacount);
+      this._motionData.events[userdatacount].value = json.getEventValue(userdatacount);
     }
     json.release();
   }
@@ -2290,10 +2171,7 @@ class CubismMotionQueueManager {
       }
       motion.updateParameters(model, motionQueueEntry, userTimeSeconds);
       updated = true;
-      const firedList = motion.getFiredEvent(
-        motionQueueEntry.getLastCheckEventSeconds() - motionQueueEntry.getStartTime(),
-        userTimeSeconds - motionQueueEntry.getStartTime()
-      );
+      const firedList = motion.getFiredEvent(motionQueueEntry.getLastCheckEventSeconds() - motionQueueEntry.getStartTime(), userTimeSeconds - motionQueueEntry.getStartTime());
       for (let i2 = 0; i2 < firedList.length; ++i2) {
         this._eventCallBack(this, firedList[i2], this._eventCustomData);
       }
@@ -2303,10 +2181,7 @@ class CubismMotionQueueManager {
         this._motions.splice(i, 1);
       } else {
         if (motionQueueEntry.isTriggeredFadeOut()) {
-          motionQueueEntry.startFadeOut(
-            motionQueueEntry.getFadeOutSeconds(),
-            userTimeSeconds
-          );
+          motionQueueEntry.startFadeOut(motionQueueEntry.getFadeOutSeconds(), userTimeSeconds);
         }
         i++;
       }
@@ -2339,10 +2214,7 @@ class CubismMotionManager extends CubismMotionQueueManager {
   }
   updateMotion(model, deltaTimeSeconds) {
     this._userTimeSeconds += deltaTimeSeconds;
-    const updated = super.doUpdateMotion(
-      model,
-      this._userTimeSeconds
-    );
+    const updated = super.doUpdateMotion(model, this._userTimeSeconds);
     if (this.isFinished()) {
       this._currentPriority = 0;
     }
@@ -2558,69 +2430,29 @@ class CubismPhysics {
       for (let i = 0; i < currentSetting.inputCount; ++i) {
         weight = currentInput[i].weight / MaximumWeight;
         if (currentInput[i].sourceParameterIndex == -1) {
-          currentInput[i].sourceParameterIndex = model.getParameterIndex(
-            currentInput[i].source.id
-          );
+          currentInput[i].sourceParameterIndex = model.getParameterIndex(currentInput[i].source.id);
         }
-        currentInput[i].getNormalizedParameterValue(
-          totalTranslation,
-          totalAngle,
-          parameterValue[currentInput[i].sourceParameterIndex],
-          parameterMinimumValue[currentInput[i].sourceParameterIndex],
-          parameterMaximumValue[currentInput[i].sourceParameterIndex],
-          parameterDefaultValue[currentInput[i].sourceParameterIndex],
-          currentSetting.normalizationPosition,
-          currentSetting.normalizationAngle,
-          currentInput[i].reflect,
-          weight
-        );
+        currentInput[i].getNormalizedParameterValue(totalTranslation, totalAngle, parameterValue[currentInput[i].sourceParameterIndex], parameterMinimumValue[currentInput[i].sourceParameterIndex], parameterMaximumValue[currentInput[i].sourceParameterIndex], parameterDefaultValue[currentInput[i].sourceParameterIndex], currentSetting.normalizationPosition, currentSetting.normalizationAngle, currentInput[i].reflect, weight);
       }
       radAngle = CubismMath.degreesToRadian(-totalAngle.angle);
       totalTranslation.x = totalTranslation.x * CubismMath.cos(radAngle) - totalTranslation.y * CubismMath.sin(radAngle);
       totalTranslation.y = totalTranslation.x * CubismMath.sin(radAngle) + totalTranslation.y * CubismMath.cos(radAngle);
-      updateParticles(
-        currentParticles,
-        currentSetting.particleCount,
-        totalTranslation,
-        totalAngle.angle,
-        this._options.wind,
-        MovementThreshold * currentSetting.normalizationPosition.maximum,
-        deltaTimeSeconds,
-        AirResistance
-      );
+      updateParticles(currentParticles, currentSetting.particleCount, totalTranslation, totalAngle.angle, this._options.wind, MovementThreshold * currentSetting.normalizationPosition.maximum, deltaTimeSeconds, AirResistance);
       for (let i = 0; i < currentSetting.outputCount; ++i) {
         const particleIndex = currentOutput[i].vertexIndex;
         if (particleIndex < 1 || particleIndex >= currentSetting.particleCount) {
           break;
         }
         if (currentOutput[i].destinationParameterIndex == -1) {
-          currentOutput[i].destinationParameterIndex = model.getParameterIndex(
-            currentOutput[i].destination.id
-          );
+          currentOutput[i].destinationParameterIndex = model.getParameterIndex(currentOutput[i].destination.id);
         }
         const translation = new CubismVector2();
         translation.x = currentParticles[particleIndex].position.x - currentParticles[particleIndex - 1].position.x;
         translation.y = currentParticles[particleIndex].position.y - currentParticles[particleIndex - 1].position.y;
-        outputValue = currentOutput[i].getValue(
-          translation,
-          currentParticles,
-          particleIndex,
-          currentOutput[i].reflect,
-          this._options.gravity
-        );
+        outputValue = currentOutput[i].getValue(translation, currentParticles, particleIndex, currentOutput[i].reflect, this._options.gravity);
         const destinationParameterIndex = currentOutput[i].destinationParameterIndex;
-        const outParameterValue = !Float32Array.prototype.slice && "subarray" in Float32Array.prototype ? JSON.parse(
-          JSON.stringify(
-            parameterValue.subarray(destinationParameterIndex)
-          )
-        ) : parameterValue.slice(destinationParameterIndex);
-        updateOutputParameterValue(
-          outParameterValue,
-          parameterMinimumValue[destinationParameterIndex],
-          parameterMaximumValue[destinationParameterIndex],
-          outputValue,
-          currentOutput[i]
-        );
+        const outParameterValue = !Float32Array.prototype.slice && "subarray" in Float32Array.prototype ? JSON.parse(JSON.stringify(parameterValue.subarray(destinationParameterIndex))) : parameterValue.slice(destinationParameterIndex);
+        updateOutputParameterValue(outParameterValue, parameterMinimumValue[destinationParameterIndex], parameterMaximumValue[destinationParameterIndex], outputValue, currentOutput[i]);
         for (let offset = destinationParameterIndex, outParamIndex = 0; offset < parameterValue.length; offset++, outParamIndex++) {
           parameterValue[offset] = outParameterValue[outParamIndex];
         }
@@ -2740,10 +2572,7 @@ class CubismPhysics {
       currentSetting = this._physicsRig.settings[settingIndex];
       strand = this._physicsRig.particles.slice(currentSetting.baseParticleIndex);
       strand[0].initialPosition = new CubismVector2(0, 0);
-      strand[0].lastPosition = new CubismVector2(
-        strand[0].initialPosition.x,
-        strand[0].initialPosition.y
-      );
+      strand[0].lastPosition = new CubismVector2(strand[0].initialPosition.x, strand[0].initialPosition.y);
       strand[0].lastGravity = new CubismVector2(0, -1);
       strand[0].lastGravity.y *= -1;
       strand[0].velocity = new CubismVector2(0, 0);
@@ -2751,18 +2580,9 @@ class CubismPhysics {
       for (let i = 1; i < currentSetting.particleCount; ++i) {
         radius = new CubismVector2(0, 0);
         radius.y = strand[i].radius;
-        strand[i].initialPosition = new CubismVector2(
-          strand[i - 1].initialPosition.x + radius.x,
-          strand[i - 1].initialPosition.y + radius.y
-        );
-        strand[i].position = new CubismVector2(
-          strand[i].initialPosition.x,
-          strand[i].initialPosition.y
-        );
-        strand[i].lastPosition = new CubismVector2(
-          strand[i].initialPosition.x,
-          strand[i].initialPosition.y
-        );
+        strand[i].initialPosition = new CubismVector2(strand[i - 1].initialPosition.x + radius.x, strand[i - 1].initialPosition.y + radius.y);
+        strand[i].position = new CubismVector2(strand[i].initialPosition.x, strand[i].initialPosition.y);
+        strand[i].lastPosition = new CubismVector2(strand[i].initialPosition.x, strand[i].initialPosition.y);
         strand[i].lastGravity = new CubismVector2(0, -1);
         strand[i].lastGravity.y *= -1;
         strand[i].velocity = new CubismVector2(0, 0);
@@ -2778,40 +2598,13 @@ class Options {
   }
 }
 function getInputTranslationXFromNormalizedParameterValue(targetTranslation, targetAngle, value, parameterMinimumValue, parameterMaximumValue, parameterDefaultValue, normalizationPosition, normalizationAngle, isInverted, weight) {
-  targetTranslation.x += normalizeParameterValue(
-    value,
-    parameterMinimumValue,
-    parameterMaximumValue,
-    parameterDefaultValue,
-    normalizationPosition.minimum,
-    normalizationPosition.maximum,
-    normalizationPosition.defalut,
-    isInverted
-  ) * weight;
+  targetTranslation.x += normalizeParameterValue(value, parameterMinimumValue, parameterMaximumValue, parameterDefaultValue, normalizationPosition.minimum, normalizationPosition.maximum, normalizationPosition.defalut, isInverted) * weight;
 }
 function getInputTranslationYFromNormalizedParamterValue(targetTranslation, targetAngle, value, parameterMinimumValue, parameterMaximumValue, parameterDefaultValue, normalizationPosition, normalizationAngle, isInverted, weight) {
-  targetTranslation.y += normalizeParameterValue(
-    value,
-    parameterMinimumValue,
-    parameterMaximumValue,
-    parameterDefaultValue,
-    normalizationPosition.minimum,
-    normalizationPosition.maximum,
-    normalizationPosition.defalut,
-    isInverted
-  ) * weight;
+  targetTranslation.y += normalizeParameterValue(value, parameterMinimumValue, parameterMaximumValue, parameterDefaultValue, normalizationPosition.minimum, normalizationPosition.maximum, normalizationPosition.defalut, isInverted) * weight;
 }
 function getInputAngleFromNormalizedParameterValue(targetTranslation, targetAngle, value, parameterMinimumValue, parameterMaximumValue, parameterDefaultValue, normalizaitionPosition, normalizationAngle, isInverted, weight) {
-  targetAngle.angle += normalizeParameterValue(
-    value,
-    parameterMinimumValue,
-    parameterMaximumValue,
-    parameterDefaultValue,
-    normalizationAngle.minimum,
-    normalizationAngle.maximum,
-    normalizationAngle.defalut,
-    isInverted
-  ) * weight;
+  targetAngle.angle += normalizeParameterValue(value, parameterMinimumValue, parameterMaximumValue, parameterDefaultValue, normalizationAngle.minimum, normalizationAngle.maximum, normalizationAngle.defalut, isInverted) * weight;
 }
 function getOutputTranslationX(translation, particles, particleIndex, isInverted, parentGravity) {
   let outputValue = translation.x;
@@ -2830,9 +2623,7 @@ function getOutputTranslationY(translation, particles, particleIndex, isInverted
 function getOutputAngle(translation, particles, particleIndex, isInverted, parentGravity) {
   let outputValue;
   if (particleIndex >= 2) {
-    parentGravity = particles[particleIndex - 1].position.substract(
-      particles[particleIndex - 2].position
-    );
+    parentGravity = particles[particleIndex - 1].position.substract(particles[particleIndex - 2].position);
   } else {
     parentGravity = parentGravity.multiplyByScaler(-1);
   }
@@ -2867,19 +2658,13 @@ function updateParticles(strand, strandCount, totalTranslation, totalAngle, wind
   let velocity = new CubismVector2(0, 0);
   let force = new CubismVector2(0, 0);
   let newDirection = new CubismVector2(0, 0);
-  strand[0].position = new CubismVector2(
-    totalTranslation.x,
-    totalTranslation.y
-  );
+  strand[0].position = new CubismVector2(totalTranslation.x, totalTranslation.y);
   totalRadian = CubismMath.degreesToRadian(totalAngle);
   currentGravity = CubismMath.radianToDirection(totalRadian);
   currentGravity.normalize();
   for (let i = 1; i < strandCount; ++i) {
     strand[i].force = currentGravity.multiplyByScaler(strand[i].acceleration).add(windDirection);
-    strand[i].lastPosition = new CubismVector2(
-      strand[i].position.x,
-      strand[i].position.y
-    );
+    strand[i].lastPosition = new CubismVector2(strand[i].position.x, strand[i].position.y);
     delay = strand[i].delay * deltaTimeSeconds * 30;
     direction = strand[i].position.substract(strand[i - 1].position);
     radian = CubismMath.directionToRadian(strand[i].lastGravity, currentGravity) / airResistance;
@@ -2891,26 +2676,17 @@ function updateParticles(strand, strandCount, totalTranslation, totalAngle, wind
     strand[i].position = strand[i].position.add(velocity).add(force);
     newDirection = strand[i].position.substract(strand[i - 1].position);
     newDirection.normalize();
-    strand[i].position = strand[i - 1].position.add(
-      newDirection.multiplyByScaler(strand[i].radius)
-    );
+    strand[i].position = strand[i - 1].position.add(newDirection.multiplyByScaler(strand[i].radius));
     if (CubismMath.abs(strand[i].position.x) < thresholdValue) {
       strand[i].position.x = 0;
     }
     if (delay != 0) {
-      strand[i].velocity = strand[i].position.substract(
-        strand[i].lastPosition
-      );
+      strand[i].velocity = strand[i].position.substract(strand[i].lastPosition);
       strand[i].velocity = strand[i].velocity.divisionByScalar(delay);
-      strand[i].velocity = strand[i].velocity.multiplyByScaler(
-        strand[i].mobility
-      );
+      strand[i].velocity = strand[i].velocity.multiplyByScaler(strand[i].mobility);
     }
     strand[i].force = new CubismVector2(0, 0);
-    strand[i].lastGravity = new CubismVector2(
-      currentGravity.x,
-      currentGravity.y
-    );
+    strand[i].lastGravity = new CubismVector2(currentGravity.x, currentGravity.y);
   }
 }
 function updateOutputParameterValue(parameterValue, parameterValueMinimum, parameterValueMaximum, translation, output) {
@@ -2948,14 +2724,8 @@ function normalizeParameterValue(value, parameterMinimum, parameterMaximum, para
   if (minValue > value) {
     value = minValue;
   }
-  const minNormValue = CubismMath.min(
-    normalizedMinimum,
-    normalizedMaximum
-  );
-  const maxNormValue = CubismMath.max(
-    normalizedMinimum,
-    normalizedMaximum
-  );
+  const minNormValue = CubismMath.min(normalizedMinimum, normalizedMaximum);
+  const maxNormValue = CubismMath.max(normalizedMinimum, normalizedMaximum);
   const middleNormValue = normalizedDefault;
   const middleValue = getDefaultValue(minValue, maxValue);
   const paramValue = value - middleValue;
@@ -3036,52 +2806,17 @@ class CubismClippingManager_WebGL {
       const size = this._clippingMaskBufferSize;
       this._colorBuffer = this.gl.createTexture();
       this.gl.bindTexture(this.gl.TEXTURE_2D, this._colorBuffer);
-      this.gl.texImage2D(
-        this.gl.TEXTURE_2D,
-        0,
-        this.gl.RGBA,
-        size,
-        size,
-        0,
-        this.gl.RGBA,
-        this.gl.UNSIGNED_BYTE,
-        null
-      );
-      this.gl.texParameteri(
-        this.gl.TEXTURE_2D,
-        this.gl.TEXTURE_WRAP_S,
-        this.gl.CLAMP_TO_EDGE
-      );
-      this.gl.texParameteri(
-        this.gl.TEXTURE_2D,
-        this.gl.TEXTURE_WRAP_T,
-        this.gl.CLAMP_TO_EDGE
-      );
-      this.gl.texParameteri(
-        this.gl.TEXTURE_2D,
-        this.gl.TEXTURE_MIN_FILTER,
-        this.gl.LINEAR
-      );
-      this.gl.texParameteri(
-        this.gl.TEXTURE_2D,
-        this.gl.TEXTURE_MAG_FILTER,
-        this.gl.LINEAR
-      );
+      this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, size, size, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, null);
+      this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
+      this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
+      this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
+      this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
       this.gl.bindTexture(this.gl.TEXTURE_2D, null);
       ret = this.gl.createFramebuffer();
       this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, ret);
-      this.gl.framebufferTexture2D(
-        this.gl.FRAMEBUFFER,
-        this.gl.COLOR_ATTACHMENT0,
-        this.gl.TEXTURE_2D,
-        this._colorBuffer,
-        0
-      );
+      this.gl.framebufferTexture2D(this.gl.FRAMEBUFFER, this.gl.COLOR_ATTACHMENT0, this.gl.TEXTURE_2D, this._colorBuffer, 0);
       this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, s_fbo);
-      this._maskTexture = new CubismRenderTextureResource(
-        this._currentFrameNo,
-        ret
-      );
+      this._maskTexture = new CubismRenderTextureResource(this._currentFrameNo, ret);
     }
     return ret;
   }
@@ -3096,12 +2831,8 @@ class CubismClippingManager_WebGL {
     const clippedDrawCount = clippingContext._clippedDrawableIndexList.length;
     for (let clippedDrawableIndex = 0; clippedDrawableIndex < clippedDrawCount; clippedDrawableIndex++) {
       const drawableIndex = clippingContext._clippedDrawableIndexList[clippedDrawableIndex];
-      const drawableVertexCount = model.getDrawableVertexCount(
-        drawableIndex
-      );
-      const drawableVertexes = model.getDrawableVertices(
-        drawableIndex
-      );
+      const drawableVertexCount = model.getDrawableVertexCount(drawableIndex);
+      const drawableVertexes = model.getDrawableVertices(drawableIndex);
       let minX = Number.MAX_VALUE;
       let minY = Number.MAX_VALUE;
       let maxX = Number.MIN_VALUE;
@@ -3216,16 +2947,9 @@ class CubismClippingManager_WebGL {
         this._clippingContextListForDraw.push(null);
         continue;
       }
-      let clippingContext = this.findSameClip(
-        drawableMasks[i],
-        drawableMaskCounts[i]
-      );
+      let clippingContext = this.findSameClip(drawableMasks[i], drawableMaskCounts[i]);
       if (clippingContext == null) {
-        clippingContext = new CubismClippingContext(
-          this,
-          drawableMasks[i],
-          drawableMaskCounts[i]
-        );
+        clippingContext = new CubismClippingContext(this, drawableMasks[i], drawableMaskCounts[i]);
         this._clippingContextListForMask.push(clippingContext);
       }
       clippingContext.addClippedDrawable(i);
@@ -3243,12 +2967,7 @@ class CubismClippingManager_WebGL {
       }
     }
     if (usingClipCount > 0) {
-      this.gl.viewport(
-        0,
-        0,
-        this._clippingMaskBufferSize,
-        this._clippingMaskBufferSize
-      );
+      this.gl.viewport(0, 0, this._clippingMaskBufferSize, this._clippingMaskBufferSize);
       this._maskRenderTexture = this.getMaskRenderTexture();
       renderer.getMvpMatrix();
       renderer.preDraw();
@@ -3262,10 +2981,7 @@ class CubismClippingManager_WebGL {
         const layoutBoundsOnTex01 = clipContext._layoutBounds;
         const MARGIN = 0.05;
         this._tmpBoundsOnModel.setRect(allClipedDrawRect);
-        this._tmpBoundsOnModel.expand(
-          allClipedDrawRect.width * MARGIN,
-          allClipedDrawRect.height * MARGIN
-        );
+        this._tmpBoundsOnModel.expand(allClipedDrawRect.width * MARGIN, allClipedDrawRect.height * MARGIN);
         const scaleX = layoutBoundsOnTex01.width / this._tmpBoundsOnModel.width;
         const scaleY = layoutBoundsOnTex01.height / this._tmpBoundsOnModel.height;
         {
@@ -3275,72 +2991,37 @@ class CubismClippingManager_WebGL {
             this._tmpMatrix.scaleRelative(2, 2);
           }
           {
-            this._tmpMatrix.translateRelative(
-              layoutBoundsOnTex01.x,
-              layoutBoundsOnTex01.y
-            );
+            this._tmpMatrix.translateRelative(layoutBoundsOnTex01.x, layoutBoundsOnTex01.y);
             this._tmpMatrix.scaleRelative(scaleX, scaleY);
-            this._tmpMatrix.translateRelative(
-              -this._tmpBoundsOnModel.x,
-              -this._tmpBoundsOnModel.y
-            );
+            this._tmpMatrix.translateRelative(-this._tmpBoundsOnModel.x, -this._tmpBoundsOnModel.y);
           }
           this._tmpMatrixForMask.setMatrix(this._tmpMatrix.getArray());
         }
         {
           this._tmpMatrix.loadIdentity();
           {
-            this._tmpMatrix.translateRelative(
-              layoutBoundsOnTex01.x,
-              layoutBoundsOnTex01.y
-            );
+            this._tmpMatrix.translateRelative(layoutBoundsOnTex01.x, layoutBoundsOnTex01.y);
             this._tmpMatrix.scaleRelative(scaleX, scaleY);
-            this._tmpMatrix.translateRelative(
-              -this._tmpBoundsOnModel.x,
-              -this._tmpBoundsOnModel.y
-            );
+            this._tmpMatrix.translateRelative(-this._tmpBoundsOnModel.x, -this._tmpBoundsOnModel.y);
           }
           this._tmpMatrixForDraw.setMatrix(this._tmpMatrix.getArray());
         }
-        clipContext._matrixForMask.setMatrix(
-          this._tmpMatrixForMask.getArray()
-        );
-        clipContext._matrixForDraw.setMatrix(
-          this._tmpMatrixForDraw.getArray()
-        );
+        clipContext._matrixForMask.setMatrix(this._tmpMatrixForMask.getArray());
+        clipContext._matrixForDraw.setMatrix(this._tmpMatrixForDraw.getArray());
         const clipDrawCount = clipContext._clippingIdCount;
         for (let i = 0; i < clipDrawCount; i++) {
           const clipDrawIndex = clipContext._clippingIdList[i];
-          if (!model.getDrawableDynamicFlagVertexPositionsDidChange(
-            clipDrawIndex
-          )) {
+          if (!model.getDrawableDynamicFlagVertexPositionsDidChange(clipDrawIndex)) {
             continue;
           }
-          renderer.setIsCulling(
-            model.getDrawableCulling(clipDrawIndex) != false
-          );
+          renderer.setIsCulling(model.getDrawableCulling(clipDrawIndex) != false);
           renderer.setClippingContextBufferForMask(clipContext);
-          renderer.drawMesh(
-            model.getDrawableTextureIndices(clipDrawIndex),
-            model.getDrawableVertexIndexCount(clipDrawIndex),
-            model.getDrawableVertexCount(clipDrawIndex),
-            model.getDrawableVertexIndices(clipDrawIndex),
-            model.getDrawableVertices(clipDrawIndex),
-            model.getDrawableVertexUvs(clipDrawIndex),
-            model.getDrawableOpacity(clipDrawIndex),
-            CubismBlendMode.CubismBlendMode_Normal,
-            false
-          );
+          renderer.drawMesh(model.getDrawableTextureIndices(clipDrawIndex), model.getDrawableVertexIndexCount(clipDrawIndex), model.getDrawableVertexCount(clipDrawIndex), model.getDrawableVertexIndices(clipDrawIndex), model.getDrawableVertices(clipDrawIndex), model.getDrawableVertexUvs(clipDrawIndex), model.getDrawableOpacity(clipDrawIndex), CubismBlendMode.CubismBlendMode_Normal, false);
         }
       }
       this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, s_fbo);
       renderer.setClippingContextBufferForMask(null);
-      this.gl.viewport(
-        s_viewport[0],
-        s_viewport[1],
-        s_viewport[2],
-        s_viewport[3]
-      );
+      this.gl.viewport(s_viewport[0], s_viewport[1], s_viewport[2], s_viewport[3]);
     }
   }
   findSameClip(drawableMasks, drawableMaskCounts) {
@@ -3527,56 +3208,22 @@ class CubismShader_WebGL {
         bufferData.vertex = this.gl.createBuffer();
       }
       this.gl.bindBuffer(this.gl.ARRAY_BUFFER, bufferData.vertex);
-      this.gl.bufferData(
-        this.gl.ARRAY_BUFFER,
-        vertexArray,
-        this.gl.DYNAMIC_DRAW
-      );
+      this.gl.bufferData(this.gl.ARRAY_BUFFER, vertexArray, this.gl.DYNAMIC_DRAW);
       this.gl.enableVertexAttribArray(shaderSet.attributePositionLocation);
-      this.gl.vertexAttribPointer(
-        shaderSet.attributePositionLocation,
-        2,
-        this.gl.FLOAT,
-        false,
-        0,
-        0
-      );
+      this.gl.vertexAttribPointer(shaderSet.attributePositionLocation, 2, this.gl.FLOAT, false, 0, 0);
       if (bufferData.uv == null) {
         bufferData.uv = this.gl.createBuffer();
       }
       this.gl.bindBuffer(this.gl.ARRAY_BUFFER, bufferData.uv);
       this.gl.bufferData(this.gl.ARRAY_BUFFER, uvArray, this.gl.DYNAMIC_DRAW);
       this.gl.enableVertexAttribArray(shaderSet.attributeTexCoordLocation);
-      this.gl.vertexAttribPointer(
-        shaderSet.attributeTexCoordLocation,
-        2,
-        this.gl.FLOAT,
-        false,
-        0,
-        0
-      );
+      this.gl.vertexAttribPointer(shaderSet.attributeTexCoordLocation, 2, this.gl.FLOAT, false, 0, 0);
       const channelNo = clippingContextBufferForMask._layoutChannelNo;
       const colorChannel = clippingContextBufferForMask.getClippingManager().getChannelFlagAsColor(channelNo);
-      this.gl.uniform4f(
-        shaderSet.uniformChannelFlagLocation,
-        colorChannel.R,
-        colorChannel.G,
-        colorChannel.B,
-        colorChannel.A
-      );
-      this.gl.uniformMatrix4fv(
-        shaderSet.uniformClipMatrixLocation,
-        false,
-        clippingContextBufferForMask._matrixForMask.getArray()
-      );
+      this.gl.uniform4f(shaderSet.uniformChannelFlagLocation, colorChannel.R, colorChannel.G, colorChannel.B, colorChannel.A);
+      this.gl.uniformMatrix4fv(shaderSet.uniformClipMatrixLocation, false, clippingContextBufferForMask._matrixForMask.getArray());
       const rect = clippingContextBufferForMask._layoutBounds;
-      this.gl.uniform4f(
-        shaderSet.uniformBaseColorLocation,
-        rect.x * 2 - 1,
-        rect.y * 2 - 1,
-        rect.getRight() * 2 - 1,
-        rect.getBottom() * 2 - 1
-      );
+      this.gl.uniform4f(shaderSet.uniformBaseColorLocation, rect.x * 2 - 1, rect.y * 2 - 1, rect.getRight() * 2 - 1, rect.getBottom() * 2 - 1);
       SRC_COLOR = this.gl.ZERO;
       DST_COLOR = this.gl.ONE_MINUS_SRC_COLOR;
       SRC_ALPHA = this.gl.ZERO;
@@ -3615,79 +3262,37 @@ class CubismShader_WebGL {
         bufferData.vertex = this.gl.createBuffer();
       }
       this.gl.bindBuffer(this.gl.ARRAY_BUFFER, bufferData.vertex);
-      this.gl.bufferData(
-        this.gl.ARRAY_BUFFER,
-        vertexArray,
-        this.gl.DYNAMIC_DRAW
-      );
+      this.gl.bufferData(this.gl.ARRAY_BUFFER, vertexArray, this.gl.DYNAMIC_DRAW);
       this.gl.enableVertexAttribArray(shaderSet.attributePositionLocation);
-      this.gl.vertexAttribPointer(
-        shaderSet.attributePositionLocation,
-        2,
-        this.gl.FLOAT,
-        false,
-        0,
-        0
-      );
+      this.gl.vertexAttribPointer(shaderSet.attributePositionLocation, 2, this.gl.FLOAT, false, 0, 0);
       if (bufferData.uv == null) {
         bufferData.uv = this.gl.createBuffer();
       }
       this.gl.bindBuffer(this.gl.ARRAY_BUFFER, bufferData.uv);
       this.gl.bufferData(this.gl.ARRAY_BUFFER, uvArray, this.gl.DYNAMIC_DRAW);
       this.gl.enableVertexAttribArray(shaderSet.attributeTexCoordLocation);
-      this.gl.vertexAttribPointer(
-        shaderSet.attributeTexCoordLocation,
-        2,
-        this.gl.FLOAT,
-        false,
-        0,
-        0
-      );
+      this.gl.vertexAttribPointer(shaderSet.attributeTexCoordLocation, 2, this.gl.FLOAT, false, 0, 0);
       if (clippingContextBufferForDraw != null) {
         this.gl.activeTexture(this.gl.TEXTURE1);
         const tex = clippingContextBufferForDraw.getClippingManager().getColorBuffer();
         this.gl.bindTexture(this.gl.TEXTURE_2D, tex);
         this.gl.uniform1i(shaderSet.samplerTexture1Location, 1);
-        this.gl.uniformMatrix4fv(
-          shaderSet.uniformClipMatrixLocation,
-          false,
-          clippingContextBufferForDraw._matrixForDraw.getArray()
-        );
+        this.gl.uniformMatrix4fv(shaderSet.uniformClipMatrixLocation, false, clippingContextBufferForDraw._matrixForDraw.getArray());
         const channelNo = clippingContextBufferForDraw._layoutChannelNo;
         const colorChannel = clippingContextBufferForDraw.getClippingManager().getChannelFlagAsColor(channelNo);
-        this.gl.uniform4f(
-          shaderSet.uniformChannelFlagLocation,
-          colorChannel.R,
-          colorChannel.G,
-          colorChannel.B,
-          colorChannel.A
-        );
+        this.gl.uniform4f(shaderSet.uniformChannelFlagLocation, colorChannel.R, colorChannel.G, colorChannel.B, colorChannel.A);
       }
       this.gl.activeTexture(this.gl.TEXTURE0);
       this.gl.bindTexture(this.gl.TEXTURE_2D, textureId);
       this.gl.uniform1i(shaderSet.samplerTexture0Location, 0);
-      this.gl.uniformMatrix4fv(
-        shaderSet.uniformMatrixLocation,
-        false,
-        matrix4x4.getArray()
-      );
-      this.gl.uniform4f(
-        shaderSet.uniformBaseColorLocation,
-        baseColor.R,
-        baseColor.G,
-        baseColor.B,
-        baseColor.A
-      );
+      this.gl.uniformMatrix4fv(shaderSet.uniformMatrixLocation, false, matrix4x4.getArray());
+      this.gl.uniform4f(shaderSet.uniformBaseColorLocation, baseColor.R, baseColor.G, baseColor.B, baseColor.A);
     }
     if (bufferData.index == null) {
       bufferData.index = this.gl.createBuffer();
     }
     this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, bufferData.index);
-    this.gl.bufferData(
-      this.gl.ELEMENT_ARRAY_BUFFER,
-      indexArray,
-      this.gl.DYNAMIC_DRAW
-    );
+    this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, indexArray, this.gl.DYNAMIC_DRAW);
     this.gl.blendFuncSeparate(SRC_COLOR, DST_COLOR, SRC_ALPHA, DST_ALPHA);
   }
   releaseShaderProgram() {
@@ -3701,319 +3306,94 @@ class CubismShader_WebGL {
     for (let i = 0; i < shaderCount; i++) {
       this._shaderSets.push({});
     }
-    this._shaderSets[0].shaderProgram = this.loadShaderProgram(
-      vertexShaderSrcSetupMask,
-      fragmentShaderSrcsetupMask
-    );
-    this._shaderSets[1].shaderProgram = this.loadShaderProgram(
-      vertexShaderSrc,
-      fragmentShaderSrcPremultipliedAlpha
-    );
-    this._shaderSets[2].shaderProgram = this.loadShaderProgram(
-      vertexShaderSrcMasked,
-      fragmentShaderSrcMaskPremultipliedAlpha
-    );
-    this._shaderSets[3].shaderProgram = this.loadShaderProgram(
-      vertexShaderSrcMasked,
-      fragmentShaderSrcMaskInvertedPremultipliedAlpha
-    );
+    this._shaderSets[0].shaderProgram = this.loadShaderProgram(vertexShaderSrcSetupMask, fragmentShaderSrcsetupMask);
+    this._shaderSets[1].shaderProgram = this.loadShaderProgram(vertexShaderSrc, fragmentShaderSrcPremultipliedAlpha);
+    this._shaderSets[2].shaderProgram = this.loadShaderProgram(vertexShaderSrcMasked, fragmentShaderSrcMaskPremultipliedAlpha);
+    this._shaderSets[3].shaderProgram = this.loadShaderProgram(vertexShaderSrcMasked, fragmentShaderSrcMaskInvertedPremultipliedAlpha);
     this._shaderSets[4].shaderProgram = this._shaderSets[1].shaderProgram;
     this._shaderSets[5].shaderProgram = this._shaderSets[2].shaderProgram;
     this._shaderSets[6].shaderProgram = this._shaderSets[3].shaderProgram;
     this._shaderSets[7].shaderProgram = this._shaderSets[1].shaderProgram;
     this._shaderSets[8].shaderProgram = this._shaderSets[2].shaderProgram;
     this._shaderSets[9].shaderProgram = this._shaderSets[3].shaderProgram;
-    this._shaderSets[0].attributePositionLocation = this.gl.getAttribLocation(
-      this._shaderSets[0].shaderProgram,
-      "a_position"
-    );
-    this._shaderSets[0].attributeTexCoordLocation = this.gl.getAttribLocation(
-      this._shaderSets[0].shaderProgram,
-      "a_texCoord"
-    );
-    this._shaderSets[0].samplerTexture0Location = this.gl.getUniformLocation(
-      this._shaderSets[0].shaderProgram,
-      "s_texture0"
-    );
-    this._shaderSets[0].uniformClipMatrixLocation = this.gl.getUniformLocation(
-      this._shaderSets[0].shaderProgram,
-      "u_clipMatrix"
-    );
-    this._shaderSets[0].uniformChannelFlagLocation = this.gl.getUniformLocation(
-      this._shaderSets[0].shaderProgram,
-      "u_channelFlag"
-    );
-    this._shaderSets[0].uniformBaseColorLocation = this.gl.getUniformLocation(
-      this._shaderSets[0].shaderProgram,
-      "u_baseColor"
-    );
-    this._shaderSets[1].attributePositionLocation = this.gl.getAttribLocation(
-      this._shaderSets[1].shaderProgram,
-      "a_position"
-    );
-    this._shaderSets[1].attributeTexCoordLocation = this.gl.getAttribLocation(
-      this._shaderSets[1].shaderProgram,
-      "a_texCoord"
-    );
-    this._shaderSets[1].samplerTexture0Location = this.gl.getUniformLocation(
-      this._shaderSets[1].shaderProgram,
-      "s_texture0"
-    );
-    this._shaderSets[1].uniformMatrixLocation = this.gl.getUniformLocation(
-      this._shaderSets[1].shaderProgram,
-      "u_matrix"
-    );
-    this._shaderSets[1].uniformBaseColorLocation = this.gl.getUniformLocation(
-      this._shaderSets[1].shaderProgram,
-      "u_baseColor"
-    );
-    this._shaderSets[2].attributePositionLocation = this.gl.getAttribLocation(
-      this._shaderSets[2].shaderProgram,
-      "a_position"
-    );
-    this._shaderSets[2].attributeTexCoordLocation = this.gl.getAttribLocation(
-      this._shaderSets[2].shaderProgram,
-      "a_texCoord"
-    );
-    this._shaderSets[2].samplerTexture0Location = this.gl.getUniformLocation(
-      this._shaderSets[2].shaderProgram,
-      "s_texture0"
-    );
-    this._shaderSets[2].samplerTexture1Location = this.gl.getUniformLocation(
-      this._shaderSets[2].shaderProgram,
-      "s_texture1"
-    );
-    this._shaderSets[2].uniformMatrixLocation = this.gl.getUniformLocation(
-      this._shaderSets[2].shaderProgram,
-      "u_matrix"
-    );
-    this._shaderSets[2].uniformClipMatrixLocation = this.gl.getUniformLocation(
-      this._shaderSets[2].shaderProgram,
-      "u_clipMatrix"
-    );
-    this._shaderSets[2].uniformChannelFlagLocation = this.gl.getUniformLocation(
-      this._shaderSets[2].shaderProgram,
-      "u_channelFlag"
-    );
-    this._shaderSets[2].uniformBaseColorLocation = this.gl.getUniformLocation(
-      this._shaderSets[2].shaderProgram,
-      "u_baseColor"
-    );
-    this._shaderSets[3].attributePositionLocation = this.gl.getAttribLocation(
-      this._shaderSets[3].shaderProgram,
-      "a_position"
-    );
-    this._shaderSets[3].attributeTexCoordLocation = this.gl.getAttribLocation(
-      this._shaderSets[3].shaderProgram,
-      "a_texCoord"
-    );
-    this._shaderSets[3].samplerTexture0Location = this.gl.getUniformLocation(
-      this._shaderSets[3].shaderProgram,
-      "s_texture0"
-    );
-    this._shaderSets[3].samplerTexture1Location = this.gl.getUniformLocation(
-      this._shaderSets[3].shaderProgram,
-      "s_texture1"
-    );
-    this._shaderSets[3].uniformMatrixLocation = this.gl.getUniformLocation(
-      this._shaderSets[3].shaderProgram,
-      "u_matrix"
-    );
-    this._shaderSets[3].uniformClipMatrixLocation = this.gl.getUniformLocation(
-      this._shaderSets[3].shaderProgram,
-      "u_clipMatrix"
-    );
-    this._shaderSets[3].uniformChannelFlagLocation = this.gl.getUniformLocation(
-      this._shaderSets[3].shaderProgram,
-      "u_channelFlag"
-    );
-    this._shaderSets[3].uniformBaseColorLocation = this.gl.getUniformLocation(
-      this._shaderSets[3].shaderProgram,
-      "u_baseColor"
-    );
-    this._shaderSets[4].attributePositionLocation = this.gl.getAttribLocation(
-      this._shaderSets[4].shaderProgram,
-      "a_position"
-    );
-    this._shaderSets[4].attributeTexCoordLocation = this.gl.getAttribLocation(
-      this._shaderSets[4].shaderProgram,
-      "a_texCoord"
-    );
-    this._shaderSets[4].samplerTexture0Location = this.gl.getUniformLocation(
-      this._shaderSets[4].shaderProgram,
-      "s_texture0"
-    );
-    this._shaderSets[4].uniformMatrixLocation = this.gl.getUniformLocation(
-      this._shaderSets[4].shaderProgram,
-      "u_matrix"
-    );
-    this._shaderSets[4].uniformBaseColorLocation = this.gl.getUniformLocation(
-      this._shaderSets[4].shaderProgram,
-      "u_baseColor"
-    );
-    this._shaderSets[5].attributePositionLocation = this.gl.getAttribLocation(
-      this._shaderSets[5].shaderProgram,
-      "a_position"
-    );
-    this._shaderSets[5].attributeTexCoordLocation = this.gl.getAttribLocation(
-      this._shaderSets[5].shaderProgram,
-      "a_texCoord"
-    );
-    this._shaderSets[5].samplerTexture0Location = this.gl.getUniformLocation(
-      this._shaderSets[5].shaderProgram,
-      "s_texture0"
-    );
-    this._shaderSets[5].samplerTexture1Location = this.gl.getUniformLocation(
-      this._shaderSets[5].shaderProgram,
-      "s_texture1"
-    );
-    this._shaderSets[5].uniformMatrixLocation = this.gl.getUniformLocation(
-      this._shaderSets[5].shaderProgram,
-      "u_matrix"
-    );
-    this._shaderSets[5].uniformClipMatrixLocation = this.gl.getUniformLocation(
-      this._shaderSets[5].shaderProgram,
-      "u_clipMatrix"
-    );
-    this._shaderSets[5].uniformChannelFlagLocation = this.gl.getUniformLocation(
-      this._shaderSets[5].shaderProgram,
-      "u_channelFlag"
-    );
-    this._shaderSets[5].uniformBaseColorLocation = this.gl.getUniformLocation(
-      this._shaderSets[5].shaderProgram,
-      "u_baseColor"
-    );
-    this._shaderSets[6].attributePositionLocation = this.gl.getAttribLocation(
-      this._shaderSets[6].shaderProgram,
-      "a_position"
-    );
-    this._shaderSets[6].attributeTexCoordLocation = this.gl.getAttribLocation(
-      this._shaderSets[6].shaderProgram,
-      "a_texCoord"
-    );
-    this._shaderSets[6].samplerTexture0Location = this.gl.getUniformLocation(
-      this._shaderSets[6].shaderProgram,
-      "s_texture0"
-    );
-    this._shaderSets[6].samplerTexture1Location = this.gl.getUniformLocation(
-      this._shaderSets[6].shaderProgram,
-      "s_texture1"
-    );
-    this._shaderSets[6].uniformMatrixLocation = this.gl.getUniformLocation(
-      this._shaderSets[6].shaderProgram,
-      "u_matrix"
-    );
-    this._shaderSets[6].uniformClipMatrixLocation = this.gl.getUniformLocation(
-      this._shaderSets[6].shaderProgram,
-      "u_clipMatrix"
-    );
-    this._shaderSets[6].uniformChannelFlagLocation = this.gl.getUniformLocation(
-      this._shaderSets[6].shaderProgram,
-      "u_channelFlag"
-    );
-    this._shaderSets[6].uniformBaseColorLocation = this.gl.getUniformLocation(
-      this._shaderSets[6].shaderProgram,
-      "u_baseColor"
-    );
-    this._shaderSets[7].attributePositionLocation = this.gl.getAttribLocation(
-      this._shaderSets[7].shaderProgram,
-      "a_position"
-    );
-    this._shaderSets[7].attributeTexCoordLocation = this.gl.getAttribLocation(
-      this._shaderSets[7].shaderProgram,
-      "a_texCoord"
-    );
-    this._shaderSets[7].samplerTexture0Location = this.gl.getUniformLocation(
-      this._shaderSets[7].shaderProgram,
-      "s_texture0"
-    );
-    this._shaderSets[7].uniformMatrixLocation = this.gl.getUniformLocation(
-      this._shaderSets[7].shaderProgram,
-      "u_matrix"
-    );
-    this._shaderSets[7].uniformBaseColorLocation = this.gl.getUniformLocation(
-      this._shaderSets[7].shaderProgram,
-      "u_baseColor"
-    );
-    this._shaderSets[8].attributePositionLocation = this.gl.getAttribLocation(
-      this._shaderSets[8].shaderProgram,
-      "a_position"
-    );
-    this._shaderSets[8].attributeTexCoordLocation = this.gl.getAttribLocation(
-      this._shaderSets[8].shaderProgram,
-      "a_texCoord"
-    );
-    this._shaderSets[8].samplerTexture0Location = this.gl.getUniformLocation(
-      this._shaderSets[8].shaderProgram,
-      "s_texture0"
-    );
-    this._shaderSets[8].samplerTexture1Location = this.gl.getUniformLocation(
-      this._shaderSets[8].shaderProgram,
-      "s_texture1"
-    );
-    this._shaderSets[8].uniformMatrixLocation = this.gl.getUniformLocation(
-      this._shaderSets[8].shaderProgram,
-      "u_matrix"
-    );
-    this._shaderSets[8].uniformClipMatrixLocation = this.gl.getUniformLocation(
-      this._shaderSets[8].shaderProgram,
-      "u_clipMatrix"
-    );
-    this._shaderSets[8].uniformChannelFlagLocation = this.gl.getUniformLocation(
-      this._shaderSets[8].shaderProgram,
-      "u_channelFlag"
-    );
-    this._shaderSets[8].uniformBaseColorLocation = this.gl.getUniformLocation(
-      this._shaderSets[8].shaderProgram,
-      "u_baseColor"
-    );
-    this._shaderSets[9].attributePositionLocation = this.gl.getAttribLocation(
-      this._shaderSets[9].shaderProgram,
-      "a_position"
-    );
-    this._shaderSets[9].attributeTexCoordLocation = this.gl.getAttribLocation(
-      this._shaderSets[9].shaderProgram,
-      "a_texCoord"
-    );
-    this._shaderSets[9].samplerTexture0Location = this.gl.getUniformLocation(
-      this._shaderSets[9].shaderProgram,
-      "s_texture0"
-    );
-    this._shaderSets[9].samplerTexture1Location = this.gl.getUniformLocation(
-      this._shaderSets[9].shaderProgram,
-      "s_texture1"
-    );
-    this._shaderSets[9].uniformMatrixLocation = this.gl.getUniformLocation(
-      this._shaderSets[9].shaderProgram,
-      "u_matrix"
-    );
-    this._shaderSets[9].uniformClipMatrixLocation = this.gl.getUniformLocation(
-      this._shaderSets[9].shaderProgram,
-      "u_clipMatrix"
-    );
-    this._shaderSets[9].uniformChannelFlagLocation = this.gl.getUniformLocation(
-      this._shaderSets[9].shaderProgram,
-      "u_channelFlag"
-    );
-    this._shaderSets[9].uniformBaseColorLocation = this.gl.getUniformLocation(
-      this._shaderSets[9].shaderProgram,
-      "u_baseColor"
-    );
+    this._shaderSets[0].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[0].shaderProgram, "a_position");
+    this._shaderSets[0].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[0].shaderProgram, "a_texCoord");
+    this._shaderSets[0].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[0].shaderProgram, "s_texture0");
+    this._shaderSets[0].uniformClipMatrixLocation = this.gl.getUniformLocation(this._shaderSets[0].shaderProgram, "u_clipMatrix");
+    this._shaderSets[0].uniformChannelFlagLocation = this.gl.getUniformLocation(this._shaderSets[0].shaderProgram, "u_channelFlag");
+    this._shaderSets[0].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[0].shaderProgram, "u_baseColor");
+    this._shaderSets[1].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[1].shaderProgram, "a_position");
+    this._shaderSets[1].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[1].shaderProgram, "a_texCoord");
+    this._shaderSets[1].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[1].shaderProgram, "s_texture0");
+    this._shaderSets[1].uniformMatrixLocation = this.gl.getUniformLocation(this._shaderSets[1].shaderProgram, "u_matrix");
+    this._shaderSets[1].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[1].shaderProgram, "u_baseColor");
+    this._shaderSets[2].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[2].shaderProgram, "a_position");
+    this._shaderSets[2].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[2].shaderProgram, "a_texCoord");
+    this._shaderSets[2].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[2].shaderProgram, "s_texture0");
+    this._shaderSets[2].samplerTexture1Location = this.gl.getUniformLocation(this._shaderSets[2].shaderProgram, "s_texture1");
+    this._shaderSets[2].uniformMatrixLocation = this.gl.getUniformLocation(this._shaderSets[2].shaderProgram, "u_matrix");
+    this._shaderSets[2].uniformClipMatrixLocation = this.gl.getUniformLocation(this._shaderSets[2].shaderProgram, "u_clipMatrix");
+    this._shaderSets[2].uniformChannelFlagLocation = this.gl.getUniformLocation(this._shaderSets[2].shaderProgram, "u_channelFlag");
+    this._shaderSets[2].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[2].shaderProgram, "u_baseColor");
+    this._shaderSets[3].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[3].shaderProgram, "a_position");
+    this._shaderSets[3].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[3].shaderProgram, "a_texCoord");
+    this._shaderSets[3].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[3].shaderProgram, "s_texture0");
+    this._shaderSets[3].samplerTexture1Location = this.gl.getUniformLocation(this._shaderSets[3].shaderProgram, "s_texture1");
+    this._shaderSets[3].uniformMatrixLocation = this.gl.getUniformLocation(this._shaderSets[3].shaderProgram, "u_matrix");
+    this._shaderSets[3].uniformClipMatrixLocation = this.gl.getUniformLocation(this._shaderSets[3].shaderProgram, "u_clipMatrix");
+    this._shaderSets[3].uniformChannelFlagLocation = this.gl.getUniformLocation(this._shaderSets[3].shaderProgram, "u_channelFlag");
+    this._shaderSets[3].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[3].shaderProgram, "u_baseColor");
+    this._shaderSets[4].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[4].shaderProgram, "a_position");
+    this._shaderSets[4].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[4].shaderProgram, "a_texCoord");
+    this._shaderSets[4].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[4].shaderProgram, "s_texture0");
+    this._shaderSets[4].uniformMatrixLocation = this.gl.getUniformLocation(this._shaderSets[4].shaderProgram, "u_matrix");
+    this._shaderSets[4].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[4].shaderProgram, "u_baseColor");
+    this._shaderSets[5].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[5].shaderProgram, "a_position");
+    this._shaderSets[5].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[5].shaderProgram, "a_texCoord");
+    this._shaderSets[5].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[5].shaderProgram, "s_texture0");
+    this._shaderSets[5].samplerTexture1Location = this.gl.getUniformLocation(this._shaderSets[5].shaderProgram, "s_texture1");
+    this._shaderSets[5].uniformMatrixLocation = this.gl.getUniformLocation(this._shaderSets[5].shaderProgram, "u_matrix");
+    this._shaderSets[5].uniformClipMatrixLocation = this.gl.getUniformLocation(this._shaderSets[5].shaderProgram, "u_clipMatrix");
+    this._shaderSets[5].uniformChannelFlagLocation = this.gl.getUniformLocation(this._shaderSets[5].shaderProgram, "u_channelFlag");
+    this._shaderSets[5].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[5].shaderProgram, "u_baseColor");
+    this._shaderSets[6].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[6].shaderProgram, "a_position");
+    this._shaderSets[6].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[6].shaderProgram, "a_texCoord");
+    this._shaderSets[6].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[6].shaderProgram, "s_texture0");
+    this._shaderSets[6].samplerTexture1Location = this.gl.getUniformLocation(this._shaderSets[6].shaderProgram, "s_texture1");
+    this._shaderSets[6].uniformMatrixLocation = this.gl.getUniformLocation(this._shaderSets[6].shaderProgram, "u_matrix");
+    this._shaderSets[6].uniformClipMatrixLocation = this.gl.getUniformLocation(this._shaderSets[6].shaderProgram, "u_clipMatrix");
+    this._shaderSets[6].uniformChannelFlagLocation = this.gl.getUniformLocation(this._shaderSets[6].shaderProgram, "u_channelFlag");
+    this._shaderSets[6].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[6].shaderProgram, "u_baseColor");
+    this._shaderSets[7].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[7].shaderProgram, "a_position");
+    this._shaderSets[7].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[7].shaderProgram, "a_texCoord");
+    this._shaderSets[7].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[7].shaderProgram, "s_texture0");
+    this._shaderSets[7].uniformMatrixLocation = this.gl.getUniformLocation(this._shaderSets[7].shaderProgram, "u_matrix");
+    this._shaderSets[7].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[7].shaderProgram, "u_baseColor");
+    this._shaderSets[8].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[8].shaderProgram, "a_position");
+    this._shaderSets[8].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[8].shaderProgram, "a_texCoord");
+    this._shaderSets[8].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[8].shaderProgram, "s_texture0");
+    this._shaderSets[8].samplerTexture1Location = this.gl.getUniformLocation(this._shaderSets[8].shaderProgram, "s_texture1");
+    this._shaderSets[8].uniformMatrixLocation = this.gl.getUniformLocation(this._shaderSets[8].shaderProgram, "u_matrix");
+    this._shaderSets[8].uniformClipMatrixLocation = this.gl.getUniformLocation(this._shaderSets[8].shaderProgram, "u_clipMatrix");
+    this._shaderSets[8].uniformChannelFlagLocation = this.gl.getUniformLocation(this._shaderSets[8].shaderProgram, "u_channelFlag");
+    this._shaderSets[8].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[8].shaderProgram, "u_baseColor");
+    this._shaderSets[9].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[9].shaderProgram, "a_position");
+    this._shaderSets[9].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[9].shaderProgram, "a_texCoord");
+    this._shaderSets[9].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[9].shaderProgram, "s_texture0");
+    this._shaderSets[9].samplerTexture1Location = this.gl.getUniformLocation(this._shaderSets[9].shaderProgram, "s_texture1");
+    this._shaderSets[9].uniformMatrixLocation = this.gl.getUniformLocation(this._shaderSets[9].shaderProgram, "u_matrix");
+    this._shaderSets[9].uniformClipMatrixLocation = this.gl.getUniformLocation(this._shaderSets[9].shaderProgram, "u_clipMatrix");
+    this._shaderSets[9].uniformChannelFlagLocation = this.gl.getUniformLocation(this._shaderSets[9].shaderProgram, "u_channelFlag");
+    this._shaderSets[9].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[9].shaderProgram, "u_baseColor");
   }
   loadShaderProgram(vertexShaderSource, fragmentShaderSource) {
     let shaderProgram = this.gl.createProgram();
-    let vertShader = this.compileShaderSource(
-      this.gl.VERTEX_SHADER,
-      vertexShaderSource
-    );
+    let vertShader = this.compileShaderSource(this.gl.VERTEX_SHADER, vertexShaderSource);
     if (!vertShader) {
       CubismLogError("Vertex shader compile error!");
       return 0;
     }
-    let fragShader = this.compileShaderSource(
-      this.gl.FRAGMENT_SHADER,
-      fragmentShaderSource
-    );
+    let fragShader = this.compileShaderSource(this.gl.FRAGMENT_SHADER, fragmentShaderSource);
     if (!fragShader) {
       CubismLogError("Vertex shader compile error!");
       return 0;
@@ -4021,10 +3401,7 @@ class CubismShader_WebGL {
     this.gl.attachShader(shaderProgram, vertShader);
     this.gl.attachShader(shaderProgram, fragShader);
     this.gl.linkProgram(shaderProgram);
-    const linkStatus = this.gl.getProgramParameter(
-      shaderProgram,
-      this.gl.LINK_STATUS
-    );
+    const linkStatus = this.gl.getProgramParameter(shaderProgram, this.gl.LINK_STATUS);
     if (!linkStatus) {
       CubismLogError("Failed to link program: {0}", shaderProgram);
       this.gl.deleteShader(vertShader);
@@ -4047,10 +3424,7 @@ class CubismShader_WebGL {
       const log = this.gl.getShaderInfoLog(shader);
       CubismLogError("Shader compile log: {0} ", log);
     }
-    const status = this.gl.getShaderParameter(
-      shader,
-      this.gl.COMPILE_STATUS
-    );
+    const status = this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS);
     if (!status) {
       this.gl.deleteShader(shader);
       return null;
@@ -4099,12 +3473,7 @@ class CubismRenderer_WebGL extends CubismRenderer {
   initialize(model) {
     if (model.isUsingMasking()) {
       this._clippingManager = new CubismClippingManager_WebGL();
-      this._clippingManager.initialize(
-        model,
-        model.getDrawableCount(),
-        model.getDrawableMasks(),
-        model.getDrawableMaskCounts()
-      );
+      this._clippingManager.initialize(model, model.getDrawableCount(), model.getDrawableMasks(), model.getDrawableMaskCounts());
     }
     for (let i = model.getDrawableCount() - 1; i >= 0; i--) {
       this._sortedDrawableIndexList[i] = 0;
@@ -4121,12 +3490,7 @@ class CubismRenderer_WebGL extends CubismRenderer {
     this._clippingManager.release();
     this._clippingManager = new CubismClippingManager_WebGL();
     this._clippingManager.setClippingMaskBufferSize(size);
-    this._clippingManager.initialize(
-      this.getModel(),
-      this.getModel().getDrawableCount(),
-      this.getModel().getDrawableMasks(),
-      this.getModel().getDrawableMaskCounts()
-    );
+    this._clippingManager.initialize(this.getModel(), this.getModel().getDrawableCount(), this.getModel().getDrawableMasks(), this.getModel().getDrawableMaskCounts());
   }
   getClippingMaskBufferSize() {
     return this._clippingManager.getClippingMaskBufferSize();
@@ -4161,21 +3525,9 @@ class CubismRenderer_WebGL extends CubismRenderer {
       if (!this.getModel().getDrawableDynamicFlagIsVisible(drawableIndex)) {
         continue;
       }
-      this.setClippingContextBufferForDraw(
-        this._clippingManager != null ? this._clippingManager.getClippingContextListForDraw()[drawableIndex] : null
-      );
+      this.setClippingContextBufferForDraw(this._clippingManager != null ? this._clippingManager.getClippingContextListForDraw()[drawableIndex] : null);
       this.setIsCulling(this.getModel().getDrawableCulling(drawableIndex));
-      this.drawMesh(
-        this.getModel().getDrawableTextureIndices(drawableIndex),
-        this.getModel().getDrawableVertexIndexCount(drawableIndex),
-        this.getModel().getDrawableVertexCount(drawableIndex),
-        this.getModel().getDrawableVertexIndices(drawableIndex),
-        this.getModel().getDrawableVertices(drawableIndex),
-        this.getModel().getDrawableVertexUvs(drawableIndex),
-        this.getModel().getDrawableOpacity(drawableIndex),
-        this.getModel().getDrawableBlendMode(drawableIndex),
-        this.getModel().getDrawableInvertedMaskBit(drawableIndex)
-      );
+      this.drawMesh(this.getModel().getDrawableTextureIndices(drawableIndex), this.getModel().getDrawableVertexIndexCount(drawableIndex), this.getModel().getDrawableVertexCount(drawableIndex), this.getModel().getDrawableVertexIndices(drawableIndex), this.getModel().getDrawableVertices(drawableIndex), this.getModel().getDrawableVertexUvs(drawableIndex), this.getModel().getDrawableOpacity(drawableIndex), this.getModel().getDrawableBlendMode(drawableIndex), this.getModel().getDrawableInvertedMaskBit(drawableIndex));
     }
   }
   drawMesh(textureNo, indexCount, vertexCount, indexArray, vertexArray, uvArray, opacity, colorBlendMode, invertedMask) {
@@ -4198,27 +3550,8 @@ class CubismRenderer_WebGL extends CubismRenderer {
     if (this._textures[textureNo] != null) {
       drawtexture = this._textures[textureNo];
     }
-    CubismShader_WebGL.getInstance().setupShaderProgram(
-      this,
-      drawtexture,
-      vertexCount,
-      vertexArray,
-      indexArray,
-      uvArray,
-      this._bufferData,
-      opacity,
-      colorBlendMode,
-      modelColorRGBA,
-      this.isPremultipliedAlpha(),
-      this.getMvpMatrix(),
-      invertedMask
-    );
-    this.gl.drawElements(
-      this.gl.TRIANGLES,
-      indexCount,
-      this.gl.UNSIGNED_SHORT,
-      0
-    );
+    CubismShader_WebGL.getInstance().setupShaderProgram(this, drawtexture, vertexCount, vertexArray, indexArray, uvArray, this._bufferData, opacity, colorBlendMode, modelColorRGBA, this.isPremultipliedAlpha(), this.getMvpMatrix(), invertedMask);
+    this.gl.drawElements(this.gl.TRIANGLES, indexCount, this.gl.UNSIGNED_SHORT, 0);
     this.gl.useProgram(null);
     this.setClippingContextBufferForDraw(null);
     this.setClippingContextBufferForMask(null);
@@ -4921,9 +4254,7 @@ class MotionManager extends EventEmitter {
         }
         if (file) {
           try {
-            audio = SoundManager.add(
-              file
-            );
+            audio = SoundManager.add(file);
             this.currentAudio = audio;
             context = SoundManager.addContext(this.currentAudio);
             this.currentContext = context;
@@ -5044,13 +4375,10 @@ class InternalModel extends EventEmitter {
     const size = this.getSize();
     self.originalWidth = size[0];
     self.originalHeight = size[1];
-    const layout = Object.assign(
-      {
-        width: LOGICAL_WIDTH,
-        height: LOGICAL_HEIGHT
-      },
-      this.getLayout()
-    );
+    const layout = Object.assign({
+      width: LOGICAL_WIDTH,
+      height: LOGICAL_HEIGHT
+    }, this.getLayout());
     this.localTransform.scale(layout.width / LOGICAL_WIDTH, layout.height / LOGICAL_HEIGHT);
     self.width = this.originalWidth * this.localTransform.a;
     self.height = this.originalHeight * this.localTransform.d;
@@ -5176,16 +4504,10 @@ XHRLoader.xhrMap = /* @__PURE__ */ new WeakMap();
 XHRLoader.allXhrSet = /* @__PURE__ */ new Set();
 XHRLoader.loader = (context, next) => {
   return new Promise((resolve, reject) => {
-    const xhr = _XHRLoader.createXHR(
-      context.target,
-      context.settings ? context.settings.resolveURL(context.url) : context.url,
-      context.type,
-      (data) => {
-        context.result = data;
-        resolve();
-      },
-      reject
-    );
+    const xhr = _XHRLoader.createXHR(context.target, context.settings ? context.settings.resolveURL(context.url) : context.url, context.type, (data) => {
+      context.result = data;
+      resolve();
+    }, reject);
     xhr.send();
   });
 };
@@ -5292,36 +4614,32 @@ const setupOptionals = (context, next) => __async(void 0, null, function* () {
     if (runtime) {
       const tasks = [];
       if (settings.pose) {
-        tasks.push(
-          Live2DLoader.load({
-            settings,
-            url: settings.pose,
-            type: "json",
-            target: internalModel
-          }).then((data) => {
-            internalModel.pose = runtime.createPose(internalModel.coreModel, data);
-            context.live2dModel.emit("poseLoaded", internalModel.pose);
-          }).catch((e) => {
-            context.live2dModel.emit("poseLoadError", e);
-            logger.warn(TAG, "Failed to load pose.", e);
-          })
-        );
+        tasks.push(Live2DLoader.load({
+          settings,
+          url: settings.pose,
+          type: "json",
+          target: internalModel
+        }).then((data) => {
+          internalModel.pose = runtime.createPose(internalModel.coreModel, data);
+          context.live2dModel.emit("poseLoaded", internalModel.pose);
+        }).catch((e) => {
+          context.live2dModel.emit("poseLoadError", e);
+          logger.warn(TAG, "Failed to load pose.", e);
+        }));
       }
       if (settings.physics) {
-        tasks.push(
-          Live2DLoader.load({
-            settings,
-            url: settings.physics,
-            type: "json",
-            target: internalModel
-          }).then((data) => {
-            internalModel.physics = runtime.createPhysics(internalModel.coreModel, data);
-            context.live2dModel.emit("physicsLoaded", internalModel.physics);
-          }).catch((e) => {
-            context.live2dModel.emit("physicsLoadError", e);
-            logger.warn(TAG, "Failed to load physics.", e);
-          })
-        );
+        tasks.push(Live2DLoader.load({
+          settings,
+          url: settings.physics,
+          type: "json",
+          target: internalModel
+        }).then((data) => {
+          internalModel.physics = runtime.createPhysics(internalModel.coreModel, data);
+          context.live2dModel.emit("physicsLoaded", internalModel.physics);
+        }).catch((e) => {
+          context.live2dModel.emit("physicsLoadError", e);
+          logger.warn(TAG, "Failed to load physics.", e);
+        }));
       }
       if (tasks.length) {
         yield Promise.all(tasks);

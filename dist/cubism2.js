@@ -615,9 +615,7 @@ var __async = (__this, __arguments, generator) => {
           }
           if (file) {
             try {
-              audio = SoundManager.add(
-                file
-              );
+              audio = SoundManager.add(file);
               this.currentAudio = audio;
               context = SoundManager.addContext(this.currentAudio);
               this.currentContext = context;
@@ -738,13 +736,10 @@ var __async = (__this, __arguments, generator) => {
       const size = this.getSize();
       self2.originalWidth = size[0];
       self2.originalHeight = size[1];
-      const layout = Object.assign(
-        {
-          width: LOGICAL_WIDTH,
-          height: LOGICAL_HEIGHT
-        },
-        this.getLayout()
-      );
+      const layout = Object.assign({
+        width: LOGICAL_WIDTH,
+        height: LOGICAL_HEIGHT
+      }, this.getLayout());
       this.localTransform.scale(layout.width / LOGICAL_WIDTH, layout.height / LOGICAL_HEIGHT);
       self2.width = this.originalWidth * this.localTransform.a;
       self2.height = this.originalHeight * this.localTransform.d;
@@ -870,16 +865,10 @@ var __async = (__this, __arguments, generator) => {
   XHRLoader.allXhrSet = /* @__PURE__ */ new Set();
   XHRLoader.loader = (context, next) => {
     return new Promise((resolve, reject) => {
-      const xhr = _XHRLoader.createXHR(
-        context.target,
-        context.settings ? context.settings.resolveURL(context.url) : context.url,
-        context.type,
-        (data) => {
-          context.result = data;
-          resolve();
-        },
-        reject
-      );
+      const xhr = _XHRLoader.createXHR(context.target, context.settings ? context.settings.resolveURL(context.url) : context.url, context.type, (data) => {
+        context.result = data;
+        resolve();
+      }, reject);
       xhr.send();
     });
   };
@@ -986,36 +975,32 @@ var __async = (__this, __arguments, generator) => {
       if (runtime) {
         const tasks = [];
         if (settings.pose) {
-          tasks.push(
-            Live2DLoader.load({
-              settings,
-              url: settings.pose,
-              type: "json",
-              target: internalModel
-            }).then((data) => {
-              internalModel.pose = runtime.createPose(internalModel.coreModel, data);
-              context.live2dModel.emit("poseLoaded", internalModel.pose);
-            }).catch((e) => {
-              context.live2dModel.emit("poseLoadError", e);
-              logger.warn(TAG, "Failed to load pose.", e);
-            })
-          );
+          tasks.push(Live2DLoader.load({
+            settings,
+            url: settings.pose,
+            type: "json",
+            target: internalModel
+          }).then((data) => {
+            internalModel.pose = runtime.createPose(internalModel.coreModel, data);
+            context.live2dModel.emit("poseLoaded", internalModel.pose);
+          }).catch((e) => {
+            context.live2dModel.emit("poseLoadError", e);
+            logger.warn(TAG, "Failed to load pose.", e);
+          }));
         }
         if (settings.physics) {
-          tasks.push(
-            Live2DLoader.load({
-              settings,
-              url: settings.physics,
-              type: "json",
-              target: internalModel
-            }).then((data) => {
-              internalModel.physics = runtime.createPhysics(internalModel.coreModel, data);
-              context.live2dModel.emit("physicsLoaded", internalModel.physics);
-            }).catch((e) => {
-              context.live2dModel.emit("physicsLoadError", e);
-              logger.warn(TAG, "Failed to load physics.", e);
-            })
-          );
+          tasks.push(Live2DLoader.load({
+            settings,
+            url: settings.physics,
+            type: "json",
+            target: internalModel
+          }).then((data) => {
+            internalModel.physics = runtime.createPhysics(internalModel.coreModel, data);
+            context.live2dModel.emit("physicsLoaded", internalModel.physics);
+          }).catch((e) => {
+            context.live2dModel.emit("physicsLoadError", e);
+            logger.warn(TAG, "Failed to load physics.", e);
+          }));
         }
         if (tasks.length) {
           yield Promise.all(tasks);
@@ -1708,6 +1693,7 @@ var __async = (__this, __arguments, generator) => {
       this.queueManager = new MotionQueueManager();
       this.definitions = this.settings.motions;
       this.init(options);
+      this.lipSyncIds = ["PARAM_MOUTH_OPEN_Y"];
     }
     init(options) {
       super.init(options);
@@ -1820,6 +1806,7 @@ var __async = (__this, __arguments, generator) => {
   class Cubism2InternalModel extends InternalModel {
     constructor(coreModel, settings, options) {
       super();
+      this.lipSync = true;
       this.textureFlipY = true;
       this.drawDataCount = 0;
       this.disableCulling = false;
@@ -1834,6 +1821,7 @@ var __async = (__this, __arguments, generator) => {
       this.angleZParamIndex = coreModel.getParamIndex("PARAM_ANGLE_Z");
       this.bodyAngleXParamIndex = coreModel.getParamIndex("PARAM_BODY_ANGLE_X");
       this.breathParamIndex = coreModel.getParamIndex("PARAM_BREATH");
+      this.mouthFormIndex = coreModel.getParamIndex("PARAM_MOUTH_FORM");
       this.init();
     }
     init() {
@@ -1942,6 +1930,13 @@ var __async = (__this, __arguments, generator) => {
       }
       this.updateFocus();
       this.updateNaturalMovements(dt, now);
+      if (this.lipSync) {
+        let value = this.motionManager.mouthSync();
+        value = clamp(value, 0, 1);
+        for (let i = 0; i < this.motionManager.lipSyncIds.length; ++i) {
+          this.coreModel.setParamFloat(this.coreModel.getParamIndex(this.motionManager.lipSyncIds[i]), value * 0.8);
+        }
+      }
       (_c = this.physics) == null ? void 0 : _c.update(now);
       (_d = this.pose) == null ? void 0 : _d.update(dt);
       this.emit("beforeModelUpdate");
@@ -2085,15 +2080,13 @@ var __async = (__this, __arguments, generator) => {
       this.opacityAnimDuration = 500;
       this.partsGroups = [];
       if (json.parts_visible) {
-        this.partsGroups = json.parts_visible.map(
-          ({ group }) => group.map(({ id, link }) => {
-            const parts = new Live2DPartsParam(id);
-            if (link) {
-              parts.link = link.map((l) => new Live2DPartsParam(l));
-            }
-            return parts;
-          })
-        );
+        this.partsGroups = json.parts_visible.map(({ group }) => group.map(({ id, link }) => {
+          const parts = new Live2DPartsParam(id);
+          if (link) {
+            parts.link = link.map((l) => new Live2DPartsParam(l));
+          }
+          return parts;
+        }));
         this.init();
       }
     }
@@ -2117,9 +2110,7 @@ var __async = (__this, __arguments, generator) => {
       const phi = 0.5;
       const maxBackOpacity = 0.15;
       let visibleOpacity = 1;
-      let visibleIndex = partsGroup.findIndex(
-        ({ paramIndex, partsIndex }) => partsIndex >= 0 && model.getParamFloat(paramIndex) !== 0
-      );
+      let visibleIndex = partsGroup.findIndex(({ paramIndex, partsIndex }) => partsIndex >= 0 && model.getParamFloat(paramIndex) !== 0);
       if (visibleIndex >= 0) {
         const originalOpacity = model.getPartsOpacity(partsGroup[visibleIndex].partsIndex);
         visibleOpacity = clamp(originalOpacity + dt / this.opacityAnimDuration, 0, 1);
