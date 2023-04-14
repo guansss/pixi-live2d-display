@@ -121,7 +121,7 @@ import { Live2DModel } from 'pixi-live2d-display';
 // reference window.PIXI.Ticker to automatically update Live2D models
 window.PIXI = PIXI;
 
-var model_proxy;
+var model_proxy; //make a global scale handler to use later
 
 (async function () {
     const app = new PIXI.Application({
@@ -129,7 +129,7 @@ var model_proxy;
     });
 
     const model = await Live2DModel.from('shizuku.model.json');
-    model_proxy = model; # make a global scale handler to use later
+    model_proxy = model; 
 
     app.stage.addChild(model);
 
