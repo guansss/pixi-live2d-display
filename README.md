@@ -161,7 +161,7 @@ var model_proxy;
   * 2: normal [default when normal action]
   * 3: Just do it! Do id! [Forced] [default when using audio]
 * Time to code
-```
+```js
 var category_name = "Idle" // name of the morion category
 var animation_index = 0 // index of animation under that motion category
 var priority_number = 3 // if you want to keep the current animation going or move to new animation by force
