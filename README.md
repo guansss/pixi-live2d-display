@@ -81,7 +81,7 @@ To make it clear, here's how you would use these files:
 
 ## Installation
 
-#### Via npm
+#### Via npm (not lipsync patch)
 
 ```sh
 npm install pixi-live2d-display
@@ -97,16 +97,16 @@ import { Live2DModel } from 'pixi-live2d-display/cubism2';
 import { Live2DModel } from 'pixi-live2d-display/cubism4';
 ```
 
-#### Via CDN
+#### Via CDN (lipsync patched)
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.0/dist/index.min.js"></script>
 
 <!-- if only Cubism 2.1 -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@1.0.0/dist/cubism2.min.js"></script>
 
 <!-- if only Cubism 4 -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@1.0.0/dist/cubism4.min.js"></script>
 ```
 
 In this way, all the exported members are available under `PIXI.live2d` namespace, such as `PIXI.live2d.Live2DModel`.
@@ -121,12 +121,15 @@ import { Live2DModel } from 'pixi-live2d-display';
 // reference window.PIXI.Ticker to automatically update Live2D models
 window.PIXI = PIXI;
 
+var model_proxy;
+
 (async function () {
     const app = new PIXI.Application({
         view: document.getElementById('canvas'),
     });
 
     const model = await Live2DModel.from('shizuku.model.json');
+    model_proxy = model; # make a global scale handler to use later
 
     app.stage.addChild(model);
 
@@ -145,6 +148,26 @@ window.PIXI = PIXI;
         }
     });
 })();
+```
+
+## Do some motion manually
+* First either you need to load your model on Live2d viewer app, or the Website by guansss [here](https://guansss.github.io/live2d-viewer-web/)
+* Check for motion category names (like "idle", "" (blank) etc)
+  * Screenshot will be added soon
+* Under those motion categories, each motions are used by their index
+* There are priority table, 
+  * 0: idk
+  * 1: maybe [for idle animation]
+  * 2: normal [default when normal action]
+  * 3: Just do it! Do id! [Forced] [default when using audio]
+* Time to code
+```
+var category_name = "Idle" // name of the morion category
+var animation_index = 0 // index of animation under that motion category
+var priority_number = 3 // if you want to keep the current animation going or move to new animation by force
+var audio_link = "https://media1.vocaroo.com/mp3/13T7cfHidkmN" //[Optional arg, can be null or empty] [must be a complete link (including http and everything)] [must be a wav file, sorry mp3 not supported] [demo link, idk if it works, use somehosting]
+model_proxy.motion(category_name, animation_index, priority_nunber, audio_link)
+// Note: during this animation with sound, other animation will be ignored, even its forced. Once over, it'll be back to normal
 ```
 
 ## Package importing
