@@ -434,6 +434,7 @@ var __async = (__this, __arguments, generator) => {
       audio.volume = this._volume;
       audio.preload = "auto";
       audio.autoplay = true;
+      audio.crossOrigin = "anonymous";
       audio.addEventListener("ended", () => {
         this.dispose(audio);
         onFinish == null ? void 0 : onFinish();
