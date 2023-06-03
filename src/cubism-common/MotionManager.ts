@@ -245,8 +245,14 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         let context: AudioContext | undefined;
 
         if (config.sound) {
-            const isUrlPath = sound && sound.startsWith('http');
             const isBase64Content = sound && sound.startsWith('data:audio/wav;base64');
+            if(sound && !isBase64Content){
+                var A = document.createElement('a');
+                A.href = sound;
+                sound = A.href; // This should be the absolute url
+                // since resolveURL is not working for some reason
+            }
+            const isUrlPath = sound && sound.startsWith('http');
             const soundURL = this.getSoundFile(definition);
             let file = soundURL;
             if (soundURL) {
