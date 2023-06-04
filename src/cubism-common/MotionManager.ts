@@ -261,11 +261,13 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             if (isUrlPath || isBase64Content) {
                 file = sound;
             }
+            const that = this;
             if (file) {
                 try {
                     // start to load the audio
                     audio = SoundManager.add(
                         file,
+                        () => {that.expressionManager && that.expressionManager.resetExpression();}
                         // () => this.currentAudio = undefined,
                         // () => this.currentAudio = undefined,
                     );
