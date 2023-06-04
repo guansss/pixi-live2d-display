@@ -63,7 +63,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      */
     abstract readonly motionDataType: 'json' | 'arraybuffer';
 
-    /**
+    /**expressionManager
      * Can be undefined if the settings defines no expression.
      */
     abstract expressionManager?: ExpressionManager;
@@ -217,8 +217,8 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * @param sound - The wav url file or base64 content
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    async startMotion(group: string, index: number, priority = MotionPriority.NORMAL, sound?: string): Promise<boolean> {
-        // Do not start a new motion if audio is still playing
+    async startMotion(group: string, index: number, priority = MotionPriority.NORMAL, sound?: string, expression?: string): Promise<boolean> {
+        // Does not start a new motion if audio is still playing
         if(this.currentAudio){
             if (!this.currentAudio.ended){
                 return false;
@@ -261,11 +261,13 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             if (isUrlPath || isBase64Content) {
                 file = sound;
             }
+            const that = this;
             if (file) {
                 try {
                     // start to load the audio
                     audio = SoundManager.add(
                         file,
+                        () => {that.expressionManager && that.expressionManager.resetExpression();}
                         // () => this.currentAudio = undefined,
                         // () => this.currentAudio = undefined,
                     );
@@ -311,7 +313,10 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         logger.log(this.tag, 'Start motion:', this.getMotionName(definition));
 
         this.emit('motionStart', group, index, audio);
-
+        
+        if (expression && this.expressionManager){
+            this.expressionManager.setExpression(expression)
+        }
         if (this.state.shouldOverrideExpression()) {
             this.expressionManager && this.expressionManager.resetExpression();
         }

@@ -583,7 +583,7 @@ class MotionManager extends EventEmitter {
     throw new Error("Not implemented.");
   }
   startMotion(_0, _1) {
-    return __async(this, arguments, function* (group, index, priority = MotionPriority.NORMAL, sound) {
+    return __async(this, arguments, function* (group, index, priority = MotionPriority.NORMAL, sound, expression) {
       var _a;
       if (this.currentAudio) {
         if (!this.currentAudio.ended) {
@@ -619,9 +619,12 @@ class MotionManager extends EventEmitter {
         if (isUrlPath || isBase64Content) {
           file = sound;
         }
+        const that = this;
         if (file) {
           try {
-            audio = SoundManager.add(file);
+            audio = SoundManager.add(file, () => {
+              that.expressionManager && that.expressionManager.resetExpression();
+            });
             this.currentAudio = audio;
             context = SoundManager.addContext(this.currentAudio);
             this.currentContext = context;
@@ -649,6 +652,9 @@ class MotionManager extends EventEmitter {
       }
       logger.log(this.tag, "Start motion:", this.getMotionName(definition));
       this.emit("motionStart", group, index, audio);
+      if (expression && this.expressionManager) {
+        this.expressionManager.setExpression(expression);
+      }
       if (this.state.shouldOverrideExpression()) {
         this.expressionManager && this.expressionManager.resetExpression();
       }
