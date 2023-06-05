@@ -1319,8 +1319,8 @@ var __async = (__this, __arguments, generator) => {
     onAnchorChange() {
       this.pivot.set(this.anchor.x * this.internalModel.width, this.anchor.y * this.internalModel.height);
     }
-    motion(group, index, priority, sound) {
-      return index === void 0 ? this.internalModel.motionManager.startRandomMotion(group, priority, sound) : this.internalModel.motionManager.startMotion(group, index, priority, sound);
+    motion(group, index, priority, sound, expression) {
+      return index === void 0 ? this.internalModel.motionManager.startRandomMotion(group, priority, sound) : this.internalModel.motionManager.startMotion(group, index, priority, sound, expression);
     }
     expression(id) {
       if (this.internalModel.motionManager.expressionManager) {
