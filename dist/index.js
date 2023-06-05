@@ -652,11 +652,11 @@ var __async = (__this, __arguments, generator) => {
         }
         logger.log(this.tag, "Start motion:", this.getMotionName(definition));
         this.emit("motionStart", group, index, audio);
-        if (expression && this.expressionManager) {
-          this.expressionManager.setExpression(expression);
-        }
         if (this.state.shouldOverrideExpression()) {
           this.expressionManager && this.expressionManager.resetExpression();
+        }
+        if (expression && this.expressionManager) {
+          this.expressionManager.setExpression(expression);
         }
         this.playing = true;
         this._startMotion(motion);
