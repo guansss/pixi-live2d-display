@@ -652,11 +652,11 @@ class MotionManager extends EventEmitter {
       }
       logger.log(this.tag, "Start motion:", this.getMotionName(definition));
       this.emit("motionStart", group, index, audio);
-      if (expression && this.expressionManager) {
-        this.expressionManager.setExpression(expression);
-      }
       if (this.state.shouldOverrideExpression()) {
         this.expressionManager && this.expressionManager.resetExpression();
+      }
+      if (expression && this.expressionManager) {
+        this.expressionManager.setExpression(expression);
       }
       this.playing = true;
       this._startMotion(motion);
@@ -1319,8 +1319,8 @@ class Live2DModel extends Container {
   onAnchorChange() {
     this.pivot.set(this.anchor.x * this.internalModel.width, this.anchor.y * this.internalModel.height);
   }
-  motion(group, index, priority, sound) {
-    return index === void 0 ? this.internalModel.motionManager.startRandomMotion(group, priority, sound) : this.internalModel.motionManager.startMotion(group, index, priority, sound);
+  motion(group, index, priority, sound, expression) {
+    return index === void 0 ? this.internalModel.motionManager.startRandomMotion(group, priority, sound) : this.internalModel.motionManager.startMotion(group, index, priority, sound, expression);
   }
   expression(id) {
     if (this.internalModel.motionManager.expressionManager) {
