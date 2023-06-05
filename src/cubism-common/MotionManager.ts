@@ -214,10 +214,11 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * @param group - The motion group.
      * @param index - Index in the motion group.
      * @param priority - The priority to be applied.
-     * @param sound - The wav url file or base64 content
+     * @param sound - The audio url to file or base64 content 
+     * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    async startMotion(group: string, index: number, priority = MotionPriority.NORMAL, sound?: string, expression?: string): Promise<boolean> {
+    async startMotion(group: string, index: number, priority = MotionPriority.NORMAL, sound?: string, expression?: number | string): Promise<boolean> {
         // Does not start a new motion if audio is still playing
         if(this.currentAudio){
             if (!this.currentAudio.ended){
