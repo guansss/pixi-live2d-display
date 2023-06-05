@@ -315,11 +315,11 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
 
         this.emit('motionStart', group, index, audio);
         
-        if (expression && this.expressionManager){
-            this.expressionManager.setExpression(expression)
-        }
         if (this.state.shouldOverrideExpression()) {
             this.expressionManager && this.expressionManager.resetExpression();
+        }
+        if (expression && this.expressionManager){
+            this.expressionManager.setExpression(expression)
         }
 
         this.playing = true;
