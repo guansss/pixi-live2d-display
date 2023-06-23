@@ -4221,6 +4221,69 @@ class MotionManager extends EventEmitter {
   _loadMotion(group, index) {
     throw new Error("Not implemented.");
   }
+  speakUp(sound, expression) {
+    return __async(this, null, function* () {
+      if (!config.sound) {
+        return false;
+      }
+      let audio;
+      let analyzer;
+      let context;
+      if (this.currentAudio) {
+        if (!this.currentAudio.ended) {
+          return false;
+        }
+      }
+      let soundURL;
+      const isBase64Content = sound && sound.startsWith("data:audio/wav;base64");
+      if (sound && !isBase64Content) {
+        var A = document.createElement("a");
+        A.href = sound;
+        sound = A.href;
+        soundURL = sound;
+      } else {
+        soundURL = "data:audio/wav;base64";
+      }
+      const isUrlPath = sound && sound.startsWith("http");
+      let file;
+      if (isUrlPath || isBase64Content) {
+        file = sound;
+      }
+      const that = this;
+      if (file) {
+        try {
+          audio = SoundManager.add(file, () => {
+            expression && that.expressionManager && that.expressionManager.resetExpression();
+            that.currentAudio = void 0;
+          }, () => {
+            expression && that.expressionManager && that.expressionManager.resetExpression();
+            that.currentAudio = void 0;
+          });
+          this.currentAudio = audio;
+          context = SoundManager.addContext(this.currentAudio);
+          this.currentContext = context;
+          analyzer = SoundManager.addAnalyzer(this.currentAudio, this.currentContext);
+          this.currentAnalyzer = analyzer;
+        } catch (e) {
+          logger.warn(this.tag, "Failed to create audio", soundURL, e);
+        }
+      }
+      if (audio) {
+        const readyToPlay = SoundManager.play(audio).catch((e) => logger.warn(this.tag, "Failed to play audio", audio.src, e));
+        if (config.motionSync) {
+          yield readyToPlay;
+        }
+      }
+      if (this.state.shouldOverrideExpression()) {
+        this.expressionManager && this.expressionManager.resetExpression();
+      }
+      if (expression && this.expressionManager) {
+        this.expressionManager.setExpression(expression);
+      }
+      this.playing = true;
+      return true;
+    });
+  }
   startMotion(_0, _1) {
     return __async(this, arguments, function* (group, index, priority = MotionPriority.NORMAL, sound, expression) {
       var _a;
@@ -4262,7 +4325,11 @@ class MotionManager extends EventEmitter {
         if (file) {
           try {
             audio = SoundManager.add(file, () => {
-              that.expressionManager && that.expressionManager.resetExpression();
+              expression && that.expressionManager && that.expressionManager.resetExpression();
+              that.currentAudio = void 0;
+            }, () => {
+              expression && that.expressionManager && that.expressionManager.resetExpression();
+              that.currentAudio = void 0;
             });
             this.currentAudio = audio;
             context = SoundManager.addContext(this.currentAudio);
@@ -4289,11 +4356,11 @@ class MotionManager extends EventEmitter {
         }
         return false;
       }
-      logger.log(this.tag, "Start motion:", this.getMotionName(definition));
-      this.emit("motionStart", group, index, audio);
       if (this.state.shouldOverrideExpression()) {
         this.expressionManager && this.expressionManager.resetExpression();
       }
+      logger.log(this.tag, "Start motion:", this.getMotionName(definition));
+      this.emit("motionStart", group, index, audio);
       if (expression && this.expressionManager) {
         this.expressionManager.setExpression(expression);
       }
