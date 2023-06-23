@@ -209,6 +209,97 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         throw new Error('Not implemented.');
     }
 
+
+    /**
+     * Only play sound with lip sync
+     * @param sound - The audio url to file or base64 content 
+     * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
+     * @returns Promise that resolves with true if the sound is playing, false if it's not
+    */
+    async speakUp(sound: string, expression?: number | string) {
+        if (!config.sound) {
+            return false;
+        }
+
+
+        
+        let audio: HTMLAudioElement | undefined;
+        let analyzer: AnalyserNode | undefined;
+        let context: AudioContext | undefined;
+
+
+        if(this.currentAudio){
+            if (!this.currentAudio.ended){
+                return false;
+            }
+        }
+        let soundURL: string | undefined;
+        const isBase64Content = sound && sound.startsWith('data:audio/wav;base64');
+
+        if(sound && !isBase64Content){
+            var A = document.createElement('a');
+            A.href = sound;
+            sound = A.href; // This should be the absolute url
+            // since resolveURL is not working for some reason
+            soundURL = sound;
+        }
+        else {
+            soundURL = 'data:audio/wav;base64';
+        }
+        const isUrlPath = sound && sound.startsWith('http');
+        let file: string | undefined;
+        if (isUrlPath || isBase64Content) {
+            file = sound;
+        }
+        const that = this;
+        if (file) {
+            try {
+                // start to load the audio
+                audio = SoundManager.add(
+                    file,
+                    () => {expression && that.expressionManager && that.expressionManager.resetExpression();
+                            that.currentAudio = undefined}, // reset expression when audio is done
+                    () => {expression && that.expressionManager && that.expressionManager.resetExpression();
+                        that.currentAudio = undefined} // on error
+                );
+                this.currentAudio = audio!;
+
+                // Add context
+                context = SoundManager.addContext(this.currentAudio);
+                this.currentContext = context;
+                
+                // Add analyzer
+                analyzer = SoundManager.addAnalyzer(this.currentAudio, this.currentContext);
+                this.currentAnalyzer = analyzer;
+
+            } catch (e) {
+                logger.warn(this.tag, 'Failed to create audio', soundURL, e);
+            }
+        }
+
+        
+        if (audio) {
+            const readyToPlay = SoundManager.play(audio)
+                .catch(e => logger.warn(this.tag, 'Failed to play audio', audio!.src, e));
+
+            if (config.motionSync) {
+                // wait until the audio is ready
+                await readyToPlay;
+            }
+        }
+        
+        if (this.state.shouldOverrideExpression()) {
+            this.expressionManager && this.expressionManager.resetExpression();
+        }
+        if (expression && this.expressionManager){
+            this.expressionManager.setExpression(expression)
+        }
+
+        this.playing = true;
+
+        return true;
+    }
+
     /**
      * Starts a motion as given priority.
      * @param group - The motion group.
@@ -268,9 +359,10 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
                     // start to load the audio
                     audio = SoundManager.add(
                         file,
-                        () => {that.expressionManager && that.expressionManager.resetExpression();}
-                        // () => this.currentAudio = undefined,
-                        // () => this.currentAudio = undefined,
+                        () => {expression && that.expressionManager && that.expressionManager.resetExpression();
+                                that.currentAudio = undefined}, // reset expression when audio is done
+                        () => {expression && that.expressionManager && that.expressionManager.resetExpression();
+                            that.currentAudio = undefined} // on error
                     );
                     this.currentAudio = audio!;
 
@@ -311,13 +403,15 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             return false;
         }
 
-        logger.log(this.tag, 'Start motion:', this.getMotionName(definition));
-
-        this.emit('motionStart', group, index, audio);
         
         if (this.state.shouldOverrideExpression()) {
             this.expressionManager && this.expressionManager.resetExpression();
         }
+
+        logger.log(this.tag, 'Start motion:', this.getMotionName(definition));
+
+        this.emit('motionStart', group, index, audio);
+        
         if (expression && this.expressionManager){
             this.expressionManager.setExpression(expression)
         }
