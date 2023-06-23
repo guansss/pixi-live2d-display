@@ -5028,6 +5028,9 @@ class Live2DModel extends Container {
   motion(group, index, priority, sound, expression) {
     return index === void 0 ? this.internalModel.motionManager.startRandomMotion(group, priority, sound) : this.internalModel.motionManager.startMotion(group, index, priority, sound, expression);
   }
+  speak(sound, expression) {
+    return this.internalModel.motionManager.speakUp(sound, expression);
+  }
   expression(id) {
     if (this.internalModel.motionManager.expressionManager) {
       return id === void 0 ? this.internalModel.motionManager.expressionManager.setRandomExpression() : this.internalModel.motionManager.expressionManager.setExpression(id);
