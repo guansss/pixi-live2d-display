@@ -100,13 +100,13 @@ import { Live2DModel } from 'pixi-live2d-display/cubism4';
 #### Via CDN (lipsync patched)
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.2/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.3/dist/index.min.js"></script>
 
 <!-- if only Cubism 2.1 -->
-<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@1.0.2/dist/cubism2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@1.0.3/dist/cubism2.min.js"></script>
 
 <!-- if only Cubism 4 -->
-<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@1.0.2/dist/cubism4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@1.0.3/dist/cubism4.min.js"></script>
 ```
 
 In this way, all the exported members are available under `PIXI.live2d` namespace, such as `PIXI.live2d.Live2DModel`.
@@ -165,9 +165,21 @@ var model_proxy; //make a global scale handler to use later
 var category_name = "Idle" // name of the morion category
 var animation_index = 0 // index of animation under that motion category
 var priority_number = 3 // if you want to keep the current animation going or move to new animation by force
-var audio_link = "https://media1.vocaroo.com/mp3/13T7cfHidkmN" //[Optional arg, can be null or empty] [must be a complete link (including http and everything)] [must be a wav file, sorry mp3 not supported] [demo link, idk if it works, use somehosting]
+var audio_link = "https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.3/playground/test.mp3" //[Optional arg, can be null or empty] [relative or full url path] [mp3 or wav file]
 model_proxy.motion(category_name, animation_index, priority_nunber, audio_link)
 // Note: during this animation with sound, other animation will be ignored, even its forced. Once over, it'll be back to normal
+```
+
+## Lipsync Only
+* You can do sound lipsync even without triggering any motion
+* This supports expressions arg too (if you have/need any)
+* Demo code
+```js
+var audio_link = "https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.3/playground/test.mp3" // [relative or full url path] [mp3 or wav file]
+
+var expression = 4; // [Optional arg, can be null or empty] [index|name of expression]
+
+model_proxy.speak(audio_link, expression)
 ```
 
 ## Package importing
