@@ -215,7 +215,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * @param sound - The audio url to file or base64 content 
      * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
      * @returns Promise that resolves with true if the sound is playing, false if it's not
-    */
+     */
     async speakUp(sound: string, expression?: number | string) {
         if (!config.sound) {
             return false;

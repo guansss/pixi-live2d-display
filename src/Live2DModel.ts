@@ -215,6 +215,17 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
             : this.internalModel.motionManager.startMotion(group, index, priority, sound, expression);
     }
 
+
+    /**
+     * Shorthand to start speaking a sound with an expression.
+     * @param sound - The audio url to file or base64 content
+     * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
+     * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
+     */
+    speak(sound: string, expression?: number | string): Promise<boolean> {
+        return this.internalModel.motionManager.speakUp(sound, expression);
+    }
+
     /**
      * Shorthand to set an expression.
      * @param id - Either the index, or the name of the expression. If not presented, a random expression will be set.
