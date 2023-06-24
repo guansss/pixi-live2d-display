@@ -605,7 +605,7 @@ var __async = (__this, __arguments, generator) => {
         } else {
           soundURL = "data:audio/wav;base64";
         }
-        const isUrlPath = sound && sound.startsWith("http");
+        const isUrlPath = sound && (sound.startsWith("http") || sound.startsWith("blob"));
         let file;
         if (isUrlPath || isBase64Content) {
           file = sound;
@@ -621,9 +621,11 @@ var __async = (__this, __arguments, generator) => {
               that.currentAudio = void 0;
             });
             this.currentAudio = audio;
-            if (volume) {
-              audio.volume = volume;
+            let _volume = 1;
+            if (volume !== void 0) {
+              _volume = volume;
             }
+            SoundManager.volume = _volume;
             context = SoundManager.addContext(this.currentAudio);
             this.currentContext = context;
             analyzer = SoundManager.addAnalyzer(this.currentAudio, this.currentContext);
@@ -676,7 +678,7 @@ var __async = (__this, __arguments, generator) => {
             A.href = sound;
             sound = A.href;
           }
-          const isUrlPath = sound && sound.startsWith("http");
+          const isUrlPath = sound && (sound.startsWith("http") || sound.startsWith("blob"));
           const soundURL = this.getSoundFile(definition);
           let file = soundURL;
           if (soundURL) {
@@ -696,9 +698,11 @@ var __async = (__this, __arguments, generator) => {
                 that.currentAudio = void 0;
               });
               this.currentAudio = audio;
-              if (volume) {
-                audio.volume = volume;
+              let _volume = 1;
+              if (volume !== void 0) {
+                _volume = volume;
               }
+              SoundManager.volume = _volume;
               context = SoundManager.addContext(this.currentAudio);
               this.currentContext = context;
               analyzer = SoundManager.addAnalyzer(this.currentAudio, this.currentContext);
