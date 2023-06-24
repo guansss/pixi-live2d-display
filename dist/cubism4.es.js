@@ -4221,7 +4221,7 @@ class MotionManager extends EventEmitter {
   _loadMotion(group, index) {
     throw new Error("Not implemented.");
   }
-  speakUp(sound, expression) {
+  speakUp(sound, volume, expression) {
     return __async(this, null, function* () {
       if (!config.sound) {
         return false;
@@ -4260,6 +4260,9 @@ class MotionManager extends EventEmitter {
             that.currentAudio = void 0;
           });
           this.currentAudio = audio;
+          if (volume) {
+            audio.volume = volume;
+          }
           context = SoundManager.addContext(this.currentAudio);
           this.currentContext = context;
           analyzer = SoundManager.addAnalyzer(this.currentAudio, this.currentContext);
@@ -4285,7 +4288,7 @@ class MotionManager extends EventEmitter {
     });
   }
   startMotion(_0, _1) {
-    return __async(this, arguments, function* (group, index, priority = MotionPriority.NORMAL, sound, expression) {
+    return __async(this, arguments, function* (group, index, priority = MotionPriority.NORMAL, sound, volume, expression) {
       var _a;
       if (this.currentAudio) {
         if (!this.currentAudio.ended) {
@@ -4332,6 +4335,9 @@ class MotionManager extends EventEmitter {
               that.currentAudio = void 0;
             });
             this.currentAudio = audio;
+            if (volume) {
+              audio.volume = volume;
+            }
             context = SoundManager.addContext(this.currentAudio);
             this.currentContext = context;
             analyzer = SoundManager.addAnalyzer(this.currentAudio, this.currentContext);
@@ -5025,11 +5031,11 @@ class Live2DModel extends Container {
   onAnchorChange() {
     this.pivot.set(this.anchor.x * this.internalModel.width, this.anchor.y * this.internalModel.height);
   }
-  motion(group, index, priority, sound, expression) {
-    return index === void 0 ? this.internalModel.motionManager.startRandomMotion(group, priority, sound) : this.internalModel.motionManager.startMotion(group, index, priority, sound, expression);
+  motion(group, index, priority, sound, volume, expression) {
+    return index === void 0 ? this.internalModel.motionManager.startRandomMotion(group, priority) : this.internalModel.motionManager.startMotion(group, index, priority, sound, volume, expression);
   }
-  speak(sound, expression) {
-    return this.internalModel.motionManager.speakUp(sound, expression);
+  speak(sound, volume, expression) {
+    return this.internalModel.motionManager.speakUp(sound, volume, expression);
   }
   expression(id) {
     if (this.internalModel.motionManager.expressionManager) {
