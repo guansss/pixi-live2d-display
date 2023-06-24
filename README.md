@@ -100,13 +100,13 @@ import { Live2DModel } from 'pixi-live2d-display/cubism4';
 #### Via CDN (lipsync patched)
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.3/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.4/dist/index.min.js"></script>
 
 <!-- if only Cubism 2.1 -->
-<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@1.0.3/dist/cubism2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@1.0.4/dist/cubism2.min.js"></script>
 
 <!-- if only Cubism 4 -->
-<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@1.0.3/dist/cubism4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@1.0.4/dist/cubism4.min.js"></script>
 ```
 
 In this way, all the exported members are available under `PIXI.live2d` namespace, such as `PIXI.live2d.Live2DModel`.
@@ -155,18 +155,21 @@ var model_proxy; //make a global scale handler to use later
 * Check for motion category names (like "idle", "" (blank) etc)
   * Screenshot will be added soon
 * Under those motion categories, each motions are used by their index
-* There are priority table, 
-  * 0: idk
+* Motion Priority table, 
+  * 0: no priority
   * 1: maybe [for idle animation]
   * 2: normal [default when normal action]
-  * 3: Just do it! Do id! [Forced] [default when using audio]
+  * 3: Just do it! Do id now! [Forced] [default when using audio]
 * Time to code
 ```js
 var category_name = "Idle" // name of the morion category
 var animation_index = 0 // index of animation under that motion category
 var priority_number = 3 // if you want to keep the current animation going or move to new animation by force
 var audio_link = "https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.3/playground/test.mp3" //[Optional arg, can be null or empty] [relative or full url path] [mp3 or wav file]
-model_proxy.motion(category_name, animation_index, priority_nunber, audio_link)
+var volume = 1; //[Optional arg, can be null or empty] [0.0 - 1.0]
+var expression = 4; //[Optional arg, can be null or empty] [index|name of expression]
+
+model_proxy.motion(category_name, animation_index, priority_number, audio_link, volume, expression)
 // Note: during this animation with sound, other animation will be ignored, even its forced. Once over, it'll be back to normal
 ```
 
@@ -177,9 +180,11 @@ model_proxy.motion(category_name, animation_index, priority_nunber, audio_link)
 ```js
 var audio_link = "https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.3/playground/test.mp3" // [relative or full url path] [mp3 or wav file]
 
+var volume = 1; // [Optional arg, can be null or empty] [0.0 - 1.0]
+
 var expression = 4; // [Optional arg, can be null or empty] [index|name of expression]
 
-model_proxy.speak(audio_link, expression)
+model_proxy.speak(audio_link, volume, expression)
 ```
 
 ## Package importing

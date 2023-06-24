@@ -217,7 +217,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
      * @returns Promise that resolves with true if the sound is playing, false if it's not
      */
-    async speakUp(sound: string, volume?:number, expression?: number | string) {
+    async speakUp(sound: string, volume?: number, expression?: number | string) {
         if (!config.sound) {
             return false;
         }
