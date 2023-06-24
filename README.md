@@ -100,13 +100,21 @@ import { Live2DModel } from 'pixi-live2d-display/cubism4';
 #### Via CDN (lipsync patched)
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.4/dist/index.min.js"></script>
+
+<!-- Load Cubism and PixiJS -->
+<script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi.js@6.5.2/dist/browser/pixi.min.js"></script>
+
+
+<!-- if support for both Cubism 2.1 and 4 -->
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.5/dist/index.min.js"></script>
 
 <!-- if only Cubism 2.1 -->
-<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@1.0.4/dist/cubism2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@1.0.5/dist/cubism2.min.js"></script>
 
 <!-- if only Cubism 4 -->
-<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@1.0.4/dist/cubism4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@1.0.5/dist/cubism4.min.js"></script>
 ```
 
 In this way, all the exported members are available under `PIXI.live2d` namespace, such as `PIXI.live2d.Live2DModel`.
