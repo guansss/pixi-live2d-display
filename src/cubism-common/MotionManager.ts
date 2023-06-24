@@ -247,7 +247,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         else {
             soundURL = 'data:audio/wav;base64';
         }
-        const isUrlPath = sound && sound.startsWith('http');
+        const isUrlPath = sound && (sound.startsWith('http') || sound.startsWith('blob'));
         let file: string | undefined;
         if (isUrlPath || isBase64Content) {
             file = sound;
@@ -264,9 +264,12 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
                         that.currentAudio = undefined} // on error
                 );
                 this.currentAudio = audio!;
-                if (volume){
-                    audio!.volume = volume;
+
+                let _volume: number = 1;
+                if (volume !== undefined){
+                    _volume = volume;
                 }
+                SoundManager.volume = _volume;
 
                 // Add context
                 context = SoundManager.addContext(this.currentAudio);
@@ -349,7 +352,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
                 sound = A.href; // This should be the absolute url
                 // since resolveURL is not working for some reason
             }
-            const isUrlPath = sound && sound.startsWith('http');
+            const isUrlPath = sound && (sound.startsWith('http') || sound.startsWith('blob'));
             const soundURL = this.getSoundFile(definition);
             let file = soundURL;
             if (soundURL) {
@@ -371,9 +374,11 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
                     );
                     this.currentAudio = audio!;
 
-                    if (volume){
-                        audio!.volume = volume;
+                    let _volume: number = 1;
+                    if (volume !== undefined){
+                        _volume = volume;
                     }
+                    SoundManager.volume = _volume;
 
                     // Add context
                     context = SoundManager.addContext(this.currentAudio);
