@@ -210,10 +210,10 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    motion(group: string, index?: number, priority?: MotionPriority, sound?: string, expression?: number | string): Promise<boolean> {
+    motion(group: string, index?: number, priority?: MotionPriority, sound?: string, volume?:number, expression?: number | string): Promise<boolean> {
         return index === undefined
-            ? this.internalModel.motionManager.startRandomMotion(group, priority, sound)
-            : this.internalModel.motionManager.startMotion(group, index, priority, sound, expression);
+            ? this.internalModel.motionManager.startRandomMotion(group, priority)
+            : this.internalModel.motionManager.startMotion(group, index, priority, sound, volume, expression);
     }
 
 
