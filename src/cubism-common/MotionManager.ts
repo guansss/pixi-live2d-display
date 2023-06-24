@@ -211,12 +211,13 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
 
 
     /**
-     * Only play sound with lip sync
+     * Only play sound with lip sync /*new in 1.0.3*
      * @param sound - The audio url to file or base64 content 
+     * @param volume - Volume of the sound (0-1) /*new in 1.0.4*
      * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
      * @returns Promise that resolves with true if the sound is playing, false if it's not
      */
-    async speakUp(sound: string, expression?: number | string) {
+    async speakUp(sound: string, volume?:number, expression?: number | string) {
         if (!config.sound) {
             return false;
         }
@@ -263,6 +264,9 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
                         that.currentAudio = undefined} // on error
                 );
                 this.currentAudio = audio!;
+                if (volume){
+                    audio!.volume = volume;
+                }
 
                 // Add context
                 context = SoundManager.addContext(this.currentAudio);
@@ -306,10 +310,11 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * @param index - Index in the motion group.
      * @param priority - The priority to be applied.
      * @param sound - The audio url to file or base64 content 
+     * @param volume - Volume of the sound (0-1) /*new in 1.0.4*
      * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    async startMotion(group: string, index: number, priority = MotionPriority.NORMAL, sound?: string, expression?: number | string): Promise<boolean> {
+    async startMotion(group: string, index: number, priority = MotionPriority.NORMAL, sound?: string, volume?: number, expression?: number | string): Promise<boolean> {
         // Does not start a new motion if audio is still playing
         if(this.currentAudio){
             if (!this.currentAudio.ended){
@@ -365,6 +370,10 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
                             that.currentAudio = undefined} // on error
                     );
                     this.currentAudio = audio!;
+
+                    if (volume){
+                        audio!.volume = volume;
+                    }
 
                     // Add context
                     context = SoundManager.addContext(this.currentAudio);
