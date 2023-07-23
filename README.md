@@ -14,6 +14,9 @@ This project aims to be a universal Live2D framework on the web platform. While 
 complex and problematic, this project has rewritten it to unify and simplify the APIs, which allows you to control the
 Live2D models on a high level without the need to learn how the internal system works.
 
+#### Feel free to support the Maintainer:
+<a href="https://www.buymeacoffee.com/RaSan147" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 #### Features
 
 -   Supports all versions of Live2D models
