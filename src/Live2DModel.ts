@@ -228,6 +228,14 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         return this.internalModel.motionManager.speakUp(sound, volume, expression);
     }
 
+    
+    /**
+     * Stop current audio playback and lipsync
+     */
+    stopSpeaking() void {
+        return this.internalModel.motionManager.stopSpeaking()
+    }
+
     /**
      * Shorthand to set an expression.
      * @param id - Either the index, or the name of the expression. If not presented, a random expression will be set.
