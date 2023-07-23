@@ -4397,13 +4397,16 @@ var __async = (__this, __arguments, generator) => {
         return false;
       });
     }
-    stopAllMotions() {
-      this._stopAllMotions();
-      this.state.reset();
+    stopSpeaking() {
       if (this.currentAudio) {
         SoundManager.dispose(this.currentAudio);
         this.currentAudio = void 0;
       }
+    }
+    stopAllMotions() {
+      this._stopAllMotions();
+      this.state.reset();
+      this.stopSpeaking();
     }
     update(model, now) {
       var _a;
@@ -5038,8 +5041,14 @@ var __async = (__this, __arguments, generator) => {
     motion(group, index, priority, sound, volume, expression) {
       return index === void 0 ? this.internalModel.motionManager.startRandomMotion(group, priority) : this.internalModel.motionManager.startMotion(group, index, priority, sound, volume, expression);
     }
+    resetMotions() {
+      return this.internalModel.motionManager.stopAllMotions();
+    }
     speak(sound, volume, expression) {
       return this.internalModel.motionManager.speakUp(sound, volume, expression);
+    }
+    stopSpeaking() {
+      return this.internalModel.motionManager.stopSpeaking();
     }
     expression(id) {
       if (this.internalModel.motionManager.expressionManager) {
