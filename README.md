@@ -195,6 +195,29 @@ var expression = 4; // [Optional arg, can be null or empty] [index|name of expre
 model_proxy.speak(audio_link, volume, expression)
 ```
 
+## Suddenly stop audio and lipsync
+* Demo code
+```js
+model_proxy.stopSpeaking()
+```
+
+## Reset motions as well as audio and lipsync
+* Demo code
+```js
+model_proxy.resetMotions()
+```
+
+## Totally destroy the model
+* This will also stop the motion and audio from running and hide the model
+* Demo code
+```js
+model_proxy.destroy()
+```
+
+# See here for more Documentation: [Documentation](https://guansss.github.io/pixi-live2d-display/)
+
+
+
 ## Package importing
 
 When importing Pixi packages on-demand, you may need to manually register some plugins to enable optional features.

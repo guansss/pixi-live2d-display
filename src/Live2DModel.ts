@@ -216,6 +216,14 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
             : this.internalModel.motionManager.startMotion(group, index, priority, sound, volume, expression);
     }
 
+    
+    /**
+     * Stops all playing motions as well as the sound.
+     */
+    resetMotions(): void {
+        return this.internalModel.motionManager.stopAllMotions();
+    }
+
 
     /**
      * Shorthand to start speaking a sound with an expression. /*new in 1.0.3*
@@ -232,7 +240,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     /**
      * Stop current audio playback and lipsync
      */
-    stopSpeaking() void {
+    stopSpeaking(): void {
         return this.internalModel.motionManager.stopSpeaking()
     }
 

@@ -469,7 +469,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
     /**
      * Stop current audio playback and lipsync
      */
-    stopSpeaking() void {
+    stopSpeaking(): void {
         if (this.currentAudio) {
             SoundManager.dispose(this.currentAudio);
             this.currentAudio = undefined;
@@ -484,7 +484,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
 
         this.state.reset();
 
-        this.stoopSpeaking()
+        this.stopSpeaking()
     }
 
     /**
