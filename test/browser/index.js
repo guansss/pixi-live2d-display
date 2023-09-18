@@ -14,7 +14,7 @@ describe('Browser <script> tag', function () {
             await loadScript('../dist/index.js');
             await loadScript('../dist/extra.js');
         } catch (e) {
-            console.warn('Failed to load production bundle. Have you run `yarn build`?');
+            console.warn('Failed to load production bundle. Have you run `npm run build`?');
         }
 
         // load original, non-bundled source
