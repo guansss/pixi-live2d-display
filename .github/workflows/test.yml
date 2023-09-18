@@ -1,50 +1,38 @@
 name: Test CI
 
-on: [ push ]
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
           node-version: 16
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Yarn cache
-        uses: actions/cache@v2
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Core cache
-        uses: actions/cache@v2
-        id: core-cache
+      - name: Cache core files
+        uses: actions/cache@v3
+        id: cache-core
         with:
           path: |
             core/*
             !core/live2d.d.ts
-          key: ${{ runner.os }}-
-          restore-keys: |
-            ${{ runner.os }}-
+          key: ${{ runner.os }}-core-${{ hashFiles('scripts/setup.js') }}
 
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
+      - run: npm ci
 
-      - name: Setup core
-        if: steps.core-cache.outputs.cache-hit != 'true'
-        run: yarn setup
+      - if: steps.cache-core.outputs.cache-hit != 'true'
+        run: npm run setup
 
       - uses: GabrielBB/xvfb-action@v1.0
         with:
-          run: yarn test:ci
+          run: npm run test:ci
