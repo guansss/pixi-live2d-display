@@ -52,12 +52,7 @@
   ],
   "types": "types/index.d.ts",
   "peerDependencies": {
-    "@pixi/core": "^6",
-    "@pixi/display": "^6",
-    "@pixi/loaders": "^6",
-    "@pixi/math": "^6",
-    "@pixi/sprite": "^6",
-    "@pixi/utils": "^6"
+    "pixi.js": "^6"
   },
   "devDependencies": {
     "@types/chai": "^4.3.1",
