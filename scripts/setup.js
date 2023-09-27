@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const AdmZip = require('adm-zip');
 
-const overwriteExisting = false;
+const overwriteExisting = true;
 const coreDir = path.resolve(__dirname, '../core') + '/';
 
 const downloadFiles = [{
@@ -11,12 +11,12 @@ const downloadFiles = [{
     url: 'http://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js',
 }, {
     file: coreDir + 'sdk4.zip',
-    url: 'https://cubism.live2d.com/sdk-web/bin/CubismSdkForWeb-4-r.1.zip',
+    url: 'https://cubism.live2d.com/sdk-web/bin/CubismSdkForWeb-4-r.7.zip',
     unzip: [{
-        entryFile: 'CubismSdkForWeb-4-r.1/Core/live2dcubismcore.js',
+        entryFile: 'CubismSdkForWeb-4-r.7/Core/live2dcubismcore.js',
         outputFile: coreDir + 'live2dcubismcore.js',
     }, {
-        entryFile: 'CubismSdkForWeb-4-r.1/Core/live2dcubismcore.d.ts',
+        entryFile: 'CubismSdkForWeb-4-r.7/Core/live2dcubismcore.d.ts',
         outputFile: coreDir + 'live2dcubismcore.d.ts',
     }],
 }];
