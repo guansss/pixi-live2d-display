@@ -14,30 +14,32 @@ Live2D models on a high level without the need to learn how the internal system 
 
 #### Features
 
--   Supports all versions of Live2D models
--   Supports PIXI.RenderTexture and PIXI.Filter
--   Pixi-style transform APIs: position, scale, rotation, skew, anchor
--   Automatic interactions: focusing, hit-testing
--   Enhanced motion reserving logic compared to the official framework
--   Loading from uploaded files / zip files (experimental)
--   Fully typed - we all love types!
+- Supports all versions of Live2D models
+- Supports PIXI.RenderTexture and PIXI.Filter
+- Pixi-style transform APIs: position, scale, rotation, skew, anchor
+- Automatic interactions: focusing, hit-testing
+- Enhanced motion reserving logic compared to the official framework
+- Loading from uploaded files / zip files (experimental)
+- Fully typed - we all love types!
 
 #### Requirements
 
--   PixiJS: >6
--   Browser: WebGL, ES6
+- PixiJS: 6.x
+- Cubism core: 2.1 or 4
+- Browser: WebGL, ES6
 
 #### Demos
 
--   [Basic demo](https://codepen.io/guansss/pen/oNzoNoz/left?editors=1010)
--   [Interaction demo](https://codepen.io/guansss/pen/KKgXBOP/left?editors=0010)
--   [Render texture & filter demo](https://codepen.io/guansss/pen/qBaMNQV/left?editors=1010)
--   [Live2D Viewer Online](https://guansss.github.io/live2d-viewer-web/)
+- [Basic demo](https://codepen.io/guansss/pen/oNzoNoz/left?editors=1010)
+- [Interaction demo](https://codepen.io/guansss/pen/KKgXBOP/left?editors=0010)
+- [Render texture & filter demo](https://codepen.io/guansss/pen/qBaMNQV/left?editors=1010)
+- [Live2D Viewer Online](https://guansss.github.io/live2d-viewer-web/)
 
 #### Documentations
 
--   [Documentation](https://guansss.github.io/pixi-live2d-display)
--   [API Documentation](https://guansss.github.io/pixi-live2d-display/api/index.html)
+- [Documentation](https://guansss.github.io/pixi-live2d-display)
+- [API Documentation](https://guansss.github.io/pixi-live2d-display/api/index.html)
+- [Development Notes](DEVELOPMENT.md)
 
 ## Cubism
 
@@ -73,9 +75,9 @@ of `cubism2.js` and `cubism4.js`.
 
 To make it clear, here's how you would use these files:
 
--   Use `cubism2.js`+`live2d.min.js` to support Cubism 2.1 models
--   Use `cubism4.js`+`live2dcubismcore.min.js` to support Cubism 3 and Cubism 4 models
--   Use `index.js`+`live2d.min.js`+`live2dcubismcore.min.js` to support all versions of models
+- Use `cubism2.js`+`live2d.min.js` to support Cubism 2.1 models
+- Use `cubism4.js`+`live2dcubismcore.min.js` to support Cubism 3 and Cubism 4 models
+- Use `index.js`+`live2d.min.js`+`live2dcubismcore.min.js` to support all versions of models
 
 ## Installation
 
@@ -120,28 +122,28 @@ import { Live2DModel } from 'pixi-live2d-display';
 window.PIXI = PIXI;
 
 (async function () {
-    const app = new PIXI.Application({
-        view: document.getElementById('canvas'),
-    });
+  const app = new PIXI.Application({
+    view: document.getElementById('canvas'),
+  });
 
-    const model = await Live2DModel.from('shizuku.model.json');
+  const model = await Live2DModel.from('shizuku.model.json');
 
-    app.stage.addChild(model);
+  app.stage.addChild(model);
 
-    // transforms
-    model.x = 100;
-    model.y = 100;
-    model.rotation = Math.PI;
-    model.skew.x = Math.PI;
-    model.scale.set(2, 2);
-    model.anchor.set(0.5, 0.5);
+  // transforms
+  model.x = 100;
+  model.y = 100;
+  model.rotation = Math.PI;
+  model.skew.x = Math.PI;
+  model.scale.set(2, 2);
+  model.anchor.set(0.5, 0.5);
 
-    // interaction
-    model.on('hit', (hitAreas) => {
-        if (hitAreas.includes('body')) {
-            model.motion('tap_body');
-        }
-    });
+  // interaction
+  model.on('hit', (hitAreas) => {
+    if (hitAreas.includes('body')) {
+      model.motion('tap_body');
+    }
+  });
 })();
 ```
 
@@ -165,13 +167,13 @@ Application.registerPlugin(TickerPlugin);
 Renderer.registerPlugin('interaction', InteractionManager);
 
 (async function () {
-    const app = new Application({
-        view: document.getElementById('canvas'),
-    });
+  const app = new Application({
+    view: document.getElementById('canvas'),
+  });
 
-    const model = await Live2DModel.from('shizuku.model.json');
+  const model = await Live2DModel.from('shizuku.model.json');
 
-    app.stage.addChild(model);
+  app.stage.addChild(model);
 })();
 ```
 
