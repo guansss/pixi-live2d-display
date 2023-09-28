@@ -133,11 +133,6 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      */
     deltaTime: DOMHighResTimeStamp = 0;
 
-    /**
-     * True if the model has been updated at least once since created.
-     */
-    wasUpdated = false;
-
     protected _autoUpdate = false;
 
     /**
@@ -336,17 +331,11 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         this.deltaTime += dt;
         this.elapsedTime += dt;
 
-        this.wasUpdated = true;
-
         // don't call `this.internalModel.update()` here, because it requires WebGL context
     }
 
     override _render(renderer: Renderer): void {
         this.registerInteraction(renderer.plugins.interaction);
-
-        if (!this.wasUpdated) {
-            return;
-        }
 
         // reset certain systems in renderer to make Live2D's drawing system compatible with Pixi
         renderer.batch.reset();
