@@ -12,6 +12,9 @@ This project aims to be a universal Live2D framework on the web platform. While 
 complex and problematic, this project has rewritten it to unify and simplify the APIs, which allows you to control the
 Live2D models on a high level without the need to learn how the internal system works.
 
+#### Feel free to support the Maintainer:
+<a href="https://www.buymeacoffee.com/RaSan147" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 #### Features
 
 - Supports all versions of Live2D models
@@ -81,7 +84,7 @@ To make it clear, here's how you would use these files:
 
 ## Installation
 
-#### Via npm
+#### Via npm (not lipsync patch)
 
 ```sh
 npm install pixi-live2d-display
@@ -97,16 +100,24 @@ import { Live2DModel } from 'pixi-live2d-display/cubism2';
 import { Live2DModel } from 'pixi-live2d-display/cubism4';
 ```
 
-#### Via CDN
+#### Via CDN (lipsync patched)
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/index.min.js"></script>
+
+<!-- Load Cubism and PixiJS -->
+<script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi.js@6.5.2/dist/browser/pixi.min.js"></script>
+
+
+<!-- if support for both Cubism 2.1 and 4 -->
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.6/dist/index.min.js"></script>
 
 <!-- if only Cubism 2.1 -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@1.0.6/dist/cubism2.min.js"></script>
 
 <!-- if only Cubism 4 -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@1.0.6/dist/cubism4.min.js"></script>
 ```
 
 In this way, all the exported members are available under `PIXI.live2d` namespace, such as `PIXI.live2d.Live2DModel`.
@@ -121,31 +132,94 @@ import { Live2DModel } from 'pixi-live2d-display';
 // reference window.PIXI.Ticker to automatically update Live2D models
 window.PIXI = PIXI;
 
+var model_proxy; //make a global scale handler to use later
+
 (async function () {
-  const app = new PIXI.Application({
-    view: document.getElementById('canvas'),
-  });
+    const app = new PIXI.Application({
+        view: document.getElementById('canvas'),
+    });
 
-  const model = await Live2DModel.from('shizuku.model.json');
+    const model = await Live2DModel.from('shizuku.model.json');
+    model_proxy = model; 
 
-  app.stage.addChild(model);
+    app.stage.addChild(model);
 
-  // transforms
-  model.x = 100;
-  model.y = 100;
-  model.rotation = Math.PI;
-  model.skew.x = Math.PI;
-  model.scale.set(2, 2);
-  model.anchor.set(0.5, 0.5);
+    // transforms
+    model.x = 100;
+    model.y = 100;
+    model.rotation = Math.PI;
+    model.skew.x = Math.PI;
+    model.scale.set(2, 2);
+    model.anchor.set(0.5, 0.5);
 
-  // interaction
-  model.on('hit', (hitAreas) => {
-    if (hitAreas.includes('body')) {
-      model.motion('tap_body');
-    }
-  });
+    // interaction
+    model.on('hit', (hitAreas) => {
+        if (hitAreas.includes('body')) {
+            model.motion('tap_body');
+        }
+    });
 })();
 ```
+
+## Do some motion manually
+* First either you need to load your model on Live2d viewer app, or the Website by guansss [here](https://guansss.github.io/live2d-viewer-web/)
+* Check for motion category names (like "idle", "" (blank) etc)
+  * Screenshot will be added soon
+* Under those motion categories, each motions are used by their index
+* Motion Priority table, 
+  * 0: no priority
+  * 1: maybe [for idle animation]
+  * 2: normal [default when normal action]
+  * 3: Just do it! Do id now! [Forced] [default when using audio]
+* Time to code
+```js
+var category_name = "Idle" // name of the morion category
+var animation_index = 0 // index of animation under that motion category
+var priority_number = 3 // if you want to keep the current animation going or move to new animation by force
+var audio_link = "https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.3/playground/test.mp3" //[Optional arg, can be null or empty] [relative or full url path] [mp3 or wav file]
+var volume = 1; //[Optional arg, can be null or empty] [0.0 - 1.0]
+var expression = 4; //[Optional arg, can be null or empty] [index|name of expression]
+
+model_proxy.motion(category_name, animation_index, priority_number, audio_link, volume, expression)
+// Note: during this animation with sound, other animation will be ignored, even its forced. Once over, it'll be back to normal
+```
+
+## Lipsync Only
+* You can do sound lipsync even without triggering any motion
+* This supports expressions arg too (if you have/need any)
+* Demo code
+```js
+var audio_link = "https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.3/playground/test.mp3" // [relative or full url path] [mp3 or wav file]
+
+var volume = 1; // [Optional arg, can be null or empty] [0.0 - 1.0]
+
+var expression = 4; // [Optional arg, can be null or empty] [index|name of expression]
+
+model_proxy.speak(audio_link, volume, expression)
+```
+
+## Suddenly stop audio and lipsync
+* Demo code
+```js
+model_proxy.stopSpeaking()
+```
+
+## Reset motions as well as audio and lipsync
+* Demo code
+```js
+model_proxy.resetMotions()
+```
+
+## Totally destroy the model
+* This will also stop the motion and audio from running and hide the model
+* Demo code
+```js
+model_proxy.destroy()
+```
+
+# See here for more Documentation: [Documentation](https://guansss.github.io/pixi-live2d-display/)
+
+
 
 ## Package importing
 

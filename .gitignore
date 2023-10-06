@@ -7,9 +7,8 @@ core
 /build
 /*.build
 /lib
-/dist
-/types
 /site
+/types
 
 .DS_Store
 node_modules

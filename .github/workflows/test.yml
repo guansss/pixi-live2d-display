@@ -14,6 +14,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: true
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
 
       - uses: actions/setup-node@v3
         with:
@@ -35,4 +36,18 @@ jobs:
 
       - uses: GabrielBB/xvfb-action@v1.0
         with:
-          run: npm run test:ci
+          run: yarn test:ci
+          
+      - name: Commit files
+        run: |
+          git config --global user.name 'RaSan147'
+          git config --global user.email '34002411+RaSan147@users.noreply.github.com'
+          git add --all
+          git commit -am "Automated report"
+          git push
+
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: ${{ github.workspace }}/dist

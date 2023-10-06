@@ -6,6 +6,8 @@ import { Live2DEyeBlink } from './Live2DEyeBlink';
 import { Live2DPhysics } from './Live2DPhysics';
 import { Live2DPose } from './Live2DPose';
 
+import { clamp, rand } from '@/utils';
+
 // prettier-ignore
 const tempMatrixArray = new Float32Array([
     1, 0, 0, 0,
@@ -20,6 +22,8 @@ export class Cubism2InternalModel extends InternalModel {
     coreModel: Live2DModelWebGL;
     motionManager: Cubism2MotionManager;
 
+
+		lipSync = true;
     eyeBlink?: Live2DEyeBlink;
 
     declare physics?: Live2DPhysics;
@@ -33,6 +37,7 @@ export class Cubism2InternalModel extends InternalModel {
     angleZParamIndex: number;
     bodyAngleXParamIndex: number;
     breathParamIndex: number;
+    mouthFormIndex: number;
 
     textureFlipY = true;
 
@@ -62,6 +67,8 @@ export class Cubism2InternalModel extends InternalModel {
         this.angleZParamIndex = coreModel.getParamIndex('PARAM_ANGLE_Z');
         this.bodyAngleXParamIndex = coreModel.getParamIndex('PARAM_BODY_ANGLE_X');
         this.breathParamIndex = coreModel.getParamIndex('PARAM_BREATH');
+        this.mouthFormIndex = coreModel.getParamIndex('PARAM_MOUTH_FORM');
+        
 
         this.init();
     }
@@ -217,6 +224,28 @@ export class Cubism2InternalModel extends InternalModel {
 
         this.updateFocus();
         this.updateNaturalMovements(dt, now);
+        
+        
+        // CHECK lip sync API
+        // and IF audio is playing
+        if (this.lipSync && this.motionManager.currentAudio) {
+            //let value = parseFloat(Math.random().toFixed(1));
+            let value = this.motionManager.mouthSync()
+            let min_ = 0;
+            let max_ = 1;
+            let weight = 1.2;  // Fix small mouth when speaking
+            
+            if (value > 0) {
+                min_ = 0.4; // Fix small mouth when speaking
+            }
+    
+            value = clamp(value * weight, min_, max_); // must be between 0 (min) and 1 (max)
+        
+            for (let i = 0; i < this.motionManager.lipSyncIds.length; ++i) {
+            		this.coreModel.setParamFloat(this.coreModel.getParamIndex(this.motionManager.lipSyncIds[i]), value);
+            }
+        }
+        
 
         this.physics?.update(now);
         this.pose?.update(dt);

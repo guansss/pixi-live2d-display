@@ -63,7 +63,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      */
     abstract readonly motionDataType: 'json' | 'arraybuffer';
 
-    /**
+    /**expressionManager
      * Can be undefined if the settings defines no expression.
      */
     abstract expressionManager?: ExpressionManager;
@@ -90,6 +90,16 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * Audio element of the current motion if a sound file is defined with it.
      */
     currentAudio?: HTMLAudioElement;
+
+    /**
+     * Analyzer element for the current sound being played.
+     */
+    currentAnalyzer?: AnalyserNode;
+
+    /**
+     * Context element for the current sound being played.
+     */
+    currentContext?: AudioContext;
 
     /**
      * Flags there's a motion playing.
@@ -199,14 +209,122 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         throw new Error('Not implemented.');
     }
 
+
+    /**
+     * Only play sound with lip sync /*new in 1.0.3*
+     * @param sound - The audio url to file or base64 content 
+     * @param volume - Volume of the sound (0-1) /*new in 1.0.4*
+     * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
+     * @returns Promise that resolves with true if the sound is playing, false if it's not
+     */
+    async speakUp(sound: string, volume?: number, expression?: number | string) {
+        if (!config.sound) {
+            return false;
+        }
+
+
+        
+        let audio: HTMLAudioElement | undefined;
+        let analyzer: AnalyserNode | undefined;
+        let context: AudioContext | undefined;
+
+
+        if(this.currentAudio){
+            if (!this.currentAudio.ended){
+                return false;
+            }
+        }
+        let soundURL: string | undefined;
+        const isBase64Content = sound && sound.startsWith('data:audio/wav;base64');
+
+        if(sound && !isBase64Content){
+            var A = document.createElement('a');
+            A.href = sound;
+            sound = A.href; // This should be the absolute url
+            // since resolveURL is not working for some reason
+            soundURL = sound;
+        }
+        else {
+            soundURL = 'data:audio/wav;base64';
+        }
+        const isUrlPath = sound && (sound.startsWith('http') || sound.startsWith('blob'));
+        let file: string | undefined;
+        if (isUrlPath || isBase64Content) {
+            file = sound;
+        }
+        const that = this;
+        if (file) {
+            try {
+                // start to load the audio
+                audio = SoundManager.add(
+                    file,
+                    () => {expression && that.expressionManager && that.expressionManager.resetExpression();
+                            that.currentAudio = undefined}, // reset expression when audio is done
+                    () => {expression && that.expressionManager && that.expressionManager.resetExpression();
+                        that.currentAudio = undefined} // on error
+                );
+                this.currentAudio = audio!;
+
+                let _volume: number = 1;
+                if (volume !== undefined){
+                    _volume = volume;
+                }
+                SoundManager.volume = _volume;
+
+                // Add context
+                context = SoundManager.addContext(this.currentAudio);
+                this.currentContext = context;
+                
+                // Add analyzer
+                analyzer = SoundManager.addAnalyzer(this.currentAudio, this.currentContext);
+                this.currentAnalyzer = analyzer;
+
+            } catch (e) {
+                logger.warn(this.tag, 'Failed to create audio', soundURL, e);
+            }
+        }
+
+        
+        if (audio) {
+            const readyToPlay = SoundManager.play(audio)
+                .catch(e => logger.warn(this.tag, 'Failed to play audio', audio!.src, e));
+
+            if (config.motionSync) {
+                // wait until the audio is ready
+                await readyToPlay;
+            }
+        }
+        
+        if (this.state.shouldOverrideExpression()) {
+            this.expressionManager && this.expressionManager.resetExpression();
+        }
+        if (expression && this.expressionManager){
+            this.expressionManager.setExpression(expression)
+        }
+
+        this.playing = true;
+
+        return true;
+    }
+
     /**
      * Starts a motion as given priority.
      * @param group - The motion group.
      * @param index - Index in the motion group.
      * @param priority - The priority to be applied.
+     * @param sound - The audio url to file or base64 content 
+     * @param volume - Volume of the sound (0-1) /*new in 1.0.4*
+     * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    async startMotion(group: string, index: number, priority = MotionPriority.NORMAL): Promise<boolean> {
+    async startMotion(group: string, index: number, priority = MotionPriority.NORMAL, sound?: string, volume?: number, expression?: number | string): Promise<boolean> {
+        // Does not start a new motion if audio is still playing
+        if(this.currentAudio){
+            if (!this.currentAudio.ended){
+                return false;
+            }
+        }
+
         if (!this.state.reserve(group, index, priority)) {
             return false;
         }
@@ -223,20 +341,53 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         }
 
         let audio: HTMLAudioElement | undefined;
+        let analyzer: AnalyserNode | undefined;
+        let context: AudioContext | undefined;
 
         if (config.sound) {
+            const isBase64Content = sound && sound.startsWith('data:audio/wav;base64');
+            if(sound && !isBase64Content){
+                var A = document.createElement('a');
+                A.href = sound;
+                sound = A.href; // This should be the absolute url
+                // since resolveURL is not working for some reason
+            }
+            const isUrlPath = sound && (sound.startsWith('http') || sound.startsWith('blob'));
             const soundURL = this.getSoundFile(definition);
-
+            let file = soundURL;
             if (soundURL) {
+                file = this.settings.resolveURL(soundURL) + "?cache-buster=" + new Date().getTime();
+            }
+            if (isUrlPath || isBase64Content) {
+                file = sound;
+            }
+            const that = this;
+            if (file) {
                 try {
                     // start to load the audio
                     audio = SoundManager.add(
-                        this.settings.resolveURL(soundURL),
-                        () => this.currentAudio = undefined,
-                        () => this.currentAudio = undefined,
+                        file,
+                        () => {expression && that.expressionManager && that.expressionManager.resetExpression();
+                                that.currentAudio = undefined}, // reset expression when audio is done
+                        () => {expression && that.expressionManager && that.expressionManager.resetExpression();
+                            that.currentAudio = undefined} // on error
                     );
+                    this.currentAudio = audio!;
 
-                    this.currentAudio = audio;
+                    let _volume: number = 1;
+                    if (volume !== undefined){
+                        _volume = volume;
+                    }
+                    SoundManager.volume = _volume;
+
+                    // Add context
+                    context = SoundManager.addContext(this.currentAudio);
+                    this.currentContext = context;
+                    
+                    // Add analyzer
+                    analyzer = SoundManager.addAnalyzer(this.currentAudio, this.currentContext);
+                    this.currentAnalyzer = analyzer;
+
                 } catch (e) {
                     logger.warn(this.tag, 'Failed to create audio', soundURL, e);
                 }
@@ -246,6 +397,8 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         const motion = await this.loadMotion(group, index);
 
         if (audio) {
+            priority = 3; // FORCED: MAKE SURE SOUND IS PLAYED
+            
             const readyToPlay = SoundManager.play(audio)
                 .catch(e => logger.warn(this.tag, 'Failed to play audio', audio!.src, e));
 
@@ -264,12 +417,17 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             return false;
         }
 
+        
+        if (this.state.shouldOverrideExpression()) {
+            this.expressionManager && this.expressionManager.resetExpression();
+        }
+
         logger.log(this.tag, 'Start motion:', this.getMotionName(definition));
 
         this.emit('motionStart', group, index, audio);
-
-        if (this.state.shouldOverrideExpression()) {
-            this.expressionManager && this.expressionManager.resetExpression();
+        
+        if (expression && this.expressionManager){
+            this.expressionManager.setExpression(expression)
         }
 
         this.playing = true;
@@ -283,9 +441,10 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * Starts a random Motion as given priority.
      * @param group - The motion group.
      * @param priority - The priority to be applied.
+     * @param sound - The wav url file or base64 content
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    async startRandomMotion(group: string, priority?: MotionPriority): Promise<boolean> {
+    async startRandomMotion(group: string, priority?: MotionPriority, sound?: string): Promise<boolean> {
         const groupDefs = this.definitions[group];
 
         if (groupDefs?.length) {
@@ -300,11 +459,21 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             if (availableIndices.length) {
                 const index = Math.floor(Math.random() * availableIndices.length);
 
-                return this.startMotion(group, availableIndices[index]!, priority);
+                return this.startMotion(group, availableIndices[index]!, priority, sound);
             }
         }
 
         return false;
+    }
+
+    /**
+     * Stop current audio playback and lipsync
+     */
+    stopSpeaking(): void {
+        if (this.currentAudio) {
+            SoundManager.dispose(this.currentAudio);
+            this.currentAudio = undefined;
+        }
     }
 
     /**
@@ -315,10 +484,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
 
         this.state.reset();
 
-        if (this.currentAudio) {
-            SoundManager.dispose(this.currentAudio);
-            this.currentAudio = undefined;
-        }
+        this.stopSpeaking()
     }
 
     /**
@@ -347,6 +513,18 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         }
 
         return this.updateParameters(model, now);
+    }
+
+    /**
+     * Move the mouth
+     * 
+     */
+     mouthSync(): number {
+        if (this.currentAnalyzer) {
+            return SoundManager.analyze(this.currentAnalyzer);
+        } else {
+            return 0;
+        }
     }
 
     /**
