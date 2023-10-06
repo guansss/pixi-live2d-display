@@ -561,6 +561,21 @@ var __async = (__this, __arguments, generator) => {
         0,
         0,
         0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
         0
       ]);
       const n = 4;
@@ -577,6 +592,21 @@ var __async = (__this, __arguments, generator) => {
     }
     loadIdentity() {
       const c = new Float32Array([
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
         1,
         0,
         0,
@@ -702,7 +732,9 @@ var __async = (__this, __arguments, generator) => {
     drawModel() {
       if (this.getModel() == null)
         return;
+      this.saveProfile();
       this.doDrawModel();
+      this.restoreProfile();
     }
     setMvpMatrix(matrix44) {
       this._mvpMatrix4x4.setMatrix(matrix44.getArray());
@@ -752,19 +784,26 @@ var __async = (__this, __arguments, generator) => {
       return this._isCulling;
     }
     setAnisotropy(n) {
-      this._anisortopy = n;
+      this._anisotropy = n;
     }
     getAnisotropy() {
-      return this._anisortopy;
+      return this._anisotropy;
     }
     getModel() {
       return this._model;
     }
+    useHighPrecisionMask(high) {
+      this._useHighPrecisionMask = high;
+    }
+    isUsingHighPrecisionMask() {
+      return this._useHighPrecisionMask;
+    }
     constructor() {
       this._isCulling = false;
       this._isPremultipliedAlpha = false;
-      this._anisortopy = 0;
+      this._anisotropy = 0;
       this._modelColor = new CubismTextureColor();
+      this._useHighPrecisionMask = false;
       this._mvpMatrix4x4 = new CubismMatrix44();
       this._mvpMatrix4x4.loadIdentity();
     }
@@ -776,11 +815,11 @@ var __async = (__this, __arguments, generator) => {
     return CubismBlendMode2;
   })(CubismBlendMode || {});
   class CubismTextureColor {
-    constructor() {
-      this.R = 1;
-      this.G = 1;
-      this.B = 1;
-      this.A = 1;
+    constructor(r = 1, g = 1, b = 1, a = 1) {
+      this.R = r;
+      this.G = g;
+      this.B = b;
+      this.A = a;
     }
   }
   let s_isStarted = false;
@@ -822,7 +861,7 @@ var __async = (__this, __arguments, generator) => {
       s_isInitialized = false;
       s_option = void 0;
     }
-    static initialize() {
+    static initialize(memorySize = 0) {
       if (!s_isStarted) {
         CubismLogWarning("CubismFramework is not started.");
         return;
@@ -831,6 +870,7 @@ var __async = (__this, __arguments, generator) => {
         CubismLogWarning("CubismFramework.initialize() skipped, already initialized.");
         return;
       }
+      Live2DCubismCore.Memory.initializeAmountOfMemory(memorySize);
       s_isInitialized = true;
       CubismLogInfo("CubismFramework.initialize() is complete.");
     }
@@ -920,10 +960,34 @@ var __async = (__this, __arguments, generator) => {
     constructor() {
     }
   }
+  class DrawableColorData {
+    constructor(isOverwritten = false, color = new CubismTextureColor()) {
+      this.isOverwritten = isOverwritten;
+      this.Color = color;
+    }
+  }
+  class PartColorData {
+    constructor(isOverwritten = false, color = new CubismTextureColor()) {
+      this.isOverwritten = isOverwritten;
+      this.Color = color;
+    }
+  }
+  class DrawableCullingData {
+    constructor(isOverwritten = false, isCulling = false) {
+      this.isOverwritten = isOverwritten;
+      this.isCulling = isCulling;
+    }
+  }
   class CubismModel {
     update() {
       this._model.update();
       this._model.drawables.resetDynamicFlags();
+    }
+    getPixelsPerUnit() {
+      if (this._model == null) {
+        return 0;
+      }
+      return this._model.canvasinfo.PixelsPerUnit;
     }
     getCanvasWidth() {
       if (this._model == null) {
@@ -948,6 +1012,150 @@ var __async = (__this, __arguments, generator) => {
         }
       }
     }
+    getMultiplyColor(index) {
+      if (this.getOverwriteFlagForModelMultiplyColors() || this.getOverwriteFlagForDrawableMultiplyColors(index)) {
+        return this._userMultiplyColors[index].Color;
+      }
+      const color = this.getDrawableMultiplyColor(index);
+      return color;
+    }
+    getScreenColor(index) {
+      if (this.getOverwriteFlagForModelScreenColors() || this.getOverwriteFlagForDrawableScreenColors(index)) {
+        return this._userScreenColors[index].Color;
+      }
+      const color = this.getDrawableScreenColor(index);
+      return color;
+    }
+    setMultiplyColorByTextureColor(index, color) {
+      this.setMultiplyColorByRGBA(index, color.R, color.G, color.B, color.A);
+    }
+    setMultiplyColorByRGBA(index, r, g, b, a = 1) {
+      this._userMultiplyColors[index].Color.R = r;
+      this._userMultiplyColors[index].Color.G = g;
+      this._userMultiplyColors[index].Color.B = b;
+      this._userMultiplyColors[index].Color.A = a;
+    }
+    setScreenColorByTextureColor(index, color) {
+      this.setScreenColorByRGBA(index, color.R, color.G, color.B, color.A);
+    }
+    setScreenColorByRGBA(index, r, g, b, a = 1) {
+      this._userScreenColors[index].Color.R = r;
+      this._userScreenColors[index].Color.G = g;
+      this._userScreenColors[index].Color.B = b;
+      this._userScreenColors[index].Color.A = a;
+    }
+    getPartMultiplyColor(partIndex) {
+      return this._userPartMultiplyColors[partIndex].Color;
+    }
+    getPartScreenColor(partIndex) {
+      return this._userPartScreenColors[partIndex].Color;
+    }
+    setPartColor(partIndex, r, g, b, a, partColors, drawableColors) {
+      partColors[partIndex].Color.R = r;
+      partColors[partIndex].Color.G = g;
+      partColors[partIndex].Color.B = b;
+      partColors[partIndex].Color.A = a;
+      if (partColors[partIndex].isOverwritten) {
+        for (let i = 0; i < this._partChildDrawables[partIndex].length; ++i) {
+          const drawableIndex = this._partChildDrawables[partIndex][i];
+          drawableColors[drawableIndex].Color.R = r;
+          drawableColors[drawableIndex].Color.G = g;
+          drawableColors[drawableIndex].Color.B = b;
+          drawableColors[drawableIndex].Color.A = a;
+        }
+      }
+    }
+    setPartMultiplyColorByTextureColor(partIndex, color) {
+      this.setPartMultiplyColorByRGBA(partIndex, color.R, color.G, color.B, color.A);
+    }
+    setPartMultiplyColorByRGBA(partIndex, r, g, b, a) {
+      this.setPartColor(partIndex, r, g, b, a, this._userPartMultiplyColors, this._userMultiplyColors);
+    }
+    setPartScreenColorByTextureColor(partIndex, color) {
+      this.setPartScreenColorByRGBA(partIndex, color.R, color.G, color.B, color.A);
+    }
+    setPartScreenColorByRGBA(partIndex, r, g, b, a) {
+      this.setPartColor(partIndex, r, g, b, a, this._userPartScreenColors, this._userScreenColors);
+    }
+    getOverwriteFlagForModelMultiplyColors() {
+      return this._isOverwrittenModelMultiplyColors;
+    }
+    getOverwriteFlagForModelScreenColors() {
+      return this._isOverwrittenModelScreenColors;
+    }
+    setOverwriteFlagForModelMultiplyColors(value) {
+      this._isOverwrittenModelMultiplyColors = value;
+    }
+    setOverwriteFlagForModelScreenColors(value) {
+      this._isOverwrittenModelScreenColors = value;
+    }
+    getOverwriteFlagForDrawableMultiplyColors(drawableindex) {
+      return this._userMultiplyColors[drawableindex].isOverwritten;
+    }
+    getOverwriteFlagForDrawableScreenColors(drawableindex) {
+      return this._userScreenColors[drawableindex].isOverwritten;
+    }
+    setOverwriteFlagForDrawableMultiplyColors(drawableindex, value) {
+      this._userMultiplyColors[drawableindex].isOverwritten = value;
+    }
+    setOverwriteFlagForDrawableScreenColors(drawableindex, value) {
+      this._userScreenColors[drawableindex].isOverwritten = value;
+    }
+    getOverwriteColorForPartMultiplyColors(partIndex) {
+      return this._userPartMultiplyColors[partIndex].isOverwritten;
+    }
+    getOverwriteColorForPartScreenColors(partIndex) {
+      return this._userPartScreenColors[partIndex].isOverwritten;
+    }
+    setOverwriteColorForPartColors(partIndex, value, partColors, drawableColors) {
+      partColors[partIndex].isOverwritten = value;
+      for (let i = 0; i < this._partChildDrawables[partIndex].length; ++i) {
+        const drawableIndex = this._partChildDrawables[partIndex][i];
+        drawableColors[drawableIndex].isOverwritten = value;
+        if (value) {
+          drawableColors[drawableIndex].Color.R = partColors[partIndex].Color.R;
+          drawableColors[drawableIndex].Color.G = partColors[partIndex].Color.G;
+          drawableColors[drawableIndex].Color.B = partColors[partIndex].Color.B;
+          drawableColors[drawableIndex].Color.A = partColors[partIndex].Color.A;
+        }
+      }
+    }
+    setOverwriteColorForPartMultiplyColors(partIndex, value) {
+      this._userPartMultiplyColors[partIndex].isOverwritten = value;
+      this.setOverwriteColorForPartColors(partIndex, value, this._userPartMultiplyColors, this._userMultiplyColors);
+    }
+    setOverwriteColorForPartScreenColors(partIndex, value) {
+      this._userPartScreenColors[partIndex].isOverwritten = value;
+      this.setOverwriteColorForPartColors(partIndex, value, this._userPartScreenColors, this._userScreenColors);
+    }
+    getDrawableCulling(drawableIndex) {
+      if (this.getOverwriteFlagForModelCullings() || this.getOverwriteFlagForDrawableCullings(drawableIndex)) {
+        return this._userCullings[drawableIndex].isCulling;
+      }
+      const constantFlags = this._model.drawables.constantFlags;
+      return !Live2DCubismCore.Utils.hasIsDoubleSidedBit(constantFlags[drawableIndex]);
+    }
+    setDrawableCulling(drawableIndex, isCulling) {
+      this._userCullings[drawableIndex].isCulling = isCulling;
+    }
+    getOverwriteFlagForModelCullings() {
+      return this._isOverwrittenCullings;
+    }
+    setOverwriteFlagForModelCullings(isOverwrittenCullings) {
+      this._isOverwrittenCullings = isOverwrittenCullings;
+    }
+    getOverwriteFlagForDrawableCullings(drawableIndex) {
+      return this._userCullings[drawableIndex].isOverwritten;
+    }
+    setOverwriteFlagForDrawableCullings(drawableIndex, isOverwrittenCullings) {
+      this._userCullings[drawableIndex].isOverwritten = isOverwrittenCullings;
+    }
+    getModelOapcity() {
+      return this._modelOpacity;
+    }
+    setModelOapcity(value) {
+      this._modelOpacity = value;
+    }
     getModel() {
       return this._model;
     }
@@ -966,6 +1174,9 @@ var __async = (__this, __arguments, generator) => {
       this._notExistPartId[partId] = partIndex;
       this._notExistPartOpacities[partIndex] = 0;
       return partIndex;
+    }
+    getPartId(partIndex) {
+      return this._model.parts.ids[partIndex];
     }
     getPartCount() {
       return this._model.parts.count;
@@ -1018,6 +1229,9 @@ var __async = (__this, __arguments, generator) => {
     }
     getParameterCount() {
       return this._model.parameters.count;
+    }
+    getParameterType(parameterIndex) {
+      return this._model.parameters.types[parameterIndex];
     }
     getParameterMaximumValue(parameterIndex) {
       return this._model.parameters.maximumValues[parameterIndex];
@@ -1093,7 +1307,11 @@ var __async = (__this, __arguments, generator) => {
       return this._model.drawables.renderOrders;
     }
     getDrawableTextureIndices(drawableIndex) {
-      return this._model.drawables.textureIndices[drawableIndex];
+      return this.getDrawableTextureIndex(drawableIndex);
+    }
+    getDrawableTextureIndex(drawableIndex) {
+      const textureIndices = this._model.drawables.textureIndices;
+      return textureIndices[drawableIndex];
     }
     getDrawableDynamicFlagVertexPositionsDidChange(drawableIndex) {
       const dynamicFlags = this._model.drawables.dynamicFlags;
@@ -1120,9 +1338,28 @@ var __async = (__this, __arguments, generator) => {
     getDrawableOpacity(drawableIndex) {
       return this._model.drawables.opacities[drawableIndex];
     }
-    getDrawableCulling(drawableIndex) {
-      const constantFlags = this._model.drawables.constantFlags;
-      return !Live2DCubismCore.Utils.hasIsDoubleSidedBit(constantFlags[drawableIndex]);
+    getDrawableMultiplyColor(drawableIndex) {
+      const multiplyColors = this._model.drawables.multiplyColors;
+      const index = drawableIndex * 4;
+      const multiplyColor = new CubismTextureColor();
+      multiplyColor.R = multiplyColors[index];
+      multiplyColor.G = multiplyColors[index + 1];
+      multiplyColor.B = multiplyColors[index + 2];
+      multiplyColor.A = multiplyColors[index + 3];
+      return multiplyColor;
+    }
+    getDrawableScreenColor(drawableIndex) {
+      const screenColors = this._model.drawables.screenColors;
+      const index = drawableIndex * 4;
+      const screenColor = new CubismTextureColor();
+      screenColor.R = screenColors[index];
+      screenColor.G = screenColors[index + 1];
+      screenColor.B = screenColors[index + 2];
+      screenColor.A = screenColors[index + 3];
+      return screenColor;
+    }
+    getDrawableParentPartIndex(drawableIndex) {
+      return this._model.drawables.parentPartIndices[drawableIndex];
     }
     getDrawableBlendMode(drawableIndex) {
       const constantFlags = this._model.drawables.constantFlags;
@@ -1163,6 +1400,10 @@ var __async = (__this, __arguments, generator) => {
       const dynamicFlags = this._model.drawables.dynamicFlags;
       return Live2DCubismCore.Utils.hasRenderOrderDidChangeBit(dynamicFlags[drawableIndex]);
     }
+    getDrawableDynamicFlagBlendColorDidChange(drawableIndex) {
+      const dynamicFlags = this._model.drawables.dynamicFlags;
+      return Live2DCubismCore.Utils.hasBlendColorDidChangeBit(dynamicFlags[drawableIndex]);
+    }
     loadParameters() {
       let parameterCount = this._model.parameters.count;
       const savedParameterCount = this._savedParameters.length;
@@ -1185,9 +1426,9 @@ var __async = (__this, __arguments, generator) => {
           this._parameterIds.push(parameterIds[i]);
         }
       }
+      const partCount = this._model.parts.count;
       {
         const partIds = this._model.parts.ids;
-        const partCount = this._model.parts.count;
         for (let i = 0; i < partCount; ++i) {
           this._partIds.push(partIds[i]);
         }
@@ -1195,8 +1436,33 @@ var __async = (__this, __arguments, generator) => {
       {
         const drawableIds = this._model.drawables.ids;
         const drawableCount = this._model.drawables.count;
-        for (let i = 0; i < drawableCount; ++i) {
-          this._drawableIds.push(drawableIds[i]);
+        const userCulling = new DrawableCullingData(false, false);
+        {
+          for (let i = 0; i < partCount; ++i) {
+            const multiplyColor = new CubismTextureColor(1, 1, 1, 1);
+            const screenColor = new CubismTextureColor(0, 0, 0, 1);
+            const userMultiplyColor = new PartColorData(false, multiplyColor);
+            const userScreenColor = new PartColorData(false, screenColor);
+            this._userPartMultiplyColors.push(userMultiplyColor);
+            this._userPartScreenColors.push(userScreenColor);
+            this._partChildDrawables.push([]);
+          }
+        }
+        {
+          for (let i = 0; i < drawableCount; ++i) {
+            const multiplyColor = new CubismTextureColor(1, 1, 1, 1);
+            const screenColor = new CubismTextureColor(0, 0, 0, 1);
+            const userMultiplyColor = new DrawableColorData(false, multiplyColor);
+            const userScreenColor = new DrawableColorData(false, screenColor);
+            this._drawableIds.push(drawableIds[i]);
+            this._userMultiplyColors.push(userMultiplyColor);
+            this._userScreenColors.push(userScreenColor);
+            this._userCullings.push(userCulling);
+            const parentIndex = this.getDrawableParentPartIndex(i);
+            if (parentIndex >= 0) {
+              this._partChildDrawables[parentIndex].push(i);
+            }
+          }
         }
       }
     }
@@ -1206,6 +1472,16 @@ var __async = (__this, __arguments, generator) => {
       this._parameterIds = [];
       this._drawableIds = [];
       this._partIds = [];
+      this._isOverwrittenModelMultiplyColors = false;
+      this._isOverwrittenModelScreenColors = false;
+      this._isOverwrittenCullings = false;
+      this._modelOpacity = 1;
+      this._userMultiplyColors = [];
+      this._userScreenColors = [];
+      this._userCullings = [];
+      this._userPartMultiplyColors = [];
+      this._userPartScreenColors = [];
+      this._partChildDrawables = [];
       this._notExistPartId = {};
       this._notExistParameterId = {};
       this._notExistParameterValues = {};
@@ -1218,12 +1494,20 @@ var __async = (__this, __arguments, generator) => {
     }
   }
   class CubismMoc {
-    static create(mocBytes) {
+    static create(mocBytes, shouldCheckMocConsistency) {
+      if (shouldCheckMocConsistency) {
+        const consistency = this.hasMocConsistency(mocBytes);
+        if (!consistency) {
+          throw new Error(`Inconsistent MOC3.`);
+        }
+      }
       const moc = Live2DCubismCore.Moc.fromArrayBuffer(mocBytes);
       if (moc) {
-        return new CubismMoc(moc);
+        const cubismMoc = new CubismMoc(moc);
+        cubismMoc._mocVersion = Live2DCubismCore.Version.csmGetMocVersion(moc, mocBytes);
+        return cubismMoc;
       }
-      throw new Error("Unknown error");
+      throw new Error("Failed to CubismMoc.create().");
     }
     createModel() {
       let cubismModel;
@@ -1243,10 +1527,21 @@ var __async = (__this, __arguments, generator) => {
     constructor(moc) {
       this._moc = moc;
       this._modelCount = 0;
+      this._mocVersion = 0;
     }
     release() {
       this._moc._release();
       this._moc = void 0;
+    }
+    getLatestMocVersion() {
+      return Live2DCubismCore.Version.csmGetLatestMocVersion();
+    }
+    getMocVersion() {
+      return this._mocVersion;
+    }
+    static hasMocConsistency(mocBytes) {
+      const isConsistent = Live2DCubismCore.Moc.prototype.hasMocConsistency(mocBytes);
+      return isConsistent === 1 ? true : false;
     }
   }
   class CubismModelUserDataJson {
@@ -1283,7 +1578,7 @@ var __async = (__this, __arguments, generator) => {
       return this._artMeshUserDataNode;
     }
     parseUserData(data, size) {
-      let json = new CubismModelUserDataJson(data, size);
+      const json = new CubismModelUserDataJson(data, size);
       const typeOfArtMesh = ArtMesh;
       const nodeCount = json.getUserDataCount();
       for (let i = 0; i < nodeCount; i++) {
@@ -1377,6 +1672,18 @@ var __async = (__this, __arguments, generator) => {
     getFinishedMotionHandler() {
       return this._onFinishedMotion;
     }
+    isExistModelOpacity() {
+      return false;
+    }
+    getModelOpacityIndex() {
+      return -1;
+    }
+    getModelOpacityId(index) {
+      return void 0;
+    }
+    getModelOpacityValue() {
+      return 1;
+    }
   }
   const DefaultFadeTime = 1;
   class CubismExpressionMotion extends ACubismMotion {
@@ -1386,35 +1693,7 @@ var __async = (__this, __arguments, generator) => {
     }
     static create(json) {
       const expression = new CubismExpressionMotion();
-      const fadeInTime = json.FadeInTime;
-      const fadeOutTime = json.FadeOutTime;
-      expression.setFadeInTime(fadeInTime !== void 0 ? fadeInTime : DefaultFadeTime);
-      expression.setFadeOutTime(fadeOutTime !== void 0 ? fadeOutTime : DefaultFadeTime);
-      const parameters = json.Parameters || [];
-      for (let i = 0; i < parameters.length; ++i) {
-        const param = parameters[i];
-        const parameterId = param.Id;
-        const value = param.Value;
-        let blendType;
-        switch (param.Blend) {
-          case "Multiply":
-            blendType = ExpressionBlendType.ExpressionBlendType_Multiply;
-            break;
-          case "Overwrite":
-            blendType = ExpressionBlendType.ExpressionBlendType_Overwrite;
-            break;
-          case "Add":
-          default:
-            blendType = ExpressionBlendType.ExpressionBlendType_Add;
-            break;
-        }
-        const item = {
-          parameterId,
-          blendType,
-          value
-        };
-        expression._parameters.push(item);
-      }
+      expression.parse(json);
       return expression;
     }
     doUpdateParameters(model, userTimeSeconds, weight, motionQueueEntry) {
@@ -1434,6 +1713,32 @@ var __async = (__this, __arguments, generator) => {
             break;
           }
         }
+      }
+    }
+    parse(json) {
+      this.setFadeInTime(json.FadeInTime != void 0 ? json.FadeInTime : DefaultFadeTime);
+      this.setFadeOutTime(json.FadeOutTime != void 0 ? json.FadeOutTime : DefaultFadeTime);
+      const parameterCount = (json.Parameters || []).length;
+      for (let i = 0; i < parameterCount; ++i) {
+        const param = json.Parameters[i];
+        const parameterId = param.Id;
+        const value = param.Value;
+        let blendType;
+        if (!param.Blend || param.Blend === "Add") {
+          blendType = ExpressionBlendType.ExpressionBlendType_Add;
+        } else if (param.Blend === "Multiply") {
+          blendType = ExpressionBlendType.ExpressionBlendType_Multiply;
+        } else if (param.Blend === "Overwrite") {
+          blendType = ExpressionBlendType.ExpressionBlendType_Overwrite;
+        } else {
+          blendType = ExpressionBlendType.ExpressionBlendType_Add;
+        }
+        const item = {
+          parameterId,
+          blendType,
+          value
+        };
+        this._parameters.push(item);
       }
     }
   }
@@ -1579,6 +1884,7 @@ var __async = (__this, __arguments, generator) => {
   const TargetNameModel = "Model";
   const TargetNameParameter = "Parameter";
   const TargetNamePartOpacity = "PartOpacity";
+  const IdNameOpacity = "Opacity";
   const UseOldBeziersCurveMotion = false;
   function lerpPoints(a, b, t) {
     const result = new CubismMotionPoint();
@@ -1657,6 +1963,7 @@ var __async = (__this, __arguments, generator) => {
       this._isLoop = false;
       this._isLoopFadeIn = true;
       this._lastWeight = 0;
+      this._modelOpacity = 1;
     }
     static create(json, onFinishedMotionHandler) {
       const ret = new CubismMotion();
@@ -1672,6 +1979,9 @@ var __async = (__this, __arguments, generator) => {
       }
       if (this._modelCurveIdLipSync == null) {
         this._modelCurveIdLipSync = EffectNameLipSync;
+      }
+      if (this._modelCurveIdOpacity == null) {
+        this._modelCurveIdOpacity = IdNameOpacity;
       }
       let timeOffsetSeconds = userTimeSeconds - motionQueueEntry.getStartTime();
       if (timeOffsetSeconds < 0) {
@@ -1705,6 +2015,9 @@ var __async = (__this, __arguments, generator) => {
           eyeBlinkValue = value;
         } else if (curves[c].id == this._modelCurveIdLipSync) {
           lipSyncValue = value;
+        } else if (curves[c].id == this._modelCurveIdOpacity) {
+          this._modelOpacity = value;
+          model.setModelOapcity(this.getModelOpacityValue());
         }
       }
       for (; c < this._motionData.curveCount && curves[c].type == CubismMotionCurveTarget.CubismMotionCurveTarget_Parameter; ++c) {
@@ -1865,7 +2178,7 @@ var __async = (__this, __arguments, generator) => {
     }
     parse(motionJson) {
       this._motionData = new CubismMotionData();
-      let json = new CubismMotionJson(motionJson);
+      const json = new CubismMotionJson(motionJson);
       this._motionData.duration = json.getMotionDuration();
       this._motionData.loop = json.isMotionLoop();
       this._motionData.curveCount = json.getMotionCurveCount();
@@ -1884,9 +2197,15 @@ var __async = (__this, __arguments, generator) => {
       } else {
         this._fadeOutSeconds = 1;
       }
-      this._motionData.curves = Array.from({ length: this._motionData.curveCount }).map(() => new CubismMotionCurve());
-      this._motionData.segments = Array.from({ length: json.getMotionTotalSegmentCount() }).map(() => new CubismMotionSegment());
-      this._motionData.events = Array.from({ length: this._motionData.eventCount }).map(() => new CubismMotionEvent());
+      this._motionData.curves = Array.from({
+        length: this._motionData.curveCount
+      }).map(() => new CubismMotionCurve());
+      this._motionData.segments = Array.from({
+        length: json.getMotionTotalSegmentCount()
+      }).map(() => new CubismMotionSegment());
+      this._motionData.events = Array.from({
+        length: this._motionData.eventCount
+      }).map(() => new CubismMotionEvent());
       this._motionData.points = [];
       let totalPointCount = 0;
       let totalSegmentCount = 0;
@@ -1980,6 +2299,46 @@ var __async = (__this, __arguments, generator) => {
         }
       }
       return this._firedEventValues;
+    }
+    isExistModelOpacity() {
+      for (let i = 0; i < this._motionData.curveCount; i++) {
+        const curve = this._motionData.curves[i];
+        if (curve.type != CubismMotionCurveTarget.CubismMotionCurveTarget_Model) {
+          continue;
+        }
+        if (curve.id === IdNameOpacity) {
+          return true;
+        }
+      }
+      return false;
+    }
+    getModelOpacityIndex() {
+      if (this.isExistModelOpacity()) {
+        for (let i = 0; i < this._motionData.curveCount; i++) {
+          const curve = this._motionData.curves[i];
+          if (curve.type != CubismMotionCurveTarget.CubismMotionCurveTarget_Model) {
+            continue;
+          }
+          if (curve.id === IdNameOpacity) {
+            return i;
+          }
+        }
+      }
+      return -1;
+    }
+    getModelOpacityId(index) {
+      if (index != -1) {
+        const curve = this._motionData.curves[index];
+        if (curve.type == CubismMotionCurveTarget.CubismMotionCurveTarget_Model) {
+          if (curve.id === IdNameOpacity) {
+            return curve.id;
+          }
+        }
+      }
+      return void 0;
+    }
+    getModelOpacityValue() {
+      return this._modelOpacity;
     }
   }
   class CubismMotionQueueEntry {
@@ -2279,6 +2638,7 @@ var __async = (__this, __arguments, generator) => {
       this.particles = [];
       this.gravity = new CubismVector2(0, 0);
       this.wind = new CubismVector2(0, 0);
+      this.fps = 0;
     }
   }
   class CubismPhysicsJson {
@@ -2299,6 +2659,9 @@ var __async = (__this, __arguments, generator) => {
       ret.x = this._json.Meta.EffectiveForces.Wind.X;
       ret.y = this._json.Meta.EffectiveForces.Wind.Y;
       return ret;
+    }
+    getFps() {
+      return this._json.Meta.Fps || 0;
     }
     getSubRigCount() {
       return this._json.Meta.PhysicsSettingCount;
@@ -2394,6 +2757,7 @@ var __async = (__this, __arguments, generator) => {
   const AirResistance = 5;
   const MaximumWeight = 100;
   const MovementThreshold = 1e-3;
+  const MaxDeltaTime = 5;
   class CubismPhysics {
     static create(json) {
       const ret = new CubismPhysics();
@@ -2401,86 +2765,20 @@ var __async = (__this, __arguments, generator) => {
       ret._physicsRig.gravity.y = 0;
       return ret;
     }
-    evaluate(model, deltaTimeSeconds) {
-      let totalAngle;
-      let weight;
-      let radAngle;
-      let outputValue;
-      const totalTranslation = new CubismVector2();
-      let currentSetting;
-      let currentInput;
-      let currentOutput;
-      let currentParticles;
-      let parameterValue;
-      let parameterMaximumValue;
-      let parameterMinimumValue;
-      let parameterDefaultValue;
-      parameterValue = model.getModel().parameters.values;
-      parameterMaximumValue = model.getModel().parameters.maximumValues;
-      parameterMinimumValue = model.getModel().parameters.minimumValues;
-      parameterDefaultValue = model.getModel().parameters.defaultValues;
-      for (let settingIndex = 0; settingIndex < this._physicsRig.subRigCount; ++settingIndex) {
-        totalAngle = { angle: 0 };
-        totalTranslation.x = 0;
-        totalTranslation.y = 0;
-        currentSetting = this._physicsRig.settings[settingIndex];
-        currentInput = this._physicsRig.inputs.slice(currentSetting.baseInputIndex);
-        currentOutput = this._physicsRig.outputs.slice(currentSetting.baseOutputIndex);
-        currentParticles = this._physicsRig.particles.slice(currentSetting.baseParticleIndex);
-        for (let i = 0; i < currentSetting.inputCount; ++i) {
-          weight = currentInput[i].weight / MaximumWeight;
-          if (currentInput[i].sourceParameterIndex == -1) {
-            currentInput[i].sourceParameterIndex = model.getParameterIndex(currentInput[i].source.id);
-          }
-          currentInput[i].getNormalizedParameterValue(totalTranslation, totalAngle, parameterValue[currentInput[i].sourceParameterIndex], parameterMinimumValue[currentInput[i].sourceParameterIndex], parameterMaximumValue[currentInput[i].sourceParameterIndex], parameterDefaultValue[currentInput[i].sourceParameterIndex], currentSetting.normalizationPosition, currentSetting.normalizationAngle, currentInput[i].reflect, weight);
-        }
-        radAngle = CubismMath.degreesToRadian(-totalAngle.angle);
-        totalTranslation.x = totalTranslation.x * CubismMath.cos(radAngle) - totalTranslation.y * CubismMath.sin(radAngle);
-        totalTranslation.y = totalTranslation.x * CubismMath.sin(radAngle) + totalTranslation.y * CubismMath.cos(radAngle);
-        updateParticles(currentParticles, currentSetting.particleCount, totalTranslation, totalAngle.angle, this._options.wind, MovementThreshold * currentSetting.normalizationPosition.maximum, deltaTimeSeconds, AirResistance);
-        for (let i = 0; i < currentSetting.outputCount; ++i) {
-          const particleIndex = currentOutput[i].vertexIndex;
-          if (particleIndex < 1 || particleIndex >= currentSetting.particleCount) {
-            break;
-          }
-          if (currentOutput[i].destinationParameterIndex == -1) {
-            currentOutput[i].destinationParameterIndex = model.getParameterIndex(currentOutput[i].destination.id);
-          }
-          const translation = new CubismVector2();
-          translation.x = currentParticles[particleIndex].position.x - currentParticles[particleIndex - 1].position.x;
-          translation.y = currentParticles[particleIndex].position.y - currentParticles[particleIndex - 1].position.y;
-          outputValue = currentOutput[i].getValue(translation, currentParticles, particleIndex, currentOutput[i].reflect, this._options.gravity);
-          const destinationParameterIndex = currentOutput[i].destinationParameterIndex;
-          const outParameterValue = !Float32Array.prototype.slice && "subarray" in Float32Array.prototype ? JSON.parse(JSON.stringify(parameterValue.subarray(destinationParameterIndex))) : parameterValue.slice(destinationParameterIndex);
-          updateOutputParameterValue(outParameterValue, parameterMinimumValue[destinationParameterIndex], parameterMaximumValue[destinationParameterIndex], outputValue, currentOutput[i]);
-          for (let offset = destinationParameterIndex, outParamIndex = 0; offset < parameterValue.length; offset++, outParamIndex++) {
-            parameterValue[offset] = outParameterValue[outParamIndex];
-          }
-        }
+    static delete(physics) {
+      if (physics != null) {
+        physics.release();
       }
-    }
-    setOptions(options) {
-      this._options = options;
-    }
-    getOption() {
-      return this._options;
-    }
-    constructor() {
-      this._options = new Options();
-      this._options.gravity.y = -1;
-      this._options.gravity.x = 0;
-      this._options.wind.x = 0;
-      this._options.wind.y = 0;
-    }
-    release() {
-      this._physicsRig = void 0;
     }
     parse(physicsJson) {
       this._physicsRig = new CubismPhysicsRig();
-      let json = new CubismPhysicsJson(physicsJson);
+      const json = new CubismPhysicsJson(physicsJson);
       this._physicsRig.gravity = json.getGravity();
       this._physicsRig.wind = json.getWind();
       this._physicsRig.subRigCount = json.getSubRigCount();
+      this._physicsRig.fps = json.getFps();
+      this._currentRigOutputs = [];
+      this._previousRigOutputs = [];
       let inputIndex = 0, outputIndex = 0, particleIndex = 0;
       for (let i = 0; i < this._physicsRig.subRigCount; ++i) {
         const setting = new CubismPhysicsSubRig();
@@ -2518,9 +2816,16 @@ var __async = (__this, __arguments, generator) => {
         }
         setting.outputCount = json.getOutputCount(i);
         setting.baseOutputIndex = outputIndex;
-        outputIndex += setting.outputCount;
+        const currentRigOutput = new PhysicsOutput();
+        const previousRigOutput = new PhysicsOutput();
         for (let j = 0; j < setting.outputCount; ++j) {
-          const output = new CubismPhysicsOutput();
+          currentRigOutput.outputs[j] = 0;
+          previousRigOutput.outputs[j] = 0;
+          let output = this._physicsRig.outputs[outputIndex + j];
+          if (!output) {
+            output = new CubismPhysicsOutput();
+            this._physicsRig.outputs[outputIndex + j] = output;
+          }
           output.destinationParameterIndex = -1;
           output.vertexIndex = json.getOutputVertexIndex(i, j);
           output.angleScale = json.getOutputAngleScale(i, j);
@@ -2545,8 +2850,10 @@ var __async = (__this, __arguments, generator) => {
               break;
           }
           output.reflect = json.getOutputReflect(i, j);
-          this._physicsRig.outputs.push(output);
         }
+        this._currentRigOutputs.push(currentRigOutput);
+        this._previousRigOutputs.push(previousRigOutput);
+        outputIndex += setting.outputCount;
         setting.particleCount = json.getParticleCount(i);
         setting.baseParticleIndex = particleIndex;
         particleIndex += setting.particleCount;
@@ -2563,6 +2870,220 @@ var __async = (__this, __arguments, generator) => {
       }
       this.initialize();
       json.release();
+    }
+    stabilization(model) {
+      var _a, _b, _c, _d;
+      let totalAngle;
+      let weight;
+      let radAngle;
+      let outputValue;
+      const totalTranslation = new CubismVector2();
+      let currentSetting;
+      let currentInputs;
+      let currentOutputs;
+      let currentParticles;
+      let parameterValues;
+      let parameterMaximumValues;
+      let parameterMinimumValues;
+      let parameterDefaultValues;
+      parameterValues = model.getModel().parameters.values;
+      parameterMaximumValues = model.getModel().parameters.maximumValues;
+      parameterMinimumValues = model.getModel().parameters.minimumValues;
+      parameterDefaultValues = model.getModel().parameters.defaultValues;
+      if (((_b = (_a = this._parameterCaches) == null ? void 0 : _a.length) != null ? _b : 0) < model.getParameterCount()) {
+        this._parameterCaches = new Float32Array(model.getParameterCount());
+      }
+      if (((_d = (_c = this._parameterInputCaches) == null ? void 0 : _c.length) != null ? _d : 0) < model.getParameterCount()) {
+        this._parameterInputCaches = new Float32Array(model.getParameterCount());
+      }
+      for (let j = 0; j < model.getParameterCount(); ++j) {
+        this._parameterCaches[j] = parameterValues[j];
+        this._parameterInputCaches[j] = parameterValues[j];
+      }
+      for (let settingIndex = 0; settingIndex < this._physicsRig.subRigCount; ++settingIndex) {
+        totalAngle = { angle: 0 };
+        totalTranslation.x = 0;
+        totalTranslation.y = 0;
+        currentSetting = this._physicsRig.settings[settingIndex];
+        currentInputs = this._physicsRig.inputs.slice(currentSetting.baseInputIndex);
+        currentOutputs = this._physicsRig.outputs.slice(currentSetting.baseOutputIndex);
+        currentParticles = this._physicsRig.particles.slice(currentSetting.baseParticleIndex);
+        for (let i = 0; i < currentSetting.inputCount; ++i) {
+          weight = currentInputs[i].weight / MaximumWeight;
+          if (currentInputs[i].sourceParameterIndex == -1) {
+            currentInputs[i].sourceParameterIndex = model.getParameterIndex(currentInputs[i].source.id);
+          }
+          currentInputs[i].getNormalizedParameterValue(totalTranslation, totalAngle, parameterValues[currentInputs[i].sourceParameterIndex], parameterMinimumValues[currentInputs[i].sourceParameterIndex], parameterMaximumValues[currentInputs[i].sourceParameterIndex], parameterDefaultValues[currentInputs[i].sourceParameterIndex], currentSetting.normalizationPosition, currentSetting.normalizationAngle, currentInputs[i].reflect, weight);
+          this._parameterCaches[currentInputs[i].sourceParameterIndex] = parameterValues[currentInputs[i].sourceParameterIndex];
+        }
+        radAngle = CubismMath.degreesToRadian(-totalAngle.angle);
+        totalTranslation.x = totalTranslation.x * CubismMath.cos(radAngle) - totalTranslation.y * CubismMath.sin(radAngle);
+        totalTranslation.y = totalTranslation.x * CubismMath.sin(radAngle) + totalTranslation.y * CubismMath.cos(radAngle);
+        updateParticlesForStabilization(currentParticles, currentSetting.particleCount, totalTranslation, totalAngle.angle, this._options.wind, MovementThreshold * currentSetting.normalizationPosition.maximum);
+        for (let i = 0; i < currentSetting.outputCount; ++i) {
+          const particleIndex = currentOutputs[i].vertexIndex;
+          if (currentOutputs[i].destinationParameterIndex == -1) {
+            currentOutputs[i].destinationParameterIndex = model.getParameterIndex(currentOutputs[i].destination.id);
+          }
+          if (particleIndex < 1 || particleIndex >= currentSetting.particleCount) {
+            continue;
+          }
+          let translation = new CubismVector2();
+          translation = currentParticles[particleIndex].position.substract(currentParticles[particleIndex - 1].position);
+          outputValue = currentOutputs[i].getValue(translation, currentParticles, particleIndex, currentOutputs[i].reflect, this._options.gravity);
+          this._currentRigOutputs[settingIndex].outputs[i] = outputValue;
+          this._previousRigOutputs[settingIndex].outputs[i] = outputValue;
+          const destinationParameterIndex = currentOutputs[i].destinationParameterIndex;
+          const outParameterCaches = !Float32Array.prototype.slice && "subarray" in Float32Array.prototype ? JSON.parse(JSON.stringify(parameterValues.subarray(destinationParameterIndex))) : parameterValues.slice(destinationParameterIndex);
+          updateOutputParameterValue(outParameterCaches, parameterMinimumValues[destinationParameterIndex], parameterMaximumValues[destinationParameterIndex], outputValue, currentOutputs[i]);
+          for (let offset = destinationParameterIndex, outParamIndex = 0; offset < this._parameterCaches.length; offset++, outParamIndex++) {
+            parameterValues[offset] = this._parameterCaches[offset] = outParameterCaches[outParamIndex];
+          }
+        }
+      }
+    }
+    evaluate(model, deltaTimeSeconds) {
+      var _a, _b, _c, _d;
+      let totalAngle;
+      let weight;
+      let radAngle;
+      let outputValue;
+      const totalTranslation = new CubismVector2();
+      let currentSetting;
+      let currentInputs;
+      let currentOutputs;
+      let currentParticles;
+      if (0 >= deltaTimeSeconds) {
+        return;
+      }
+      let parameterValues;
+      let parameterMaximumValues;
+      let parameterMinimumValues;
+      let parameterDefaultValues;
+      let physicsDeltaTime;
+      this._currentRemainTime += deltaTimeSeconds;
+      if (this._currentRemainTime > MaxDeltaTime) {
+        this._currentRemainTime = 0;
+      }
+      parameterValues = model.getModel().parameters.values;
+      parameterMaximumValues = model.getModel().parameters.maximumValues;
+      parameterMinimumValues = model.getModel().parameters.minimumValues;
+      parameterDefaultValues = model.getModel().parameters.defaultValues;
+      if (((_b = (_a = this._parameterCaches) == null ? void 0 : _a.length) != null ? _b : 0) < model.getParameterCount()) {
+        this._parameterCaches = new Float32Array(model.getParameterCount());
+      }
+      if (((_d = (_c = this._parameterInputCaches) == null ? void 0 : _c.length) != null ? _d : 0) < model.getParameterCount()) {
+        this._parameterInputCaches = new Float32Array(model.getParameterCount());
+        for (let j = 0; j < model.getParameterCount(); ++j) {
+          this._parameterInputCaches[j] = parameterValues[j];
+        }
+      }
+      if (this._physicsRig.fps > 0) {
+        physicsDeltaTime = 1 / this._physicsRig.fps;
+      } else {
+        physicsDeltaTime = deltaTimeSeconds;
+      }
+      while (this._currentRemainTime >= physicsDeltaTime) {
+        for (let settingIndex = 0; settingIndex < this._physicsRig.subRigCount; ++settingIndex) {
+          currentSetting = this._physicsRig.settings[settingIndex];
+          currentOutputs = this._physicsRig.outputs.slice(currentSetting.baseOutputIndex);
+          for (let i = 0; i < currentSetting.outputCount; ++i) {
+            this._previousRigOutputs[settingIndex].outputs[i] = this._currentRigOutputs[settingIndex].outputs[i];
+          }
+        }
+        const inputWeight = physicsDeltaTime / this._currentRemainTime;
+        for (let j = 0; j < model.getParameterCount(); ++j) {
+          this._parameterCaches[j] = this._parameterInputCaches[j] * (1 - inputWeight) + parameterValues[j] * inputWeight;
+          this._parameterInputCaches[j] = this._parameterCaches[j];
+        }
+        for (let settingIndex = 0; settingIndex < this._physicsRig.subRigCount; ++settingIndex) {
+          totalAngle = { angle: 0 };
+          totalTranslation.x = 0;
+          totalTranslation.y = 0;
+          currentSetting = this._physicsRig.settings[settingIndex];
+          currentInputs = this._physicsRig.inputs.slice(currentSetting.baseInputIndex);
+          currentOutputs = this._physicsRig.outputs.slice(currentSetting.baseOutputIndex);
+          currentParticles = this._physicsRig.particles.slice(currentSetting.baseParticleIndex);
+          for (let i = 0; i < currentSetting.inputCount; ++i) {
+            weight = currentInputs[i].weight / MaximumWeight;
+            if (currentInputs[i].sourceParameterIndex == -1) {
+              currentInputs[i].sourceParameterIndex = model.getParameterIndex(currentInputs[i].source.id);
+            }
+            currentInputs[i].getNormalizedParameterValue(totalTranslation, totalAngle, this._parameterCaches[currentInputs[i].sourceParameterIndex], parameterMinimumValues[currentInputs[i].sourceParameterIndex], parameterMaximumValues[currentInputs[i].sourceParameterIndex], parameterDefaultValues[currentInputs[i].sourceParameterIndex], currentSetting.normalizationPosition, currentSetting.normalizationAngle, currentInputs[i].reflect, weight);
+          }
+          radAngle = CubismMath.degreesToRadian(-totalAngle.angle);
+          totalTranslation.x = totalTranslation.x * CubismMath.cos(radAngle) - totalTranslation.y * CubismMath.sin(radAngle);
+          totalTranslation.y = totalTranslation.x * CubismMath.sin(radAngle) + totalTranslation.y * CubismMath.cos(radAngle);
+          updateParticles(currentParticles, currentSetting.particleCount, totalTranslation, totalAngle.angle, this._options.wind, MovementThreshold * currentSetting.normalizationPosition.maximum, physicsDeltaTime, AirResistance);
+          for (let i = 0; i < currentSetting.outputCount; ++i) {
+            const particleIndex = currentOutputs[i].vertexIndex;
+            if (currentOutputs[i].destinationParameterIndex == -1) {
+              currentOutputs[i].destinationParameterIndex = model.getParameterIndex(currentOutputs[i].destination.id);
+            }
+            if (particleIndex < 1 || particleIndex >= currentSetting.particleCount) {
+              continue;
+            }
+            const translation = new CubismVector2();
+            translation.x = currentParticles[particleIndex].position.x - currentParticles[particleIndex - 1].position.x;
+            translation.y = currentParticles[particleIndex].position.y - currentParticles[particleIndex - 1].position.y;
+            outputValue = currentOutputs[i].getValue(translation, currentParticles, particleIndex, currentOutputs[i].reflect, this._options.gravity);
+            this._currentRigOutputs[settingIndex].outputs[i] = outputValue;
+            const destinationParameterIndex = currentOutputs[i].destinationParameterIndex;
+            const outParameterCaches = !Float32Array.prototype.slice && "subarray" in Float32Array.prototype ? JSON.parse(JSON.stringify(this._parameterCaches.subarray(destinationParameterIndex))) : this._parameterCaches.slice(destinationParameterIndex);
+            updateOutputParameterValue(outParameterCaches, parameterMinimumValues[destinationParameterIndex], parameterMaximumValues[destinationParameterIndex], outputValue, currentOutputs[i]);
+            for (let offset = destinationParameterIndex, outParamIndex = 0; offset < this._parameterCaches.length; offset++, outParamIndex++) {
+              this._parameterCaches[offset] = outParameterCaches[outParamIndex];
+            }
+          }
+        }
+        this._currentRemainTime -= physicsDeltaTime;
+      }
+      const alpha = this._currentRemainTime / physicsDeltaTime;
+      this.interpolate(model, alpha);
+    }
+    interpolate(model, weight) {
+      let currentOutputs;
+      let currentSetting;
+      let parameterValues;
+      let parameterMaximumValues;
+      let parameterMinimumValues;
+      parameterValues = model.getModel().parameters.values;
+      parameterMaximumValues = model.getModel().parameters.maximumValues;
+      parameterMinimumValues = model.getModel().parameters.minimumValues;
+      for (let settingIndex = 0; settingIndex < this._physicsRig.subRigCount; ++settingIndex) {
+        currentSetting = this._physicsRig.settings[settingIndex];
+        currentOutputs = this._physicsRig.outputs.slice(currentSetting.baseOutputIndex);
+        for (let i = 0; i < currentSetting.outputCount; ++i) {
+          if (currentOutputs[i].destinationParameterIndex == -1) {
+            continue;
+          }
+          const destinationParameterIndex = currentOutputs[i].destinationParameterIndex;
+          const outParameterValues = !Float32Array.prototype.slice && "subarray" in Float32Array.prototype ? JSON.parse(JSON.stringify(parameterValues.subarray(destinationParameterIndex))) : parameterValues.slice(destinationParameterIndex);
+          updateOutputParameterValue(outParameterValues, parameterMinimumValues[destinationParameterIndex], parameterMaximumValues[destinationParameterIndex], this._previousRigOutputs[settingIndex].outputs[i] * (1 - weight) + this._currentRigOutputs[settingIndex].outputs[i] * weight, currentOutputs[i]);
+          for (let offset = destinationParameterIndex, outParamIndex = 0; offset < parameterValues.length; offset++, outParamIndex++) {
+            parameterValues[offset] = outParameterValues[outParamIndex];
+          }
+        }
+      }
+    }
+    setOptions(options) {
+      this._options = options;
+    }
+    getOption() {
+      return this._options;
+    }
+    constructor() {
+      this._options = new Options();
+      this._options.gravity.y = -1;
+      this._options.gravity.x = 0;
+      this._options.wind.x = 0;
+      this._options.wind.y = 0;
+      this._currentRigOutputs = [];
+      this._previousRigOutputs = [];
+      this._currentRemainTime = 0;
+    }
+    release() {
+      this._physicsRig = void 0;
     }
     initialize() {
       let strand;
@@ -2595,6 +3116,11 @@ var __async = (__this, __arguments, generator) => {
     constructor() {
       this.gravity = new CubismVector2(0, 0);
       this.wind = new CubismVector2(0, 0);
+    }
+  }
+  class PhysicsOutput {
+    constructor() {
+      this.outputs = [];
     }
   }
   function getInputTranslationXFromNormalizedParameterValue(targetTranslation, targetAngle, value, parameterMinimumValue, parameterMaximumValue, parameterDefaultValue, normalizationPosition, normalizationAngle, isInverted, weight) {
@@ -2684,6 +3210,29 @@ var __async = (__this, __arguments, generator) => {
         strand[i].velocity = strand[i].position.substract(strand[i].lastPosition);
         strand[i].velocity = strand[i].velocity.divisionByScalar(delay);
         strand[i].velocity = strand[i].velocity.multiplyByScaler(strand[i].mobility);
+      }
+      strand[i].force = new CubismVector2(0, 0);
+      strand[i].lastGravity = new CubismVector2(currentGravity.x, currentGravity.y);
+    }
+  }
+  function updateParticlesForStabilization(strand, strandCount, totalTranslation, totalAngle, windDirection, thresholdValue) {
+    let totalRadian;
+    let currentGravity;
+    let force = new CubismVector2(0, 0);
+    strand[0].position = new CubismVector2(totalTranslation.x, totalTranslation.y);
+    totalRadian = CubismMath.degreesToRadian(totalAngle);
+    currentGravity = CubismMath.radianToDirection(totalRadian);
+    currentGravity.normalize();
+    for (let i = 1; i < strandCount; ++i) {
+      strand[i].force = currentGravity.multiplyByScaler(strand[i].acceleration).add(windDirection);
+      strand[i].lastPosition = new CubismVector2(strand[i].position.x, strand[i].position.y);
+      strand[i].velocity = new CubismVector2(0, 0);
+      force = strand[i].force;
+      force.normalize();
+      force = force.multiplyByScaler(strand[i].radius);
+      strand[i].position = strand[i - 1].position.add(force);
+      if (CubismMath.abs(strand[i].position.x) < thresholdValue) {
+        strand[i].position.x = 0;
       }
       strand[i].force = new CubismVector2(0, 0);
       strand[i].lastGravity = new CubismVector2(currentGravity.x, currentGravity.y);
@@ -2788,7 +3337,9 @@ var __async = (__this, __arguments, generator) => {
     }
   }
   const ColorChannelCount = 4;
-  const shaderCount = 10;
+  const ClippingMaskMaxCountOnDefault = 36;
+  const ClippingMaskMaxCountOnMultiRenderTexture = 32;
+  const ShaderCount = 10;
   let s_instance;
   let s_viewport;
   let s_fbo;
@@ -2797,28 +3348,29 @@ var __async = (__this, __arguments, generator) => {
       return this._channelColors[channelNo];
     }
     getMaskRenderTexture() {
-      let ret = 0;
-      if (this._maskTexture && this._maskTexture.texture != 0) {
+      if (this._maskTexture && this._maskTexture.textures != null) {
         this._maskTexture.frameNo = this._currentFrameNo;
-        ret = this._maskTexture.texture;
-      }
-      if (ret == 0) {
+      } else {
+        this._maskRenderTextures = [];
+        this._maskColorBuffers = [];
         const size = this._clippingMaskBufferSize;
-        this._colorBuffer = this.gl.createTexture();
-        this.gl.bindTexture(this.gl.TEXTURE_2D, this._colorBuffer);
-        this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, size, size, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, null);
-        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
-        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
-        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
-        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
-        this.gl.bindTexture(this.gl.TEXTURE_2D, null);
-        ret = this.gl.createFramebuffer();
-        this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, ret);
-        this.gl.framebufferTexture2D(this.gl.FRAMEBUFFER, this.gl.COLOR_ATTACHMENT0, this.gl.TEXTURE_2D, this._colorBuffer, 0);
+        for (let index = 0; index < this._renderTextureCount; index++) {
+          this._maskColorBuffers.push(this.gl.createTexture());
+          this.gl.bindTexture(this.gl.TEXTURE_2D, this._maskColorBuffers[index]);
+          this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, size, size, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, null);
+          this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
+          this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
+          this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
+          this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
+          this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+          this._maskRenderTextures.push(this.gl.createFramebuffer());
+          this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this._maskRenderTextures[index]);
+          this.gl.framebufferTexture2D(this.gl.FRAMEBUFFER, this.gl.COLOR_ATTACHMENT0, this.gl.TEXTURE_2D, this._maskColorBuffers[index], 0);
+        }
         this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, s_fbo);
-        this._maskTexture = new CubismRenderTextureResource(this._currentFrameNo, ret);
+        this._maskTexture = new CubismRenderTextureResource(this._currentFrameNo, this._maskRenderTextures);
       }
-      return ret;
+      return this._maskTexture.textures;
     }
     setGL(gl) {
       this.gl = gl;
@@ -2835,8 +3387,8 @@ var __async = (__this, __arguments, generator) => {
         const drawableVertexes = model.getDrawableVertices(drawableIndex);
         let minX = Number.MAX_VALUE;
         let minY = Number.MAX_VALUE;
-        let maxX = Number.MIN_VALUE;
-        let maxY = Number.MIN_VALUE;
+        let maxX = -Number.MAX_VALUE;
+        let maxY = -Number.MAX_VALUE;
         const loop = drawableVertexCount * Constant.vertexStep;
         for (let pi = Constant.vertexOffset; pi < loop; pi += Constant.vertexStep) {
           const x = drawableVertexes[pi];
@@ -2887,9 +3439,9 @@ var __async = (__this, __arguments, generator) => {
       }
     }
     constructor() {
-      this._maskRenderTexture = null;
-      this._colorBuffer = null;
+      this._currentMaskRenderTexture = null;
       this._currentFrameNo = 0;
+      this._renderTextureCount = 0;
       this._clippingMaskBufferSize = 256;
       this._clippingContextListForMask = [];
       this._clippingContextListForDraw = [];
@@ -2924,7 +3476,7 @@ var __async = (__this, __arguments, generator) => {
       this._channelColors.push(tmp);
     }
     release() {
-      var _a, _b, _c;
+      var _a;
       const self2 = this;
       for (let i = 0; i < this._clippingContextListForMask.length; i++) {
         if (this._clippingContextListForMask[i]) {
@@ -2934,14 +3486,31 @@ var __async = (__this, __arguments, generator) => {
       self2._clippingContextListForMask = void 0;
       self2._clippingContextListForDraw = void 0;
       if (this._maskTexture) {
-        (_b = this.gl) == null ? void 0 : _b.deleteFramebuffer(this._maskTexture.texture);
-        self2._maskTexture = void 0;
+        for (let i = 0; i < this._maskTexture.textures.length; i++) {
+          this.gl.deleteFramebuffer(this._maskTexture.textures[i]);
+        }
+        this._maskTexture = void 0;
       }
       self2._channelColors = void 0;
-      (_c = this.gl) == null ? void 0 : _c.deleteTexture(this._colorBuffer);
-      this._colorBuffer = null;
+      if (this._maskColorBuffers) {
+        for (let index = 0; index < this._maskColorBuffers.length; index++) {
+          this.gl.deleteTexture(this._maskColorBuffers[index]);
+        }
+      }
+      this._maskColorBuffers = void 0;
+      this._maskRenderTextures = void 0;
+      this._clearedFrameBufferflags = void 0;
     }
-    initialize(model, drawableCount, drawableMasks, drawableMaskCounts) {
+    initialize(model, drawableCount, drawableMasks, drawableMaskCounts, renderTextureCount) {
+      if (renderTextureCount % 1 != 0) {
+        CubismLogWarning("The number of render textures must be specified as an integer. The decimal point is rounded down and corrected to an integer.");
+        renderTextureCount = ~~renderTextureCount;
+      }
+      if (renderTextureCount < 1) {
+        CubismLogWarning("The number of render textures must be an integer greater than or equal to 1. Set the number of render textures to 1.");
+      }
+      this._renderTextureCount = renderTextureCount < 1 ? 1 : renderTextureCount;
+      this._clearedFrameBufferflags = [];
       for (let i = 0; i < drawableCount; i++) {
         if (drawableMaskCounts[i] <= 0) {
           this._clippingContextListForDraw.push(null);
@@ -2967,23 +3536,56 @@ var __async = (__this, __arguments, generator) => {
         }
       }
       if (usingClipCount > 0) {
-        this.gl.viewport(0, 0, this._clippingMaskBufferSize, this._clippingMaskBufferSize);
-        this._maskRenderTexture = this.getMaskRenderTexture();
-        renderer.getMvpMatrix();
-        renderer.preDraw();
-        this.setupLayoutBounds(usingClipCount);
-        this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this._maskRenderTexture);
-        this.gl.clearColor(1, 1, 1, 1);
-        this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+        this.setupLayoutBounds(renderer.isUsingHighPrecisionMask() ? 0 : usingClipCount);
+        if (!renderer.isUsingHighPrecisionMask()) {
+          this.gl.viewport(0, 0, this._clippingMaskBufferSize, this._clippingMaskBufferSize);
+          this._currentMaskRenderTexture = this.getMaskRenderTexture()[0];
+          renderer.preDraw();
+          this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this._currentMaskRenderTexture);
+        }
+        if (!this._clearedFrameBufferflags) {
+          this._clearedFrameBufferflags = [];
+        }
+        for (let index = 0; index < this._renderTextureCount; index++) {
+          this._clearedFrameBufferflags[index] = false;
+        }
         for (let clipIndex = 0; clipIndex < this._clippingContextListForMask.length; clipIndex++) {
           const clipContext = this._clippingContextListForMask[clipIndex];
           const allClipedDrawRect = clipContext._allClippedDrawRect;
           const layoutBoundsOnTex01 = clipContext._layoutBounds;
           const MARGIN = 0.05;
-          this._tmpBoundsOnModel.setRect(allClipedDrawRect);
-          this._tmpBoundsOnModel.expand(allClipedDrawRect.width * MARGIN, allClipedDrawRect.height * MARGIN);
-          const scaleX = layoutBoundsOnTex01.width / this._tmpBoundsOnModel.width;
-          const scaleY = layoutBoundsOnTex01.height / this._tmpBoundsOnModel.height;
+          let scaleX = 0;
+          let scaleY = 0;
+          const clipContextRenderTexture = this.getMaskRenderTexture()[clipContext._bufferIndex];
+          if (this._currentMaskRenderTexture != clipContextRenderTexture && !renderer.isUsingHighPrecisionMask()) {
+            this._currentMaskRenderTexture = clipContextRenderTexture;
+            renderer.preDraw();
+            this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this._currentMaskRenderTexture);
+          }
+          if (renderer.isUsingHighPrecisionMask()) {
+            const ppu = model.getPixelsPerUnit();
+            const maskPixelSize = clipContext.getClippingManager()._clippingMaskBufferSize;
+            const physicalMaskWidth = layoutBoundsOnTex01.width * maskPixelSize;
+            const physicalMaskHeight = layoutBoundsOnTex01.height * maskPixelSize;
+            this._tmpBoundsOnModel.setRect(allClipedDrawRect);
+            if (this._tmpBoundsOnModel.width * ppu > physicalMaskWidth) {
+              this._tmpBoundsOnModel.expand(allClipedDrawRect.width * MARGIN, 0);
+              scaleX = layoutBoundsOnTex01.width / this._tmpBoundsOnModel.width;
+            } else {
+              scaleX = ppu / physicalMaskWidth;
+            }
+            if (this._tmpBoundsOnModel.height * ppu > physicalMaskHeight) {
+              this._tmpBoundsOnModel.expand(0, allClipedDrawRect.height * MARGIN);
+              scaleY = layoutBoundsOnTex01.height / this._tmpBoundsOnModel.height;
+            } else {
+              scaleY = ppu / physicalMaskHeight;
+            }
+          } else {
+            this._tmpBoundsOnModel.setRect(allClipedDrawRect);
+            this._tmpBoundsOnModel.expand(allClipedDrawRect.width * MARGIN, allClipedDrawRect.height * MARGIN);
+            scaleX = layoutBoundsOnTex01.width / this._tmpBoundsOnModel.width;
+            scaleY = layoutBoundsOnTex01.height / this._tmpBoundsOnModel.height;
+          }
           {
             this._tmpMatrix.loadIdentity();
             {
@@ -3008,20 +3610,29 @@ var __async = (__this, __arguments, generator) => {
           }
           clipContext._matrixForMask.setMatrix(this._tmpMatrixForMask.getArray());
           clipContext._matrixForDraw.setMatrix(this._tmpMatrixForDraw.getArray());
-          const clipDrawCount = clipContext._clippingIdCount;
-          for (let i = 0; i < clipDrawCount; i++) {
-            const clipDrawIndex = clipContext._clippingIdList[i];
-            if (!model.getDrawableDynamicFlagVertexPositionsDidChange(clipDrawIndex)) {
-              continue;
+          if (!renderer.isUsingHighPrecisionMask()) {
+            const clipDrawCount = clipContext._clippingIdCount;
+            for (let i = 0; i < clipDrawCount; i++) {
+              const clipDrawIndex = clipContext._clippingIdList[i];
+              if (!model.getDrawableDynamicFlagVertexPositionsDidChange(clipDrawIndex)) {
+                continue;
+              }
+              renderer.setIsCulling(model.getDrawableCulling(clipDrawIndex) != false);
+              if (!this._clearedFrameBufferflags[clipContext._bufferIndex]) {
+                this.gl.clearColor(1, 1, 1, 1);
+                this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+                this._clearedFrameBufferflags[clipContext._bufferIndex] = true;
+              }
+              renderer.setClippingContextBufferForMask(clipContext);
+              renderer.drawMesh(model.getDrawableTextureIndex(clipDrawIndex), model.getDrawableVertexIndexCount(clipDrawIndex), model.getDrawableVertexCount(clipDrawIndex), model.getDrawableVertexIndices(clipDrawIndex), model.getDrawableVertices(clipDrawIndex), model.getDrawableVertexUvs(clipDrawIndex), model.getMultiplyColor(clipDrawIndex), model.getScreenColor(clipDrawIndex), model.getDrawableOpacity(clipDrawIndex), CubismBlendMode.CubismBlendMode_Normal, false);
             }
-            renderer.setIsCulling(model.getDrawableCulling(clipDrawIndex) != false);
-            renderer.setClippingContextBufferForMask(clipContext);
-            renderer.drawMesh(model.getDrawableTextureIndices(clipDrawIndex), model.getDrawableVertexIndexCount(clipDrawIndex), model.getDrawableVertexCount(clipDrawIndex), model.getDrawableVertexIndices(clipDrawIndex), model.getDrawableVertices(clipDrawIndex), model.getDrawableVertexUvs(clipDrawIndex), model.getDrawableOpacity(clipDrawIndex), CubismBlendMode.CubismBlendMode_Normal, false);
           }
         }
-        this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, s_fbo);
-        renderer.setClippingContextBufferForMask(null);
-        this.gl.viewport(s_viewport[0], s_viewport[1], s_viewport[2], s_viewport[3]);
+        if (!renderer.isUsingHighPrecisionMask()) {
+          this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, s_fbo);
+          renderer.setClippingContextBufferForMask(null);
+          this.gl.viewport(s_viewport[0], s_viewport[1], s_viewport[2], s_viewport[3]);
+        }
       }
     }
     findSameClip(drawableMasks, drawableMaskCounts) {
@@ -3048,82 +3659,126 @@ var __async = (__this, __arguments, generator) => {
       return null;
     }
     setupLayoutBounds(usingClipCount) {
-      let div = usingClipCount / ColorChannelCount;
-      let mod = usingClipCount % ColorChannelCount;
-      div = ~~div;
-      mod = ~~mod;
-      let curClipIndex = 0;
-      for (let channelNo = 0; channelNo < ColorChannelCount; channelNo++) {
-        const layoutCount = div + (channelNo < mod ? 1 : 0);
-        if (layoutCount == 0)
-          ;
-        else if (layoutCount == 1) {
-          const clipContext = this._clippingContextListForMask[curClipIndex++];
-          clipContext._layoutChannelNo = channelNo;
+      const useClippingMaskMaxCount = this._renderTextureCount <= 1 ? ClippingMaskMaxCountOnDefault : ClippingMaskMaxCountOnMultiRenderTexture * this._renderTextureCount;
+      if (usingClipCount <= 0 || usingClipCount > useClippingMaskMaxCount) {
+        if (usingClipCount > useClippingMaskMaxCount) {
+          CubismLogError("not supported mask count : {0}\n[Details] render texture count : {1}, mask count : {2}", usingClipCount - useClippingMaskMaxCount, this._renderTextureCount, usingClipCount);
+        }
+        for (let index = 0; index < this._clippingContextListForMask.length; index++) {
+          const clipContext = this._clippingContextListForMask[index];
+          clipContext._layoutChannelNo = 0;
           clipContext._layoutBounds.x = 0;
           clipContext._layoutBounds.y = 0;
           clipContext._layoutBounds.width = 1;
           clipContext._layoutBounds.height = 1;
-        } else if (layoutCount == 2) {
-          for (let i = 0; i < layoutCount; i++) {
-            let xpos = i % 2;
-            xpos = ~~xpos;
-            const cc = this._clippingContextListForMask[curClipIndex++];
-            cc._layoutChannelNo = channelNo;
-            cc._layoutBounds.x = xpos * 0.5;
-            cc._layoutBounds.y = 0;
-            cc._layoutBounds.width = 0.5;
-            cc._layoutBounds.height = 1;
+          clipContext._bufferIndex = 0;
+        }
+        return;
+      }
+      const layoutCountMaxValue = this._renderTextureCount <= 1 ? 9 : 8;
+      let countPerSheetDiv = usingClipCount / this._renderTextureCount;
+      let countPerSheetMod = usingClipCount % this._renderTextureCount;
+      countPerSheetDiv = ~~countPerSheetDiv;
+      countPerSheetMod = ~~countPerSheetMod;
+      let div = countPerSheetDiv / ColorChannelCount;
+      let mod = countPerSheetDiv % ColorChannelCount;
+      div = ~~div;
+      mod = ~~mod;
+      let curClipIndex = 0;
+      for (let renderTextureNo = 0; renderTextureNo < this._renderTextureCount; renderTextureNo++) {
+        for (let channelNo = 0; channelNo < ColorChannelCount; channelNo++) {
+          let layoutCount = div + (channelNo < mod ? 1 : 0);
+          const checkChannelNo = mod + 1 >= ColorChannelCount ? 0 : mod + 1;
+          if (layoutCount < layoutCountMaxValue && channelNo == checkChannelNo) {
+            layoutCount += renderTextureNo < countPerSheetMod ? 1 : 0;
           }
-        } else if (layoutCount <= 4) {
-          for (let i = 0; i < layoutCount; i++) {
-            let xpos = i % 2;
-            let ypos = i / 2;
-            xpos = ~~xpos;
-            ypos = ~~ypos;
-            const cc = this._clippingContextListForMask[curClipIndex++];
-            cc._layoutChannelNo = channelNo;
-            cc._layoutBounds.x = xpos * 0.5;
-            cc._layoutBounds.y = ypos * 0.5;
-            cc._layoutBounds.width = 0.5;
-            cc._layoutBounds.height = 0.5;
+          if (layoutCount == 0)
+            ;
+          else if (layoutCount == 1) {
+            const clipContext = this._clippingContextListForMask[curClipIndex++];
+            clipContext._layoutChannelNo = channelNo;
+            clipContext._layoutBounds.x = 0;
+            clipContext._layoutBounds.y = 0;
+            clipContext._layoutBounds.width = 1;
+            clipContext._layoutBounds.height = 1;
+            clipContext._bufferIndex = renderTextureNo;
+          } else if (layoutCount == 2) {
+            for (let i = 0; i < layoutCount; i++) {
+              let xpos = i % 2;
+              xpos = ~~xpos;
+              const cc = this._clippingContextListForMask[curClipIndex++];
+              cc._layoutChannelNo = channelNo;
+              cc._layoutBounds.x = xpos * 0.5;
+              cc._layoutBounds.y = 0;
+              cc._layoutBounds.width = 0.5;
+              cc._layoutBounds.height = 1;
+              cc._bufferIndex = renderTextureNo;
+            }
+          } else if (layoutCount <= 4) {
+            for (let i = 0; i < layoutCount; i++) {
+              let xpos = i % 2;
+              let ypos = i / 2;
+              xpos = ~~xpos;
+              ypos = ~~ypos;
+              const cc = this._clippingContextListForMask[curClipIndex++];
+              cc._layoutChannelNo = channelNo;
+              cc._layoutBounds.x = xpos * 0.5;
+              cc._layoutBounds.y = ypos * 0.5;
+              cc._layoutBounds.width = 0.5;
+              cc._layoutBounds.height = 0.5;
+              cc._bufferIndex = renderTextureNo;
+            }
+          } else if (layoutCount <= layoutCountMaxValue) {
+            for (let i = 0; i < layoutCount; i++) {
+              let xpos = i % 3;
+              let ypos = i / 3;
+              xpos = ~~xpos;
+              ypos = ~~ypos;
+              const cc = this._clippingContextListForMask[curClipIndex++];
+              cc._layoutChannelNo = channelNo;
+              cc._layoutBounds.x = xpos / 3;
+              cc._layoutBounds.y = ypos / 3;
+              cc._layoutBounds.width = 1 / 3;
+              cc._layoutBounds.height = 1 / 3;
+              cc._bufferIndex = renderTextureNo;
+            }
+          } else if (exports2.CubismConfig.supportMoreMaskDivisions && layoutCount <= 16) {
+            for (let i = 0; i < layoutCount; i++) {
+              let xpos = i % 4;
+              let ypos = i / 4;
+              xpos = ~~xpos;
+              ypos = ~~ypos;
+              const cc = this._clippingContextListForMask[curClipIndex++];
+              cc._layoutChannelNo = channelNo;
+              cc._layoutBounds.x = xpos / 4;
+              cc._layoutBounds.y = ypos / 4;
+              cc._layoutBounds.width = 1 / 4;
+              cc._layoutBounds.height = 1 / 4;
+              cc._bufferIndex = renderTextureNo;
+            }
+          } else {
+            CubismLogError("not supported mask count : {0}\n[Details] render texture count : {1}, mask count : {2}", usingClipCount - useClippingMaskMaxCount, this._renderTextureCount, usingClipCount);
+            for (let index = 0; index < layoutCount; index++) {
+              const cc = this._clippingContextListForMask[curClipIndex++];
+              cc._layoutChannelNo = 0;
+              cc._layoutBounds.x = 0;
+              cc._layoutBounds.y = 0;
+              cc._layoutBounds.width = 1;
+              cc._layoutBounds.height = 1;
+              cc._bufferIndex = 0;
+            }
           }
-        } else if (layoutCount <= 9) {
-          for (let i = 0; i < layoutCount; i++) {
-            let xpos = i % 3;
-            let ypos = i / 3;
-            xpos = ~~xpos;
-            ypos = ~~ypos;
-            const cc = this._clippingContextListForMask[curClipIndex++];
-            cc._layoutChannelNo = channelNo;
-            cc._layoutBounds.x = xpos / 3;
-            cc._layoutBounds.y = ypos / 3;
-            cc._layoutBounds.width = 1 / 3;
-            cc._layoutBounds.height = 1 / 3;
-          }
-        } else if (exports2.CubismConfig.supportMoreMaskDivisions && layoutCount <= 16) {
-          for (let i = 0; i < layoutCount; i++) {
-            let xpos = i % 4;
-            let ypos = i / 4;
-            xpos = ~~xpos;
-            ypos = ~~ypos;
-            const cc = this._clippingContextListForMask[curClipIndex++];
-            cc._layoutChannelNo = channelNo;
-            cc._layoutBounds.x = xpos / 4;
-            cc._layoutBounds.y = ypos / 4;
-            cc._layoutBounds.width = 1 / 4;
-            cc._layoutBounds.height = 1 / 4;
-          }
-        } else {
-          CubismLogError("not supported mask count : {0}", layoutCount);
         }
       }
     }
     getColorBuffer() {
-      return this._colorBuffer;
+      return this._maskColorBuffers;
     }
     getClippingContextListForDraw() {
       return this._clippingContextListForDraw;
+    }
+    getClippingMaskCount() {
+      return this._clippingContextListForMask.length;
     }
     setClippingMaskBufferSize(size) {
       this._clippingMaskBufferSize = size;
@@ -3131,11 +3786,14 @@ var __async = (__this, __arguments, generator) => {
     getClippingMaskBufferSize() {
       return this._clippingMaskBufferSize;
     }
+    getRenderTextureCount() {
+      return this._renderTextureCount;
+    }
   }
   class CubismRenderTextureResource {
     constructor(frameNo, texture) {
       this.frameNo = frameNo;
-      this.texture = texture;
+      this.textures = texture;
     }
   }
   class CubismClippingContext {
@@ -3149,6 +3807,7 @@ var __async = (__this, __arguments, generator) => {
       this._clippedDrawableIndexList = [];
       this._matrixForMask = new CubismMatrix44();
       this._matrixForDraw = new CubismMatrix44();
+      this._bufferIndex = 0;
     }
     release() {
       const self2 = this;
@@ -3164,6 +3823,86 @@ var __async = (__this, __arguments, generator) => {
     }
     setGl(gl) {
       this._owner.setGL(gl);
+    }
+  }
+  class CubismRendererProfile_WebGL {
+    setGlEnable(index, enabled) {
+      if (enabled)
+        this.gl.enable(index);
+      else
+        this.gl.disable(index);
+    }
+    setGlEnableVertexAttribArray(index, enabled) {
+      if (enabled)
+        this.gl.enableVertexAttribArray(index);
+      else
+        this.gl.disableVertexAttribArray(index);
+    }
+    save() {
+      if (this.gl == null) {
+        CubismLogError("'gl' is null. WebGLRenderingContext is required.\nPlease call 'CubimRenderer_WebGL.startUp' function.");
+        return;
+      }
+      this._lastArrayBufferBinding = this.gl.getParameter(this.gl.ARRAY_BUFFER_BINDING);
+      this._lastArrayBufferBinding = this.gl.getParameter(this.gl.ELEMENT_ARRAY_BUFFER_BINDING);
+      this._lastProgram = this.gl.getParameter(this.gl.CURRENT_PROGRAM);
+      this._lastActiveTexture = this.gl.getParameter(this.gl.ACTIVE_TEXTURE);
+      this.gl.activeTexture(this.gl.TEXTURE1);
+      this._lastTexture1Binding2D = this.gl.getParameter(this.gl.TEXTURE_BINDING_2D);
+      this.gl.activeTexture(this.gl.TEXTURE0);
+      this._lastTexture0Binding2D = this.gl.getParameter(this.gl.TEXTURE_BINDING_2D);
+      this._lastVertexAttribArrayEnabled[0] = this.gl.getVertexAttrib(0, this.gl.VERTEX_ATTRIB_ARRAY_ENABLED);
+      this._lastVertexAttribArrayEnabled[1] = this.gl.getVertexAttrib(1, this.gl.VERTEX_ATTRIB_ARRAY_ENABLED);
+      this._lastVertexAttribArrayEnabled[2] = this.gl.getVertexAttrib(2, this.gl.VERTEX_ATTRIB_ARRAY_ENABLED);
+      this._lastVertexAttribArrayEnabled[3] = this.gl.getVertexAttrib(3, this.gl.VERTEX_ATTRIB_ARRAY_ENABLED);
+      this._lastScissorTest = this.gl.isEnabled(this.gl.SCISSOR_TEST);
+      this._lastStencilTest = this.gl.isEnabled(this.gl.STENCIL_TEST);
+      this._lastDepthTest = this.gl.isEnabled(this.gl.DEPTH_TEST);
+      this._lastCullFace = this.gl.isEnabled(this.gl.CULL_FACE);
+      this._lastBlend = this.gl.isEnabled(this.gl.BLEND);
+      this._lastFrontFace = this.gl.getParameter(this.gl.FRONT_FACE);
+      this._lastColorMask = this.gl.getParameter(this.gl.COLOR_WRITEMASK);
+      this._lastBlending[0] = this.gl.getParameter(this.gl.BLEND_SRC_RGB);
+      this._lastBlending[1] = this.gl.getParameter(this.gl.BLEND_DST_RGB);
+      this._lastBlending[2] = this.gl.getParameter(this.gl.BLEND_SRC_ALPHA);
+      this._lastBlending[3] = this.gl.getParameter(this.gl.BLEND_DST_ALPHA);
+      this._lastFBO = this.gl.getParameter(this.gl.FRAMEBUFFER_BINDING);
+      this._lastViewport = this.gl.getParameter(this.gl.VIEWPORT);
+    }
+    restore() {
+      if (this.gl == null) {
+        CubismLogError("'gl' is null. WebGLRenderingContext is required.\nPlease call 'CubimRenderer_WebGL.startUp' function.");
+        return;
+      }
+      this.gl.useProgram(this._lastProgram);
+      this.setGlEnableVertexAttribArray(0, this._lastVertexAttribArrayEnabled[0]);
+      this.setGlEnableVertexAttribArray(1, this._lastVertexAttribArrayEnabled[1]);
+      this.setGlEnableVertexAttribArray(2, this._lastVertexAttribArrayEnabled[2]);
+      this.setGlEnableVertexAttribArray(3, this._lastVertexAttribArrayEnabled[3]);
+      this.setGlEnable(this.gl.SCISSOR_TEST, this._lastScissorTest);
+      this.setGlEnable(this.gl.STENCIL_TEST, this._lastStencilTest);
+      this.setGlEnable(this.gl.DEPTH_TEST, this._lastDepthTest);
+      this.setGlEnable(this.gl.CULL_FACE, this._lastCullFace);
+      this.setGlEnable(this.gl.BLEND, this._lastBlend);
+      this.gl.frontFace(this._lastFrontFace);
+      this.gl.colorMask(this._lastColorMask[0], this._lastColorMask[1], this._lastColorMask[2], this._lastColorMask[3]);
+      this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this._lastArrayBufferBinding);
+      this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this._lastElementArrayBufferBinding);
+      this.gl.activeTexture(this.gl.TEXTURE1);
+      this.gl.bindTexture(this.gl.TEXTURE_2D, this._lastTexture1Binding2D);
+      this.gl.activeTexture(this.gl.TEXTURE0);
+      this.gl.bindTexture(this.gl.TEXTURE_2D, this._lastTexture0Binding2D);
+      this.gl.activeTexture(this._lastActiveTexture);
+      this.gl.blendFuncSeparate(this._lastBlending[0], this._lastBlending[1], this._lastBlending[2], this._lastBlending[3]);
+    }
+    setGl(gl) {
+      this.gl = gl;
+    }
+    constructor() {
+      this._lastVertexAttribArrayEnabled = new Array(4);
+      this._lastColorMask = new Array(4);
+      this._lastBlending = new Array(4);
+      this._lastViewport = new Array(4);
     }
   }
   class CubismShader_WebGL {
@@ -3186,7 +3925,7 @@ var __async = (__this, __arguments, generator) => {
     release() {
       this.releaseShaderProgram();
     }
-    setupShaderProgram(renderer, textureId, vertexCount, vertexArray, indexArray, uvArray, bufferData, opacity, colorBlendMode, baseColor, isPremultipliedAlpha, matrix4x4, invertedMask) {
+    setupShaderProgram(renderer, textureId, vertexCount, vertexArray, indexArray, uvArray, bufferData, opacity, colorBlendMode, baseColor, multiplyColor, screenColor, isPremultipliedAlpha, matrix4x4, invertedMask) {
       if (!isPremultipliedAlpha) {
         CubismLogError("NoPremultipliedAlpha is not allowed");
       }
@@ -3224,6 +3963,8 @@ var __async = (__this, __arguments, generator) => {
         this.gl.uniformMatrix4fv(shaderSet.uniformClipMatrixLocation, false, clippingContextBufferForMask._matrixForMask.getArray());
         const rect = clippingContextBufferForMask._layoutBounds;
         this.gl.uniform4f(shaderSet.uniformBaseColorLocation, rect.x * 2 - 1, rect.y * 2 - 1, rect.getRight() * 2 - 1, rect.getBottom() * 2 - 1);
+        this.gl.uniform4f(shaderSet.uniformMultiplyColorLocation, multiplyColor.R, multiplyColor.G, multiplyColor.B, multiplyColor.A);
+        this.gl.uniform4f(shaderSet.uniformScreenColorLocation, screenColor.R, screenColor.G, screenColor.B, screenColor.A);
         SRC_COLOR = this.gl.ZERO;
         DST_COLOR = this.gl.ONE_MINUS_SRC_COLOR;
         SRC_ALPHA = this.gl.ZERO;
@@ -3274,7 +4015,7 @@ var __async = (__this, __arguments, generator) => {
         this.gl.vertexAttribPointer(shaderSet.attributeTexCoordLocation, 2, this.gl.FLOAT, false, 0, 0);
         if (clippingContextBufferForDraw != null) {
           this.gl.activeTexture(this.gl.TEXTURE1);
-          const tex = clippingContextBufferForDraw.getClippingManager().getColorBuffer();
+          const tex = clippingContextBufferForDraw.getClippingManager().getColorBuffer()[renderer.getClippingContextBufferForDraw()._bufferIndex];
           this.gl.bindTexture(this.gl.TEXTURE_2D, tex);
           this.gl.uniform1i(shaderSet.samplerTexture1Location, 1);
           this.gl.uniformMatrix4fv(shaderSet.uniformClipMatrixLocation, false, clippingContextBufferForDraw._matrixForDraw.getArray());
@@ -3287,6 +4028,8 @@ var __async = (__this, __arguments, generator) => {
         this.gl.uniform1i(shaderSet.samplerTexture0Location, 0);
         this.gl.uniformMatrix4fv(shaderSet.uniformMatrixLocation, false, matrix4x4.getArray());
         this.gl.uniform4f(shaderSet.uniformBaseColorLocation, baseColor.R, baseColor.G, baseColor.B, baseColor.A);
+        this.gl.uniform4f(shaderSet.uniformMultiplyColorLocation, multiplyColor.R, multiplyColor.G, multiplyColor.B, multiplyColor.A);
+        this.gl.uniform4f(shaderSet.uniformScreenColorLocation, screenColor.R, screenColor.G, screenColor.B, screenColor.A);
       }
       if (bufferData.index == null) {
         bufferData.index = this.gl.createBuffer();
@@ -3303,7 +4046,7 @@ var __async = (__this, __arguments, generator) => {
       this._shaderSets = [];
     }
     generateShaders() {
-      for (let i = 0; i < shaderCount; i++) {
+      for (let i = 0; i < ShaderCount; i++) {
         this._shaderSets.push({});
       }
       this._shaderSets[0].shaderProgram = this.loadShaderProgram(vertexShaderSrcSetupMask, fragmentShaderSrcsetupMask);
@@ -3322,11 +4065,15 @@ var __async = (__this, __arguments, generator) => {
       this._shaderSets[0].uniformClipMatrixLocation = this.gl.getUniformLocation(this._shaderSets[0].shaderProgram, "u_clipMatrix");
       this._shaderSets[0].uniformChannelFlagLocation = this.gl.getUniformLocation(this._shaderSets[0].shaderProgram, "u_channelFlag");
       this._shaderSets[0].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[0].shaderProgram, "u_baseColor");
+      this._shaderSets[0].uniformMultiplyColorLocation = this.gl.getUniformLocation(this._shaderSets[0].shaderProgram, "u_multiplyColor");
+      this._shaderSets[0].uniformScreenColorLocation = this.gl.getUniformLocation(this._shaderSets[0].shaderProgram, "u_screenColor");
       this._shaderSets[1].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[1].shaderProgram, "a_position");
       this._shaderSets[1].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[1].shaderProgram, "a_texCoord");
       this._shaderSets[1].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[1].shaderProgram, "s_texture0");
       this._shaderSets[1].uniformMatrixLocation = this.gl.getUniformLocation(this._shaderSets[1].shaderProgram, "u_matrix");
       this._shaderSets[1].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[1].shaderProgram, "u_baseColor");
+      this._shaderSets[1].uniformMultiplyColorLocation = this.gl.getUniformLocation(this._shaderSets[1].shaderProgram, "u_multiplyColor");
+      this._shaderSets[1].uniformScreenColorLocation = this.gl.getUniformLocation(this._shaderSets[1].shaderProgram, "u_screenColor");
       this._shaderSets[2].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[2].shaderProgram, "a_position");
       this._shaderSets[2].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[2].shaderProgram, "a_texCoord");
       this._shaderSets[2].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[2].shaderProgram, "s_texture0");
@@ -3335,6 +4082,8 @@ var __async = (__this, __arguments, generator) => {
       this._shaderSets[2].uniformClipMatrixLocation = this.gl.getUniformLocation(this._shaderSets[2].shaderProgram, "u_clipMatrix");
       this._shaderSets[2].uniformChannelFlagLocation = this.gl.getUniformLocation(this._shaderSets[2].shaderProgram, "u_channelFlag");
       this._shaderSets[2].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[2].shaderProgram, "u_baseColor");
+      this._shaderSets[2].uniformMultiplyColorLocation = this.gl.getUniformLocation(this._shaderSets[2].shaderProgram, "u_multiplyColor");
+      this._shaderSets[2].uniformScreenColorLocation = this.gl.getUniformLocation(this._shaderSets[2].shaderProgram, "u_screenColor");
       this._shaderSets[3].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[3].shaderProgram, "a_position");
       this._shaderSets[3].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[3].shaderProgram, "a_texCoord");
       this._shaderSets[3].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[3].shaderProgram, "s_texture0");
@@ -3343,11 +4092,15 @@ var __async = (__this, __arguments, generator) => {
       this._shaderSets[3].uniformClipMatrixLocation = this.gl.getUniformLocation(this._shaderSets[3].shaderProgram, "u_clipMatrix");
       this._shaderSets[3].uniformChannelFlagLocation = this.gl.getUniformLocation(this._shaderSets[3].shaderProgram, "u_channelFlag");
       this._shaderSets[3].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[3].shaderProgram, "u_baseColor");
+      this._shaderSets[3].uniformMultiplyColorLocation = this.gl.getUniformLocation(this._shaderSets[3].shaderProgram, "u_multiplyColor");
+      this._shaderSets[3].uniformScreenColorLocation = this.gl.getUniformLocation(this._shaderSets[3].shaderProgram, "u_screenColor");
       this._shaderSets[4].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[4].shaderProgram, "a_position");
       this._shaderSets[4].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[4].shaderProgram, "a_texCoord");
       this._shaderSets[4].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[4].shaderProgram, "s_texture0");
       this._shaderSets[4].uniformMatrixLocation = this.gl.getUniformLocation(this._shaderSets[4].shaderProgram, "u_matrix");
       this._shaderSets[4].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[4].shaderProgram, "u_baseColor");
+      this._shaderSets[4].uniformMultiplyColorLocation = this.gl.getUniformLocation(this._shaderSets[4].shaderProgram, "u_multiplyColor");
+      this._shaderSets[4].uniformScreenColorLocation = this.gl.getUniformLocation(this._shaderSets[4].shaderProgram, "u_screenColor");
       this._shaderSets[5].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[5].shaderProgram, "a_position");
       this._shaderSets[5].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[5].shaderProgram, "a_texCoord");
       this._shaderSets[5].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[5].shaderProgram, "s_texture0");
@@ -3356,6 +4109,8 @@ var __async = (__this, __arguments, generator) => {
       this._shaderSets[5].uniformClipMatrixLocation = this.gl.getUniformLocation(this._shaderSets[5].shaderProgram, "u_clipMatrix");
       this._shaderSets[5].uniformChannelFlagLocation = this.gl.getUniformLocation(this._shaderSets[5].shaderProgram, "u_channelFlag");
       this._shaderSets[5].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[5].shaderProgram, "u_baseColor");
+      this._shaderSets[5].uniformMultiplyColorLocation = this.gl.getUniformLocation(this._shaderSets[5].shaderProgram, "u_multiplyColor");
+      this._shaderSets[5].uniformScreenColorLocation = this.gl.getUniformLocation(this._shaderSets[5].shaderProgram, "u_screenColor");
       this._shaderSets[6].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[6].shaderProgram, "a_position");
       this._shaderSets[6].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[6].shaderProgram, "a_texCoord");
       this._shaderSets[6].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[6].shaderProgram, "s_texture0");
@@ -3364,11 +4119,15 @@ var __async = (__this, __arguments, generator) => {
       this._shaderSets[6].uniformClipMatrixLocation = this.gl.getUniformLocation(this._shaderSets[6].shaderProgram, "u_clipMatrix");
       this._shaderSets[6].uniformChannelFlagLocation = this.gl.getUniformLocation(this._shaderSets[6].shaderProgram, "u_channelFlag");
       this._shaderSets[6].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[6].shaderProgram, "u_baseColor");
+      this._shaderSets[6].uniformMultiplyColorLocation = this.gl.getUniformLocation(this._shaderSets[6].shaderProgram, "u_multiplyColor");
+      this._shaderSets[6].uniformScreenColorLocation = this.gl.getUniformLocation(this._shaderSets[6].shaderProgram, "u_screenColor");
       this._shaderSets[7].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[7].shaderProgram, "a_position");
       this._shaderSets[7].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[7].shaderProgram, "a_texCoord");
       this._shaderSets[7].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[7].shaderProgram, "s_texture0");
       this._shaderSets[7].uniformMatrixLocation = this.gl.getUniformLocation(this._shaderSets[7].shaderProgram, "u_matrix");
       this._shaderSets[7].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[7].shaderProgram, "u_baseColor");
+      this._shaderSets[7].uniformMultiplyColorLocation = this.gl.getUniformLocation(this._shaderSets[7].shaderProgram, "u_multiplyColor");
+      this._shaderSets[7].uniformScreenColorLocation = this.gl.getUniformLocation(this._shaderSets[7].shaderProgram, "u_screenColor");
       this._shaderSets[8].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[8].shaderProgram, "a_position");
       this._shaderSets[8].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[8].shaderProgram, "a_texCoord");
       this._shaderSets[8].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[8].shaderProgram, "s_texture0");
@@ -3377,6 +4136,8 @@ var __async = (__this, __arguments, generator) => {
       this._shaderSets[8].uniformClipMatrixLocation = this.gl.getUniformLocation(this._shaderSets[8].shaderProgram, "u_clipMatrix");
       this._shaderSets[8].uniformChannelFlagLocation = this.gl.getUniformLocation(this._shaderSets[8].shaderProgram, "u_channelFlag");
       this._shaderSets[8].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[8].shaderProgram, "u_baseColor");
+      this._shaderSets[8].uniformMultiplyColorLocation = this.gl.getUniformLocation(this._shaderSets[8].shaderProgram, "u_multiplyColor");
+      this._shaderSets[8].uniformScreenColorLocation = this.gl.getUniformLocation(this._shaderSets[8].shaderProgram, "u_screenColor");
       this._shaderSets[9].attributePositionLocation = this.gl.getAttribLocation(this._shaderSets[9].shaderProgram, "a_position");
       this._shaderSets[9].attributeTexCoordLocation = this.gl.getAttribLocation(this._shaderSets[9].shaderProgram, "a_texCoord");
       this._shaderSets[9].samplerTexture0Location = this.gl.getUniformLocation(this._shaderSets[9].shaderProgram, "s_texture0");
@@ -3385,15 +4146,17 @@ var __async = (__this, __arguments, generator) => {
       this._shaderSets[9].uniformClipMatrixLocation = this.gl.getUniformLocation(this._shaderSets[9].shaderProgram, "u_clipMatrix");
       this._shaderSets[9].uniformChannelFlagLocation = this.gl.getUniformLocation(this._shaderSets[9].shaderProgram, "u_channelFlag");
       this._shaderSets[9].uniformBaseColorLocation = this.gl.getUniformLocation(this._shaderSets[9].shaderProgram, "u_baseColor");
+      this._shaderSets[9].uniformMultiplyColorLocation = this.gl.getUniformLocation(this._shaderSets[9].shaderProgram, "u_multiplyColor");
+      this._shaderSets[9].uniformScreenColorLocation = this.gl.getUniformLocation(this._shaderSets[9].shaderProgram, "u_screenColor");
     }
     loadShaderProgram(vertexShaderSource, fragmentShaderSource) {
-      let shaderProgram = this.gl.createProgram();
-      let vertShader = this.compileShaderSource(this.gl.VERTEX_SHADER, vertexShaderSource);
+      const shaderProgram = this.gl.createProgram();
+      const vertShader = this.compileShaderSource(this.gl.VERTEX_SHADER, vertexShaderSource);
       if (!vertShader) {
         CubismLogError("Vertex shader compile error!");
         return 0;
       }
-      let fragShader = this.compileShaderSource(this.gl.FRAGMENT_SHADER, fragmentShaderSource);
+      const fragShader = this.compileShaderSource(this.gl.FRAGMENT_SHADER, fragmentShaderSource);
       if (!fragShader) {
         CubismLogError("Vertex shader compile error!");
         return 0;
@@ -3452,15 +4215,15 @@ var __async = (__this, __arguments, generator) => {
   const fragmentShaderSrcsetupMask = "precision mediump float;varying vec2       v_texCoord;varying vec4       v_myPos;uniform vec4       u_baseColor;uniform vec4       u_channelFlag;uniform sampler2D  s_texture0;void main(){   float isInside =        step(u_baseColor.x, v_myPos.x/v_myPos.w)       * step(u_baseColor.y, v_myPos.y/v_myPos.w)       * step(v_myPos.x/v_myPos.w, u_baseColor.z)       * step(v_myPos.y/v_myPos.w, u_baseColor.w);   gl_FragColor = u_channelFlag * texture2D(s_texture0, v_texCoord).a * isInside;}";
   const vertexShaderSrc = "attribute vec4     a_position;attribute vec2     a_texCoord;varying vec2       v_texCoord;uniform mat4       u_matrix;void main(){   gl_Position = u_matrix * a_position;   v_texCoord = a_texCoord;   v_texCoord.y = 1.0 - v_texCoord.y;}";
   const vertexShaderSrcMasked = "attribute vec4     a_position;attribute vec2     a_texCoord;varying vec2       v_texCoord;varying vec4       v_clipPos;uniform mat4       u_matrix;uniform mat4       u_clipMatrix;void main(){   gl_Position = u_matrix * a_position;   v_clipPos = u_clipMatrix * a_position;   v_texCoord = a_texCoord;   v_texCoord.y = 1.0 - v_texCoord.y;}";
-  const fragmentShaderSrcPremultipliedAlpha = "precision mediump float;varying vec2       v_texCoord;uniform vec4       u_baseColor;uniform sampler2D  s_texture0;void main(){   gl_FragColor = texture2D(s_texture0 , v_texCoord) * u_baseColor;}";
-  const fragmentShaderSrcMaskPremultipliedAlpha = "precision mediump float;varying vec2       v_texCoord;varying vec4       v_clipPos;uniform vec4       u_baseColor;uniform vec4       u_channelFlag;uniform sampler2D  s_texture0;uniform sampler2D  s_texture1;void main(){   vec4 col_formask = texture2D(s_texture0 , v_texCoord) * u_baseColor;   vec4 clipMask = (1.0 - texture2D(s_texture1, v_clipPos.xy / v_clipPos.w)) * u_channelFlag;   float maskVal = clipMask.r + clipMask.g + clipMask.b + clipMask.a;   col_formask = col_formask * maskVal;   gl_FragColor = col_formask;}";
-  const fragmentShaderSrcMaskInvertedPremultipliedAlpha = "precision mediump float;varying vec2 v_texCoord;varying vec4 v_clipPos;uniform sampler2D s_texture0;uniform sampler2D s_texture1;uniform vec4 u_channelFlag;uniform vec4 u_baseColor;void main(){vec4 col_formask = texture2D(s_texture0, v_texCoord) * u_baseColor;vec4 clipMask = (1.0 - texture2D(s_texture1, v_clipPos.xy / v_clipPos.w)) * u_channelFlag;float maskVal = clipMask.r + clipMask.g + clipMask.b + clipMask.a;col_formask = col_formask * (1.0 - maskVal);gl_FragColor = col_formask;}";
+  const fragmentShaderSrcPremultipliedAlpha = "precision mediump float;varying vec2       v_texCoord;uniform vec4       u_baseColor;uniform sampler2D  s_texture0;uniform vec4       u_multiplyColor;uniform vec4       u_screenColor;void main(){   vec4 texColor = texture2D(s_texture0, v_texCoord);   texColor.rgb = texColor.rgb * u_multiplyColor.rgb;   texColor.rgb = (texColor.rgb + u_screenColor.rgb * texColor.a) - (texColor.rgb * u_screenColor.rgb);   vec4 color = texColor * u_baseColor;   gl_FragColor = vec4(color.rgb, color.a);}";
+  const fragmentShaderSrcMaskPremultipliedAlpha = "precision mediump float;varying vec2       v_texCoord;varying vec4       v_clipPos;uniform vec4       u_baseColor;uniform vec4       u_channelFlag;uniform sampler2D  s_texture0;uniform sampler2D  s_texture1;uniform vec4       u_multiplyColor;uniform vec4       u_screenColor;void main(){   vec4 texColor = texture2D(s_texture0, v_texCoord);   texColor.rgb = texColor.rgb * u_multiplyColor.rgb;   texColor.rgb = (texColor.rgb + u_screenColor.rgb * texColor.a) - (texColor.rgb * u_screenColor.rgb);   vec4 col_formask = texColor * u_baseColor;   vec4 clipMask = (1.0 - texture2D(s_texture1, v_clipPos.xy / v_clipPos.w)) * u_channelFlag;   float maskVal = clipMask.r + clipMask.g + clipMask.b + clipMask.a;   col_formask = col_formask * maskVal;   gl_FragColor = col_formask;}";
+  const fragmentShaderSrcMaskInvertedPremultipliedAlpha = "precision mediump float;varying vec2      v_texCoord;varying vec4      v_clipPos;uniform sampler2D s_texture0;uniform sampler2D s_texture1;uniform vec4      u_channelFlag;uniform vec4      u_baseColor;uniform vec4      u_multiplyColor;uniform vec4      u_screenColor;void main(){   vec4 texColor = texture2D(s_texture0, v_texCoord);   texColor.rgb = texColor.rgb * u_multiplyColor.rgb;   texColor.rgb = (texColor.rgb + u_screenColor.rgb * texColor.a) - (texColor.rgb * u_screenColor.rgb);   vec4 col_formask = texColor * u_baseColor;   vec4 clipMask = (1.0 - texture2D(s_texture1, v_clipPos.xy / v_clipPos.w)) * u_channelFlag;   float maskVal = clipMask.r + clipMask.g + clipMask.b + clipMask.a;   col_formask = col_formask * (1.0 - maskVal);   gl_FragColor = col_formask;}";
   class CubismRenderer_WebGL extends CubismRenderer {
     constructor() {
       super();
       this._clippingContextBufferForMask = null;
       this._clippingContextBufferForDraw = null;
-      this._clippingManager = new CubismClippingManager_WebGL();
+      this._rendererProfile = new CubismRendererProfile_WebGL();
       this.firstDraw = true;
       this._textures = {};
       this._sortedDrawableIndexList = [];
@@ -3470,10 +4233,10 @@ var __async = (__this, __arguments, generator) => {
         index: null
       };
     }
-    initialize(model) {
+    initialize(model, maskBufferCount = 1) {
       if (model.isUsingMasking()) {
         this._clippingManager = new CubismClippingManager_WebGL();
-        this._clippingManager.initialize(model, model.getDrawableCount(), model.getDrawableMasks(), model.getDrawableMaskCounts());
+        this._clippingManager.initialize(model, model.getDrawableCount(), model.getDrawableMasks(), model.getDrawableMaskCounts(), maskBufferCount);
       }
       for (let i = model.getDrawableCount() - 1; i >= 0; i--) {
         this._sortedDrawableIndexList[i] = 0;
@@ -3487,13 +4250,20 @@ var __async = (__this, __arguments, generator) => {
       return this._textures;
     }
     setClippingMaskBufferSize(size) {
+      if (!this._model.isUsingMasking()) {
+        return;
+      }
+      const renderTextureCount = this._clippingManager.getRenderTextureCount();
       this._clippingManager.release();
       this._clippingManager = new CubismClippingManager_WebGL();
       this._clippingManager.setClippingMaskBufferSize(size);
-      this._clippingManager.initialize(this.getModel(), this.getModel().getDrawableCount(), this.getModel().getDrawableMasks(), this.getModel().getDrawableMaskCounts());
+      this._clippingManager.initialize(this.getModel(), this.getModel().getDrawableCount(), this.getModel().getDrawableMasks(), this.getModel().getDrawableMaskCounts(), renderTextureCount);
     }
     getClippingMaskBufferSize() {
-      return this._clippingManager.getClippingMaskBufferSize();
+      return this._model.isUsingMasking() ? this._clippingManager.getClippingMaskBufferSize() : -1;
+    }
+    getRenderTextureCount() {
+      return this._model.isUsingMasking() ? this._clippingManager.getRenderTextureCount() : -1;
     }
     release() {
       var _a, _b, _c;
@@ -3510,10 +4280,15 @@ var __async = (__this, __arguments, generator) => {
       self2._textures = void 0;
     }
     doDrawModel() {
-      this.preDraw();
+      if (this.gl == null) {
+        CubismLogError("'gl' is null. WebGLRenderingContext is required.\nPlease call 'CubimRenderer_WebGL.startUp' function.");
+        return;
+      }
       if (this._clippingManager != null) {
+        this.preDraw();
         this._clippingManager.setupClippingContext(this.getModel(), this);
       }
+      this.preDraw();
       const drawableCount = this.getModel().getDrawableCount();
       const renderOrder = this.getModel().getDrawableRenderOrders();
       for (let i = 0; i < drawableCount; ++i) {
@@ -3525,12 +4300,40 @@ var __async = (__this, __arguments, generator) => {
         if (!this.getModel().getDrawableDynamicFlagIsVisible(drawableIndex)) {
           continue;
         }
-        this.setClippingContextBufferForDraw(this._clippingManager != null ? this._clippingManager.getClippingContextListForDraw()[drawableIndex] : null);
+        const clipContext = this._clippingManager != null ? this._clippingManager.getClippingContextListForDraw()[drawableIndex] : null;
+        if (clipContext != null && this.isUsingHighPrecisionMask()) {
+          if (clipContext._isUsing) {
+            this.gl.viewport(0, 0, this._clippingManager.getClippingMaskBufferSize(), this._clippingManager.getClippingMaskBufferSize());
+            this.preDraw();
+            this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, clipContext.getClippingManager().getMaskRenderTexture()[clipContext._bufferIndex]);
+            this.gl.clearColor(1, 1, 1, 1);
+            this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+          }
+          {
+            const clipDrawCount = clipContext._clippingIdCount;
+            for (let index = 0; index < clipDrawCount; index++) {
+              const clipDrawIndex = clipContext._clippingIdList[index];
+              if (!this._model.getDrawableDynamicFlagVertexPositionsDidChange(clipDrawIndex)) {
+                continue;
+              }
+              this.setIsCulling(this._model.getDrawableCulling(clipDrawIndex) != false);
+              this.setClippingContextBufferForMask(clipContext);
+              this.drawMesh(this.getModel().getDrawableTextureIndex(clipDrawIndex), this.getModel().getDrawableVertexIndexCount(clipDrawIndex), this.getModel().getDrawableVertexCount(clipDrawIndex), this.getModel().getDrawableVertexIndices(clipDrawIndex), this.getModel().getDrawableVertices(clipDrawIndex), this.getModel().getDrawableVertexUvs(clipDrawIndex), this.getModel().getMultiplyColor(clipDrawIndex), this.getModel().getScreenColor(clipDrawIndex), this.getModel().getDrawableOpacity(clipDrawIndex), CubismBlendMode.CubismBlendMode_Normal, false);
+            }
+          }
+          {
+            this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, s_fbo);
+            this.setClippingContextBufferForMask(null);
+            this.gl.viewport(s_viewport[0], s_viewport[1], s_viewport[2], s_viewport[3]);
+            this.preDraw();
+          }
+        }
+        this.setClippingContextBufferForDraw(clipContext);
         this.setIsCulling(this.getModel().getDrawableCulling(drawableIndex));
-        this.drawMesh(this.getModel().getDrawableTextureIndices(drawableIndex), this.getModel().getDrawableVertexIndexCount(drawableIndex), this.getModel().getDrawableVertexCount(drawableIndex), this.getModel().getDrawableVertexIndices(drawableIndex), this.getModel().getDrawableVertices(drawableIndex), this.getModel().getDrawableVertexUvs(drawableIndex), this.getModel().getDrawableOpacity(drawableIndex), this.getModel().getDrawableBlendMode(drawableIndex), this.getModel().getDrawableInvertedMaskBit(drawableIndex));
+        this.drawMesh(this.getModel().getDrawableTextureIndex(drawableIndex), this.getModel().getDrawableVertexIndexCount(drawableIndex), this.getModel().getDrawableVertexCount(drawableIndex), this.getModel().getDrawableVertexIndices(drawableIndex), this.getModel().getDrawableVertices(drawableIndex), this.getModel().getDrawableVertexUvs(drawableIndex), this.getModel().getMultiplyColor(drawableIndex), this.getModel().getScreenColor(drawableIndex), this.getModel().getDrawableOpacity(drawableIndex), this.getModel().getDrawableBlendMode(drawableIndex), this.getModel().getDrawableInvertedMaskBit(drawableIndex));
       }
     }
-    drawMesh(textureNo, indexCount, vertexCount, indexArray, vertexArray, uvArray, opacity, colorBlendMode, invertedMask) {
+    drawMesh(textureNo, indexCount, vertexCount, indexArray, vertexArray, uvArray, multiplyColor, screenColor, opacity, colorBlendMode, invertedMask) {
       if (this.isCulling()) {
         this.gl.enable(this.gl.CULL_FACE);
       } else {
@@ -3550,11 +4353,17 @@ var __async = (__this, __arguments, generator) => {
       if (this._textures[textureNo] != null) {
         drawtexture = this._textures[textureNo];
       }
-      CubismShader_WebGL.getInstance().setupShaderProgram(this, drawtexture, vertexCount, vertexArray, indexArray, uvArray, this._bufferData, opacity, colorBlendMode, modelColorRGBA, this.isPremultipliedAlpha(), this.getMvpMatrix(), invertedMask);
+      CubismShader_WebGL.getInstance().setupShaderProgram(this, drawtexture, vertexCount, vertexArray, indexArray, uvArray, this._bufferData, opacity, colorBlendMode, modelColorRGBA, multiplyColor, screenColor, this.isPremultipliedAlpha(), this.getMvpMatrix(), invertedMask);
       this.gl.drawElements(this.gl.TRIANGLES, indexCount, this.gl.UNSIGNED_SHORT, 0);
       this.gl.useProgram(null);
       this.setClippingContextBufferForDraw(null);
       this.setClippingContextBufferForMask(null);
+    }
+    saveProfile() {
+      this._rendererProfile.save();
+    }
+    restoreProfile() {
+      this._rendererProfile.restore();
     }
     static doStaticRelease() {
       CubismShader_WebGL.deleteInstance();
@@ -3566,7 +4375,6 @@ var __async = (__this, __arguments, generator) => {
     preDraw() {
       if (this.firstDraw) {
         this.firstDraw = false;
-        this._anisortopy = this.gl.getExtension("EXT_texture_filter_anisotropic") || this.gl.getExtension("WEBKIT_EXT_texture_filter_anisotropic") || this.gl.getExtension("MOZ_EXT_texture_filter_anisotropic");
       }
       this.gl.disable(this.gl.SCISSOR_TEST);
       this.gl.disable(this.gl.STENCIL_TEST);
@@ -3576,6 +4384,12 @@ var __async = (__this, __arguments, generator) => {
       this.gl.colorMask(true, true, true, true);
       this.gl.bindBuffer(this.gl.ARRAY_BUFFER, null);
       this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, null);
+      if (this.getAnisotropy() > 0 && this._extension) {
+        for (const tex of Object.entries(this._textures)) {
+          this.gl.bindTexture(this.gl.TEXTURE_2D, tex);
+          this.gl.texParameterf(this.gl.TEXTURE_2D, this._extension.TEXTURE_MAX_ANISOTROPY_EXT, this.getAnisotropy());
+        }
+      }
     }
     setClippingContextBufferForMask(clip) {
       this._clippingContextBufferForMask = clip;
@@ -3591,8 +4405,12 @@ var __async = (__this, __arguments, generator) => {
     }
     startUp(gl) {
       this.gl = gl;
-      this._clippingManager.setGL(gl);
+      if (this._clippingManager) {
+        this._clippingManager.setGL(gl);
+      }
       CubismShader_WebGL.getInstance().setGl(gl);
+      this._rendererProfile.setGl(gl);
+      this._extension = this.gl.getExtension("EXT_texture_filter_anisotropic") || this.gl.getExtension("WEBKIT_EXT_texture_filter_anisotropic") || this.gl.getExtension("MOZ_EXT_texture_filter_anisotropic");
     }
   }
   CubismRenderer.staticRelease = () => {
@@ -4987,7 +5805,6 @@ var __async = (__this, __arguments, generator) => {
       this.glContextID = -1;
       this.elapsedTime = performance.now();
       this.deltaTime = 0;
-      this.wasUpdated = false;
       this._autoUpdate = false;
       this.once("modelLoaded", () => this.init(options));
     }
@@ -5105,13 +5922,9 @@ var __async = (__this, __arguments, generator) => {
     update(dt) {
       this.deltaTime += dt;
       this.elapsedTime += dt;
-      this.wasUpdated = true;
     }
     _render(renderer) {
       this.registerInteraction(renderer.plugins.interaction);
-      if (!this.wasUpdated) {
-        return;
-      }
       renderer.batch.reset();
       renderer.geometry.reset();
       renderer.shader.reset();
@@ -5706,8 +6519,8 @@ var __async = (__this, __arguments, generator) => {
     createModelSettings(json) {
       return new Cubism4ModelSettings(json);
     },
-    createCoreModel(data) {
-      const moc = CubismMoc.create(data);
+    createCoreModel(data, options) {
+      const moc = CubismMoc.create(data, !!(options == null ? void 0 : options.checkMocConsistency));
       try {
         const model = moc.createModel();
         model.__moc = moc;
@@ -5793,10 +6606,13 @@ var __async = (__this, __arguments, generator) => {
   exports2.CubismPose = CubismPose;
   exports2.CubismRenderTextureResource = CubismRenderTextureResource;
   exports2.CubismRenderer = CubismRenderer;
+  exports2.CubismRendererProfile_WebGL = CubismRendererProfile_WebGL;
   exports2.CubismRenderer_WebGL = CubismRenderer_WebGL;
   exports2.CubismShader_WebGL = CubismShader_WebGL;
   exports2.CubismTextureColor = CubismTextureColor;
   exports2.CubismVector2 = CubismVector2;
+  exports2.DrawableColorData = DrawableColorData;
+  exports2.DrawableCullingData = DrawableCullingData;
   exports2.EvaluationOptionFlag = EvaluationOptionFlag;
   exports2.ExpressionBlendType = ExpressionBlendType;
   exports2.ExpressionManager = ExpressionManager;
@@ -5863,12 +6679,14 @@ var __async = (__this, __arguments, generator) => {
   exports2.ParamMouthOpenY = ParamMouthOpenY;
   exports2.ParamNONE = ParamNONE;
   exports2.ParamShoulderY = ParamShoulderY;
+  exports2.PartColorData = PartColorData;
   exports2.PartData = PartData;
   exports2.PartsArmLPrefix = PartsArmLPrefix;
   exports2.PartsArmPrefix = PartsArmPrefix;
   exports2.PartsArmRPrefix = PartsArmRPrefix;
   exports2.PartsIdCore = PartsIdCore;
   exports2.PhysicsJsonEffectiveForces = PhysicsJsonEffectiveForces;
+  exports2.PhysicsOutput = PhysicsOutput;
   exports2.ShaderNames = ShaderNames;
   exports2.SoundManager = SoundManager;
   exports2.VERSION = VERSION;
