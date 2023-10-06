@@ -2,7 +2,7 @@
 
 Live2D runtime libraries. All the files listed below must be placed in this folder when developing this project.
 
-Run `yarn setup` to get these files set up automatically.
+Run `npm run setup` to get these files set up automatically.
 
 ### Cubism 2.1
 

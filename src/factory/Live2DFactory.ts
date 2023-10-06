@@ -15,6 +15,13 @@ import { JSONObject } from '../types/helpers';
 
 export interface Live2DFactoryOptions extends Live2DModelOptions {
     /**
+     * Whether to check the consistency of the moc file. It's an internal
+     * function of Cubism core and only available since Cubism 4 R7.
+     * @default false
+     */
+    checkMocConsistency?: boolean;
+    
+    /**
      * String to use for crossOrigin properties on `<img>` elements when loading textures.
      * @default undefined
      */
@@ -82,7 +89,7 @@ export interface Live2DRuntime {
      * @param data - Content of the moc file.
      * @return Created core model.
      */
-    createCoreModel(data: ArrayBuffer): any;
+    createCoreModel(data: ArrayBuffer, options?: Live2DFactoryOptions): any;
 
     /**
      * Creates an InternalModel.

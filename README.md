@@ -2,11 +2,9 @@
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/guansss/pixi-live2d-display?style=flat-square)
 ![Cubism version](https://img.shields.io/badge/Cubism-2/3/4-ff69b4?style=flat-square)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/guansss/pixi-live2d-display/Test%20CI?style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/guansss/pixi-live2d-display/test.yml?style=flat-square)
 
 English | [中文](README.zh.md)
-
-> :warning: This readme is for v0.4.0, if you're looking for v0.3.1, see [this](https://github.com/guansss/pixi-live2d-display/blob/dfa7f764f241c1c802e92a7ab490206369746efd/README.md).
 
 Live2D integration for [PixiJS](https://github.com/pixijs/pixi.js) v6.
 
@@ -19,30 +17,32 @@ Live2D models on a high level without the need to learn how the internal system 
 
 #### Features
 
--   Supports all versions of Live2D models
--   Supports PIXI.RenderTexture and PIXI.Filter
--   Pixi-style transform APIs: position, scale, rotation, skew, anchor
--   Automatic interactions: focusing, hit-testing
--   Enhanced motion reserving logic compared to the official framework
--   Loading from uploaded files / zip files (experimental)
--   Fully typed - we all love types!
+- Supports all versions of Live2D models
+- Supports PIXI.RenderTexture and PIXI.Filter
+- Pixi-style transform APIs: position, scale, rotation, skew, anchor
+- Automatic interactions: focusing, hit-testing
+- Enhanced motion reserving logic compared to the official framework
+- Loading from uploaded files / zip files (experimental)
+- Fully typed - we all love types!
 
 #### Requirements
 
--   PixiJS: >6
--   Browser: WebGL, ES6
+- PixiJS: 6.x
+- Cubism core: 2.1 or 4
+- Browser: WebGL, ES6
 
 #### Demos
 
--   [Basic demo](https://codepen.io/guansss/pen/oNzoNoz/left?editors=1010)
--   [Interaction demo](https://codepen.io/guansss/pen/KKgXBOP/left?editors=0010)
--   [Render texture & filter demo](https://codepen.io/guansss/pen/qBaMNQV/left?editors=1010)
--   [Live2D Viewer Online](https://guansss.github.io/live2d-viewer-web/)
+- [Basic demo](https://codepen.io/guansss/pen/oNzoNoz/left?editors=1010)
+- [Interaction demo](https://codepen.io/guansss/pen/KKgXBOP/left?editors=0010)
+- [Render texture & filter demo](https://codepen.io/guansss/pen/qBaMNQV/left?editors=1010)
+- [Live2D Viewer Online](https://guansss.github.io/live2d-viewer-web/)
 
 #### Documentations
 
--   [Documentation](https://guansss.github.io/pixi-live2d-display)
--   [API Documentation](https://guansss.github.io/pixi-live2d-display/api/index.html)
+- [Documentation](https://guansss.github.io/pixi-live2d-display)
+- [API Documentation](https://guansss.github.io/pixi-live2d-display/api/index.html)
+- [Development Notes](DEVELOPMENT.md)
 
 ## Cubism
 
@@ -78,9 +78,9 @@ of `cubism2.js` and `cubism4.js`.
 
 To make it clear, here's how you would use these files:
 
--   Use `cubism2.js`+`live2d.min.js` to support Cubism 2.1 models
--   Use `cubism4.js`+`live2dcubismcore.min.js` to support Cubism 3 and Cubism 4 models
--   Use `index.js`+`live2d.min.js`+`live2dcubismcore.min.js` to support all versions of models
+- Use `cubism2.js`+`live2d.min.js` to support Cubism 2.1 models
+- Use `cubism4.js`+`live2dcubismcore.min.js` to support Cubism 3 and Cubism 4 models
+- Use `index.js`+`live2d.min.js`+`live2dcubismcore.min.js` to support all versions of models
 
 ## Installation
 
@@ -241,13 +241,13 @@ Application.registerPlugin(TickerPlugin);
 Renderer.registerPlugin('interaction', InteractionManager);
 
 (async function () {
-    const app = new Application({
-        view: document.getElementById('canvas'),
-    });
+  const app = new Application({
+    view: document.getElementById('canvas'),
+  });
 
-    const model = await Live2DModel.from('shizuku.model.json');
+  const model = await Live2DModel.from('shizuku.model.json');
 
-    app.stage.addChild(model);
+  app.stage.addChild(model);
 })();
 ```
 

@@ -31,8 +31,8 @@ Live2DFactory.registerRuntime({
         return new Cubism4ModelSettings(json as CubismSpec.ModelJSON & { url: string });
     },
 
-    createCoreModel(data: ArrayBuffer): CubismModel {
-        const moc = CubismMoc.create(data);
+    createCoreModel(data: ArrayBuffer, options?: Live2DFactoryOptions): CubismModel {
+        const moc = CubismMoc.create(data, !!options?.checkMocConsistency);
 
         try {
             const model = moc.createModel();
