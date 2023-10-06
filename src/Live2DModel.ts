@@ -198,14 +198,45 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     /**
      * Shorthand to start a motion.
      * @param group - The motion group.
-     * @param index - The index in this group. If not presented, a random motion will be started.
-     * @param priority - The motion priority. Defaults to `MotionPriority.NORMAL`.
+     * @param index - Index in the motion group.
+     * @param priority - The priority to be applied.
+     * @param sound - The audio url to file or base64 content 
+     * @param volume - Volume of the sound (0-1) /*new in 1.0.4*
+     * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    motion(group: string, index?: number, priority?: MotionPriority): Promise<boolean> {
+    motion(group: string, index?: number, priority?: MotionPriority, sound?: string, volume?:number, expression?: number | string): Promise<boolean> {
         return index === undefined
             ? this.internalModel.motionManager.startRandomMotion(group, priority)
-            : this.internalModel.motionManager.startMotion(group, index, priority);
+            : this.internalModel.motionManager.startMotion(group, index, priority, sound, volume, expression);
+    }
+
+    
+    /**
+     * Stops all playing motions as well as the sound.
+     */
+    resetMotions(): void {
+        return this.internalModel.motionManager.stopAllMotions();
+    }
+
+
+    /**
+     * Shorthand to start speaking a sound with an expression. /*new in 1.0.3*
+     * @param sound - The audio url to file or base64 content 
+     * @param volume - Volume of the sound (0-1) /*new in 1.0.4*
+     * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
+     * @returns Promise that resolves with true if the sound is playing, false if it's not
+     */
+    speak(sound: string, volume?: number, expression?: number | string): Promise<boolean> {
+        return this.internalModel.motionManager.speakUp(sound, volume, expression);
+    }
+
+    
+    /**
+     * Stop current audio playback and lipsync
+     */
+    stopSpeaking(): void {
+        return this.internalModel.motionManager.stopSpeaking()
     }
 
     /**
