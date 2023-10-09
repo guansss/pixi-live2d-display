@@ -1,12 +1,15 @@
-import { MotionManagerOptions } from '@/cubism-common';
-import { ExpressionManager } from '@/cubism-common/ExpressionManager';
-import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
-import { CubismSpec } from '@cubism/CubismSpec';
-import { CubismModel } from '@cubism/model/cubismmodel';
-import { CubismExpressionMotion } from '@cubism/motion/cubismexpressionmotion';
-import { CubismMotionQueueManager } from '@cubism/motion/cubismmotionqueuemanager';
+import type { MotionManagerOptions } from "@/cubism-common";
+import { ExpressionManager } from "@/cubism-common/ExpressionManager";
+import type { Cubism4ModelSettings } from "@/cubism4/Cubism4ModelSettings";
+import type { CubismSpec } from "@cubism/CubismSpec";
+import type { CubismModel } from "@cubism/model/cubismmodel";
+import { CubismExpressionMotion } from "@cubism/motion/cubismexpressionmotion";
+import { CubismMotionQueueManager } from "@cubism/motion/cubismmotionqueuemanager";
 
-export class Cubism4ExpressionManager extends ExpressionManager<CubismExpressionMotion, CubismSpec.Expression> {
+export class Cubism4ExpressionManager extends ExpressionManager<
+    CubismExpressionMotion,
+    CubismSpec.Expression
+> {
     readonly queueManager = new CubismMotionQueueManager();
 
     readonly definitions: CubismSpec.Expression[];
@@ -24,7 +27,7 @@ export class Cubism4ExpressionManager extends ExpressionManager<CubismExpression
     }
 
     getExpressionIndex(name: string): number {
-        return this.definitions.findIndex(def => def.Name === name);
+        return this.definitions.findIndex((def) => def.Name === name);
     }
 
     getExpressionFile(definition: CubismSpec.Expression): string {

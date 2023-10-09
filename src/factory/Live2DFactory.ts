@@ -1,8 +1,7 @@
-import { ExpressionManager, InternalModel, ModelSettings, MotionManager } from '@/cubism-common';
-import { Live2DLoader } from '@/factory/Live2DLoader';
-import { Live2DModel, Live2DModelOptions } from '@/Live2DModel';
-import { logger } from '@/utils';
-import { Middleware, runMiddlewares } from '@/utils/middleware';
+import type { Live2DModel, Live2DModelOptions } from "@/Live2DModel";
+import type { InternalModel, ModelSettings } from "@/cubism-common";
+import { ExpressionManager, MotionManager } from "@/cubism-common";
+import { Live2DLoader } from "@/factory/Live2DLoader";
 import {
     createInternalModel,
     jsonToSettings,
@@ -10,8 +9,11 @@ import {
     setupOptionals,
     urlToJSON,
     waitUntilReady,
-} from '@/factory/model-middlewares';
-import { JSONObject } from '../types/helpers';
+} from "@/factory/model-middlewares";
+import { logger } from "@/utils";
+import type { Middleware } from "@/utils/middleware";
+import { runMiddlewares } from "@/utils/middleware";
+import type { JSONObject } from "../types/helpers";
 
 export interface Live2DFactoryOptions extends Live2DModelOptions {
     /**
@@ -20,7 +22,7 @@ export interface Live2DFactoryOptions extends Live2DModelOptions {
      * @default false
      */
     checkMocConsistency?: boolean;
-    
+
     /**
      * String to use for crossOrigin properties on `<img>` elements when loading textures.
      * @default undefined
@@ -44,7 +46,7 @@ export interface Live2DFactoryOptions extends Live2DModelOptions {
  * The context transferred through the model creation middlewares.
  */
 export interface Live2DFactoryContext {
-    source: any,
+    source: any;
     options: Live2DFactoryOptions;
     live2dModel: Live2DModel;
     internalModel?: InternalModel;
@@ -98,7 +100,11 @@ export interface Live2DRuntime {
      * @param options - Options that will be passed to the InternalModel's constructor.
      * @return Created InternalModel.
      */
-    createInternalModel(coreModel: any, settings: ModelSettings, options?: Live2DFactoryOptions): InternalModel;
+    createInternalModel(
+        coreModel: any,
+        settings: ModelSettings,
+        options?: Live2DFactoryOptions,
+    ): InternalModel;
 
     /**
      * Creates a pose.
@@ -141,14 +147,22 @@ export class Live2DFactory {
      * Middlewares to run through when setting up a Live2DModel.
      */
     static live2DModelMiddlewares: Middleware<Live2DFactoryContext>[] = [
-        urlToJSON, jsonToSettings, waitUntilReady, setupOptionals, setupEssentials, createInternalModel,
+        urlToJSON,
+        jsonToSettings,
+        waitUntilReady,
+        setupOptionals,
+        setupEssentials,
+        createInternalModel,
     ];
 
     /**
      * load tasks of each motion. The structure of each value in this map
      * is the same as respective {@link MotionManager.definitions}.
      */
-    static motionTasksMap = new WeakMap<MotionManager, Record<string, (Promise<any> | undefined)[]>>();
+    static motionTasksMap = new WeakMap<
+        MotionManager,
+        Record<string, (Promise<any> | undefined)[]>
+    >();
 
     /**
      * Load tasks of each expression.
@@ -185,15 +199,21 @@ export class Live2DFactory {
      * @param options - Options for the process.
      * @return Promise that resolves when all resources have been loaded, rejects when error occurs.
      */
-    static async setupLive2DModel<IM extends InternalModel>(live2dModel: Live2DModel<IM>, source: string | object | IM['settings'], options?: Live2DFactoryOptions): Promise<void> {
-        const textureLoaded = new Promise(resolve => live2dModel.once('textureLoaded', resolve));
-        const modelLoaded = new Promise(resolve => live2dModel.once('modelLoaded', resolve));
+    static async setupLive2DModel<IM extends InternalModel>(
+        live2dModel: Live2DModel<IM>,
+        source: string | object | IM["settings"],
+        options?: Live2DFactoryOptions,
+    ): Promise<void> {
+        const textureLoaded = new Promise((resolve) => live2dModel.once("textureLoaded", resolve));
+        const modelLoaded = new Promise((resolve) => live2dModel.once("modelLoaded", resolve));
 
         // because the "ready" event is supposed to be emitted after
         // both the internal model and textures have been loaded,
         // we should here wrap the emit() in a then() so it'll
         // be executed after all the handlers of "modelLoaded" and "textureLoaded"
-        const readyEventEmitted = Promise.all([textureLoaded, modelLoaded]).then(() => live2dModel.emit('ready'));
+        const readyEventEmitted = Promise.all([textureLoaded, modelLoaded]).then(() =>
+            live2dModel.emit("ready"),
+        );
 
         await runMiddlewares(Live2DFactory.live2DModelMiddlewares, {
             live2dModel: live2dModel as Live2DModel<InternalModel>,
@@ -204,7 +224,7 @@ export class Live2DFactory {
         // the "load" event should never be emitted before "ready"
         await readyEventEmitted;
 
-        live2dModel.emit('load');
+        live2dModel.emit("load");
     }
 
     /**
@@ -215,19 +235,23 @@ export class Live2DFactory {
      * @param index - Index in the motion group.
      * @return Promise that resolves with the Motion, or with undefined if it can't be loaded.
      */
-    static loadMotion<Motion, MotionSpec>(motionManager: MotionManager<Motion, MotionSpec>, group: string, index: number): Promise<Motion | undefined> {
+    static loadMotion<Motion, MotionSpec>(
+        motionManager: MotionManager<Motion, MotionSpec>,
+        group: string,
+        index: number,
+    ): Promise<Motion | undefined> {
         // errors in this method are always handled
-        const handleError = (e: any) => motionManager.emit('motionLoadError', group, index, e);
+        const handleError = (e: any) => motionManager.emit("motionLoadError", group, index, e);
 
         try {
-            const definition = motionManager.definitions[group] ?. [index];
+            const definition = motionManager.definitions[group]?.[index];
 
             if (!definition) {
                 return Promise.resolve(undefined);
             }
 
-            if (!motionManager.listeners('destroy').includes(Live2DFactory.releaseTasks)) {
-                motionManager.once('destroy', Live2DFactory.releaseTasks);
+            if (!motionManager.listeners("destroy").includes(Live2DFactory.releaseTasks)) {
+                motionManager.once("destroy", Live2DFactory.releaseTasks);
             }
 
             let tasks = Live2DFactory.motionTasksMap.get(motionManager);
@@ -247,12 +271,12 @@ export class Live2DFactory {
             const path = motionManager.getMotionFile(definition);
 
             taskGroup[index] ??= Live2DLoader.load({
-                    url: path,
-                    settings: motionManager.settings,
-                    type: motionManager.motionDataType,
-                    target: motionManager,
-                })
-                .then(data => {
+                url: path,
+                settings: motionManager.settings,
+                type: motionManager.motionDataType,
+                target: motionManager,
+            })
+                .then((data) => {
                     const taskGroup = Live2DFactory.motionTasksMap.get(motionManager)?.[group];
 
                     if (taskGroup) {
@@ -261,11 +285,11 @@ export class Live2DFactory {
 
                     const motion = motionManager.createMotion(data, group, definition);
 
-                    motionManager.emit('motionLoaded', group, index, motion);
+                    motionManager.emit("motionLoaded", group, index, motion);
 
                     return motion;
                 })
-                .catch(e => {
+                .catch((e) => {
                     logger.warn(motionManager.tag, `Failed to load motion: ${path}\n`, e);
                     handleError(e);
                 });
@@ -286,9 +310,12 @@ export class Live2DFactory {
      * @param index - Index of the Expression.
      * @return Promise that resolves with the Expression, or with undefined if it can't be loaded.
      */
-    static loadExpression<Expression, ExpressionSpec>(expressionManager: ExpressionManager<Expression, ExpressionSpec>, index: number): Promise<Expression | undefined> {
+    static loadExpression<Expression, ExpressionSpec>(
+        expressionManager: ExpressionManager<Expression, ExpressionSpec>,
+        index: number,
+    ): Promise<Expression | undefined> {
         // errors in this method are always handled
-        const handleError = (e: any) => expressionManager.emit('expressionLoadError', index, e);
+        const handleError = (e: any) => expressionManager.emit("expressionLoadError", index, e);
 
         try {
             const definition = expressionManager.definitions[index];
@@ -297,8 +324,8 @@ export class Live2DFactory {
                 return Promise.resolve(undefined);
             }
 
-            if (!expressionManager.listeners('destroy').includes(Live2DFactory.releaseTasks)) {
-                expressionManager.once('destroy', Live2DFactory.releaseTasks);
+            if (!expressionManager.listeners("destroy").includes(Live2DFactory.releaseTasks)) {
+                expressionManager.once("destroy", Live2DFactory.releaseTasks);
             }
 
             let tasks = Live2DFactory.expressionTasksMap.get(expressionManager);
@@ -311,12 +338,12 @@ export class Live2DFactory {
             const path = expressionManager.getExpressionFile(definition);
 
             tasks[index] ??= Live2DLoader.load({
-                    url: path,
-                    settings: expressionManager.settings,
-                    type: 'json',
-                    target: expressionManager,
-                })
-                .then(data => {
+                url: path,
+                settings: expressionManager.settings,
+                type: "json",
+                target: expressionManager,
+            })
+                .then((data) => {
                     const tasks = Live2DFactory.expressionTasksMap.get(expressionManager);
 
                     if (tasks) {
@@ -325,11 +352,11 @@ export class Live2DFactory {
 
                     const expression = expressionManager.createExpression(data, definition);
 
-                    expressionManager.emit('expressionLoaded', index, expression);
+                    expressionManager.emit("expressionLoaded", index, expression);
 
                     return expression;
                 })
-                .catch(e => {
+                .catch((e) => {
                     logger.warn(expressionManager.tag, `Failed to load expression: ${path}\n`, e);
                     handleError(e);
                 });
@@ -352,10 +379,10 @@ export class Live2DFactory {
     }
 }
 
-MotionManager.prototype['_loadMotion'] = function(group, index) {
+MotionManager.prototype["_loadMotion"] = function (group, index) {
     return Live2DFactory.loadMotion(this, group, index);
 };
 
-ExpressionManager.prototype['_loadExpression'] = function(index) {
+ExpressionManager.prototype["_loadExpression"] = function (index) {
     return Live2DFactory.loadExpression(this, index);
 };

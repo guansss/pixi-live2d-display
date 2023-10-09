@@ -13,39 +13,39 @@ export namespace config {
      * Global log level.
      * @default {@link LOG_LEVEL_WARNING}
      */
-    export let logLevel = __DEV__ ? LOG_LEVEL_VERBOSE : LOG_LEVEL_WARNING;
+    export const logLevel = __DEV__ ? LOG_LEVEL_VERBOSE : LOG_LEVEL_WARNING;
 
     /**
      * Enabling sound for motions.
      */
-    export let sound = true;
+    export const sound = true;
 
     /**
      * Deferring motion and corresponding sound until both are loaded.
      */
-    export let motionSync = true;
+    export const motionSync = true;
 
     /**
      * Default fading duration for motions without such value specified.
      */
-    export let motionFadingDuration = 500;
+    export const motionFadingDuration = 500;
 
     /**
      * Default fading duration for idle motions without such value specified.
      */
-    export let idleMotionFadingDuration = 2000;
+    export const idleMotionFadingDuration = 2000;
 
     /**
      * Default fading duration for expressions without such value specified.
      */
-    export let expressionFadingDuration = 500;
+    export const expressionFadingDuration = 500;
 
     /**
      * If false, expression will be reset to default when playing non-idle motions.
      */
-    export let preserveExpressionOnMotion = true;
+    export const preserveExpressionOnMotion = true;
 
-    export let cubism4 = CubismConfig;
+    export const cubism4 = CubismConfig;
 }
 
 /**

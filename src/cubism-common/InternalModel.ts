@@ -1,10 +1,10 @@
-import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from '@/cubism-common/constants';
-import { FocusController } from '@/cubism-common/FocusController';
-import { ModelSettings } from '@/cubism-common/ModelSettings';
-import { MotionManager, MotionManagerOptions } from '@/cubism-common/MotionManager';
-import { Matrix } from '@pixi/math';
-import { EventEmitter } from '@pixi/utils';
-import { Mutable } from '../types/helpers';
+import { FocusController } from "@/cubism-common/FocusController";
+import type { ModelSettings } from "@/cubism-common/ModelSettings";
+import type { MotionManager, MotionManagerOptions } from "@/cubism-common/MotionManager";
+import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from "@/cubism-common/constants";
+import { Matrix } from "@pixi/math";
+import { EventEmitter } from "@pixi/utils";
+import type { Mutable } from "../types/helpers";
 
 /**
  * Common layout definition shared between all Cubism versions.
@@ -148,17 +148,19 @@ export abstract class InternalModel extends EventEmitter {
         self.height = this.originalHeight * this.localTransform.d;
 
         // this calculation differs from Live2D SDK...
-        const offsetX = (layout.x !== undefined && layout.x - layout.width / 2)
-            || (layout.centerX !== undefined && layout.centerX)
-            || (layout.left !== undefined && layout.left - layout.width / 2)
-            || (layout.right !== undefined && layout.right + layout.width / 2)
-            || 0;
+        const offsetX =
+            (layout.x !== undefined && layout.x - layout.width / 2) ||
+            (layout.centerX !== undefined && layout.centerX) ||
+            (layout.left !== undefined && layout.left - layout.width / 2) ||
+            (layout.right !== undefined && layout.right + layout.width / 2) ||
+            0;
 
-        const offsetY = (layout.y !== undefined && layout.y - layout.height / 2)
-            || (layout.centerY !== undefined && layout.centerY)
-            || (layout.top !== undefined && layout.top - layout.height / 2)
-            || (layout.bottom !== undefined && layout.bottom + layout.height / 2)
-            || 0;
+        const offsetY =
+            (layout.y !== undefined && layout.y - layout.height / 2) ||
+            (layout.centerY !== undefined && layout.centerY) ||
+            (layout.top !== undefined && layout.top - layout.height / 2) ||
+            (layout.bottom !== undefined && layout.bottom + layout.height / 2) ||
+            0;
 
         this.localTransform.translate(this.width * offsetX, -this.height * offsetY);
     }
@@ -167,7 +169,7 @@ export abstract class InternalModel extends EventEmitter {
      * Sets up the hit areas by their definitions in settings.
      */
     protected setupHitAreas() {
-        const definitions = this.getHitAreaDefs().filter(hitArea => hitArea.index >= 0);
+        const definitions = this.getHitAreaDefs().filter((hitArea) => hitArea.index >= 0);
 
         for (const def of definitions) {
             this.hitAreas[def.name] = def;
@@ -181,7 +183,7 @@ export abstract class InternalModel extends EventEmitter {
      * @return The names of the *hit* hit areas. Can be empty if none is hit.
      */
     hitTest(x: number, y: number): string[] {
-        return Object.keys(this.hitAreas).filter(hitAreaName => this.isHit(hitAreaName, x, y));
+        return Object.keys(this.hitAreas).filter((hitAreaName) => this.isHit(hitAreaName, x, y));
     }
 
     /**
@@ -200,7 +202,12 @@ export abstract class InternalModel extends EventEmitter {
 
         const bounds = this.getDrawableBounds(drawIndex, tempBounds);
 
-        return bounds.x <= x && x <= bounds.x + bounds.width && bounds.y <= y && y <= bounds.y + bounds.height;
+        return (
+            bounds.x <= x &&
+            x <= bounds.x + bounds.width &&
+            bounds.y <= y &&
+            y <= bounds.y + bounds.height
+        );
     }
 
     /**
@@ -252,7 +259,7 @@ export abstract class InternalModel extends EventEmitter {
      */
     update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {
         this.focusController.update(dt);
-    };
+    }
 
     /**
      * Destroys the model and all related resources.
@@ -260,7 +267,7 @@ export abstract class InternalModel extends EventEmitter {
      */
     destroy() {
         this.destroyed = true;
-        this.emit('destroy');
+        this.emit("destroy");
 
         this.motionManager.destroy();
         (this as Partial<this>).motionManager = undefined;

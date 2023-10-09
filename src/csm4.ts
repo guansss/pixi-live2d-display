@@ -1,3 +1,3 @@
-export * from '@cubism/index';
-export * from './common';
-export * from './cubism4';
+export * from "@cubism/index";
+export * from "./common";
+export * from "./cubism4";

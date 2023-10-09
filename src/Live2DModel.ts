@@ -1,15 +1,16 @@
-import { InternalModel, ModelSettings, MotionPriority } from '@/cubism-common';
-import { MotionManagerOptions } from '@/cubism-common/MotionManager';
-import type { Live2DFactoryOptions } from '@/factory/Live2DFactory';
-import { Live2DFactory } from '@/factory/Live2DFactory';
-import { Renderer, Texture } from '@pixi/core';
-import { Container } from '@pixi/display';
-import { Matrix, ObservablePoint, Point, Rectangle } from '@pixi/math';
-import type { Ticker } from '@pixi/ticker';
-import { InteractionMixin } from './InteractionMixin';
-import { Live2DTransform } from './Live2DTransform';
-import { JSONObject } from './types/helpers';
-import { applyMixins, logger } from './utils';
+import type { InternalModel, ModelSettings, MotionPriority } from "@/cubism-common";
+import type { MotionManagerOptions } from "@/cubism-common/MotionManager";
+import type { Live2DFactoryOptions } from "@/factory/Live2DFactory";
+import { Live2DFactory } from "@/factory/Live2DFactory";
+import type { Renderer, Texture } from "@pixi/core";
+import { Container } from "@pixi/display";
+import type { Rectangle } from "@pixi/math";
+import { Matrix, ObservablePoint, Point } from "@pixi/math";
+import type { Ticker } from "@pixi/ticker";
+import { InteractionMixin } from "./InteractionMixin";
+import { Live2DTransform } from "./Live2DTransform";
+import type { JSONObject } from "./types/helpers";
+import { applyMixins, logger } from "./utils";
 
 export interface Live2DModelOptions extends MotionManagerOptions {
     /**
@@ -35,7 +36,7 @@ let tickerRef: TickerClass | undefined;
 
 export interface Live2DModel<IM extends InternalModel = InternalModel> extends InteractionMixin {}
 
-export type Live2DConstructor = { new(options?: Live2DModelOptions): Live2DModel }
+export type Live2DConstructor = { new (options?: Live2DModelOptions): Live2DModel };
 
 /**
  * A wrapper that allows the Live2D model to be used as a DisplayObject in PixiJS.
@@ -53,7 +54,11 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * @param options - Options for the creation.
      * @return Promise that resolves with the Live2DModel.
      */
-    static from<M extends Live2DConstructor = typeof Live2DModel>(this: M, source: string | JSONObject | ModelSettings, options?: Live2DFactoryOptions): Promise<InstanceType<M>> {
+    static from<M extends Live2DConstructor = typeof Live2DModel>(
+        this: M,
+        source: string | JSONObject | ModelSettings,
+        options?: Live2DFactoryOptions,
+    ): Promise<InstanceType<M>> {
         const model = new this(options) as InstanceType<M>;
 
         return Live2DFactory.setupLive2DModel(model, source, options).then(() => model);
@@ -79,10 +84,16 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * });
      * ```
      */
-    static fromSync<M extends Live2DConstructor = typeof Live2DModel>(this: M, source: string | JSONObject | ModelSettings, options?: Live2DFactoryOptions): InstanceType<M> {
+    static fromSync<M extends Live2DConstructor = typeof Live2DModel>(
+        this: M,
+        source: string | JSONObject | ModelSettings,
+        options?: Live2DFactoryOptions,
+    ): InstanceType<M> {
         const model = new this(options) as InstanceType<M>;
 
-        Live2DFactory.setupLive2DModel(model, source, options).then(options?.onLoad).catch(options?.onError);
+        Live2DFactory.setupLive2DModel(model, source, options)
+            .then(options?.onLoad)
+            .catch(options?.onError);
 
         return model;
     }
@@ -97,7 +108,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     /**
      * Tag for logging.
      */
-    tag = 'Live2DModel(uninitialized)';
+    tag = "Live2DModel(uninitialized)";
 
     /**
      * The internal model. Though typed as non-nullable, it'll be undefined until the "ready" event is emitted.
@@ -152,7 +163,10 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
 
                     this._autoUpdate = true;
                 } else {
-                    logger.warn(this.tag, 'No Ticker registered, please call Live2DModel.registerTicker(Ticker).');
+                    logger.warn(
+                        this.tag,
+                        "No Ticker registered, please call Live2DModel.registerTicker(Ticker).",
+                    );
                 }
             }
         } else {
@@ -165,7 +179,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     constructor(options?: Live2DModelOptions) {
         super();
 
-        this.once('modelLoaded', () => this.init(options));
+        this.once("modelLoaded", () => this.init(options));
     }
 
     // TODO: rename
@@ -175,10 +189,13 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     protected init(options?: Live2DModelOptions) {
         this.tag = `Live2DModel(${this.internalModel.settings.name})`;
 
-        const _options = Object.assign({
-            autoUpdate: true,
-            autoInteract: true,
-        }, options);
+        const _options = Object.assign(
+            {
+                autoUpdate: true,
+                autoInteract: true,
+            },
+            options,
+        );
 
         if (_options.autoInteract) {
             this.interactive = true;
@@ -192,7 +209,10 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * A callback that observes {@link anchor}, invoked when the anchor's values have been changed.
      */
     protected onAnchorChange(): void {
-        this.pivot.set(this.anchor.x * this.internalModel.width, this.anchor.y * this.internalModel.height);
+        this.pivot.set(
+            this.anchor.x * this.internalModel.width,
+            this.anchor.y * this.internalModel.height,
+        );
     }
 
     /**
@@ -238,9 +258,9 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         // and a model being rendered will always get transform updated
         this.toModelPosition(tempPoint, tempPoint, true);
 
-        let tx = (tempPoint.x / this.internalModel.originalWidth) * 2 - 1
-        let ty = (tempPoint.y / this.internalModel.originalHeight) * 2 - 1
-        let radian = Math.atan2(ty, tx);
+        const tx = (tempPoint.x / this.internalModel.originalWidth) * 2 - 1;
+        const ty = (tempPoint.y / this.internalModel.originalHeight) * 2 - 1;
+        const radian = Math.atan2(ty, tx);
         this.internalModel.focusController.focus(Math.cos(radian), -Math.sin(radian), instant);
     }
 
@@ -257,7 +277,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         if (hitAreaNames.length) {
             logger.log(this.tag, `Hit`, hitAreaNames);
 
-            this.emit('hit', hitAreaNames);
+            this.emit("hit", hitAreaNames);
         }
     }
 
@@ -282,7 +302,11 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * @param skipUpdate - True to skip the update transform.
      * @return The Point in model canvas space.
      */
-    toModelPosition(position: Point, result: Point = position.clone(), skipUpdate?: boolean): Point {
+    toModelPosition(
+        position: Point,
+        result: Point = position.clone(),
+        skipUpdate?: boolean,
+    ): Point {
         if (!skipUpdate) {
             this._recursivePostUpdateTransform();
 
@@ -312,7 +336,13 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
 
     /** @override */
     protected _calculateBounds(): void {
-        this._bounds.addFrame(this.transform, 0, 0, this.internalModel.width, this.internalModel.height);
+        this._bounds.addFrame(
+            this.transform,
+            0,
+            0,
+            this.internalModel.width,
+            this.internalModel.height,
+        );
     }
 
     /**
@@ -361,8 +391,14 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
                 continue;
             }
 
-            if (shouldUpdateTexture || !(texture.baseTexture as any)._glTextures[this.glContextID]) {
-                renderer.gl.pixelStorei(WebGLRenderingContext.UNPACK_FLIP_Y_WEBGL, this.internalModel.textureFlipY);
+            if (
+                shouldUpdateTexture ||
+                !(texture.baseTexture as any)._glTextures[this.glContextID]
+            ) {
+                renderer.gl.pixelStorei(
+                    WebGLRenderingContext.UNPACK_FLIP_Y_WEBGL,
+                    this.internalModel.textureFlipY,
+                );
 
                 // let the TextureSystem generate corresponding WebGLTexture, and bind to an arbitrary location
                 renderer.texture.bind(texture.baseTexture, 0);
@@ -372,7 +408,10 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
             // because the Texture in Pixi can be shared between multiple DisplayObjects,
             // it's unable to know if the WebGLTexture in this Texture has been destroyed (GCed) and regenerated,
             // and therefore we always bind the texture at this moment no matter what
-            this.internalModel.bindTexture(i, (texture.baseTexture as any)._glTextures[this.glContextID].texture);
+            this.internalModel.bindTexture(
+                i,
+                (texture.baseTexture as any)._glTextures[this.glContextID].texture,
+            );
 
             // manually update the GC counter so they won't be GCed while using this model
             (texture.baseTexture as any).touched = renderer.textureGC.count;
@@ -411,8 +450,8 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * @param [options.baseTexture=false] - Only used for child Sprites if options.children is set to true
      *  Should it destroy the base texture of the child sprite
      */
-    destroy(options?: { children?: boolean, texture?: boolean, baseTexture?: boolean }): void {
-        this.emit('destroy');
+    destroy(options?: { children?: boolean; texture?: boolean; baseTexture?: boolean }): void {
+        this.emit("destroy");
 
         // the setters will do the cleanup
         this.autoUpdate = false;
@@ -420,7 +459,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         this.unregisterInteraction();
 
         if (options?.texture) {
-            this.textures.forEach(texture => texture.destroy(options.baseTexture));
+            this.textures.forEach((texture) => texture.destroy(options.baseTexture));
         }
 
         this.internalModel.destroy();

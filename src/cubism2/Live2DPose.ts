@@ -1,5 +1,5 @@
-import { clamp } from '@/utils';
-import { Cubism2Spec } from '../types/Cubism2Spec';
+import { clamp } from "@/utils";
+import type { Cubism2Spec } from "../types/Cubism2Spec";
 
 class Live2DPartsParam {
     paramIndex = -1;
@@ -9,7 +9,7 @@ class Live2DPartsParam {
     constructor(readonly id: string) {}
 
     initIndex(model: Live2DModelWebGL) {
-        this.paramIndex = model.getParamIndex('VISIBLE:' + this.id);
+        this.paramIndex = model.getParamIndex("VISIBLE:" + this.id);
         this.partsIndex = model.getPartsDataIndex(PartsDataID.getID(this.id));
         model.setParamFloat(this.paramIndex, 1);
     }
@@ -20,14 +20,17 @@ export class Live2DPose {
 
     partsGroups: Live2DPartsParam[][] = [];
 
-    constructor(readonly coreModel: Live2DModelWebGL, json: Cubism2Spec.PoseJSON) {
+    constructor(
+        readonly coreModel: Live2DModelWebGL,
+        json: Cubism2Spec.PoseJSON,
+    ) {
         if (json.parts_visible) {
             this.partsGroups = json.parts_visible.map(({ group }) =>
                 group.map(({ id, link }) => {
                     const parts = new Live2DPartsParam(id);
 
                     if (link) {
-                        parts.link = link.map(l => new Live2DPartsParam(l));
+                        parts.link = link.map((l) => new Live2DPartsParam(l));
                     }
 
                     return parts;
@@ -39,8 +42,8 @@ export class Live2DPose {
     }
 
     init() {
-        this.partsGroups.forEach(group => {
-            group.forEach(parts => {
+        this.partsGroups.forEach((group) => {
+            group.forEach((parts) => {
                 parts.initIndex(this.coreModel);
 
                 if (parts.paramIndex >= 0) {
@@ -49,7 +52,7 @@ export class Live2DPose {
                     this.coreModel.setParamFloat(parts.paramIndex, visible ? 1 : 0);
 
                     if (parts.link.length > 0) {
-                        parts.link.forEach(p => p.initIndex(this.coreModel));
+                        parts.link.forEach((p) => p.initIndex(this.coreModel));
                     }
                 }
             });
@@ -63,7 +66,8 @@ export class Live2DPose {
         let visibleOpacity = 1;
 
         let visibleIndex = partsGroup.findIndex(
-            ({ paramIndex, partsIndex }) => partsIndex >= 0 && model.getParamFloat(paramIndex) !== 0,
+            ({ paramIndex, partsIndex }) =>
+                partsIndex >= 0 && model.getParamFloat(paramIndex) !== 0,
         );
 
         if (visibleIndex >= 0) {
@@ -89,7 +93,7 @@ export class Live2DPose {
                     } else {
                         a1 = ((1 - visibleOpacity) * phi) / (1 - phi);
                     }
-                    let backOp = (1 - a1) * (1 - visibleOpacity);
+                    const backOp = (1 - a1) * (1 - visibleOpacity);
                     if (backOp > maxBackOpacity) {
                         a1 = 1 - maxBackOpacity / (1 - visibleOpacity);
                     }
@@ -120,7 +124,7 @@ export class Live2DPose {
     }
 
     update(dt: DOMHighResTimeStamp) {
-        this.partsGroups.forEach(partGroup => {
+        this.partsGroups.forEach((partGroup) => {
             this.normalizePartsOpacityGroup(partGroup, dt);
             this.copyOpacity(partGroup);
         });

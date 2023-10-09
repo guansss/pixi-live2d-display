@@ -1,9 +1,10 @@
-import { ExpressionManager, InternalModel, ModelSettings, MotionManager } from '@/cubism-common';
-import { XHRLoader } from '@/factory/XHRLoader';
-import { Live2DModel } from '@/Live2DModel';
-import { Middleware, runMiddlewares } from '@/utils/middleware';
+import type { MotionManager } from "@/cubism-common";
+import { XHRLoader } from "@/factory/XHRLoader";
+import type { Live2DModel } from "@/Live2DModel";
+import type { Middleware } from "@/utils/middleware";
+import { runMiddlewares } from "@/utils/middleware";
 
-export type Live2DLoaderTarget = Live2DModel | InternalModel | MotionManager | ExpressionManager
+export type Live2DLoaderTarget = Live2DModel | InternalModel | MotionManager | ExpressionManager;
 
 /**
  * The context transferred through Live2DLoader middlewares.

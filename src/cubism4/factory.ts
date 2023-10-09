@@ -1,12 +1,13 @@
-import { Cubism4InternalModel } from '@/cubism4/Cubism4InternalModel';
-import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
-import { cubism4Ready } from '@/cubism4/setup';
-import { Live2DFactory, Live2DFactoryOptions } from '@/factory/Live2DFactory';
-import { CubismPose } from '@cubism/effect/cubismpose';
-import { CubismMoc } from '@cubism/model/cubismmoc';
-import { CubismModel } from '@cubism/model/cubismmodel';
-import { CubismPhysics } from '@cubism/physics/cubismphysics';
-import { CubismSpec } from '@cubism/CubismSpec';
+import { Cubism4InternalModel } from "@/cubism4/Cubism4InternalModel";
+import { Cubism4ModelSettings } from "@/cubism4/Cubism4ModelSettings";
+import { cubism4Ready } from "@/cubism4/setup";
+import type { Live2DFactoryOptions } from "@/factory/Live2DFactory";
+import { Live2DFactory } from "@/factory/Live2DFactory";
+import type { CubismSpec } from "@cubism/CubismSpec";
+import { CubismPose } from "@cubism/effect/cubismpose";
+import { CubismMoc } from "@cubism/model/cubismmoc";
+import type { CubismModel } from "@cubism/model/cubismmodel";
+import { CubismPhysics } from "@cubism/physics/cubismphysics";
 
 Live2DFactory.registerRuntime({
     version: 4,
@@ -24,7 +25,7 @@ Live2DFactory.registerRuntime({
 
         const view = new Int8Array(modelData, 0, 4);
 
-        return String.fromCharCode(...view) === 'MOC3';
+        return String.fromCharCode(...view) === "MOC3";
     },
 
     createModelSettings(json: object): Cubism4ModelSettings {
@@ -44,14 +45,17 @@ Live2DFactory.registerRuntime({
         } catch (e) {
             try {
                 moc.release();
-            } catch (ignored) {
-            }
+            } catch (ignored) {}
 
             throw e;
         }
     },
 
-    createInternalModel(coreModel: CubismModel, settings: Cubism4ModelSettings, options?: Live2DFactoryOptions): Cubism4InternalModel {
+    createInternalModel(
+        coreModel: CubismModel,
+        settings: Cubism4ModelSettings,
+        options?: Live2DFactoryOptions,
+    ): Cubism4InternalModel {
         const model = new Cubism4InternalModel(coreModel, settings, options);
 
         const coreModelWithMoc = coreModel as { __moc?: CubismMoc };
@@ -64,7 +68,7 @@ Live2DFactory.registerRuntime({
             delete coreModelWithMoc.__moc;
 
             // release the moc when destroying
-            model.once('destroy', releaseMoc);
+            model.once("destroy", releaseMoc);
         }
 
         return model;

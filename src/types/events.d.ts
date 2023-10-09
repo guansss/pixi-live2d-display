@@ -1,6 +1,6 @@
-import { InternalModel, ModelSettings } from '@/cubism-common';
-import { Texture } from '@pixi/core';
-import { JSONObject } from './helpers';
+import type { InternalModel, ModelSettings } from "@/cubism-common";
+import type { Texture } from "@pixi/core";
+import type { JSONObject } from "./helpers";
 
 export interface Live2DModelEvents {
     /**

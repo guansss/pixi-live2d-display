@@ -1,4 +1,4 @@
-import { config } from '@/config';
+import { config } from "@/config";
 
 /**
  * A simple tagged logger.
@@ -31,4 +31,4 @@ export const logger = {
             console.error(`[${tag}]`, ...messages);
         }
     },
-}
+};

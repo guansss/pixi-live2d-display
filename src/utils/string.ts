@@ -4,13 +4,13 @@
  * @return Name of the parent folder, or the file itself if it has no parent folder.
  */
 export function folderName(url: string) {
-    let lastSlashIndex = url.lastIndexOf('/');
+    let lastSlashIndex = url.lastIndexOf("/");
 
     if (lastSlashIndex != -1) {
         url = url.slice(0, lastSlashIndex);
     }
 
-    lastSlashIndex = url.lastIndexOf('/');
+    lastSlashIndex = url.lastIndexOf("/");
 
     if (lastSlashIndex !== -1) {
         url = url.slice(lastSlashIndex + 1);

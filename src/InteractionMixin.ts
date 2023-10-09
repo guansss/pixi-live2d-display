@@ -1,5 +1,5 @@
-import { InteractionEvent, InteractionManager } from '@pixi/interaction';
-import { Live2DModel } from './Live2DModel';
+import type { InteractionEvent, InteractionManager } from "@pixi/interaction";
+import type { Live2DModel } from "./Live2DModel";
 
 /**
  * The interaction control split from Live2DModel class for code clarity. This mixin should *only*
@@ -19,9 +19,9 @@ export class InteractionMixin {
     set autoInteract(autoInteract: boolean) {
         if (autoInteract !== this._autoInteract) {
             if (autoInteract) {
-                (this as any as Live2DModel<any>).on('pointertap', onTap, this);
+                (this as any as Live2DModel<any>).on("pointertap", onTap, this);
             } else {
-                (this as any as Live2DModel<any>).off('pointertap', onTap, this);
+                (this as any as Live2DModel<any>).off("pointertap", onTap, this);
             }
 
             this._autoInteract = autoInteract;
@@ -43,7 +43,7 @@ export class InteractionMixin {
             if (this._autoInteract && manager) {
                 this.interactionManager = manager;
 
-                manager.on('pointermove', onPointerMove, this);
+                manager.on("pointermove", onPointerMove, this);
             }
         }
     }
@@ -53,7 +53,7 @@ export class InteractionMixin {
      */
     unregisterInteraction(this: Live2DModel<any>): void {
         if (this.interactionManager) {
-            this.interactionManager?.off('pointermove', onPointerMove, this);
+            this.interactionManager?.off("pointermove", onPointerMove, this);
             this.interactionManager = undefined;
         }
     }
