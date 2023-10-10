@@ -163,6 +163,7 @@ export class Automator {
         }
 
         this.model = model;
+        this.ticker = ticker;
         this.autoUpdate = autoUpdate;
         this.autoHitTest = autoHitTest;
         this.autoFocus = autoFocus;
