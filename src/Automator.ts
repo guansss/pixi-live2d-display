@@ -179,8 +179,12 @@ export class Automator {
 
     }
 
-    onTickerUpdate(deltaTime: number) {
-        this.model.update(deltaTime);
+    onTickerUpdate() {
+        // the delta time can only be obtained from the ticker instead from the listener's argument
+        // because the argument is not the delta time, but the delta frame count
+        const deltaMS = this.ticker!.deltaMS;
+
+        this.model.update(deltaMS);
     }
 
     onTap(event: FederatedPointerEvent) {
@@ -203,8 +207,8 @@ export class Automator {
 }
 
 // static event delegates
-function onTickerUpdate(this: Automator, deltaTime: number) {
-    this.onTickerUpdate(deltaTime);
+function onTickerUpdate(this: Automator) {
+    this.onTickerUpdate();
 }
 function onTap(this: Automator, event: FederatedPointerEvent) {
     this.onTap(event);
