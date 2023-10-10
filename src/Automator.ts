@@ -177,6 +177,9 @@ export class Automator {
         this.autoHitTest = autoHitTest;
         this.autoFocus = autoFocus;
 
+        if (autoHitTest || autoFocus) {
+            this.model.eventMode = "static";
+        }
     }
 
     onTickerUpdate() {
