@@ -2,8 +2,7 @@ import { FocusController } from "@/cubism-common/FocusController";
 import type { ModelSettings } from "@/cubism-common/ModelSettings";
 import type { MotionManager, MotionManagerOptions } from "@/cubism-common/MotionManager";
 import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from "@/cubism-common/constants";
-import { Matrix } from "@pixi/math";
-import { EventEmitter } from "@pixi/utils";
+import { Matrix, utils } from "@pixi/core";
 import type { Mutable } from "../types/helpers";
 
 /**
@@ -46,7 +45,7 @@ const tempBounds: Bounds = { x: 0, y: 0, width: 0, height: 0 };
  * A wrapper that manages the states of a Live2D core model, and delegates all operations to it.
  * @emits {@link InternalModelEvents}
  */
-export abstract class InternalModel extends EventEmitter {
+export abstract class InternalModel extends utils.EventEmitter {
     /**
      * The managed Live2D core model.
      */

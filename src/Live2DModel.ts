@@ -2,11 +2,9 @@ import type { InternalModel, ModelSettings, MotionPriority } from "@/cubism-comm
 import type { MotionManagerOptions } from "@/cubism-common/MotionManager";
 import type { Live2DFactoryOptions } from "@/factory/Live2DFactory";
 import { Live2DFactory } from "@/factory/Live2DFactory";
-import type { Renderer, Texture } from "@pixi/core";
+import type { Rectangle, Renderer, Texture, Ticker } from "@pixi/core";
+import { Matrix, ObservablePoint, Point } from "@pixi/core";
 import { Container } from "@pixi/display";
-import type { Rectangle } from "@pixi/math";
-import { Matrix, ObservablePoint, Point } from "@pixi/math";
-import type { Ticker } from "@pixi/ticker";
 import { Automator, type AutomatorOptions } from "./Automator";
 import { Live2DTransform } from "./Live2DTransform";
 import type { JSONObject } from "./types/helpers";

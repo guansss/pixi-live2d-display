@@ -1,5 +1,5 @@
 import { folderName } from "@/utils";
-import { url } from "@pixi/utils";
+import { utils } from "@pixi/core";
 import type { JSONObject } from "../types/helpers";
 
 /**
@@ -70,7 +70,8 @@ export abstract class ModelSettings {
      * @return Resolved path.
      */
     resolveURL(path: string): string {
-        return url.resolve(this.url, path);
+        // FIXME: deprecated API
+        return utils.url.resolve(this.url, path);
     }
 
     /**

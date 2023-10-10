@@ -1,4 +1,4 @@
-import type { Ticker } from "@pixi/ticker";
+import type { Ticker } from "@pixi/core";
 import type { FederatedPointerEvent } from "pixi.js";
 import type { Live2DModel } from "./Live2DModel";
 import { logger } from "./utils";

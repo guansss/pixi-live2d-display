@@ -1,9 +1,9 @@
 import type { Live2DModel } from "@/Live2DModel";
 import type { Renderer } from "@pixi/core";
+import { Rectangle } from "@pixi/core";
 import { Graphics } from "@pixi/graphics";
-import type { InteractionEvent } from "@pixi/interaction";
-import { Rectangle } from "@pixi/math";
 import { Text, TextStyle } from "@pixi/text";
+import type { FederatedPointerEvent } from "pixi.js";
 
 const tempBounds = new Rectangle();
 
@@ -45,7 +45,7 @@ export class HitAreaFrames extends Graphics {
         });
     }
 
-    onPointerMove(e: InteractionEvent) {
+    onPointerMove(e: FederatedPointerEvent) {
         const hitAreaNames = (this.parent as Live2DModel).hitTest(e.data.global.x, e.data.global.y);
 
         this.texts.forEach((text) => {

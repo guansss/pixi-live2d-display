@@ -4,7 +4,7 @@ import type { ModelSettings } from "@/cubism-common/ModelSettings";
 import { MotionPriority, MotionState } from "@/cubism-common/MotionState";
 import { SoundManager } from "@/cubism-common/SoundManager";
 import { logger } from "@/utils";
-import { EventEmitter } from "@pixi/utils";
+import { utils } from "@pixi/core";
 import type { JSONObject, Mutable } from "../types/helpers";
 
 export interface MotionManagerOptions {
@@ -39,7 +39,7 @@ export enum MotionPreloadStrategy {
  * Handles the motion playback.
  * @emits {@link MotionManagerEvents}
  */
-export abstract class MotionManager<Motion = any, MotionSpec = any> extends EventEmitter {
+export abstract class MotionManager<Motion = any, MotionSpec = any> extends utils.EventEmitter {
     /**
      * Tag for logging.
      */
