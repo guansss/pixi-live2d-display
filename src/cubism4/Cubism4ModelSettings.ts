@@ -3,8 +3,10 @@ import { applyMixins } from "@/utils";
 import type { CubismSpec } from "@cubism/CubismSpec";
 import { CubismModelSettingsJson } from "@cubism/settings/cubismmodelsettingsjson";
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface Cubism4ModelSettings extends CubismModelSettingsJson {}
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class Cubism4ModelSettings extends ModelSettings {
     declare json: CubismSpec.ModelJSON;
 

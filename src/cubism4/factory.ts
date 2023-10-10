@@ -45,7 +45,9 @@ Live2DFactory.registerRuntime({
         } catch (e) {
             try {
                 moc.release();
-            } catch (ignored) {}
+            } catch {
+                // TODO: handle this error
+            }
 
             throw e;
         }

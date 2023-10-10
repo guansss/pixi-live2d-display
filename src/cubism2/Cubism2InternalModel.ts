@@ -122,7 +122,7 @@ export class Cubism2InternalModel extends InternalModel {
         const layout: CommonLayout = {};
 
         if (this.settings.layout) {
-            for (const key of Object.keys(this.settings.layout)) {
+            for (const [key, value] of Object.entries(this.settings.layout)) {
                 let commonKey = key;
 
                 if (key === "center_x") {
@@ -131,8 +131,7 @@ export class Cubism2InternalModel extends InternalModel {
                     commonKey = "centerY";
                 }
 
-                // @ts-ignore
-                layout[commonKey] = this.settings.layout[key];
+                layout[commonKey as keyof CommonLayout] = value;
             }
         }
 
@@ -147,12 +146,9 @@ export class Cubism2InternalModel extends InternalModel {
         drawParamWebGL.glno = glContextID;
 
         // reset WebGL buffers
-        for (const prop in drawParamWebGL) {
-            if (
-                drawParamWebGL.hasOwnProperty(prop) &&
-                (drawParamWebGL as any)[prop] instanceof WebGLBuffer
-            ) {
-                (drawParamWebGL as any)[prop] = null;
+        for (const [key, value] of Object.entries(drawParamWebGL)) {
+            if (value instanceof WebGLBuffer) {
+                (drawParamWebGL as unknown as Record<string, WebGLBuffer | null>)[key] = null;
             }
         }
 

@@ -24,6 +24,9 @@ module.exports = {
 
         // IDEs already warn about unused vars
         "@typescript-eslint/no-unused-vars": "off",
+
+        // TODO: enable this later
+        "@typescript-eslint/no-explicit-any": "off",
     },
     overrides: [
         {
