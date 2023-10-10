@@ -17,7 +17,7 @@ module.exports = {
     plugins: ["@typescript-eslint"],
     root: true,
     rules: {
-        "@typescript-eslint/consistent-type-imports": "warn",
+        "@typescript-eslint/consistent-type-imports": ["warn", { disallowTypeAnnotations: false }],
 
         // "warn" is for better DX in IDEs, and will be changed to "error" when running "npm run lint"
         "prettier/prettier": "warn",

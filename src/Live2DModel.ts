@@ -7,34 +7,15 @@ import { Container } from "@pixi/display";
 import type { Rectangle } from "@pixi/math";
 import { Matrix, ObservablePoint, Point } from "@pixi/math";
 import type { Ticker } from "@pixi/ticker";
-import { InteractionMixin } from "./InteractionMixin";
+import { Automator, type AutomatorOptions } from "./Automator";
 import { Live2DTransform } from "./Live2DTransform";
 import type { JSONObject } from "./types/helpers";
-import { applyMixins, logger } from "./utils";
+import { logger } from "./utils";
 
-export interface Live2DModelOptions extends MotionManagerOptions {
-    /**
-     * Should the internal model be automatically updated by `PIXI.Ticker.shared`.
-     * @default ture
-     */
-    autoUpdate?: boolean;
-
-    /**
-     * Should the internal model automatically reacts to interactions by listening for pointer events.
-     * @see {@link InteractionMixin}
-     * @default true
-     */
-    autoInteract?: boolean;
-}
+export interface Live2DModelOptions extends MotionManagerOptions, AutomatorOptions {}
 
 const tempPoint = new Point();
 const tempMatrix = new Matrix();
-
-// a reference to Ticker class, defaults to window.PIXI.Ticker
-type TickerClass = typeof Ticker;
-let tickerRef: TickerClass | undefined;
-
-export interface Live2DModel<IM extends InternalModel = InternalModel> extends InteractionMixin {}
 
 export type Live2DConstructor = { new (options?: Live2DModelOptions): Live2DModel };
 
@@ -100,9 +81,10 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
 
     /**
      * Registers the class of `PIXI.Ticker` for auto updating.
+     * @deprecated Use {@link Live2DModelOptions.ticker} instead.
      */
-    static registerTicker(tickerClass: TickerClass): void {
-        tickerRef = tickerClass;
+    static registerTicker(tickerClass: typeof Ticker): void {
+        Automator["defaultTicker"] = tickerClass.shared;
     }
 
     /**
@@ -144,40 +126,12 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      */
     deltaTime: DOMHighResTimeStamp = 0;
 
-    protected _autoUpdate = false;
-
-    /**
-     * Enables automatic updating. Requires {@link Live2DModel.registerTicker} or the global `window.PIXI.Ticker`.
-     */
-    get autoUpdate() {
-        return this._autoUpdate;
-    }
-
-    set autoUpdate(autoUpdate: boolean) {
-        tickerRef ||= (window as any).PIXI?.Ticker;
-
-        if (autoUpdate) {
-            if (!this._destroyed) {
-                if (tickerRef) {
-                    tickerRef.shared.add(this.onTickerUpdate, this);
-
-                    this._autoUpdate = true;
-                } else {
-                    logger.warn(
-                        this.tag,
-                        "No Ticker registered, please call Live2DModel.registerTicker(Ticker).",
-                    );
-                }
-            }
-        } else {
-            tickerRef?.shared.remove(this.onTickerUpdate, this);
-
-            this._autoUpdate = false;
-        }
-    }
+    automator: Automator;
 
     constructor(options?: Live2DModelOptions) {
         super();
+
+        this.automator = new Automator(this, options);
 
         this.once("modelLoaded", () => this.init(options));
     }
@@ -188,21 +142,6 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      */
     protected init(options?: Live2DModelOptions) {
         this.tag = `Live2DModel(${this.internalModel.settings.name})`;
-
-        const _options = Object.assign(
-            {
-                autoUpdate: true,
-                autoInteract: true,
-            },
-            options,
-        );
-
-        if (_options.autoInteract) {
-            this.interactive = true;
-        }
-
-        this.autoInteract = _options.autoInteract;
-        this.autoUpdate = _options.autoUpdate;
     }
 
     /**
@@ -346,13 +285,6 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     }
 
     /**
-     * An update callback to be added to `PIXI.Ticker` and invoked every tick.
-     */
-    onTickerUpdate(): void {
-        this.update(tickerRef!.shared.deltaMS);
-    }
-
-    /**
      * Updates the model. Note this method just updates the timer,
      * and the actual update will be done right before rendering the model.
      * @param dt - The elapsed time in milliseconds since last frame.
@@ -365,8 +297,6 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     }
 
     override _render(renderer: Renderer): void {
-        this.registerInteraction(renderer.plugins.interaction);
-
         // reset certain systems in renderer to make Live2D's drawing system compatible with Pixi
         renderer.batch.reset();
         renderer.geometry.reset();
@@ -453,19 +383,13 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     destroy(options?: { children?: boolean; texture?: boolean; baseTexture?: boolean }): void {
         this.emit("destroy");
 
-        // the setters will do the cleanup
-        this.autoUpdate = false;
-
-        this.unregisterInteraction();
-
         if (options?.texture) {
             this.textures.forEach((texture) => texture.destroy(options.baseTexture));
         }
 
+        this.automator.destroy();
         this.internalModel.destroy();
 
         super.destroy(options);
     }
 }
-
-applyMixins(Live2DModel, [InteractionMixin]);
