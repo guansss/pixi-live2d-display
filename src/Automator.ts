@@ -150,7 +150,7 @@ export class Automator {
             autoUpdate = true,
             autoHitTest = true,
             autoFocus = true,
-            autoInteract = true,
+            autoInteract,
             ticker,
         }: AutomatorOptions = {},
     ) {
@@ -162,12 +162,21 @@ export class Automator {
             }
         }
 
+        if (autoInteract !== undefined) {
+            autoHitTest = autoInteract;
+            autoFocus = autoInteract;
+            logger.warn(
+                model.tag,
+                "options.autoInteract is deprecated since v0.5.0, use autoHitTest and autoFocus instead.",
+            );
+        }
+
         this.model = model;
         this.ticker = ticker;
         this.autoUpdate = autoUpdate;
         this.autoHitTest = autoHitTest;
         this.autoFocus = autoFocus;
-        this.autoInteract = autoInteract;
+
     }
 
     onTickerUpdate(deltaTime: number) {
