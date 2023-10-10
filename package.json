@@ -54,12 +54,7 @@
   ],
   "types": "types/index.d.ts",
   "peerDependencies": {
-    "@pixi/core": "^6",
-    "@pixi/display": "^6",
-    "@pixi/loaders": "^6",
-    "@pixi/math": "^6",
-    "@pixi/sprite": "^6",
-    "@pixi/utils": "^6"
+    "pixi.js": "^7.0.0"
   },
   "devDependencies": {
     "@types/chai": "^4.3.1",
@@ -84,7 +79,7 @@
     "jszip": "^3.10.0",
     "lodash-es": "^4.17.21",
     "node-fetch": "^2",
-    "pixi.js": "^6.4.2",
+    "pixi.js": "^7.3.1",
     "prettier": "^3.0.3",
     "rimraf": "^3.0.2",
     "sinon": "^14.0.0",
