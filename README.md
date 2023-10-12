@@ -229,6 +229,9 @@ model_proxy.resetMotions()
 model_proxy.destroy()
 ```
 
+## Result
+https://user-images.githubusercontent.com/34002411/230723497-612146b1-5593-4dfa-911d-accb331c5b9b.mp4
+
 # See here for more Documentation: [Documentation](https://guansss.github.io/pixi-live2d-display/)
 
 
