@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: $GITHUB_REF_NAME
+          ref: ${{github.ref_name}}
           submodules: true
           fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
 
