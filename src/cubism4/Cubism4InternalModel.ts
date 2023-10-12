@@ -10,6 +10,7 @@ import {
     ParamBreath,
     ParamEyeBallX,
     ParamEyeBallY,
+    ParamMouthForm,
 } from '@cubism/cubismdefaultparameterid';
 import { BreathParameterData, CubismBreath } from '@cubism/effect/cubismbreath';
 import { CubismEyeBlink } from '@cubism/effect/cubismeyeblink';
@@ -21,6 +22,7 @@ import { CubismPhysics } from '@cubism/physics/cubismphysics';
 import { CubismRenderer_WebGL, CubismShader_WebGL } from '@cubism/rendering/cubismrenderer_webgl';
 import { Matrix } from '@pixi/math';
 import { Mutable } from '../types/helpers';
+import { clamp } from '@/utils';
 
 const tempMatrix = new CubismMatrix44();
 
@@ -49,6 +51,7 @@ export class Cubism4InternalModel extends InternalModel {
     idParamEyeBallY = ParamEyeBallY;
     idParamBodyAngleX = ParamBodyAngleX;
     idParamBreath = ParamBreath;
+    idParamMouthForm = ParamMouthForm;
 
     /**
      * The model's internal scale, defined in the moc3 file.
@@ -209,14 +212,20 @@ export class Cubism4InternalModel extends InternalModel {
         // revert the timestamps to be milliseconds
         this.updateNaturalMovements(dt * 1000, now * 1000);
 
-        // TODO: Add lip sync API
-        // if (this.lipSync) {
-        //     const value = 0; // 0 ~ 1
-        //
-        //     for (let i = 0; i < this.lipSyncIds.length; ++i) {
-        //         model.addParameterValueById(this.lipSyncIds[i], value, 0.8);
-        //     }
-        // }
+        if (this.lipSync && this.motionManager.currentAudio) {
+            let value = this.motionManager.mouthSync();
+            let min_ = 0;
+            let max_ = 1;
+            let weight = 1.2;
+            if (value > 0) {
+                min_ = 0.4;
+            }
+            value = clamp(value * weight, min_, max_);
+
+            for (let i = 0; i < this.motionManager.lipSyncIds.length; ++i) {
+                model.addParameterValueById(this.motionManager.lipSyncIds[i], value, 0.8);
+            }
+        }
 
         this.physics?.evaluate(model, dt);
         this.pose?.updateParameters(model, dt);
@@ -234,6 +243,11 @@ export class Cubism4InternalModel extends InternalModel {
         this.coreModel.addParameterValueById(this.idParamAngleY, this.focusController.y * 30);
         this.coreModel.addParameterValueById(this.idParamAngleZ, this.focusController.x * this.focusController.y * -30);
         this.coreModel.addParameterValueById(this.idParamBodyAngleX, this.focusController.x * 10); // -10 ~ 10
+    }
+
+
+    updateFacialEmotion(mouthForm: number) {
+        this.coreModel.addParameterValueById(this.idParamMouthForm, mouthForm); // -1 ~ 1
     }
 
     updateNaturalMovements(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp) {

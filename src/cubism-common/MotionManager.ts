@@ -212,12 +212,13 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
 
     /**
      * Only play sound with lip sync /*new in 1.0.3*
-     * @param sound - The audio url to file or base64 content 
+     * @param sound - The audio url to file or base64 content
+     * ### OPTIONAL: {name: value, ...}
      * @param volume - Volume of the sound (0-1) /*new in 1.0.4*
      * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
      * @returns Promise that resolves with true if the sound is playing, false if it's not
      */
-    async speakUp(sound: string, volume?: number, expression?: number | string) {
+    async speakUp(sound: string, {volume=1, expression, resetExpression=true}:{volume?:number, expression?: number | string, resetExpression?:boolean}={}) {
         if (!config.sound) {
             return false;
         }
@@ -258,9 +259,9 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
                 // start to load the audio
                 audio = SoundManager.add(
                     file,
-                    () => {expression && that.expressionManager && that.expressionManager.resetExpression();
+                    () => {resetExpression && expression && that.expressionManager && that.expressionManager.resetExpression();
                             that.currentAudio = undefined}, // reset expression when audio is done
-                    () => {expression && that.expressionManager && that.expressionManager.resetExpression();
+                    () => {resetExpression && expression && that.expressionManager && that.expressionManager.resetExpression();
                         that.currentAudio = undefined} // on error
                 );
                 this.currentAudio = audio!;
@@ -311,13 +312,15 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * Starts a motion as given priority.
      * @param group - The motion group.
      * @param index - Index in the motion group.
-     * @param priority - The priority to be applied.
+     * @param priority - The priority to be applied. default: 2 (NORMAL)
+     * ### OPTIONAL: {name: value, ...}
      * @param sound - The audio url to file or base64 content 
      * @param volume - Volume of the sound (0-1)
      * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
+     * @param resetExpression - Reset expression before and after playing sound (default: true)
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    async startMotion(group: string, index: number, priority = MotionPriority.NORMAL, sound?: string, volume?: number, expression?: number | string): Promise<boolean> {
+    async startMotion(group: string, index: number, priority = MotionPriority.NORMAL, {sound=undefined, volume=1, expression=undefined, resetExpression=true}:{sound?: string, volume?:number, expression?: number | string, resetExpression?:boolean}={}): Promise<boolean> {
         // Does not start a new motion if audio is still playing
         if(this.currentAudio){
             if (!this.currentAudio.ended){
@@ -367,9 +370,9 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
                     // start to load the audio
                     audio = SoundManager.add(
                         file,
-                        () => {expression && that.expressionManager && that.expressionManager.resetExpression();
+                        () => {resetExpression && expression && that.expressionManager && that.expressionManager.resetExpression();
                                 that.currentAudio = undefined}, // reset expression when audio is done
-                        () => {expression && that.expressionManager && that.expressionManager.resetExpression();
+                        () => {resetExpression && expression && that.expressionManager && that.expressionManager.resetExpression();
                             that.currentAudio = undefined} // on error
                     );
                     this.currentAudio = audio!;
@@ -416,6 +419,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
 
             return false;
         }
+        
 
         
         if (this.state.shouldOverrideExpression()) {
@@ -440,12 +444,15 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
     /**
      * Starts a random Motion as given priority.
      * @param group - The motion group.
-     * @param priority - The priority to be applied.
-     * @param sound - The wav url file or base64 content
-     * @param volume - Volume of the sound (0-1)
+     * @param priority - The priority to be applied. (default: 1 `IDLE`)
+     * ### OPTIONAL: {name: value, ...}
+     * @param sound - The wav url file or base64 content+
+     * @param volume - Volume of the sound (0-1) (default: 1)
+     * @param expression - In case you want to mix up a expression while playing sound (name/index)
+     * @param resetExpression - Reset expression before and after playing sound (default: true)
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    async startRandomMotion(group: string, priority?: MotionPriority, sound?: string, volume?: number): Promise<boolean> {
+    async startRandomMotion(group: string, priority?:MotionPriority, {sound=undefined, volume=1, expression=undefined, resetExpression=true}:{sound?: string, volume?:number, expression?: number | string, resetExpression?:boolean}={}): Promise<boolean> {
         const groupDefs = this.definitions[group];
 
         if (groupDefs?.length) {
@@ -460,7 +467,11 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             if (availableIndices.length) {
                 const index = availableIndices[Math.floor(Math.random() * availableIndices.length)]!;
 
-                return this.startMotion(group, index, priority, sound, volume);
+                return this.startMotion(group, index, priority, {
+                    sound: sound, 
+                    volume: volume, 
+                    expression: expression, 
+                    resetExpression: resetExpression});
             }
         }
 

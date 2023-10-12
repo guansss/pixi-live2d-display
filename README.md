@@ -111,13 +111,13 @@ import { Live2DModel } from 'pixi-live2d-display/cubism4';
 
 
 <!-- if support for both Cubism 2.1 and 4 -->
-<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v0.4.0-ls-1/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v0.4.0-ls-2/dist/index.min.js"></script>
 
 <!-- if only Cubism 2.1 -->
-<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v0.4.0-ls-1/dist/cubism2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v0.4.0-ls-2/dist/cubism2.min.js"></script>
 
 <!-- if only Cubism 4 -->
-<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v0.4.0-ls-1/dist/cubism4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v0.4.0-ls-2/dist/cubism4.min.js"></script>
 ```
 
 In this way, all the exported members are available under `PIXI.live2d` namespace, such as `PIXI.live2d.Live2DModel`.
@@ -175,13 +175,20 @@ var model_proxy; //make a global scale handler to use later
 ```js
 var category_name = "Idle" // name of the morion category
 var animation_index = 0 // index of animation under that motion category
-var priority_number = 3 // if you want to keep the current animation going or move to new animation by force
+var priority_number = 3 // if you want to keep the current animation going or move to new animation by force [0: no priority, 1: idle, 2: normal, 3: forced]
 var audio_link = "https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.3/playground/test.mp3" //[Optional arg, can be null or empty] [relative or full url path] [mp3 or wav file]
 var volume = 1; //[Optional arg, can be null or empty] [0.0 - 1.0]
 var expression = 4; //[Optional arg, can be null or empty] [index|name of expression]
+var resetExpression = true; //[Optional arg, can be null or empty] [true|false] [default: true] [if true, expression will be reset to default after animation is over]
 
-model_proxy.motion(category_name, animation_index, priority_number, audio_link, volume, expression)
+model_proxy.motion(category_name, animation_index, priority_number, {voice: audio_link, volume: volume, expression:expression, resetExpression:resetExpression})
 // Note: during this animation with sound, other animation will be ignored, even its forced. Once over, it'll be back to normal
+
+// if you dont want voice, just ignore the option
+model_proxy.motion(category_name, animation_index, priority_number)
+model_proxy.motion(category_name, animation_index, priority_number, {expression:expression, resetExpression:resetExpression})
+model_proxy.motion(category_name, animation_index, priority_number, {expression:expression, resetExpression:false})
+
 ```
 
 ## Lipsync Only
@@ -190,12 +197,17 @@ model_proxy.motion(category_name, animation_index, priority_number, audio_link, 
 * Demo code
 ```js
 var audio_link = "https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.3/playground/test.mp3" // [relative or full url path] [mp3 or wav file]
-
 var volume = 1; // [Optional arg, can be null or empty] [0.0 - 1.0]
-
 var expression = 4; // [Optional arg, can be null or empty] [index|name of expression]
+var resetExpression = true; // [Optional arg, can be null or empty] [true|false] [default: true] [if true, expression will be reset to default after animation is over]
 
-model_proxy.speak(audio_link, volume, expression)
+model_proxy.speak(audio_link, {volume: volume, expression:expression, resetExpression:resetExpression})
+
+// Or if you want to keep some things default
+model_proxy.speak(audio_link)
+model_proxy.speak(audio_link, {volume: volume})
+model_proxy.speak(audio_link, {expression:expression, resetExpression:resetExpression})
+
 ```
 
 ## Suddenly stop audio and lipsync
