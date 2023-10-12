@@ -5039,8 +5039,8 @@ var __async = (__this, __arguments, generator) => {
     _loadMotion(group, index) {
       throw new Error("Not implemented.");
     }
-    speakUp(sound, volume, expression) {
-      return __async(this, null, function* () {
+    speakUp(_0) {
+      return __async(this, arguments, function* (sound, { volume = 1, expression, resetExpression = true } = {}) {
         if (!exports2.config.sound) {
           return false;
         }
@@ -5071,10 +5071,10 @@ var __async = (__this, __arguments, generator) => {
         if (file) {
           try {
             audio = SoundManager.add(file, () => {
-              expression && that.expressionManager && that.expressionManager.resetExpression();
+              resetExpression && expression && that.expressionManager && that.expressionManager.resetExpression();
               that.currentAudio = void 0;
             }, () => {
-              expression && that.expressionManager && that.expressionManager.resetExpression();
+              resetExpression && expression && that.expressionManager && that.expressionManager.resetExpression();
               that.currentAudio = void 0;
             });
             this.currentAudio = audio;
@@ -5108,7 +5108,7 @@ var __async = (__this, __arguments, generator) => {
       });
     }
     startMotion(_0, _1) {
-      return __async(this, arguments, function* (group, index, priority = MotionPriority.NORMAL, sound, volume, expression) {
+      return __async(this, arguments, function* (group, index, priority = MotionPriority.NORMAL, { sound = void 0, volume = 1, expression = void 0, resetExpression = true } = {}) {
         var _a;
         if (this.currentAudio) {
           if (!this.currentAudio.ended) {
@@ -5148,10 +5148,10 @@ var __async = (__this, __arguments, generator) => {
           if (file) {
             try {
               audio = SoundManager.add(file, () => {
-                expression && that.expressionManager && that.expressionManager.resetExpression();
+                resetExpression && expression && that.expressionManager && that.expressionManager.resetExpression();
                 that.currentAudio = void 0;
               }, () => {
-                expression && that.expressionManager && that.expressionManager.resetExpression();
+                resetExpression && expression && that.expressionManager && that.expressionManager.resetExpression();
                 that.currentAudio = void 0;
               });
               this.currentAudio = audio;
@@ -5197,8 +5197,8 @@ var __async = (__this, __arguments, generator) => {
         return true;
       });
     }
-    startRandomMotion(group, priority, sound, volume) {
-      return __async(this, null, function* () {
+    startRandomMotion(_0, _1) {
+      return __async(this, arguments, function* (group, priority, { sound = void 0, volume = 1, expression = void 0, resetExpression = true } = {}) {
         const groupDefs = this.definitions[group];
         if (groupDefs == null ? void 0 : groupDefs.length) {
           const availableIndices = [];
@@ -5209,7 +5209,12 @@ var __async = (__this, __arguments, generator) => {
           }
           if (availableIndices.length) {
             const index = availableIndices[Math.floor(Math.random() * availableIndices.length)];
-            return this.startMotion(group, index, priority, sound, volume);
+            return this.startMotion(group, index, priority, {
+              sound,
+              volume,
+              expression,
+              resetExpression
+            });
           }
         }
         return false;
@@ -5855,14 +5860,28 @@ var __async = (__this, __arguments, generator) => {
     onAnchorChange() {
       this.pivot.set(this.anchor.x * this.internalModel.width, this.anchor.y * this.internalModel.height);
     }
-    motion(group, index, priority, sound, volume, expression) {
-      return index === void 0 ? this.internalModel.motionManager.startRandomMotion(group, priority) : this.internalModel.motionManager.startMotion(group, index, priority, sound, volume, expression);
+    motion(group, index, { priority = 2, sound, volume = 1, expression, resetExpression = true } = {}) {
+      return index === void 0 ? this.internalModel.motionManager.startRandomMotion(group, priority, {
+        sound,
+        volume,
+        expression,
+        resetExpression
+      }) : this.internalModel.motionManager.startMotion(group, index, priority, {
+        sound,
+        volume,
+        expression,
+        resetExpression
+      });
     }
     resetMotions() {
       return this.internalModel.motionManager.stopAllMotions();
     }
-    speak(sound, volume, expression) {
-      return this.internalModel.motionManager.speakUp(sound, volume, expression);
+    speak(sound, { volume = 1, expression, resetExpression = true } = {}) {
+      return this.internalModel.motionManager.speakUp(sound, {
+        volume,
+        expression,
+        resetExpression
+      });
     }
     stopSpeaking() {
       return this.internalModel.motionManager.stopSpeaking();
@@ -6310,6 +6329,7 @@ var __async = (__this, __arguments, generator) => {
       this.idParamEyeBallY = ParamEyeBallY;
       this.idParamBodyAngleX = ParamBodyAngleX;
       this.idParamBreath = ParamBreath;
+      this.idParamMouthForm = ParamMouthForm;
       this.pixelsPerUnit = 1;
       this.centeringTransform = new math.Matrix();
       this.coreModel = coreModel;
@@ -6412,6 +6432,19 @@ var __async = (__this, __arguments, generator) => {
       }
       this.updateFocus();
       this.updateNaturalMovements(dt * 1e3, now * 1e3);
+      if (this.lipSync && this.motionManager.currentAudio) {
+        let value = this.motionManager.mouthSync();
+        let min_ = 0;
+        let max_ = 1;
+        let weight = 1.2;
+        if (value > 0) {
+          min_ = 0.4;
+        }
+        value = clamp(value * weight, min_, max_);
+        for (let i = 0; i < this.motionManager.lipSyncIds.length; ++i) {
+          model.addParameterValueById(this.motionManager.lipSyncIds[i], value, 0.8);
+        }
+      }
       (_c = this.physics) == null ? void 0 : _c.evaluate(model, dt);
       (_d = this.pose) == null ? void 0 : _d.updateParameters(model, dt);
       this.emit("beforeModelUpdate");
@@ -6425,6 +6458,9 @@ var __async = (__this, __arguments, generator) => {
       this.coreModel.addParameterValueById(this.idParamAngleY, this.focusController.y * 30);
       this.coreModel.addParameterValueById(this.idParamAngleZ, this.focusController.x * this.focusController.y * -30);
       this.coreModel.addParameterValueById(this.idParamBodyAngleX, this.focusController.x * 10);
+    }
+    updateFacialEmotion(mouthForm) {
+      this.coreModel.addParameterValueById(this.idParamMouthForm, mouthForm);
     }
     updateNaturalMovements(dt, now) {
       var _a;
