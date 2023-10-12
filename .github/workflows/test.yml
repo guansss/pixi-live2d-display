@@ -11,8 +11,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v@v4
         with:
+          ref: $GITHUB_REF_NAME
           submodules: true
           fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
 
