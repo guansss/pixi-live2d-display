@@ -1,6 +1,6 @@
 import { createBirpc } from "birpc";
 import type { RpcFunctions } from "./rpc-server";
-import { TEST_RPC_ENDPOINT } from "./constants";
+import { TEST_RPC_ENDPOINT } from "../constants";
 
 let _rpc: ReturnType<typeof createRpc> | undefined;
 

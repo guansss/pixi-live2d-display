@@ -3,7 +3,7 @@
 import path from "path";
 import { defineConfig } from "vite";
 import packageJson from "./package.json";
-import { testRpcPlugin } from "./test/rpc-server";
+import { testRpcPlugin } from "./test/rpc/rpc-server";
 
 export default defineConfig(({ command, mode }) => {
     const isDev = command === "serve";
@@ -54,6 +54,7 @@ export default defineConfig(({ command, mode }) => {
                 enabled: true,
                 name: "chrome",
             },
+            setupFiles: ["./test/rpc/image-snapshot-client.ts"],
         },
     };
 });

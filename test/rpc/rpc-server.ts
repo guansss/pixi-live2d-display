@@ -1,10 +1,12 @@
 import { createBirpc } from "birpc";
 import type { Plugin } from "vite";
 import { WebSocketServer } from "ws";
-import { TEST_RPC_ENDPOINT } from "./constants";
+import { TEST_RPC_ENDPOINT } from "../constants";
+import { handleToMatchImageSnapshot } from "./image-snapshot-server";
 
 const rpcFunctions = {
     hi: () => "Hello my sweetheart!",
+    toMatchImageSnapshot: handleToMatchImageSnapshot,
 };
 
 export type RpcFunctions = typeof rpcFunctions;
