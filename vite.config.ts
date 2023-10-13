@@ -3,6 +3,7 @@
 import path from "path";
 import { defineConfig } from "vite";
 import packageJson from "./package.json";
+import { testRpcPlugin } from "./test/rpc-server";
 
 export default defineConfig(({ command, mode }) => {
     const isDev = command === "serve";
@@ -46,6 +47,7 @@ export default defineConfig(({ command, mode }) => {
             },
             minify: false,
         },
+        plugins: [testRpcPlugin()],
         test: {
             include: ["**/*.test.ts"],
             browser: {
