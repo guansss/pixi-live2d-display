@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import path from "path";
 import { defineConfig } from "vite";
 import packageJson from "./package.json";
@@ -9,6 +11,9 @@ export default defineConfig(({ command, mode }) => {
         define: {
             __DEV__: isDev,
             __VERSION__: JSON.stringify(packageJson.version),
+
+            // test env
+            __HEADLESS__: process.env.CI === "true",
         },
         resolve: {
             alias: {
@@ -40,6 +45,13 @@ export default defineConfig(({ command, mode }) => {
                 },
             },
             minify: false,
+        },
+        test: {
+            include: ["**/*.test.ts"],
+            browser: {
+                enabled: true,
+                name: "chrome",
+            },
         },
     };
 });

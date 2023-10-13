@@ -34,7 +34,7 @@
   "scripts": {
     "setup": "node scripts/setup.js",
     "playground": "vite",
-    "test": "node scripts/build-tests.js && npx floss --path=test.build --reporter=tap",
+    "test": "vitest",
     "test:ci": "npm run type && npm run build && npm run test",
     "test:debug": "node scripts/build-tests.js && npx floss --path=test.build -d",
     "build": "rimraf dist && node scripts/build.js",
@@ -64,16 +64,13 @@
     "@types/offscreencanvas": "^2019.7.0",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
+    "@vitest/browser": "^0.34.6",
     "adm-zip": "^0.5.9",
-    "chai": "^4.3.6",
-    "chai-as-promised": "^7.1.1",
     "chalk": "^4",
     "dts-bundle-generator": "^6.11.0",
-    "electron": "^13",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
-    "floss": "^5.0.1",
     "glob": "^8.0.3",
     "handlebars": "^4.7.7",
     "jszip": "^3.10.0",
@@ -82,11 +79,10 @@
     "pixi.js": "^7.3.1",
     "prettier": "^3.0.3",
     "rimraf": "^3.0.2",
-    "sinon": "^14.0.0",
-    "sinon-chai": "^3.7.0",
-    "typedoc": "0.23.10",
-    "typescript": "^4.7.3",
-    "vite": "^4.4.11"
+    "typescript": "^5.2.2",
+    "vite": "^4.4.11",
+    "vitest": "^0.34.6",
+    "webdriverio": "^8.17.0"
   },
   "dependencies": {
     "gh-pages": "^4.0.0"

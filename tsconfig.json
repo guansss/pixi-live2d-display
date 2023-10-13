@@ -28,6 +28,7 @@
   },
   "include": [
     "src/**/*",
+    "test/**/*",
     "cubism/**/*",
     "core/**/*"
   ],
