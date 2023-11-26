@@ -1,10 +1,11 @@
 /// <reference types="vitest" />
 
+import { existsSync, readFileSync } from "fs";
 import path from "path";
-import { UserConfig, defineConfig } from "vite";
+import { defineConfig } from "vite";
+import { nodePolyfills } from "vite-plugin-node-polyfills";
 import packageJson from "./package.json";
 import { testRpcPlugin } from "./test/rpc/rpc-server";
-import { existsSync, readFileSync } from "fs";
 
 const cubism2Core = path.resolve(__dirname, "core/live2d.min.js");
 const cubism4Core = path.resolve(__dirname, "core/live2dcubismcore.js");
@@ -41,6 +42,10 @@ export default defineConfig(({ command, mode }) => {
             },
             rollupOptions: {
                 external(id, parentId, isResolved) {
+                    if (id === "pixi.js") {
+                        throw new Error("please import @pixi/* packages instead of pixi.js");
+                    }
+
                     return id.startsWith("@pixi/");
                 },
                 output: {
@@ -56,12 +61,16 @@ export default defineConfig(({ command, mode }) => {
             minify: false,
         },
         plugins: [
+            // pixi.js imports a polyfill package named "url", which breaks Vitest
+            // see https://github.com/vitest-dev/vitest/issues/4535
+            nodePolyfills(),
+
             testRpcPlugin(),
             {
                 name: "load-cubism-core",
-                enforce: "post",
+                enforce: "post" as const,
                 transform(code, id) {
-                    if (id.includes("test/setup.ts")) {
+                    if (id.includes("test/load-cores.ts")) {
                         code = code.replace(
                             "__CUBISM2_CORE_SOURCE__",
                             readFileSync(cubism2Core, "utf-8"),
@@ -77,7 +86,7 @@ export default defineConfig(({ command, mode }) => {
             },
         ],
         test: {
-            include: ["**/*.test.ts"],
+            include: ["**/*.test.ts", "**/*.test.js"],
             browser: {
                 enabled: true,
                 name: "chrome",

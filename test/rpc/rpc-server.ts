@@ -27,7 +27,7 @@ export function testRpcPlugin(): Plugin {
                     wss.emit("connection", ws, request);
 
                     createBirpc(rpcFunctions, {
-                        post: (msg) => ws.send(msg),
+                        post: (msg: string) => ws.send(msg),
                         on: (fn) => ws.on("message", fn),
                         serialize: JSON.stringify,
                         deserialize: JSON.parse,

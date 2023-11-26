@@ -10,6 +10,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "noUncheckedIndexedAccess": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
@@ -27,10 +28,7 @@
     ]
   },
   "include": [
-    "src/**/*",
-    "test/**/*",
-    "cubism/**/*",
-    "core/**/*"
+    "**/*",
   ],
   "exclude": [
     "node_modules",

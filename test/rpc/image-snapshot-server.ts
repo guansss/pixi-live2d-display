@@ -1,7 +1,7 @@
 // @ts-expect-error - untyped package
 import { toMatchImageSnapshot as untyped_toMatchImageSnapshot } from "jest-image-snapshot";
 
-import type { MatcherState, RawMatcherFn } from "@vitest/expect";
+import type { MatcherState, RawMatcherFn, SyncExpectationResult } from "@vitest/expect";
 import type { SnapshotState } from "@vitest/snapshot";
 import type { OverrideProperties } from "type-fest";
 
@@ -51,10 +51,7 @@ export function handleToMatchImageSnapshot({
     ctx: FakeMatcherStateSerialized;
     received: string;
     options: unknown;
-}) {
-    console.log("--------------------------------------");
-    console.log(ctx, received, options);
-
+}): OverrideProperties<SyncExpectationResult, { message: string }> {
     const fakeThis: FakeMatcherState = {
         ...ctx,
         snapshotState: {
@@ -87,11 +84,20 @@ export function handleToMatchImageSnapshot({
         },
     });
 
-    return toMatchImageSnapshot.call(
+    if (received.slice(0, 10) === "data:image") {
+        received = received.slice("data:image/png;base64,".length);
+    }
+
+    const result = toMatchImageSnapshot.call(
         fakeThisProxy as unknown as MatcherState,
         Buffer.from(received, "base64"),
         options,
-    );
+    ) as SyncExpectationResult;
+
+    return {
+        ...result,
+        message: result.message(),
+    };
 }
 
 function validateCtxProps(p: string | symbol): asserts p is KnownAccessedCtxProps {
