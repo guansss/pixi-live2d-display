@@ -1,6 +1,7 @@
 import type { InternalModelOptions } from "@/cubism-common";
 import type { CommonHitArea, CommonLayout } from "@/cubism-common/InternalModel";
 import { InternalModel } from "@/cubism-common/InternalModel";
+import { logger } from "../utils";
 import type { Cubism2ModelSettings } from "./Cubism2ModelSettings";
 import { Cubism2MotionManager } from "./Cubism2MotionManager";
 import { Live2DEyeBlink } from "./Live2DEyeBlink";
@@ -48,6 +49,8 @@ export class Cubism2InternalModel extends InternalModel {
      */
     disableCulling = false;
 
+    private hasDrawn = false;
+
     constructor(
         coreModel: Live2DModelWebGL,
         settings: Cubism2ModelSettings,
@@ -87,10 +90,10 @@ export class Cubism2InternalModel extends InternalModel {
 
         this.coreModel.saveParam();
 
-        const arr: any = this.coreModel.getModelContext()._$aS;
+        const arr = this.coreModel.getModelContext()._$aS;
 
-        if (arr?.length) {
-            this.drawDataCount = arr.length;
+        if ((arr as unknown[])?.length) {
+            this.drawDataCount = (arr as unknown[]).length;
         }
 
         let culling = this.coreModel.drawParamWebGL.culling;
@@ -155,7 +158,7 @@ export class Cubism2InternalModel extends InternalModel {
         const clipManager = this.coreModel.getModelContext().clipManager;
         clipManager.curFrameNo = glContextID;
 
-        const framebuffer = gl.getParameter(gl.FRAMEBUFFER_BINDING);
+        const framebuffer = gl.getParameter(gl.FRAMEBUFFER_BINDING) as WebGLFramebuffer;
 
         // force Live2D to re-create the framebuffer
         clipManager.getMaskRenderTexture();
@@ -204,6 +207,16 @@ export class Cubism2InternalModel extends InternalModel {
         }
 
         return this.coreModel.getTransformedPoints(drawIndex).slice();
+    }
+
+    override hitTest(x: number, y: number): string[] {
+        if (!this.hasDrawn) {
+            logger.warn(
+                "Trying to hit-test a Cubism 2 model that has not been rendered yet. The result will always be empty since the draw data is not ready.",
+            );
+        }
+
+        return super.hitTest(x, y);
     }
 
     update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {
@@ -281,6 +294,7 @@ export class Cubism2InternalModel extends InternalModel {
         this.coreModel.setMatrix(tempMatrixArray);
         this.coreModel.draw();
 
+        this.hasDrawn = true;
         this.disableCulling = disableCulling;
     }
 
