@@ -5,6 +5,7 @@ import { Live2DLoader } from "@/factory/Live2DLoader";
 import { createTexture } from "@/factory/texture";
 import { logger } from "@/utils";
 import type { Middleware } from "@/utils/middleware";
+import { noop } from "lodash-es";
 
 const TAG = "Live2DFactory";
 
@@ -139,10 +140,15 @@ export const setupEssentials: Middleware<Live2DFactoryContext> = async (context,
     if (context.settings) {
         const live2DModel = context.live2dModel;
 
-        const textureLoadings = context.settings.textures.map((tex) => {
-            const url = context.settings!.resolveURL(tex);
-            return createTexture(url, { crossOrigin: context.options.crossOrigin });
-        });
+        const loadingTextures = Promise.all(
+            context.settings.textures.map((tex) => {
+                const url = context.settings!.resolveURL(tex);
+                return createTexture(url, { crossOrigin: context.options.crossOrigin });
+            }),
+        );
+
+        // we'll handle the error later (using await), this catch() is to suppress the unhandled rejection warning
+        loadingTextures.catch(noop);
 
         // wait for the internal model to be created
         await next();
@@ -154,7 +160,7 @@ export const setupEssentials: Middleware<Live2DFactoryContext> = async (context,
             throw new TypeError("Missing internal model.");
         }
 
-        live2DModel.textures = await Promise.all(textureLoadings);
+        live2DModel.textures = await loadingTextures;
         live2DModel.emit("textureLoaded", live2DModel.textures);
     } else {
         throw new TypeError("Missing settings.");
