@@ -117,7 +117,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     /**
      * Elapsed time in milliseconds since created.
      */
-    elapsedTime: DOMHighResTimeStamp = performance.now();
+    elapsedTime: DOMHighResTimeStamp = 0;
 
     /**
      * Elapsed time in milliseconds from last frame to this frame.
