@@ -52,8 +52,9 @@ export default defineConfig(({ command, mode }) => {
                     extend: true,
                     globals(id: string) {
                         if (id.startsWith("@pixi/")) {
-                            // eslint-disable-next-line @typescript-eslint/no-var-requires
-                            return require(`./node_modules/${id}/package.json`).namespace || "PIXI";
+                            // something will go wrong if we directly use `require` here
+                            const r = require;
+                            return r(`./node_modules/${id}/package.json`).namespace || "PIXI";
                         }
                     },
                 },
