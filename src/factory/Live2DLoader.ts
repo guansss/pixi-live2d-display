@@ -1,6 +1,11 @@
-import type { MotionManager } from "@/cubism-common";
-import { XHRLoader } from "@/factory/XHRLoader";
 import type { Live2DModel } from "@/Live2DModel";
+import type {
+    ExpressionManager,
+    InternalModel,
+    ModelSettings,
+    MotionManager,
+} from "@/cubism-common";
+import { XHRLoader } from "@/factory/XHRLoader";
 import type { Middleware } from "@/utils/middleware";
 import { runMiddlewares } from "@/utils/middleware";
 
