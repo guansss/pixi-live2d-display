@@ -1,5 +1,4 @@
 import { createTexture } from "@/factory/texture";
-import type { Application } from "@pixi/app";
 import type { Renderer } from "@pixi/core";
 import { BaseRenderTexture, RenderTexture } from "@pixi/core";
 import { AlphaFilter } from "@pixi/filter-alpha";
@@ -7,25 +6,7 @@ import { Graphics } from "@pixi/graphics";
 import { Sprite } from "@pixi/sprite";
 import { expect } from "vitest";
 import { ALL_TEST_MODELS, TEST_TEXTURE, test } from "../env";
-import { createModel, delay } from "../utils";
-
-async function addAllModels(app: Application) {
-    const models = await Promise.all(
-        ALL_TEST_MODELS.map((M) =>
-            createModel(M.modelJsonWithUrl, {
-                autoUpdate: false,
-                autoFocus: false,
-                idleMotionGroup: "non-existent",
-            }),
-        ),
-    );
-    models.forEach((model) => {
-        model.scale.set(app.view.width / model.width);
-        model.update(1);
-        app.stage.addChild(model);
-    });
-    return models;
-}
+import { addAllModels, createModel, delay } from "../utils";
 
 test("works with PIXI.Sprite", async ({ app }) => {
     const sprite = Sprite.from(await createTexture(TEST_TEXTURE));

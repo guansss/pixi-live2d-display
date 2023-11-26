@@ -1,6 +1,8 @@
 import { cloneDeep, noop } from "lodash-es";
+import type { Application } from "pixi.js";
 import type { JSONObject, Live2DFactoryOptions, Live2DModelEvents, ModelSettings } from "../src";
 import { Live2DModel, MotionPreloadStrategy } from "../src";
+import { ALL_TEST_MODELS } from "./env";
 
 export const BASE_PATH = "../../../test/";
 
@@ -48,7 +50,13 @@ export function createFile(blob: Blob, relativePath: string) {
 
 export function createModel(
     src: string | JSONObject | ModelSettings,
-    options: Live2DFactoryOptions & {
+    {
+        Class = Live2DModel,
+        listeners,
+        ...options
+    }: Live2DFactoryOptions & {
+        Class?: typeof Live2DModel;
+
         // TODO: make a public API for this
         listeners?: {
             [K in keyof Live2DModelEvents]?: (
@@ -64,15 +72,34 @@ export function createModel(
         options.onError = reject;
     });
 
-    const model = Live2DModel.fromSync(src, defaultOptions(options));
+    const model = Class.fromSync(src, defaultOptions(options));
 
-    if (options.listeners)
-        Object.entries(options.listeners).forEach(([key, value]) => {
+    if (listeners)
+        Object.entries(listeners).forEach(([key, value]) => {
             console.log("on", key);
             if (typeof value === "function") model.on(key, value);
         });
 
     return creation;
+}
+
+export async function addAllModels(app: Application, options?: Parameters<typeof createModel>[1]) {
+    const models = await Promise.all(
+        ALL_TEST_MODELS.map((M) =>
+            createModel(M.modelJsonWithUrl, {
+                autoUpdate: false,
+                autoFocus: false,
+                idleMotionGroup: "non-existent",
+                ...options,
+            }),
+        ),
+    );
+    models.forEach((model) => {
+        model.scale.set(app.view.width / model.width);
+        model.update(1);
+        app.stage.addChild(model);
+    });
+    return models;
 }
 
 // inspired by Playwright's source code
