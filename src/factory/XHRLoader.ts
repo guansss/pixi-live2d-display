@@ -82,8 +82,9 @@ export class XHRLoader {
                 xhrSet.add(xhr);
             }
 
-            if (!target.listeners("destroy").includes(XHRLoader.cancelXHRs)) {
-                target.once("destroy", XHRLoader.cancelXHRs);
+            // TODO: properly type this
+            if (!(target.listeners as any)("destroy").includes(XHRLoader.cancelXHRs)) {
+                (target.once as any)("destroy", XHRLoader.cancelXHRs);
             }
         }
 
