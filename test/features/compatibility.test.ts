@@ -70,7 +70,7 @@ test("works with PIXI.RenderTexture", async ({ app }) => {
     });
 
     app.render();
-    expect(app).toMatchImageSnapshot();
+    await expect(app).toMatchImageSnapshot();
 });
 
 test("works with PIXI.Filter", async ({ app }) => {
