@@ -1,6 +1,6 @@
 import type { InternalModel, ModelSettings } from "@/cubism-common";
 import type { Live2DFactoryContext } from "@/factory/Live2DFactory";
-import { Live2DFactory } from "@/factory/Live2DFactory";
+import type { Live2DFactory } from "@/factory/Live2DFactory";
 import { Live2DLoader } from "@/factory/Live2DLoader";
 import type { Middleware } from "@/utils/middleware";
 import { utils } from "@pixi/core";
@@ -15,6 +15,9 @@ type ZipReader = any;
  * it only contains a middleware for the Live2DFactory.
  */
 export class ZipLoader {
+    // will be set by Live2DFactory
+    private static live2dFactory: typeof Live2DFactory;
+
     static ZIP_PROTOCOL = "zip://";
     static uid = 0;
 
@@ -141,7 +144,7 @@ export class ZipLoader {
 
         settingsJSON.url = settingsFilePath;
 
-        const runtime = Live2DFactory.findRuntime(settingsJSON);
+        const runtime = ZipLoader.live2dFactory.findRuntime(settingsJSON);
 
         if (!runtime) {
             throw new Error("Unknown settings JSON");
@@ -170,5 +173,3 @@ export class ZipLoader {
         // this method is optional
     }
 }
-
-Live2DFactory.live2DModelMiddlewares.unshift(ZipLoader.factory);

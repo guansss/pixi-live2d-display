@@ -14,6 +14,8 @@ import { logger } from "@/utils";
 import type { Middleware } from "@/utils/middleware";
 import { runMiddlewares } from "@/utils/middleware";
 import type { JSONObject } from "../types/helpers";
+import { FileLoader } from "./FileLoader";
+import { ZipLoader } from "./ZipLoader";
 
 export interface Live2DFactoryOptions extends Live2DModelOptions {
     /**
@@ -147,6 +149,8 @@ export class Live2DFactory {
      * Middlewares to run through when setting up a Live2DModel.
      */
     static live2DModelMiddlewares: Middleware<Live2DFactoryContext>[] = [
+        ZipLoader.factory,
+        FileLoader.factory,
         urlToJSON,
         jsonToSettings,
         waitUntilReady,
@@ -386,3 +390,6 @@ MotionManager.prototype["_loadMotion"] = function (group, index) {
 ExpressionManager.prototype["_loadExpression"] = function (index) {
     return Live2DFactory.loadExpression(this, index);
 };
+
+FileLoader["live2dFactory"] = Live2DFactory;
+ZipLoader["live2dFactory"] = Live2DFactory;
