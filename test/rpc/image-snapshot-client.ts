@@ -44,7 +44,16 @@ expect.extend({
             },
         };
 
-        const result = await rpc().toMatchImageSnapshot({ ctx, received: receivedAsB64, options });
+        const result = await rpc().toMatchImageSnapshot({
+            ctx,
+            received: receivedAsB64,
+            options: {
+                // images are a bit different (~1% from observation) when rendered in CI,
+                // and probably also in other platforms, so we have to set a higher threshold
+                failureThreshold: 3,
+                failureThresholdType: "percent",
+            },
+        });
 
         return {
             pass: result.pass,
