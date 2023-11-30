@@ -71,6 +71,7 @@
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "gh-pages": "^6.1.0",
     "glob": "^8.0.3",
     "handlebars": "^4.7.7",
     "jest-image-snapshot": "^6.2.0",
@@ -86,9 +87,6 @@
     "vite-plugin-node-polyfills": "^0.16.0",
     "vitest": "^1.0.0-beta.5",
     "webdriverio": "^8.17.0"
-  },
-  "dependencies": {
-    "gh-pages": "^4.0.0"
   },
   "overrides": {
     "vite-plugin-node-polyfills": {
