@@ -64,10 +64,10 @@ export default defineConfig(({ command, mode }) => {
         plugins: [
             // pixi.js imports a polyfill package named "url", which breaks Vitest
             // see https://github.com/vitest-dev/vitest/issues/4535
-            nodePolyfills(),
+            isDev && nodePolyfills(),
 
-            testRpcPlugin(),
-            {
+            isDev && testRpcPlugin(),
+            isDev && {
                 name: "load-cubism-core",
                 enforce: "post" as const,
                 transform(code, id) {
