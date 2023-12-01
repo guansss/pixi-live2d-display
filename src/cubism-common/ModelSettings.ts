@@ -1,6 +1,6 @@
-import { folderName } from '@/utils';
-import { url } from '@pixi/utils';
-import { JSONObject } from '../types/helpers';
+import { folderName } from "@/utils";
+import { utils } from "@pixi/core";
+import type { JSONObject } from "../types/helpers";
 
 /**
  * Parses, and provides access to the settings JSON.
@@ -48,13 +48,13 @@ export abstract class ModelSettings {
     protected constructor(json: JSONObject & { url: string }) {
         this.json = json;
 
-        let url = (json as any).url;
+        const url = (json as any).url;
 
-        if (typeof url !== 'string') {
+        if (typeof url !== "string") {
             // this is not allowed because it'll typically result in errors, including a
             // fatal error - an OOM that crashes the browser while initializing this cubism2 model,
             // I'm not kidding!
-            throw new TypeError('The `url` field in settings JSON must be defined as a string.');
+            throw new TypeError("The `url` field in settings JSON must be defined as a string.");
         }
 
         this.url = url;
@@ -70,7 +70,8 @@ export abstract class ModelSettings {
      * @return Resolved path.
      */
     resolveURL(path: string): string {
-        return url.resolve(this.url, path);
+        // FIXME: deprecated API
+        return utils.url.resolve(this.url, path);
     }
 
     /**
@@ -90,20 +91,20 @@ export abstract class ModelSettings {
      * ```
      */
     replaceFiles(replacer: (file: string, path: string) => string) {
-        this.moc = replacer(this.moc, 'moc');
+        this.moc = replacer(this.moc, "moc");
 
         if (this.pose !== undefined) {
-            (this.pose = replacer(this.pose, 'pose'));
+            this.pose = replacer(this.pose, "pose");
         }
 
         if (this.physics !== undefined) {
-            (this.physics = replacer(this.physics, 'physics'));
+            this.physics = replacer(this.physics, "physics");
         }
 
         for (let i = 0; i < this.textures.length; i++) {
             this.textures[i] = replacer(this.textures[i]!, `textures[${i}]`);
         }
-    };
+    }
 
     /**
      * Retrieves all resource files defined in the settings.
@@ -140,7 +141,9 @@ export abstract class ModelSettings {
 
             if (!files.includes(actualPath)) {
                 if (shouldThrow) {
-                    throw new Error(`File "${expectedFile}" is defined in settings, but doesn't exist in given files`);
+                    throw new Error(
+                        `File "${expectedFile}" is defined in settings, but doesn't exist in given files`,
+                    );
                 }
 
                 return false;
@@ -151,10 +154,10 @@ export abstract class ModelSettings {
 
         const essentialFiles = [this.moc, ...this.textures];
 
-        essentialFiles.forEach(texture => assertFileExists(texture, true));
+        essentialFiles.forEach((texture) => assertFileExists(texture, true));
 
         const definedFiles = this.getDefinedFiles();
 
-        return definedFiles.filter(file => assertFileExists(file, false));
+        return definedFiles.filter((file) => assertFileExists(file, false));
     }
 }

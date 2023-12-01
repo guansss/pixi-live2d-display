@@ -1,8 +1,8 @@
-import { MotionManagerOptions } from '@/cubism-common';
-import { ExpressionManager } from '@/cubism-common/ExpressionManager';
-import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
-import { Cubism2Spec } from '../types/Cubism2Spec';
-import { Live2DExpression } from './Live2DExpression';
+import type { MotionManagerOptions } from "@/cubism-common";
+import { ExpressionManager } from "@/cubism-common/ExpressionManager";
+import type { Cubism2ModelSettings } from "@/cubism2/Cubism2ModelSettings";
+import type { Cubism2Spec } from "../types/Cubism2Spec";
+import { Live2DExpression } from "./Live2DExpression";
 
 export class Cubism2ExpressionManager extends ExpressionManager<Live2DExpression> {
     readonly queueManager = new MotionQueueManager();
@@ -24,14 +24,17 @@ export class Cubism2ExpressionManager extends ExpressionManager<Live2DExpression
     }
 
     getExpressionIndex(name: string): number {
-        return this.definitions.findIndex(def => def.name === name);
+        return this.definitions.findIndex((def) => def.name === name);
     }
 
     getExpressionFile(definition: Cubism2Spec.Expression): string {
         return definition.file;
     }
 
-    createExpression(data: object, definition: Cubism2Spec.Expression | undefined): Live2DExpression {
+    createExpression(
+        data: object,
+        definition: Cubism2Spec.Expression | undefined,
+    ): Live2DExpression {
         return new Live2DExpression(data);
     }
 

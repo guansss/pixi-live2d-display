@@ -1,17 +1,18 @@
-import { MotionManager, MotionManagerOptions } from '@/cubism-common/MotionManager';
-import { Cubism2ExpressionManager } from '@/cubism2/Cubism2ExpressionManager';
-import { Cubism2ModelSettings } from '@/cubism2/Cubism2ModelSettings';
-import './patch-motion';
-import { config } from '@/config';
-import { Cubism2Spec } from '../types/Cubism2Spec';
-import { Mutable } from '../types/helpers';
+import { config } from "@/config";
+import type { MotionManagerOptions } from "@/cubism-common/MotionManager";
+import { MotionManager } from "@/cubism-common/MotionManager";
+import { Cubism2ExpressionManager } from "@/cubism2/Cubism2ExpressionManager";
+import type { Cubism2ModelSettings } from "@/cubism2/Cubism2ModelSettings";
+import type { Cubism2Spec } from "../types/Cubism2Spec";
+import type { Mutable } from "../types/helpers";
+import "./patch-motion";
 
 export class Cubism2MotionManager extends MotionManager<Live2DMotion, Cubism2Spec.Motion> {
     readonly definitions: Partial<Record<string, Cubism2Spec.Motion[]>>;
 
-    readonly groups = { idle: 'idle' } as const;
+    readonly groups = { idle: "idle" } as const;
 
-    readonly motionDataType = 'arraybuffer';
+    readonly motionDataType = "arraybuffer";
 
     readonly queueManager = new MotionQueueManager();
 
@@ -65,7 +66,10 @@ export class Cubism2MotionManager extends MotionManager<Live2DMotion, Cubism2Spe
         return definition.sound;
     }
 
-    protected _startMotion(motion: Live2DMotion, onFinish?: (motion: Live2DMotion) => void): number {
+    protected _startMotion(
+        motion: Live2DMotion,
+        onFinish?: (motion: Live2DMotion) => void,
+    ): number {
         motion.onFinishHandler = onFinish;
 
         this.queueManager.stopAllMotions();

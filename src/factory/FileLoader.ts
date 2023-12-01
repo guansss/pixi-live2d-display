@@ -1,7 +1,8 @@
-import { InternalModel, ModelSettings } from '@/cubism-common';
-import { Live2DFactory, Live2DFactoryContext } from '@/factory';
-import { Middleware } from '@/utils/middleware';
-import { url as urlUtils } from '@pixi/utils';
+import type { InternalModel, ModelSettings } from "@/cubism-common";
+import type { Live2DFactoryContext } from "@/factory";
+import { Live2DFactory } from "@/factory";
+import type { Middleware } from "@/utils/middleware";
+import { utils } from "@pixi/core";
 
 declare global {
     interface File {
@@ -9,14 +10,14 @@ declare global {
     }
 }
 
-declare module '@/cubism-common/ModelSettings' {
+declare module "@/cubism-common/ModelSettings" {
     interface ModelSettings {
         /** @ignore */
         _objectURL?: string;
     }
 }
 
-export type ExtendedFileList = File[] & { settings?: ModelSettings }
+export type ExtendedFileList = File[] & { settings?: ModelSettings };
 
 /**
  * Experimental loader to load resources from uploaded files.
@@ -29,13 +30,16 @@ export type ExtendedFileList = File[] & { settings?: ModelSettings }
  * it only contains a middleware for the Live2DFactory.
  */
 export class FileLoader {
+    // will be set by Live2DFactory
+    private static live2dFactory: typeof Live2DFactory;
+
     /**
      * Stores all the object URLs of uploaded files.
      */
     static filesMap: {
         [settingsFileURL: string]: {
-            [resourceFileURL: string]: string
-        }
+            [resourceFileURL: string]: string;
+        };
     } = {};
 
     /**
@@ -48,7 +52,7 @@ export class FileLoader {
         const resolved = FileLoader.filesMap[settingsURL]?.[filePath];
 
         if (resolved === undefined) {
-            throw new Error('Cannot find this file from uploaded files: ' + filePath);
+            throw new Error("Cannot find this file from uploaded files: " + filePath);
         }
 
         return resolved;
@@ -66,29 +70,31 @@ export class FileLoader {
             if (!settings) {
                 settings = await FileLoader.createSettings(files);
             } else if (!settings._objectURL) {
-                throw  new Error('"_objectURL" must be specified in ModelSettings');
+                throw new Error('"_objectURL" must be specified in ModelSettings');
             }
 
-            settings.validateFiles(files.map(file => encodeURI(file.webkitRelativePath)));
+            settings.validateFiles(files.map((file) => encodeURI(file.webkitRelativePath)));
 
             await FileLoader.upload(files, settings);
 
             // override the default method to resolve URL from uploaded files
-            settings.resolveURL = function(url) {
+            settings.resolveURL = function (url) {
                 return FileLoader.resolveURL(this._objectURL!, url);
             };
 
             context.source = settings;
 
             // clean up when destroying the model
-            context.live2dModel.once('modelLoaded', (internalModel: InternalModel) => {
-                internalModel.once('destroy', function(this: InternalModel) {
+            context.live2dModel.once("modelLoaded", (internalModel: InternalModel) => {
+                internalModel.once("destroy", function (this: InternalModel) {
                     const objectURL = this.settings._objectURL!;
 
                     URL.revokeObjectURL(objectURL);
 
                     if (FileLoader.filesMap[objectURL]) {
-                        for (const resourceObjectURL of Object.values(FileLoader.filesMap[objectURL]!)) {
+                        for (const resourceObjectURL of Object.values(
+                            FileLoader.filesMap[objectURL]!,
+                        )) {
                             URL.revokeObjectURL(resourceObjectURL);
                         }
                     }
@@ -109,9 +115,10 @@ export class FileLoader {
 
         // only consume the files defined in settings
         for (const definedFile of settings.getDefinedFiles()) {
-            const actualPath = decodeURI(urlUtils.resolve(settings.url, definedFile));
+            // FIXME: deprecated API
+            const actualPath = decodeURI(utils.url.resolve(settings.url, definedFile));
 
-            const actualFile = files.find(file => file.webkitRelativePath === actualPath);
+            const actualFile = files.find((file) => file.webkitRelativePath === actualPath);
 
             if (actualFile) {
                 fileMap[definedFile] = URL.createObjectURL(actualFile);
@@ -126,10 +133,12 @@ export class FileLoader {
      * @return Promise that resolves with the created ModelSettings.
      */
     static async createSettings(files: File[]): Promise<ModelSettings> {
-        const settingsFile = files.find(file => file.name.endsWith('model.json') || file.name.endsWith('model3.json'));
+        const settingsFile = files.find(
+            (file) => file.name.endsWith("model.json") || file.name.endsWith("model3.json"),
+        );
 
         if (!settingsFile) {
-            throw new TypeError('Settings file not found');
+            throw new TypeError("Settings file not found");
         }
 
         const settingsText = await FileLoader.readText(settingsFile);
@@ -140,7 +149,7 @@ export class FileLoader {
         const runtime = Live2DFactory.findRuntime(settingsJSON);
 
         if (!runtime) {
-            throw new Error('Unknown settings JSON');
+            throw new Error("Unknown settings JSON");
         }
 
         const settings = runtime.createModelSettings(settingsJSON);
@@ -159,9 +168,7 @@ export class FileLoader {
 
             reader.onload = () => resolve(reader.result as string);
             reader.onerror = reject;
-            reader.readAsText(file, 'utf8');
+            reader.readAsText(file, "utf8");
         });
     }
 }
-
-Live2DFactory.live2DModelMiddlewares.unshift(FileLoader.factory);

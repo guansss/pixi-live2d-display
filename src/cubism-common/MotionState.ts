@@ -1,5 +1,5 @@
-import { logger } from '@/utils';
-import { config } from '../config';
+import { logger } from "@/utils";
+import { config } from "../config";
 
 /**
  * Indicates the motion priority.
@@ -15,7 +15,7 @@ export enum MotionPriority {
     NORMAL,
 
     /** High priority. Motions as this priority will always be played regardless of the current priority. */
-    FORCE
+    FORCE,
 }
 
 /**
@@ -91,19 +91,30 @@ export class MotionState {
             return false;
         }
 
-        if ((group === this.reservedGroup && index === this.reservedIndex) || (group === this.reservedIdleGroup && index === this.reservedIdleIndex)) {
+        if (
+            (group === this.reservedGroup && index === this.reservedIndex) ||
+            (group === this.reservedIdleGroup && index === this.reservedIdleIndex)
+        ) {
             logger.log(this.tag, `Motion is already reserved.`, this.dump(group, index));
             return false;
         }
 
         if (priority === MotionPriority.IDLE) {
             if (this.currentPriority !== MotionPriority.NONE) {
-                logger.log(this.tag, `Cannot start idle motion because another motion is playing.`, this.dump(group, index));
+                logger.log(
+                    this.tag,
+                    `Cannot start idle motion because another motion is playing.`,
+                    this.dump(group, index),
+                );
                 return false;
             }
 
             if (this.reservedIdleGroup !== undefined) {
-                logger.log(this.tag, `Cannot start idle motion because another idle motion has reserved.`, this.dump(group, index));
+                logger.log(
+                    this.tag,
+                    `Cannot start idle motion because another idle motion has reserved.`,
+                    this.dump(group, index),
+                );
                 return false;
             }
 
@@ -111,12 +122,20 @@ export class MotionState {
         } else {
             if (priority < MotionPriority.FORCE) {
                 if (priority <= this.currentPriority) {
-                    logger.log(this.tag, 'Cannot start motion because another motion is playing as an equivalent or higher priority.', this.dump(group, index));
+                    logger.log(
+                        this.tag,
+                        "Cannot start motion because another motion is playing as an equivalent or higher priority.",
+                        this.dump(group, index),
+                    );
                     return false;
                 }
 
                 if (priority <= this.reservePriority) {
-                    logger.log(this.tag, 'Cannot start motion because another motion has reserved as an equivalent or higher priority.', this.dump(group, index));
+                    logger.log(
+                        this.tag,
+                        "Cannot start motion because another motion has reserved as an equivalent or higher priority.",
+                        this.dump(group, index),
+                    );
                     return false;
                 }
             }
@@ -140,12 +159,20 @@ export class MotionState {
             this.setReservedIdle(undefined, undefined);
 
             if (this.currentPriority !== MotionPriority.NONE) {
-                logger.log(this.tag, 'Cannot start idle motion because another motion is playing.', this.dump(group, index));
+                logger.log(
+                    this.tag,
+                    "Cannot start idle motion because another motion is playing.",
+                    this.dump(group, index),
+                );
                 return false;
             }
         } else {
             if (group !== this.reservedGroup || index !== this.reservedIndex) {
-                logger.log(this.tag, 'Cannot start motion because another motion has taken the place.', this.dump(group, index));
+                logger.log(
+                    this.tag,
+                    "Cannot start motion because another motion has taken the place.",
+                    this.dump(group, index),
+                );
                 return false;
             }
 
@@ -199,9 +226,11 @@ export class MotionState {
      * @return True if active.
      */
     isActive(group: string, index: number): boolean {
-        return (group === this.currentGroup && index === this.currentIndex)
-            || (group === this.reservedGroup && index === this.reservedIndex)
-            || (group === this.reservedIdleGroup && index === this.reservedIdleIndex);
+        return (
+            (group === this.currentGroup && index === this.currentIndex) ||
+            (group === this.reservedGroup && index === this.reservedIndex) ||
+            (group === this.reservedIdleGroup && index === this.reservedIdleIndex)
+        );
     }
 
     /**
@@ -235,17 +264,20 @@ export class MotionState {
     dump(requestedGroup?: string, requestedIndex?: number): string {
         if (this.debug) {
             const keys: (keyof this & string)[] = [
-                'currentPriority',
-                'reservePriority',
-                'currentGroup',
-                'currentIndex',
-                'reservedGroup',
-                'reservedIndex',
-                'reservedIdleGroup',
-                'reservedIdleIndex',
+                "currentPriority",
+                "reservePriority",
+                "currentGroup",
+                "currentIndex",
+                "reservedGroup",
+                "reservedIndex",
+                "reservedIdleGroup",
+                "reservedIdleIndex",
             ];
-            return `\n<Requested> group = "${requestedGroup}", index = ${requestedIndex}\n` + keys.map(key => '[' + key + '] ' + this[key]).join('\n');
+            return (
+                `\n<Requested> group = "${requestedGroup}", index = ${requestedIndex}\n` +
+                keys.map((key) => "[" + key + "] " + this[key]).join("\n")
+            );
         }
-        return '';
+        return "";
     }
 }

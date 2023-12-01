@@ -1,5 +1,6 @@
-import { logger } from '@/utils';
-import { CubismFramework, CubismStartupOption, LogLevel } from '@cubism/live2dcubismframework';
+import { logger } from "@/utils";
+import type { CubismStartupOption } from "@cubism/live2dcubismframework";
+import { CubismFramework, LogLevel } from "@cubism/live2dcubismframework";
 
 let startupPromise: Promise<void>;
 let startupRetries = 20;
@@ -13,7 +14,7 @@ export function cubism4Ready(): Promise<void> {
         return Promise.resolve();
     }
 
-    startupPromise ??= new Promise<void>(((resolve, reject) => {
+    startupPromise ??= new Promise<void>((resolve, reject) => {
         function startUpWithRetry() {
             try {
                 startUpCubism4();
@@ -22,7 +23,7 @@ export function cubism4Ready(): Promise<void> {
                 startupRetries--;
 
                 if (startupRetries < 0) {
-                    const err = new Error('Failed to start up Cubism 4 framework.');
+                    const err = new Error("Failed to start up Cubism 4 framework.");
 
                     (err as any).cause = e;
 
@@ -30,14 +31,14 @@ export function cubism4Ready(): Promise<void> {
                     return;
                 }
 
-                logger.log('Cubism4', 'Startup failed, retrying 10ms later...');
+                logger.log("Cubism4", "Startup failed, retrying 10ms later...");
 
                 setTimeout(startUpWithRetry, 10);
             }
         }
 
         startUpWithRetry();
-    }));
+    });
 
     return startupPromise;
 }
@@ -46,10 +47,13 @@ export function cubism4Ready(): Promise<void> {
  * Starts up Cubism 4 framework.
  */
 export function startUpCubism4(options?: CubismStartupOption) {
-    options = Object.assign({
-        logFunction: console.log,
-        loggingLevel: LogLevel.LogLevel_Verbose,
-    }, options);
+    options = Object.assign(
+        {
+            logFunction: console.log,
+            loggingLevel: LogLevel.LogLevel_Verbose,
+        },
+        options,
+    );
 
     CubismFramework.startUp(options);
     CubismFramework.initialize();
