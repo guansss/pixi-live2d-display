@@ -4,6 +4,7 @@ import { existsSync, readFileSync } from "fs";
 import path from "path";
 import { defineConfig } from "vite";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
+import { BaseSequencer } from "vitest/node";
 import packageJson from "./package.json";
 import { testRpcPlugin } from "./test/rpc/rpc-server";
 
@@ -94,6 +95,27 @@ export default defineConfig(({ command, mode }) => {
                 slowHijackESM: false,
             },
             setupFiles: ["./test/setup.ts"],
+            sequence: {
+                sequencer: class MySequencer extends BaseSequencer {
+                    // use the default sorting, then put bundle tests at the end
+                    // to make sure they will not pollute the environment for other tests
+                    override async sort(files: Parameters<BaseSequencer["sort"]>[0]) {
+                        files = await super.sort(files);
+
+                        const bundleTestFiles: typeof files = [];
+
+                        files = files.filter(([project, file]) => {
+                            if (file.includes("bundle")) {
+                                bundleTestFiles.push([project, file]);
+                                return false;
+                            }
+                            return true;
+                        });
+
+                        return [...files, ...bundleTestFiles];
+                    }
+                },
+            },
         },
     };
 });
