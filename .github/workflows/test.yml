@@ -3,12 +3,17 @@ name: Test CI
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+      - "docs/**"
+      - "playground/**"
+      - "*.md"
   pull_request:
     branches: [ master ]
   workflow_dispatch:
+  workflow_call:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,7 +22,8 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
+          cache: "npm"
 
       - name: Cache core files
         uses: actions/cache@v3
@@ -26,16 +32,22 @@ jobs:
           path: |
             core/*
             !core/live2d.d.ts
-          key: ${{ runner.os }}-core-${{ hashFiles('scripts/setup.js') }}
+          key: ${{ hashFiles('scripts/setup.js') }}
 
       - run: npm ci
 
       - if: steps.cache-core.outputs.cache-hit != 'true'
-        run: npm run setup
+        run: |
+          echo Cache miss: ${{ hashFiles('scripts/setup.js') }}
+          npm run setup
 
-      - uses: GabrielBB/xvfb-action@v1.0
+      - run: npm run type
+      - run: npm run build
+
+      - name: Run tests
+        uses: GabrielBB/xvfb-action@v1.0
         with:
-          run: npm run test:ci
+          run: npm test
 
       - uses: actions/upload-artifact@v3
         if: failure()
