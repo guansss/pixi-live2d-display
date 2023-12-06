@@ -3,6 +3,7 @@
   "version": "0.4.0",
   "description": "Live2D plugin for PixiJS",
   "main": "dist/index.js",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
