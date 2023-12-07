@@ -84,7 +84,7 @@ To make it clear, here's how you would use these files:
 
 ## Installation
 
-#### Via npm (not lipsync patch)
+#### Via npm
 
 ```sh
 npm install pixi-live2d-display

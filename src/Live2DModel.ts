@@ -190,10 +190,10 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
 
 
     /**
-     * Shorthand to start speaking a sound with an expression. /*new in 1.0.3*
+     * Shorthand to start speaking a sound with an expression.
      * @param sound - The audio url to file or base64 content 
      * ### OPTIONAL: {name: value, ...}
-     * @param volume - Volume of the sound (0-1) /*new in 1.0.4*
+     * @param volume - Volume of the sound (0-1)
      * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
      * @param resetExpression - Reset the expression to default after the motion is finished (default: true)
      * @returns Promise that resolves with true if the sound is playing, false if it's not
