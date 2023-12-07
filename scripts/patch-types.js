@@ -1,12 +1,11 @@
-const fs = require("fs");
-const path = require("path");
-const chalk = require("chalk");
+import { readFileSync, writeFileSync } from "fs";
+import { resolve } from "path";
 
-const tsdFile = path.resolve("types/index.d.ts");
+const tsdFile = resolve("types/index.d.ts");
 
-console.log(chalk.blue("Patching types for"), chalk.yellow(tsdFile));
+console.log("Patching types for", tsdFile);
 
-let tsdContent = fs.readFileSync(tsdFile, "utf8");
+let tsdContent = readFileSync(tsdFile, "utf8");
 
 // correct the declaration merging
 tsdContent = tsdContent.replace(
@@ -14,4 +13,4 @@ tsdContent = tsdContent.replace(
     "declare interface Live2DMotion",
 );
 
-fs.writeFileSync(tsdFile, tsdContent);
+writeFileSync(tsdFile, tsdContent);

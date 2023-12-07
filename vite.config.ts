@@ -44,7 +44,7 @@ export default defineConfig(({ command, mode }) => {
             rollupOptions: {
                 external(id, parentId, isResolved) {
                     if (id === "pixi.js") {
-                        throw new Error("please import @pixi/* packages instead of pixi.js");
+                        throw new Error("do not import pixi.js, import @pixi/* instead");
                     }
 
                     return id.startsWith("@pixi/");
@@ -53,9 +53,12 @@ export default defineConfig(({ command, mode }) => {
                     extend: true,
                     globals(id: string) {
                         if (id.startsWith("@pixi/")) {
-                            // something will go wrong if we directly use `require` here
-                            const r = require;
-                            return r(`./node_modules/${id}/package.json`).namespace || "PIXI";
+                            const packageJsonPath = path.resolve(
+                                __dirname,
+                                `./node_modules/${id}/package.json`,
+                            );
+                            const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
+                            return packageJson.namespace || "PIXI";
                         }
                     },
                 },

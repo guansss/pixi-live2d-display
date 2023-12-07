@@ -1,5 +1,8 @@
-const { build } = require("vite");
-const path = require("path");
+import { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
+import { build } from "vite";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const entries = [
     { entry: "src/csm2.ts", name: "cubism2" },
@@ -15,7 +18,7 @@ const profiles = entries.flatMap(({ entry, name }) =>
             minify: minify && "terser",
             lib: {
                 formats: minify ? ["umd"] : ["es", "umd"],
-                entry: path.resolve(__dirname, "..", entry),
+                entry: resolve(__dirname, "..", entry),
                 fileName: (format) =>
                     `${name}${format === "umd" ? (minify ? ".min" : "") : "." + format}.js`,
             },

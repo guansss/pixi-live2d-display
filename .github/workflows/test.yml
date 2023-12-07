@@ -36,7 +36,8 @@ jobs:
 
       - run: npm ci
 
-      - if: steps.cache-core.outputs.cache-hit != 'true'
+      - name: Set up core files
+        if: steps.cache-core.outputs.cache-hit != 'true'
         run: |
           echo Cache miss: ${{ hashFiles('scripts/setup.js') }}
           npm run setup
