@@ -1,6 +1,5 @@
 import { createWriteStream, existsSync, mkdirSync, writeFileSync } from "fs";
 import JSZip from "jszip";
-import fetch from "node-fetch";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 
@@ -53,7 +52,8 @@ async function download({ url, file, zipEntries }) {
         }
     }
 
-    const buffer = await fetch(url).then((res) => res.buffer());
+    const arrayBuffer = await fetch(url).then((res) => res.arrayBuffer());
+    const buffer = Buffer.from(arrayBuffer);
 
     if (!buffer.length) {
         throw new Error("got empty response from " + url);
