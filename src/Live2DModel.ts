@@ -184,7 +184,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     /**
      * Stops all playing motions as well as the sound.
      */
-    resetMotions(): void {
+    stopMotions(): void {
         return this.internalModel.motionManager.stopAllMotions();
     }
 

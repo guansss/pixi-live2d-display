@@ -219,7 +219,7 @@ model_proxy.stopSpeaking()
 ## Reset motions as well as audio and lipsync
 * Demo code
 ```js
-model_proxy.resetMotions()
+model_proxy.stopMotions()
 ```
 
 ## Totally destroy the model
