@@ -14,6 +14,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+          registry-url: 'https://registry.npmjs.org'
 
       - run: npm ci
       - run: npm run setup
@@ -23,6 +24,7 @@ jobs:
       - name: Publish to NPM
         run: |
           TAG=$(jq .version package.json | grep -oP '^"v?\d+\.\d+\.\d+-?\K(\w+)?')
+          echo "Publishing to npm with tag: ${TAG:-latest}"
           npm publish --tag ${TAG:-latest}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
