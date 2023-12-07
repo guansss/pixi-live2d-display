@@ -199,7 +199,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * @returns Promise that resolves with true if the sound is playing, false if it's not
      */
     speak(sound: string, {volume=1, expression, resetExpression=true}:{volume?:number, expression?: number | string, resetExpression?:boolean}={}): Promise<boolean> {
-        return this.internalModel.motionManager.speakUp(sound, {
+        return this.internalModel.motionManager.speak(sound, {
             volume: volume, 
             expression: expression, 
             resetExpression: resetExpression
