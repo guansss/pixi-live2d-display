@@ -17,6 +17,7 @@ if (!existsSync(cubism2Core) || !existsSync(cubism4Core)) {
 
 export default defineConfig(({ command, mode }) => {
     const isDev = command === "serve";
+    const isTest = mode === "test";
 
     return {
         define: {
@@ -33,7 +34,7 @@ export default defineConfig(({ command, mode }) => {
             },
         },
         server: {
-            open: "/playground/index.html",
+            open: !isTest && "/playground/index.html",
         },
         build: {
             target: "es6",
@@ -68,10 +69,10 @@ export default defineConfig(({ command, mode }) => {
         plugins: [
             // pixi.js imports a polyfill package named "url", which breaks Vitest
             // see https://github.com/vitest-dev/vitest/issues/4535
-            isDev && nodePolyfills(),
+            isTest && nodePolyfills(),
 
-            isDev && testRpcPlugin(),
-            isDev && {
+            isTest && testRpcPlugin(),
+            isTest && {
                 name: "load-cubism-core",
                 enforce: "post" as const,
                 transform(code, id) {
