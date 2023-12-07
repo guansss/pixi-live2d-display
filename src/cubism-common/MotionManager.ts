@@ -260,11 +260,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
         else {
             soundURL = 'data:audio/'; // This is a dummy url to avoid showing the entire base64 content in logger.warn
         }
-        const isUrlPath = sound && (sound.startsWith('http') || sound.startsWith('blob'));
-        let file: string | undefined;
-        if (isUrlPath || isBase64Content) {
-            file = sound;
-        }
+        let file: string | undefined = sound;
         const that = this;
         if (file) {
             try {
