@@ -18,11 +18,11 @@ jobs:
       - run: npm ci
       - run: npm run setup
 
-      # parse the tag name to determine the npm tag to use (most likely "beta").
-      # source: https://github.com/Leaflet/Leaflet/blob/35e053c6ff550991a0686865b87a34726e565ce5/.github/workflows/main.yml#L181C29-L181C29
+      # parse the package version to determine the npm tag to use (most likely "beta").
+      # regex from: https://github.com/Leaflet/Leaflet/blob/35e053c6ff550991a0686865b87a34726e565ce5/.github/workflows/main.yml#L181C29-L181C29
       - name: Publish to NPM
         run: |
-          TAG=$(echo $GITHUB_REF_NAME | grep -oP '^v?\d+\.\d+\.\d+-?\K(\w+)?')
+          TAG=$(jq .version package.json | grep -oP '^"v?\d+\.\d+\.\d+-?\K(\w+)?')
           npm publish --tag ${TAG:-latest}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
