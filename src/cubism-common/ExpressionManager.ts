@@ -1,15 +1,18 @@
-import { ModelSettings } from '@/cubism-common/ModelSettings';
-import { MotionManagerOptions } from '@/cubism-common/MotionManager';
-import { logger } from '@/utils';
-import { EventEmitter } from '@pixi/utils';
-import { ExpressionManagerEvents } from '../types/events';
-import { JSONObject, Mutable } from '../types/helpers';
+import type { ModelSettings } from "@/cubism-common/ModelSettings";
+import type { MotionManagerOptions } from "@/cubism-common/MotionManager";
+import { logger } from "@/utils";
+import { utils } from "@pixi/core";
+import type { ExpressionManagerEvents } from "../types/events";
+import type { JSONObject, Mutable } from "../types/helpers";
 
 /**
  * Abstract expression manager.
  * @emits {@link ExpressionManagerEvents}
  */
-export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> extends EventEmitter<keyof ExpressionManagerEvents> {
+export abstract class ExpressionManager<
+    Expression = any,
+    ExpressionSpec = any,
+> extends utils.EventEmitter<keyof ExpressionManagerEvents> {
     /**
      * Tag for logging.
      */
@@ -84,7 +87,10 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
         }
 
         if (this.expressions[index] === null) {
-            logger.warn(this.tag, `Cannot set expression at [${index}] because it's already failed in loading.`);
+            logger.warn(
+                this.tag,
+                `Cannot set expression at [${index}] because it's already failed in loading.`,
+            );
             return undefined;
         }
 
@@ -103,8 +109,8 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
      * Loads the Expression. Will be implemented by Live2DFactory in order to avoid circular dependency.
      * @ignore
      */
-     private _loadExpression(index: number): Promise<Expression | undefined> {
-        throw new Error('Not implemented.');
+    private _loadExpression(index: number): Promise<Expression | undefined> {
+        throw new Error("Not implemented.");
     }
 
     /**
@@ -117,9 +123,9 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
 
             for (let i = 0; i < this.definitions.length; i++) {
                 if (
-                    this.expressions[i] !== null
-                    && this.expressions[i] !== this.currentExpression
-                    && i !== this.reserveExpressionIndex
+                    this.expressions[i] !== null &&
+                    this.expressions[i] !== this.currentExpression &&
+                    i !== this.reserveExpressionIndex
                 ) {
                     availableIndices.push(i);
                 }
@@ -155,7 +161,7 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
      * @return Promise that resolves with true if succeeded, with false otherwise.
      */
     async setExpression(index: number | string): Promise<boolean> {
-        if (typeof index !== 'number') {
+        if (typeof index !== "number") {
             index = this.getExpressionIndex(index);
         }
 
@@ -200,7 +206,7 @@ export abstract class ExpressionManager<Expression = any, ExpressionSpec = any> 
      */
     destroy() {
         this.destroyed = true;
-        this.emit('destroy');
+        this.emit("destroy");
 
         const self = this as Mutable<Partial<this>>;
         self.definitions = undefined;

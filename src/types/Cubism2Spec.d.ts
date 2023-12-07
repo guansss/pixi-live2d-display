@@ -55,17 +55,17 @@ export namespace Cubism2Spec {
 
     interface HitArea {
         name: string;
-        id: string
+        id: string;
     }
 
     interface InitParam {
         id: string;
-        value: number
+        value: number;
     }
 
     interface InitOpacity {
         id: string;
-        value: number
+        value: number;
     }
 
     interface ExpressionJSON {
@@ -75,39 +75,39 @@ export namespace Cubism2Spec {
             id: string;
             val: number;
             def?: number;
-            calc?: 'set' | 'add' | 'mult';
-        }[]
+            calc?: "set" | "add" | "mult";
+        }[];
     }
 
     interface PhysicsJSON {
         physics_hair?: {
-            'comment': string,
-            'setup': {
-                'length': number,
-                'regist': number,
-                'mass': number
-            },
-            'src': {
-                'id': string,
-                'ptype': 'x' | 'y' | 'angle',
-                'scale': number,
-                'weight': number
-            }[],
-            'targets': {
-                'id': string,
-                'ptype': 'x' | 'y' | 'angle',
-                'scale': number,
-                'weight': number
-            }[]
-        }[]
+            comment: string;
+            setup: {
+                length: number;
+                regist: number;
+                mass: number;
+            };
+            src: {
+                id: string;
+                ptype: "x" | "y" | "angle";
+                scale: number;
+                weight: number;
+            }[];
+            targets: {
+                id: string;
+                ptype: "x" | "y" | "angle";
+                scale: number;
+                weight: number;
+            }[];
+        }[];
     }
 
     interface PoseJSON {
-        'parts_visible': {
+        parts_visible: {
             group: {
                 id: string;
                 link?: string[];
             }[];
-        }[]
+        }[];
     }
 }

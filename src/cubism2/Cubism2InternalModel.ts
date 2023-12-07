@@ -1,10 +1,12 @@
-import { InternalModelOptions } from '@/cubism-common';
-import { CommonHitArea, CommonLayout, InternalModel } from '@/cubism-common/InternalModel';
-import { Cubism2ModelSettings } from './Cubism2ModelSettings';
-import { Cubism2MotionManager } from './Cubism2MotionManager';
-import { Live2DEyeBlink } from './Live2DEyeBlink';
-import { Live2DPhysics } from './Live2DPhysics';
-import { Live2DPose } from './Live2DPose';
+import type { InternalModelOptions } from "@/cubism-common";
+import type { CommonHitArea, CommonLayout } from "@/cubism-common/InternalModel";
+import { InternalModel } from "@/cubism-common/InternalModel";
+import { logger } from "../utils";
+import type { Cubism2ModelSettings } from "./Cubism2ModelSettings";
+import { Cubism2MotionManager } from "./Cubism2MotionManager";
+import { Live2DEyeBlink } from "./Live2DEyeBlink";
+import type { Live2DPhysics } from "./Live2DPhysics";
+import type { Live2DPose } from "./Live2DPose";
 import { clamp } from '@/utils';
 
 // prettier-ignore
@@ -51,7 +53,13 @@ export class Cubism2InternalModel extends InternalModel {
      */
     disableCulling = false;
 
-    constructor(coreModel: Live2DModelWebGL, settings: Cubism2ModelSettings, options?: InternalModelOptions) {
+    private hasDrawn = false;
+
+    constructor(
+        coreModel: Live2DModelWebGL,
+        settings: Cubism2ModelSettings,
+        options?: InternalModelOptions,
+    ) {
         super();
 
         this.coreModel = coreModel;
@@ -75,27 +83,31 @@ export class Cubism2InternalModel extends InternalModel {
         super.init();
 
         if (this.settings.initParams) {
-            this.settings.initParams.forEach(({ id, value }) => this.coreModel.setParamFloat(id, value));
+            this.settings.initParams.forEach(({ id, value }) =>
+                this.coreModel.setParamFloat(id, value),
+            );
         }
         if (this.settings.initOpacities) {
-            this.settings.initOpacities.forEach(({ id, value }) => this.coreModel.setPartsOpacity(id, value));
+            this.settings.initOpacities.forEach(({ id, value }) =>
+                this.coreModel.setPartsOpacity(id, value),
+            );
         }
 
         this.coreModel.saveParam();
 
-        const arr: any = this.coreModel.getModelContext()._$aS;
+        const arr = this.coreModel.getModelContext()._$aS;
 
-        if (arr?.length) {
-            this.drawDataCount = arr.length;
+        if ((arr as unknown[])?.length) {
+            this.drawDataCount = (arr as unknown[]).length;
         }
 
         let culling = this.coreModel.drawParamWebGL.culling;
 
-        Object.defineProperty(this.coreModel.drawParamWebGL, 'culling', {
-            set: (v: boolean) => culling = v,
+        Object.defineProperty(this.coreModel.drawParamWebGL, "culling", {
+            set: (v: boolean) => (culling = v),
 
             // always return false when disabled
-            get: () => this.disableCulling ? false : culling,
+            get: () => (this.disableCulling ? false : culling),
         });
 
         const clipManager = this.coreModel.getModelContext().clipManager;
@@ -118,17 +130,16 @@ export class Cubism2InternalModel extends InternalModel {
         const layout: CommonLayout = {};
 
         if (this.settings.layout) {
-            for (const key of Object.keys(this.settings.layout)) {
+            for (const [key, value] of Object.entries(this.settings.layout)) {
                 let commonKey = key;
 
-                if (key === 'center_x') {
-                    commonKey = 'centerX';
-                } else if (key === 'center_y') {
-                    commonKey = 'centerY';
+                if (key === "center_x") {
+                    commonKey = "centerX";
+                } else if (key === "center_y") {
+                    commonKey = "centerY";
                 }
 
-                // @ts-ignore
-                layout[commonKey] = this.settings.layout[key];
+                layout[commonKey as keyof CommonLayout] = value;
             }
         }
 
@@ -143,16 +154,16 @@ export class Cubism2InternalModel extends InternalModel {
         drawParamWebGL.glno = glContextID;
 
         // reset WebGL buffers
-        for (const prop in drawParamWebGL) {
-            if (drawParamWebGL.hasOwnProperty(prop) && (drawParamWebGL as any)[prop] instanceof WebGLBuffer) {
-                (drawParamWebGL as any)[prop] = null;
+        for (const [key, value] of Object.entries(drawParamWebGL)) {
+            if (value instanceof WebGLBuffer) {
+                (drawParamWebGL as unknown as Record<string, WebGLBuffer | null>)[key] = null;
             }
         }
 
         const clipManager = this.coreModel.getModelContext().clipManager;
         clipManager.curFrameNo = glContextID;
 
-        const framebuffer = gl.getParameter(gl.FRAMEBUFFER_BINDING);
+        const framebuffer = gl.getParameter(gl.FRAMEBUFFER_BINDING) as WebGLFramebuffer;
 
         // force Live2D to re-create the framebuffer
         clipManager.getMaskRenderTexture();
@@ -165,11 +176,13 @@ export class Cubism2InternalModel extends InternalModel {
     }
 
     protected getHitAreaDefs(): CommonHitArea[] {
-        return this.settings.hitAreas?.map(hitArea => ({
-            id: hitArea.id,
-            name: hitArea.name,
-            index: this.coreModel.getDrawDataIndex(hitArea.id),
-        })) || [];
+        return (
+            this.settings.hitAreas?.map((hitArea) => ({
+                id: hitArea.id,
+                name: hitArea.name,
+                index: this.coreModel.getDrawDataIndex(hitArea.id),
+            })) || []
+        );
     }
 
     getDrawableIDs(): string[] {
@@ -192,13 +205,23 @@ export class Cubism2InternalModel extends InternalModel {
     }
 
     getDrawableVertices(drawIndex: number | string): Float32Array {
-        if (typeof drawIndex === 'string') {
+        if (typeof drawIndex === "string") {
             drawIndex = this.coreModel.getDrawDataIndex(drawIndex);
 
-            if (drawIndex === -1) throw new TypeError('Unable to find drawable ID: ' + drawIndex);
+            if (drawIndex === -1) throw new TypeError("Unable to find drawable ID: " + drawIndex);
         }
 
         return this.coreModel.getTransformedPoints(drawIndex).slice();
+    }
+
+    override hitTest(x: number, y: number): string[] {
+        if (!this.hasDrawn) {
+            logger.warn(
+                "Trying to hit-test a Cubism 2 model that has not been rendered yet. The result will always be empty since the draw data is not ready.",
+            );
+        }
+
+        return super.hitTest(x, y);
     }
 
     update(dt: DOMHighResTimeStamp, now: DOMHighResTimeStamp): void {
@@ -206,11 +229,11 @@ export class Cubism2InternalModel extends InternalModel {
 
         const model = this.coreModel;
 
-        this.emit('beforeMotionUpdate');
+        this.emit("beforeMotionUpdate");
 
         const motionUpdated = this.motionManager.update(this.coreModel, now);
 
-        this.emit('afterMotionUpdate');
+        this.emit("afterMotionUpdate");
 
         model.saveParam();
 
@@ -241,7 +264,7 @@ export class Cubism2InternalModel extends InternalModel {
         this.physics?.update(now);
         this.pose?.update(dt);
 
-        this.emit('beforeModelUpdate');
+        this.emit("beforeModelUpdate");
 
         model.update();
         model.loadParam();
@@ -252,7 +275,10 @@ export class Cubism2InternalModel extends InternalModel {
         this.coreModel.addToParamFloat(this.eyeballYParamIndex, this.focusController.y);
         this.coreModel.addToParamFloat(this.angleXParamIndex, this.focusController.x * 30);
         this.coreModel.addToParamFloat(this.angleYParamIndex, this.focusController.y * 30);
-        this.coreModel.addToParamFloat(this.angleZParamIndex, this.focusController.x * this.focusController.y * -30);
+        this.coreModel.addToParamFloat(
+            this.angleZParamIndex,
+            this.focusController.x * this.focusController.y * -30,
+        );
         this.coreModel.addToParamFloat(this.bodyAngleXParamIndex, this.focusController.x * 10);
     }
 
@@ -288,6 +314,7 @@ export class Cubism2InternalModel extends InternalModel {
         this.coreModel.setMatrix(tempMatrixArray);
         this.coreModel.draw();
 
+        this.hasDrawn = true;
         this.disableCulling = disableCulling;
     }
 

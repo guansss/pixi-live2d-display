@@ -1,7 +1,8 @@
-import { InternalModelOptions } from '@/cubism-common';
-import { CommonHitArea, CommonLayout, InternalModel } from '@/cubism-common/InternalModel';
-import { Cubism4ModelSettings } from '@/cubism4/Cubism4ModelSettings';
-import { Cubism4MotionManager } from '@/cubism4/Cubism4MotionManager';
+import type { InternalModelOptions } from "@/cubism-common";
+import type { CommonHitArea, CommonLayout } from "@/cubism-common/InternalModel";
+import { InternalModel } from "@/cubism-common/InternalModel";
+import type { Cubism4ModelSettings } from "@/cubism4/Cubism4ModelSettings";
+import { Cubism4MotionManager } from "@/cubism4/Cubism4MotionManager";
 import {
     ParamAngleX,
     ParamAngleY,
@@ -11,17 +12,17 @@ import {
     ParamEyeBallX,
     ParamEyeBallY,
     ParamMouthForm,
-} from '@cubism/cubismdefaultparameterid';
-import { BreathParameterData, CubismBreath } from '@cubism/effect/cubismbreath';
-import { CubismEyeBlink } from '@cubism/effect/cubismeyeblink';
-import { CubismPose } from '@cubism/effect/cubismpose';
-import { CubismMatrix44 } from '@cubism/math/cubismmatrix44';
-import { CubismModel } from '@cubism/model/cubismmodel';
-import { CubismModelUserData } from '@cubism/model/cubismmodeluserdata';
-import { CubismPhysics } from '@cubism/physics/cubismphysics';
-import { CubismRenderer_WebGL, CubismShader_WebGL } from '@cubism/rendering/cubismrenderer_webgl';
-import { Matrix } from '@pixi/math';
-import { Mutable } from '../types/helpers';
+} from "@cubism/cubismdefaultparameterid";
+import { BreathParameterData, CubismBreath } from "@cubism/effect/cubismbreath";
+import { CubismEyeBlink } from "@cubism/effect/cubismeyeblink";
+import type { CubismPose } from "@cubism/effect/cubismpose";
+import { CubismMatrix44 } from "@cubism/math/cubismmatrix44";
+import type { CubismModel } from "@cubism/model/cubismmodel";
+import type { CubismModelUserData } from "@cubism/model/cubismmodeluserdata";
+import type { CubismPhysics } from "@cubism/physics/cubismphysics";
+import { CubismRenderer_WebGL, CubismShader_WebGL } from "@cubism/rendering/cubismrenderer_webgl";
+import { Matrix } from "@pixi/core";
+import type { Mutable } from "../types/helpers";
 import { clamp } from '@/utils';
 
 const tempMatrix = new CubismMatrix44();
@@ -65,7 +66,11 @@ export class Cubism4InternalModel extends InternalModel {
      */
     protected centeringTransform = new Matrix();
 
-    constructor(coreModel: CubismModel, settings: Cubism4ModelSettings, options?: InternalModelOptions) {
+    constructor(
+        coreModel: CubismModel,
+        settings: Cubism4ModelSettings,
+        options?: InternalModelOptions,
+    ) {
         super();
 
         this.coreModel = coreModel;
@@ -78,7 +83,7 @@ export class Cubism4InternalModel extends InternalModel {
     protected init() {
         super.init();
 
-        if (this.settings.getEyeBlinkParameters()?.length! > 0) {
+        if (this.settings.getEyeBlinkParameters()?.length) {
             this.eyeBlink = CubismEyeBlink.create(this.settings);
         }
 
@@ -95,7 +100,10 @@ export class Cubism4InternalModel extends InternalModel {
     }
 
     protected getSize(): [number, number] {
-        return [this.coreModel.getModel().canvasinfo.CanvasWidth, this.coreModel.getModel().canvasinfo.CanvasHeight];
+        return [
+            this.coreModel.getModel().canvasinfo.CanvasWidth,
+            this.coreModel.getModel().canvasinfo.CanvasHeight,
+        ];
     }
 
     protected getLayout(): CommonLayout {
@@ -104,11 +112,10 @@ export class Cubism4InternalModel extends InternalModel {
         if (this.settings.layout) {
             // un-capitalize each key to satisfy the common layout format
             // e.g. CenterX -> centerX
-            for (const key of Object.keys(this.settings.layout)) {
+            for (const [key, value] of Object.entries(this.settings.layout)) {
                 const commonKey = key.charAt(0).toLowerCase() + key.slice(1);
 
-                // @ts-ignore
-                layout[commonKey] = this.settings.layout[key];
+                layout[commonKey as keyof CommonLayout] = value;
             }
         }
 
@@ -145,11 +152,13 @@ export class Cubism4InternalModel extends InternalModel {
     }
 
     protected getHitAreaDefs(): CommonHitArea[] {
-        return this.settings.hitAreas?.map(hitArea => ({
-            id: hitArea.Id,
-            name: hitArea.Name,
-            index: this.coreModel.getDrawableIndex(hitArea.Id),
-        })) ?? [];
+        return (
+            this.settings.hitAreas?.map((hitArea) => ({
+                id: hitArea.Id,
+                name: hitArea.Name,
+                index: this.coreModel.getDrawableIndex(hitArea.Id),
+            })) ?? []
+        );
     }
 
     getDrawableIDs(): string[] {
@@ -161,10 +170,10 @@ export class Cubism4InternalModel extends InternalModel {
     }
 
     getDrawableVertices(drawIndex: number | string): Float32Array {
-        if (typeof drawIndex === 'string') {
+        if (typeof drawIndex === "string") {
             drawIndex = this.coreModel.getDrawableIndex(drawIndex);
 
-            if (drawIndex === -1) throw new TypeError('Unable to find drawable ID: ' + drawIndex);
+            if (drawIndex === -1) throw new TypeError("Unable to find drawable ID: " + drawIndex);
         }
 
         const arr = this.coreModel.getDrawableVertices(drawIndex).slice();
@@ -193,11 +202,11 @@ export class Cubism4InternalModel extends InternalModel {
 
         const model = this.coreModel;
 
-        this.emit('beforeMotionUpdate');
+        this.emit("beforeMotionUpdate");
 
         const motionUpdated = this.motionManager.update(this.coreModel, now);
 
-        this.emit('afterMotionUpdate');
+        this.emit("afterMotionUpdate");
 
         model.saveParameters();
 
@@ -230,7 +239,7 @@ export class Cubism4InternalModel extends InternalModel {
         this.physics?.evaluate(model, dt);
         this.pose?.updateParameters(model, dt);
 
-        this.emit('beforeModelUpdate');
+        this.emit("beforeModelUpdate");
 
         model.update();
         model.loadParameters();
@@ -241,7 +250,10 @@ export class Cubism4InternalModel extends InternalModel {
         this.coreModel.addParameterValueById(this.idParamEyeBallY, this.focusController.y);
         this.coreModel.addParameterValueById(this.idParamAngleX, this.focusController.x * 30); // -30 ~ 30
         this.coreModel.addParameterValueById(this.idParamAngleY, this.focusController.y * 30);
-        this.coreModel.addParameterValueById(this.idParamAngleZ, this.focusController.x * this.focusController.y * -30);
+        this.coreModel.addParameterValueById(
+            this.idParamAngleZ,
+            this.focusController.x * this.focusController.y * -30,
+        );
         this.coreModel.addParameterValueById(this.idParamBodyAngleX, this.focusController.x * 10); // -10 ~ 10
     }
 

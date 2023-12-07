@@ -1,10 +1,12 @@
-import { ModelSettings } from '@/cubism-common/ModelSettings';
-import { applyMixins } from '@/utils';
-import { CubismSpec } from '@cubism/CubismSpec';
-import { CubismModelSettingsJson } from '@cubism/settings/cubismmodelsettingsjson';
+import { ModelSettings } from "@/cubism-common/ModelSettings";
+import { applyMixins } from "@/utils";
+import type { CubismSpec } from "@cubism/CubismSpec";
+import { CubismModelSettingsJson } from "@cubism/settings/cubismmodelsettingsjson";
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface Cubism4ModelSettings extends CubismModelSettingsJson {}
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class Cubism4ModelSettings extends ModelSettings {
     declare json: CubismSpec.ModelJSON;
 
@@ -12,19 +14,20 @@ export class Cubism4ModelSettings extends ModelSettings {
     textures!: string[];
 
     static isValidJSON(json: any): json is CubismSpec.ModelJSON {
-        return !!json?.FileReferences
-            && typeof json.FileReferences.Moc === 'string'
-            && json.FileReferences.Textures?.length > 0
-
+        return (
+            !!json?.FileReferences &&
+            typeof json.FileReferences.Moc === "string" &&
+            json.FileReferences.Textures?.length > 0 &&
             // textures must be an array of strings
-            && json.FileReferences.Textures.every((item: any) => typeof item === 'string');
+            json.FileReferences.Textures.every((item: any) => typeof item === "string")
+        );
     }
 
     constructor(json: CubismSpec.ModelJSON & { url: string }) {
         super(json);
 
         if (!Cubism4ModelSettings.isValidJSON(json)) {
-            throw new TypeError('Invalid JSON.');
+            throw new TypeError("Invalid JSON.");
         }
 
         // this doesn't seem to be allowed in ES6 and above, calling it will cause an error:
@@ -44,7 +47,10 @@ export class Cubism4ModelSettings extends ModelSettings {
                     motions[i]!.File = replace(motions[i]!.File, `motions.${group}[${i}].File`);
 
                     if (motions[i]!.Sound !== undefined) {
-                        motions[i]!.Sound = replace(motions[i]!.Sound!, `motions.${group}[${i}].Sound`);
+                        motions[i]!.Sound = replace(
+                            motions[i]!.Sound!,
+                            `motions.${group}[${i}].Sound`,
+                        );
                     }
                 }
             }
@@ -52,7 +58,10 @@ export class Cubism4ModelSettings extends ModelSettings {
 
         if (this.expressions) {
             for (let i = 0; i < this.expressions.length; i++) {
-                this.expressions[i]!.File = replace(this.expressions[i]!.File, `expressions[${i}].File`);
+                this.expressions[i]!.File = replace(
+                    this.expressions[i]!.File,
+                    `expressions[${i}].File`,
+                );
             }
         }
     }

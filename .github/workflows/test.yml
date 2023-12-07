@@ -3,12 +3,17 @@ name: Test CI
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+      - "docs/**"
+      - "playground/**"
+      - "*.md"
   pull_request:
     branches: [ master ]
   workflow_dispatch:
+  workflow_call:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +24,9 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org'
+          cache: "npm"
 
       - name: Cache core files
         uses: actions/cache@v3
@@ -28,25 +35,31 @@ jobs:
           path: |
             core/*
             !core/live2d.d.ts
-          key: ${{ runner.os }}-core-${{ hashFiles('scripts/setup.js') }}
+          key: ${{ hashFiles('scripts/setup.js') }}
 
       - run: npm ci
 
-      - if: steps.cache-core.outputs.cache-hit != 'true'
-        run: npm run setup
-
-      - uses: GabrielBB/xvfb-action@v1.0
-        with:
-          run: npm run test:ci
-          
-      - name: Commit files
+      - name: Set up core files
+        if: steps.cache-core.outputs.cache-hit != 'true'
         run: |
-          git config --global user.name 'RaSan147'
-          git config --global user.email '34002411+RaSan147@users.noreply.github.com'
-          git add --all
-          git commit -am "Automated report"
-          git push
+          echo Cache miss: ${{ hashFiles('scripts/setup.js') }}
+          npm run setup
 
+      - run: npm run type
+      - run: npm run build
+
+      - name: Run tests
+        uses: GabrielBB/xvfb-action@v1.0
+        with:
+          run: npm test
+
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: diff-images
+          path: test/**/__image_snapshots__/__diff_output__/*
+          if-no-files-found: ignore
+          
 
       - uses: actions/upload-artifact@v3
         with:

@@ -1,10 +1,10 @@
-const TypeDoc = require('typedoc');
-const { execSync } = require('child_process');
+const TypeDoc = require("typedoc");
+const { execSync } = require("child_process");
 
 mkdocs().then(typedoc);
 
 async function mkdocs() {
-    execSync(`mkdocs build -f docs/mkdocs.yml`, { stdio: 'inherit' });
+    execSync(`mkdocs build -f docs/mkdocs.yml`, { stdio: "inherit" });
 }
 
 // https://typedoc.org/guides/installation/#node-module
@@ -15,9 +15,9 @@ async function typedoc() {
     app.options.addReader(new TypeDoc.TSConfigReader());
 
     app.bootstrap({
-        entryPoints: ['src/index.ts', 'cubism/src/index.ts'],
-        readme: 'DOC_INDEX.md',
-        tsconfig: 'tsconfig.build.json',
+        entryPoints: ["src/index.ts", "cubism/src/index.ts"],
+        readme: "DOC_INDEX.md",
+        tsconfig: "tsconfig.build.json",
         includeVersion: true,
         excludePrivate: true,
     });
@@ -25,8 +25,8 @@ async function typedoc() {
     const project = app.convert();
 
     if (!project) {
-        throw new Error('Project is not converted correctly');
+        throw new Error("Project is not converted correctly");
     }
 
-    await app.generateDocs(project, 'site/api');
+    await app.generateDocs(project, "site/api");
 }

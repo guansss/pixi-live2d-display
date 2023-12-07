@@ -1,4 +1,4 @@
-export type Middleware<T> = (context: T, next: (err?: any) => Promise<void>) => Promise<void>
+export type Middleware<T> = (context: T, next: (err?: any) => Promise<void>) => Promise<void>;
 
 /**
  * Run middlewares with given context.
@@ -14,7 +14,7 @@ export function runMiddlewares<T>(middleware: Middleware<T>[], context: T): Prom
 
     function dispatch(i: number, err?: Error): Promise<void> {
         if (err) return Promise.reject(err);
-        if (i <= index) return Promise.reject(new Error('next() called multiple times'));
+        if (i <= index) return Promise.reject(new Error("next() called multiple times"));
         index = i;
         const fn = middleware[i];
         if (!fn) return Promise.resolve();

@@ -1,9 +1,9 @@
-import { Live2DModel } from '@/Live2DModel';
-import { Renderer } from '@pixi/core';
-import { Graphics } from '@pixi/graphics';
-import { InteractionEvent } from '@pixi/interaction';
-import { Text, TextStyle } from '@pixi/text';
-import { Rectangle } from '@pixi/math';
+import type { Live2DModel } from "@/Live2DModel";
+import type { Renderer } from "@pixi/core";
+import { Rectangle } from "@pixi/core";
+import { Graphics } from "@pixi/graphics";
+import { Text, TextStyle } from "@pixi/text";
+import type { FederatedPointerEvent } from "pixi.js";
 
 const tempBounds = new Rectangle();
 
@@ -13,15 +13,15 @@ export class HitAreaFrames extends Graphics {
     texts: Text[] = [];
 
     strokeWidth = 4;
-    normalColor = 0xE31A1A;
-    activeColor = 0x1EC832;
+    normalColor = 0xe31a1a;
+    activeColor = 0x1ec832;
 
     constructor() {
         super();
 
-        this.interactive = true;
+        this.eventMode = "static";
 
-        this.on('added', this.init).on('pointermove', this.onPointerMove);
+        this.on("added", this.init).on("globalpointermove", this.onPointerMove);
     }
 
     init() {
@@ -29,12 +29,12 @@ export class HitAreaFrames extends Graphics {
 
         const textStyle = new TextStyle({
             fontSize: 24,
-            fill: '#ffffff',
-            stroke: '#000000',
+            fill: "#ffffff",
+            stroke: "#000000",
             strokeThickness: 4,
         });
 
-        this.texts = Object.keys(internalModel.hitAreas).map(hitAreaName => {
+        this.texts = Object.keys(internalModel.hitAreas).map((hitAreaName) => {
             const text = new Text(hitAreaName, textStyle);
 
             text.visible = false;
@@ -45,10 +45,10 @@ export class HitAreaFrames extends Graphics {
         });
     }
 
-    onPointerMove(e: InteractionEvent) {
+    onPointerMove(e: FederatedPointerEvent) {
         const hitAreaNames = (this.parent as Live2DModel).hitTest(e.data.global.x, e.data.global.y);
 
-        this.texts.forEach(text => {
+        this.texts.forEach((text) => {
             text.visible = hitAreaNames.includes(text.text);
         });
     }
@@ -59,15 +59,20 @@ export class HitAreaFrames extends Graphics {
 
         // extract scale from the transform matrix, and invert it to ease following calculation
         // https://math.stackexchange.com/a/13165
-        const scale = 1 / Math.sqrt(this.transform.worldTransform.a ** 2 + this.transform.worldTransform.b ** 2);
+        const scale =
+            1 /
+            Math.sqrt(this.transform.worldTransform.a ** 2 + this.transform.worldTransform.b ** 2);
 
-        this.texts.forEach(text => {
+        this.texts.forEach((text) => {
             this.lineStyle({
                 width: this.strokeWidth * scale,
                 color: text.visible ? this.activeColor : this.normalColor,
             });
 
-            const bounds = internalModel.getDrawableBounds(internalModel.hitAreas[text.text]!.index, tempBounds);
+            const bounds = internalModel.getDrawableBounds(
+                internalModel.hitAreas[text.text]!.index,
+                tempBounds,
+            );
             const transform = internalModel.localTransform;
 
             bounds.x = bounds.x * transform.a + transform.tx;

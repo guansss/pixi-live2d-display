@@ -1,11 +1,16 @@
-import { Live2DLoaderContext, Live2DLoaderTarget } from '@/factory/Live2DLoader';
-import { logger } from '@/utils';
-import { Middleware } from '@/utils/middleware';
+import type { Live2DLoaderContext, Live2DLoaderTarget } from "@/factory/Live2DLoader";
+import { logger } from "@/utils";
+import type { Middleware } from "@/utils/middleware";
 
-const TAG = 'XHRLoader';
+const TAG = "XHRLoader";
 
 class NetworkError extends Error {
-    constructor(message: string, public url: string, public status: number, public aborted = false) {
+    constructor(
+        message: string,
+        public url: string,
+        public status: number,
+        public aborted = false,
+    ) {
         super(message);
     }
 }
@@ -38,7 +43,7 @@ export class XHRLoader {
                 context.target,
                 context.settings ? context.settings.resolveURL(context.url) : context.url,
                 context.type,
-                data => {
+                (data) => {
                     context.result = data;
                     resolve();
                 },
@@ -77,12 +82,13 @@ export class XHRLoader {
                 xhrSet.add(xhr);
             }
 
-            if (!target.listeners('destroy').includes(XHRLoader.cancelXHRs)) {
-                target.once('destroy', XHRLoader.cancelXHRs);
+            // TODO: properly type this
+            if (!(target.listeners as any)("destroy").includes(XHRLoader.cancelXHRs)) {
+                (target.once as any)("destroy", XHRLoader.cancelXHRs);
             }
         }
 
-        xhr.open('GET', url);
+        xhr.open("GET", url);
         xhr.responseType = type;
         xhr.onload = () => {
             if ((xhr.status === 200 || xhr.status === 0) && xhr.response) {
@@ -92,10 +98,13 @@ export class XHRLoader {
             }
         };
         xhr.onerror = () => {
-            logger.warn(TAG, `Failed to load resource as ${xhr.responseType} (Status ${xhr.status}): ${url}`);
-            onerror(new NetworkError('Network error.', url, xhr.status));
+            logger.warn(
+                TAG,
+                `Failed to load resource as ${xhr.responseType} (Status ${xhr.status}): ${url}`,
+            );
+            onerror(new NetworkError("Network error.", url, xhr.status));
         };
-        xhr.onabort = () => onerror(new NetworkError('Aborted.', url, xhr.status, true));
+        xhr.onabort = () => onerror(new NetworkError("Aborted.", url, xhr.status, true));
         xhr.onloadend = () => {
             XHRLoader.allXhrSet.delete(xhr);
 
@@ -111,7 +120,7 @@ export class XHRLoader {
      * Cancels all XHRs related to this target.
      */
     static cancelXHRs(this: Live2DLoaderTarget) {
-        XHRLoader.xhrMap.get(this)?.forEach(xhr => {
+        XHRLoader.xhrMap.get(this)?.forEach((xhr) => {
             xhr.abort();
             XHRLoader.allXhrSet.delete(xhr);
         });
@@ -122,7 +131,7 @@ export class XHRLoader {
      * Release all XHRs.
      */
     static release() {
-        XHRLoader.allXhrSet.forEach(xhr => xhr.abort());
+        XHRLoader.allXhrSet.forEach((xhr) => xhr.abort());
         XHRLoader.allXhrSet.clear();
         XHRLoader.xhrMap = new WeakMap();
     }

@@ -1,8 +1,9 @@
 {
   "name": "pixi-live2d-display",
-  "version": "0.4.0",
+  "version": "v0.5.0-beta",
   "description": "Live2D plugin for PixiJS",
   "main": "dist/index.js",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
@@ -34,9 +35,8 @@
   "scripts": {
     "setup": "node scripts/setup.js",
     "playground": "vite",
-    "test": "node scripts/build-tests.js && npx floss --path=test.build --reporter=tap",
-    "test:ci": "npm run type && npm run build && npm run test",
-    "test:debug": "node scripts/build-tests.js && npx floss --path=test.build -d",
+    "test": "vitest",
+    "test:u": "vitest --update",
     "build": "rimraf dist && node scripts/build.js",
     "pretype": "node scripts/patch-dts-generator.js",
     "type": "rimraf types && dts-bundle-generator src/index.ts --no-check --project=tsconfig.build.json -o=types/index.d.ts && dts-bundle-generator src/extra.ts --no-check --project=tsconfig.build.json -o=types/extra.d.ts ",
@@ -44,7 +44,9 @@
     "doc": "node scripts/gen-docs.js",
     "serve-docs": "mkdocs serve -f docs/mkdocs.yml",
     "deploy": "gh-pages -d site",
-    "prepublishOnly": "npm run build && npm run test && npm run type"
+    "prepublishOnly": "npm run type && npm run build && npm run test",
+    "lint": "eslint . --config .eslintrc.cjs --rule \"prettier/prettier: error\"",
+    "lint:fix": "npm run lint -- --fix"
   },
   "files": [
     "dist",
@@ -52,40 +54,33 @@
   ],
   "types": "types/index.d.ts",
   "peerDependencies": {
-    "@pixi/core": "^6",
-    "@pixi/display": "^6",
-    "@pixi/loaders": "^6",
-    "@pixi/math": "^6",
-    "@pixi/sprite": "^6",
-    "@pixi/utils": "^6"
+    "pixi.js": "^7.0.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.1",
-    "@types/chai-as-promised": "^7.1.5",
     "@types/lodash-es": "^4.17.6",
-    "@types/node": "17.0.41",
-    "@types/offscreencanvas": "^2019.7.0",
-    "adm-zip": "^0.5.9",
-    "chai": "^4.3.6",
-    "chai-as-promised": "^7.1.1",
-    "chalk": "^4",
+    "@types/node": "^20.8.9",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "@vitest/browser": "^1.0.0-beta.5",
+    "birpc": "^0.2.14",
     "dts-bundle-generator": "^6.11.0",
-    "electron": "^13",
-    "floss": "^5.0.1",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "gh-pages": "^6.1.0",
     "glob": "^8.0.3",
     "handlebars": "^4.7.7",
+    "jest-image-snapshot": "^6.2.0",
     "jszip": "^3.10.0",
     "lodash-es": "^4.17.21",
-    "node-fetch": "^2",
-    "pixi.js": "^6.4.2",
+    "pixi.js": "^7.3.2",
+    "prettier": "^3.0.3",
     "rimraf": "^3.0.2",
-    "sinon": "^14.0.0",
-    "sinon-chai": "^3.7.0",
-    "typedoc": "0.23.10",
-    "typescript": "^4.7.3",
-    "vite": "^2.9.13"
-  },
-  "dependencies": {
-    "gh-pages": "^4.0.0"
+    "type-fest": "^4.4.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0",
+    "vite-plugin-node-polyfills": "^0.17.0",
+    "vitest": "^1.0.1",
+    "webdriverio": "^8.17.0"
   }
 }

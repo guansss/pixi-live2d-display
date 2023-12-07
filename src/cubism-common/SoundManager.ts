@@ -1,7 +1,7 @@
-import { logger, remove } from '@/utils';
+import { logger, remove } from "@/utils";
 
-const TAG = 'SoundManager';
-const VOLUME = 0.9;
+const TAG = "SoundManager";
+const VOLUME = 0.5;
 
 /**
  * Manages all the sounds.
@@ -25,7 +25,7 @@ export class SoundManager {
 
     static set volume(value: number) {
         this._volume = (value > 1 ? 1 : value < 0 ? 0 : value) || 0;
-        this.audios.forEach(audio => (audio.volume = this._volume));
+        this.audios.forEach((audio) => (audio.volume = this._volume));
     }
 
     // TODO: return an ID?
@@ -36,20 +36,25 @@ export class SoundManager {
      * @param onError - Callback invoked when error occurs.
      * @return Created audio element.
      */
-    static add(file: string, onFinish?: () => void, onError?: (e: Error) => void): HTMLAudioElement {
+    static add(
+        file: string,
+        onFinish?: () => void,
+        onError?: (e: Error) => void,
+        crossOrigin?: string
+    ): HTMLAudioElement {
         const audio = new Audio(file);
 
         audio.volume = this._volume;
         audio.preload = 'auto';
         audio.autoplay = true;
-        audio.crossOrigin = "anonymous";
+        audio.crossOrigin = crossOrigin;
 
-        audio.addEventListener('ended', () => {
+        audio.addEventListener("ended", () => {
             this.dispose(audio);
             onFinish?.();
         });
 
-        audio.addEventListener('error', (e: ErrorEvent) => {
+        audio.addEventListener("error", (e: ErrorEvent) => {
             this.dispose(audio);
             logger.warn(TAG, `Error occurred on "${file}"`, e.error);
             onError?.(e.error);
@@ -68,15 +73,15 @@ export class SoundManager {
     static play(audio: HTMLAudioElement): Promise<void> {
         return new Promise((resolve, reject) => {
             // see https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
-            audio.play()?.catch(e => {
-                audio.dispatchEvent(new ErrorEvent('error', { error: e }));
+            audio.play()?.catch((e) => {
+                audio.dispatchEvent(new ErrorEvent("error", { error: e }));
                 reject(e);
             });
 
             if (audio.readyState === audio.HAVE_ENOUGH_DATA) {
                 resolve();
             } else {
-                audio.addEventListener('canplaythrough', resolve as () => void);
+                audio.addEventListener("canplaythrough", resolve as () => void);
             }
         });
     }
@@ -131,7 +136,7 @@ export class SoundManager {
      */
     static dispose(audio: HTMLAudioElement): void {
         audio.pause();
-        audio.removeAttribute('src');
+        audio.removeAttribute("src");
 
         remove(this.audios, audio);
     }

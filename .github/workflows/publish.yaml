@@ -1,0 +1,30 @@
+name: Publish Package to npmjs
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: npm ci
+      - run: npm run setup
+
+      # parse the package version to determine the npm tag to use (most likely "beta").
+      # regex from: https://github.com/Leaflet/Leaflet/blob/35e053c6ff550991a0686865b87a34726e565ce5/.github/workflows/main.yml#L181C29-L181C29
+      - name: Publish to NPM
+        run: |
+          TAG=$(jq .version package.json | grep -oP '^"v?\d+\.\d+\.\d+-?\K(\w+)?')
+          echo "Publishing to npm with tag: ${TAG:-latest}"
+          npm publish --tag ${TAG:-latest}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

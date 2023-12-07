@@ -1,11 +1,11 @@
-import { config } from '@/config';
-import { ExpressionManager } from '@/cubism-common/ExpressionManager';
-import { ModelSettings } from '@/cubism-common/ModelSettings';
-import { MotionPriority, MotionState } from '@/cubism-common/MotionState';
-import { SoundManager } from '@/cubism-common/SoundManager';
-import { logger } from '@/utils';
-import { EventEmitter } from '@pixi/utils';
-import { JSONObject, Mutable } from '../types/helpers';
+import { config } from "@/config";
+import type { ExpressionManager } from "@/cubism-common/ExpressionManager";
+import type { ModelSettings } from "@/cubism-common/ModelSettings";
+import { MotionPriority, MotionState } from "@/cubism-common/MotionState";
+import { SoundManager } from "@/cubism-common/SoundManager";
+import { logger } from "@/utils";
+import { utils } from "@pixi/core";
+import type { JSONObject, Mutable } from "../types/helpers";
 
 export interface MotionManagerOptions {
     /**
@@ -26,20 +26,20 @@ export interface MotionManagerOptions {
  */
 export enum MotionPreloadStrategy {
     /** Preload all the motions. */
-    ALL = 'ALL',
+    ALL = "ALL",
 
     /** Preload only the idle motions. */
-    IDLE = 'IDLE',
+    IDLE = "IDLE",
 
     /** No preload. */
-    NONE = 'NONE',
+    NONE = "NONE",
 }
 
 /**
  * Handles the motion playback.
  * @emits {@link MotionManagerEvents}
  */
-export abstract class MotionManager<Motion = any, MotionSpec = any> extends EventEmitter {
+export abstract class MotionManager<Motion = any, MotionSpec = any> extends utils.EventEmitter {
     /**
      * Tag for logging.
      */
@@ -61,7 +61,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * Indicates the content type of the motion files, varies in different Cubism versions.
      * This will be used as `xhr.responseType`.
      */
-    abstract readonly motionDataType: 'json' | 'arraybuffer';
+    abstract readonly motionDataType: "json" | "arraybuffer";
 
     /**
      * Can be undefined if the settings defines no expression.
@@ -176,13 +176,16 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * @emits {@link MotionManagerEvents.motionLoadError}
      */
     async loadMotion(group: string, index: number): Promise<Motion | undefined> {
-        if (!this.definitions[group] ?. [index]) {
+        if (!this.definitions[group]?.[index]) {
             logger.warn(this.tag, `Undefined motion at "${group}"[${index}]`);
             return undefined;
         }
 
         if (this.motionGroups[group]![index] === null) {
-            logger.warn(this.tag, `Cannot start motion at "${group}"[${index}] because it's already failed in loading.`);
+            logger.warn(
+                this.tag,
+                `Cannot start motion at "${group}"[${index}] because it's already failed in loading.`,
+            );
             return undefined;
         }
 
@@ -205,8 +208,8 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * Loads the Motion. Will be implemented by Live2DFactory in order to avoid circular dependency.
      * @ignore
      */
-     private _loadMotion(group: string, index: number): Promise<Motion | undefined> {
-        throw new Error('Not implemented.');
+    private _loadMotion(group: string, index: number): Promise<Motion | undefined> {
+        throw new Error("Not implemented.");
     }
 
 
@@ -218,7 +221,16 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
      * @returns Promise that resolves with true if the sound is playing, false if it's not
      */
-    async speakUp(sound: string, {volume=1, expression, resetExpression=true}:{volume?:number, expression?: number | string, resetExpression?:boolean}={}) {
+    async speakUp(
+          sound: string, 
+          {
+            volume=1, 
+            expression, 
+            resetExpression=true
+          }:{volume?:number, 
+             expression?: number | string, 
+             resetExpression?:boolean}={}
+   ): Promise<boolean> {
         if (!config.sound) {
             return false;
         }
@@ -320,7 +332,22 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * @param resetExpression - Reset expression before and after playing sound (default: true)
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    async startMotion(group: string, index: number, priority = MotionPriority.NORMAL, {sound=undefined, volume=1, expression=undefined, resetExpression=true}:{sound?: string, volume?:number, expression?: number | string, resetExpression?:boolean}={}): Promise<boolean> {
+    async startMotion(
+        group: string,
+        index: number, 
+        priority = MotionPriority.NORMAL, 
+        {
+          sound=undefined, 
+          volume=1, 
+          expression=undefined, 
+          resetExpression=true
+         }:{
+            sound?: string, 
+            volume?:number, 
+            expression?: number | string, 
+            resetExpression?:boolean
+          }={}
+    ): Promise<boolean> {
         // Does not start a new motion if audio is still playing
         if(this.currentAudio){
             if (!this.currentAudio.ended){
@@ -392,7 +419,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
                     this.currentAnalyzer = analyzer;
 
                 } catch (e) {
-                    logger.warn(this.tag, 'Failed to create audio', soundURL, e);
+                    logger.warn(this.tag, "Failed to create audio", soundURL, e);
                 }
             }
         }
@@ -400,10 +427,10 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         const motion = await this.loadMotion(group, index);
 
         if (audio) {
-            priority = 3; // FORCED: MAKE SURE SOUND IS PLAYED
-            
-            const readyToPlay = SoundManager.play(audio)
-                .catch(e => logger.warn(this.tag, 'Failed to play audio', audio!.src, e));
+
+            const readyToPlay = SoundManager.play(audio).catch((e) =>
+                logger.warn(this.tag, "Failed to play audio", audio!.src, e),
+            );
 
             if (config.motionSync) {
                 // wait until the audio is ready
@@ -426,11 +453,11 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             this.expressionManager && this.expressionManager.resetExpression();
         }
 
-        logger.log(this.tag, 'Start motion:', this.getMotionName(definition));
+        logger.log(this.tag, "Start motion:", this.getMotionName(definition));
 
         this.emit('motionStart', group, index, audio);
         
-        if (expression && this.expressionManager){
+        if (expression && this.expressionManager && this.state.shouldOverrideExpression()){
             this.expressionManager.setExpression(expression)
         }
 
@@ -509,7 +536,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
         if (this.isFinished()) {
             if (this.playing) {
                 this.playing = false;
-                this.emit('motionFinish');
+                this.emit("motionFinish");
             }
 
             if (this.state.shouldOverrideExpression()) {
@@ -545,7 +572,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      */
     destroy() {
         this.destroyed = true;
-        this.emit('destroy');
+        this.emit("destroy");
 
         this.stopAllMotions();
         this.expressionManager?.destroy();
@@ -567,7 +594,11 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * @param definition - The motion definition.
      * @return The created Motion.
      */
-    abstract createMotion(data: ArrayBuffer | JSONObject, group: string, definition: MotionSpec): Motion;
+    abstract createMotion(
+        data: ArrayBuffer | JSONObject,
+        group: string,
+        definition: MotionSpec,
+    ): Motion;
 
     /**
      * Retrieves the motion's file path by its definition.
