@@ -248,7 +248,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
             }
         }
         let soundURL: string | undefined;
-        const isBase64Content = sound && sound.startsWith('data:audio/wav;base64');
+        const isBase64Content = sound && sound.startsWith('data:');
 
         if(sound && !isBase64Content){
             var A = document.createElement('a');
@@ -258,7 +258,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
             soundURL = sound;
         }
         else {
-            soundURL = 'data:audio/wav;base64';
+            soundURL = 'data:audio/'; // This is a dummy url to avoid showing the entire base64 content in logger.warn
         }
         const isUrlPath = sound && (sound.startsWith('http') || sound.startsWith('blob'));
         let file: string | undefined;
