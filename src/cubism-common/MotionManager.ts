@@ -290,17 +290,28 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
 
             } catch (e) {
                 logger.warn(this.tag, 'Failed to create audio', soundURL, e);
+
+                return false;
             }
         }
 
         
         if (audio) {
+            var playSuccess = false;
             const readyToPlay = SoundManager.play(audio)
-                .catch(e => logger.warn(this.tag, 'Failed to play audio', audio!.src, e));
+                .catch(e => {
+                    logger.warn(this.tag, 'Failed to play audio', audio!.src, e)
+                    playSuccess = false;
+                });
 
             if (config.motionSync) {
                 // wait until the audio is ready
                 await readyToPlay;
+
+                if (!playSuccess){
+                    return false;
+                }
+                
             }
         }
         
