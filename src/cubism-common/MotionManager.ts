@@ -2,7 +2,7 @@ import { config } from "@/config";
 import type { ExpressionManager } from "@/cubism-common/ExpressionManager";
 import type { ModelSettings } from "@/cubism-common/ModelSettings";
 import { MotionPriority, MotionState } from "@/cubism-common/MotionState";
-import { SoundManager } from "@/cubism-common/SoundManager";
+import { SoundManager, VOLUME } from "@/cubism-common/SoundManager";
 import { logger } from "@/utils";
 import { utils } from "@pixi/core";
 import type { JSONObject, Mutable } from "../types/helpers";
@@ -219,18 +219,24 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
      * ### OPTIONAL: {name: value, ...}
      * @param volume - Volume of the sound (0-1)
      * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
+     * @param resetExpression - Reset expression before and after playing sound (default: true)
+     * @param crossOrigin - Cross origin setting.
      * @returns Promise that resolves with true if the sound is playing, false if it's not
      */
     async speak(
-          sound: string, 
-          {
-            volume=1, 
+        sound: string, 
+        {
+            volume=VOLUME, 
             expression, 
-            resetExpression=true
-          }:{volume?:number, 
-             expression?: number | string, 
-             resetExpression?:boolean}={}
-   ): Promise<boolean> {
+            resetExpression=true,
+            crossOrigin,
+        }:{
+            volume?:number, 
+            expression?: number | string, 
+            resetExpression?:boolean
+            crossOrigin?: string
+        }={}
+    ): Promise<boolean> {
         if (!config.sound) {
             return false;
         }
@@ -267,18 +273,19 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
                 // start to load the audio
                 audio = SoundManager.add(
                     file,
-                    () => {resetExpression && expression && that.expressionManager && that.expressionManager.resetExpression();
-                            that.currentAudio = undefined}, // reset expression when audio is done
-                    () => {resetExpression && expression && that.expressionManager && that.expressionManager.resetExpression();
-                        that.currentAudio = undefined} // on error
+                    () => {
+                        resetExpression && expression && that.expressionManager && that.expressionManager.resetExpression();
+                        that.currentAudio = undefined
+                    }, // reset expression when audio is done
+                    () => {
+                        resetExpression && expression && that.expressionManager && that.expressionManager.resetExpression();
+                        that.currentAudio = undefined
+                    }, // on error
+                    crossOrigin
                 );
                 this.currentAudio = audio!;
 
-                let _volume: number = 1;
-                if (volume !== undefined){
-                    _volume = volume;
-                }
-                SoundManager.volume = _volume;
+                SoundManager.volume = volume;
 
                 // Add context
                 context = SoundManager.addContext(this.currentAudio);
@@ -337,6 +344,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
      * @param volume - Volume of the sound (0-1)
      * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
      * @param resetExpression - Reset expression before and after playing sound (default: true)
+     * @param crossOrigin - Cross origin setting.
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
     async startMotion(
@@ -344,16 +352,18 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
         index: number, 
         priority = MotionPriority.NORMAL, 
         {
-          sound=undefined, 
-          volume=1, 
-          expression=undefined, 
-          resetExpression=true
-         }:{
+            sound=undefined, 
+            volume=VOLUME, 
+            expression=undefined, 
+            resetExpression=true,
+            crossOrigin,
+        }:{
             sound?: string, 
             volume?:number, 
             expression?: number | string, 
-            resetExpression?:boolean
-          }={}
+            resetExpression?:boolean,
+            crossOrigin?: string
+        }={}
     ): Promise<boolean> {
         // Does not start a new motion if audio is still playing
         if(this.currentAudio){
@@ -404,18 +414,20 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
                     // start to load the audio
                     audio = SoundManager.add(
                         file,
-                        () => {resetExpression && expression && that.expressionManager && that.expressionManager.resetExpression();
-                                that.currentAudio = undefined}, // reset expression when audio is done
-                        () => {resetExpression && expression && that.expressionManager && that.expressionManager.resetExpression();
-                            that.currentAudio = undefined} // on error
+                        () => {
+                            resetExpression && expression && that.expressionManager && that.expressionManager.resetExpression();
+                            that.currentAudio = undefined
+                        }, // reset expression when audio is done
+                        () => {
+                            resetExpression && expression && that.expressionManager && that.expressionManager.resetExpression();
+                            that.currentAudio = undefined
+                        }, // on error
+                        crossOrigin
                     );
+
                     this.currentAudio = audio!;
 
-                    let _volume: number = 1;
-                    if (volume !== undefined){
-                        _volume = volume;
-                    }
-                    SoundManager.volume = _volume;
+                    SoundManager.volume = volume;
 
                     // Add context
                     context = SoundManager.addContext(this.currentAudio);
@@ -486,7 +498,20 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
      * @param resetExpression - Reset expression before and after playing sound (default: true)
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    async startRandomMotion(group: string, priority?:MotionPriority, {sound=undefined, volume=1, expression=undefined, resetExpression=true}:{sound?: string, volume?:number, expression?: number | string, resetExpression?:boolean}={}): Promise<boolean> {
+    async startRandomMotion(
+        group: string, 
+        priority?:MotionPriority, 
+        {
+            sound, 
+            volume=VOLUME, 
+            expression, 
+            resetExpression=true
+        }:{
+            sound?: string, 
+            volume?:number, expression?: number | string, 
+            resetExpression?:boolean
+        }={}
+    ): Promise<boolean> {
         const groupDefs = this.definitions[group];
 
         if (groupDefs?.length) {

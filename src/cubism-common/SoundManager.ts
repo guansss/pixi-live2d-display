@@ -1,7 +1,7 @@
 import { logger, remove } from "@/utils";
 
 const TAG = "SoundManager";
-const VOLUME = 0.5;
+export const VOLUME = 0.5;
 
 /**
  * Manages all the sounds.
@@ -34,6 +34,7 @@ export class SoundManager {
      * @param file - URL of the sound file.
      * @param onFinish - Callback invoked when the playback has finished.
      * @param onError - Callback invoked when error occurs.
+     * @param crossOrigin - Cross origin setting.
      * @return Created audio element.
      */
     static add(
