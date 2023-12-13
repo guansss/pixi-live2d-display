@@ -505,11 +505,13 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
             sound, 
             volume=VOLUME, 
             expression, 
-            resetExpression=true
+            resetExpression=true,
+            crossOrigin,
         }:{
             sound?: string, 
             volume?:number, expression?: number | string, 
-            resetExpression?:boolean
+            resetExpression?:boolean,
+            crossOrigin?: string
         }={}
     ): Promise<boolean> {
         const groupDefs = this.definitions[group];
@@ -530,7 +532,9 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
                     sound: sound, 
                     volume: volume, 
                     expression: expression, 
-                    resetExpression: resetExpression});
+                    resetExpression: resetExpression,
+                    crossOrigin: crossOrigin,
+                });
             }
         }
 
