@@ -594,7 +594,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
      * Move the mouth
      * 
      */
-     mouthSync(): number {
+    mouthSync(): number {
         if (this.currentAnalyzer) {
             return SoundManager.analyze(this.currentAnalyzer);
         } else {
