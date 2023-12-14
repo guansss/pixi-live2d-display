@@ -47,7 +47,6 @@ export class SoundManager {
 
         audio.volume = this._volume;
         audio.preload = 'auto';
-        audio.autoplay = true;
         audio.crossOrigin = crossOrigin!;
 
         audio.addEventListener("ended", () => {
