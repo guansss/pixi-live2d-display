@@ -403,7 +403,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
             const soundURL = this.getSoundFile(definition);
             let file = soundURL;
             if (soundURL) {
-                file = this.settings.resolveURL(soundURL) + "?cache-buster=" + new Date().getTime();
+                file = this.settings.resolveURL(soundURL);
             }
             if (isUrlPath || isBase64Content) {
                 file = sound;
