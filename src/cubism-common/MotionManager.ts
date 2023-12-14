@@ -392,7 +392,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
         let context: AudioContext | undefined;
 
         if (config.sound) {
-            const isBase64Content = sound && sound.startsWith('data:audio/wav;base64');
+            const isBase64Content = sound && sound.startsWith('data:');
             if(sound && !isBase64Content){
                 var A = document.createElement('a');
                 A.href = sound;
