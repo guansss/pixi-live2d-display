@@ -72,6 +72,8 @@ Or run the tests and update snapshots:
 npm run test:u
 ```
 
+If you get an error like `This version of ChromeDriver only supports Chrome version XX`, you need to either upgrade or downgrade your Chrome browser to match that version, or run `npm install chromedriver@<version>` to install the correct version of ChromeDriver (don't commit this change if you are contributing to this project!).
+
 ## Playground
 
 The playground is for debugging and testing. To run the playground:
