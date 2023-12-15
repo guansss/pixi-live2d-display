@@ -1,53 +1,80 @@
-## Setup
+## Cloning the repo
+
+#### Cloning via SSH
+
+Run the following command to clone the repo with submodule:
 
 ```sh
-# clone the repo and submodule (cubism)
 git clone git@github.com:guansss/pixi-live2d-display.git --recursive
-
-# install dependencies
-npm install
-
-# download Live2D core files into `./core`
-npm run setup
 ```
 
 #### Cloning via HTTPS
 
-If you didn't set up a SSH key for GitHub, you can use HTTPS instead:
+Run the following command to clone the repo _without_ submodule:
 
 ```sh
-# omit the `--recursive` flag
 git clone https://github.com/guansss/pixi-live2d-display.git
 ```
 
-Then edit `.gitmodules` and change the `url` of `cubism` submodule to `https://github.coguansss/CubismWebFramework.git`, and run the following command to install the submodule:
+Then follow one of the following methods to manually install the submodule:
+
+**Method 1**
+
+```sh
+git config --global url."https://github.com/guansss/CubismWebFramework.git".insteadOf "git@github.com:guansss/CubismWebFramework.git"
+
+git submodule sync
+git submodule update --init
+```
+
+**Method 2**
+
+Edit `.gitmodules` and replace `git@github.com:guansss/CubismWebFramework.git` with `https://github.com/guansss/CubismWebFramework.git` (don't commit this change if you are contributing to this project!).
+
+Then run:
 
 ```sh
 git submodule sync
 git submodule update --init
 ```
 
-If you are contributing to this project, please do not commit the changes to `.gitmodules`.
+## Setup
+
+Install dependencies:
+
+```sh
+npm install
+```
+
+Download Live2D core files into `./core`:
+
+```sh
+npm run setup
+```
 
 ## Testing
 
-There's a browser test suite that requires production bundle, so you'll need to build before running tests.
-
-You don't have to build it every time, just do it when you think necessary.
+There's a bundle test that requires a production build. Before running the tests for the first time, you need to build the project: (at some point I will automate this step so you don't have to do it manually)
 
 ```sh
 npm run build
+```
 
-# run test headlessly
+Then you can run the tests:
+
+```sh
 npm run test
+```
 
-# run test with GUI
-npm run test:debug
+Or run the tests and update snapshots:
+
+```sh
+npm run test:u
 ```
 
 ## Playground
 
-There's a playground with hot reload enabled, useful for debugging.
+The playground is for debugging and testing. To run the playground:
 
 ```sh
 npm run playground
@@ -55,8 +82,20 @@ npm run playground
 
 Then make changes to `playground/index.ts` and check the result.
 
-Modifications of this file should *not* be committed to git. You can run this command to tell git not to track this file:
+Changes to this file should _not_ be committed to git. You can run this command to tell git not to track this file:
 
 ```sh
 git update-index --skip-worktree playground/index.ts
 ```
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request if you have any ideas or suggestions.
+
+Before contributing, or better yet, before each commit, please run the following command to lint and fix the code:
+
+```sh
+npm run lint:fix
+```
+
+If there are any errors that cannot be fixed automatically, please fix them manually.
