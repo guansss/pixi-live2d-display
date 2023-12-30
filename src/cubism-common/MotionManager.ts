@@ -392,7 +392,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
         let context: AudioContext | undefined;
 
         if (config.sound) {
-            const isBase64Content = sound && sound.startsWith('data:');
+            const isBase64Content = sound && sound.startsWith('data:audio/wav;base64');
             if(sound && !isBase64Content){
                 var A = document.createElement('a');
                 A.href = sound;
@@ -403,7 +403,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
             const soundURL = this.getSoundFile(definition);
             let file = soundURL;
             if (soundURL) {
-                file = this.settings.resolveURL(soundURL);
+                file = this.settings.resolveURL(soundURL) + "?cache-buster=" + new Date().getTime();
             }
             if (isUrlPath || isBase64Content) {
                 file = sound;
