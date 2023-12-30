@@ -1,4 +1,5 @@
-import { InternalModel, ModelSettings, MotionPriority } from "@/cubism-common";
+import type { InternalModel, ModelSettings } from "@/cubism-common";
+import { MotionPriority } from "@/cubism-common";
 import type { MotionManagerOptions } from "@/cubism-common/MotionManager";
 import { VOLUME } from "@/cubism-common/SoundManager";
 import type { Live2DFactoryOptions } from "@/factory/Live2DFactory";
@@ -159,7 +160,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * @param index - Index in the motion group.
      * @param priority - The priority to be applied. (0: No priority, 1: IDLE, 2:NORMAL, 3:FORCE) (default: 2)
      * ### OPTIONAL: `{name: value, ...}`
-     * @param sound - The audio url to file or base64 content 
+     * @param sound - The audio url to file or base64 content
      * @param volume - Volume of the sound (0-1) (default: 0.5)
      * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
      * @param resetExpression - Reset the expression to default after the motion is finished (default: true)
@@ -167,40 +168,39 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      */
     motion(
         group: string,
-        index: number, 
-        priority: MotionPriority = MotionPriority.NORMAL, 
+        index: number,
+        priority: MotionPriority = MotionPriority.NORMAL,
         {
-            sound=undefined, 
-            volume=VOLUME, 
-            expression=undefined, 
-            resetExpression=true,
+            sound = undefined,
+            volume = VOLUME,
+            expression = undefined,
+            resetExpression = true,
             crossOrigin,
-        }:{
-            sound?: string, 
-            volume?:number, 
-            expression?: number | string, 
-            resetExpression?:boolean,
-            crossOrigin?: string
-        }={}
+        }: {
+            sound?: string;
+            volume?: number;
+            expression?: number | string;
+            resetExpression?: boolean;
+            crossOrigin?: string;
+        } = {},
     ): Promise<boolean> {
         return index === undefined
             ? this.internalModel.motionManager.startRandomMotion(group, priority, {
-                sound: sound, 
-                volume: volume, 
-                expression: expression, 
-                resetExpression: resetExpression,
-                crossOrigin: crossOrigin
-            })
+                  sound: sound,
+                  volume: volume,
+                  expression: expression,
+                  resetExpression: resetExpression,
+                  crossOrigin: crossOrigin,
+              })
             : this.internalModel.motionManager.startMotion(group, index, priority, {
-                sound: sound, 
-                volume: volume, 
-                expression: expression, 
-                resetExpression: resetExpression,
-                crossOrigin: crossOrigin
-            });
+                  sound: sound,
+                  volume: volume,
+                  expression: expression,
+                  resetExpression: resetExpression,
+                  crossOrigin: crossOrigin,
+              });
     }
 
-    
     /**
      * Stops all playing motions as well as the sound.
      */
@@ -208,10 +208,9 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
         return this.internalModel.motionManager.stopAllMotions();
     }
 
-
     /**
      * Shorthand to start speaking a sound with an expression.
-     * @param sound - The audio url to file or base64 content 
+     * @param sound - The audio url to file or base64 content
      * ### OPTIONAL: {name: value, ...}
      * @param volume - Volume of the sound (0-1)
      * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
@@ -219,33 +218,32 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * @returns Promise that resolves with true if the sound is playing, false if it's not
      */
     speak(
-        sound: string, 
+        sound: string,
         {
-            volume=VOLUME, 
-            expression, 
-            resetExpression=true,
+            volume = VOLUME,
+            expression,
+            resetExpression = true,
             crossOrigin,
-        }:{
-            volume?:number, 
-            expression?: number | string, 
-            resetExpression?:boolean
-            crossOrigin?: string
-        }={}
+        }: {
+            volume?: number;
+            expression?: number | string;
+            resetExpression?: boolean;
+            crossOrigin?: string;
+        } = {},
     ): Promise<boolean> {
         return this.internalModel.motionManager.speak(sound, {
-            volume: volume, 
-            expression: expression, 
+            volume: volume,
+            expression: expression,
             resetExpression: resetExpression,
-            crossOrigin: crossOrigin
+            crossOrigin: crossOrigin,
         });
     }
 
-    
     /**
      * Stop current audio playback and lipsync
      */
     stopSpeaking(): void {
-        return this.internalModel.motionManager.stopSpeaking()
+        return this.internalModel.motionManager.stopSpeaking();
     }
 
     /**
