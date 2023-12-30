@@ -8,8 +8,15 @@ import { BaseSequencer } from "vitest/node";
 import packageJson from "./package.json";
 import { testRpcPlugin } from "./test/rpc/rpc-server";
 
+const cubismSubmodule = path.resolve(__dirname, "cubism");
 const cubism2Core = path.resolve(__dirname, "core/live2d.min.js");
 const cubism4Core = path.resolve(__dirname, "core/live2dcubismcore.js");
+
+if (!existsSync(cubismSubmodule) || !existsSync(path.resolve(cubismSubmodule, "package.json"))) {
+    throw new Error(
+        "Cubism submodule not found. Please run `git submodule update --init` to download them. If you have trouble downloading the submodule, please check out DEVELOPMENT.md for possible solutions.",
+    );
+}
 
 if (!existsSync(cubism2Core) || !existsSync(cubism4Core)) {
     throw new Error("Cubism Core not found. Please run `npm run setup` to download them.");
