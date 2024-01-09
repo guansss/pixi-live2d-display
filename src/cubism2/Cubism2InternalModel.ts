@@ -7,7 +7,7 @@ import { Cubism2MotionManager } from "./Cubism2MotionManager";
 import { Live2DEyeBlink } from "./Live2DEyeBlink";
 import type { Live2DPhysics } from "./Live2DPhysics";
 import type { Live2DPose } from "./Live2DPose";
-import { clamp } from '@/utils';
+import { clamp } from "@/utils";
 
 // prettier-ignore
 const tempMatrixArray = new Float32Array([
@@ -67,13 +67,13 @@ export class Cubism2InternalModel extends InternalModel {
         this.motionManager = new Cubism2MotionManager(settings, options);
         this.eyeBlink = new Live2DEyeBlink(coreModel);
 
-        this.eyeballXParamIndex = coreModel.getParamIndex('PARAM_EYE_BALL_X');
-        this.eyeballYParamIndex = coreModel.getParamIndex('PARAM_EYE_BALL_Y');
-        this.angleXParamIndex = coreModel.getParamIndex('PARAM_ANGLE_X');
-        this.angleYParamIndex = coreModel.getParamIndex('PARAM_ANGLE_Y');
-        this.angleZParamIndex = coreModel.getParamIndex('PARAM_ANGLE_Z');
-        this.bodyAngleXParamIndex = coreModel.getParamIndex('PARAM_BODY_ANGLE_X');
-        this.breathParamIndex = coreModel.getParamIndex('PARAM_BREATH');
+        this.eyeballXParamIndex = coreModel.getParamIndex("PARAM_EYE_BALL_X");
+        this.eyeballYParamIndex = coreModel.getParamIndex("PARAM_EYE_BALL_Y");
+        this.angleXParamIndex = coreModel.getParamIndex("PARAM_ANGLE_X");
+        this.angleYParamIndex = coreModel.getParamIndex("PARAM_ANGLE_Y");
+        this.angleZParamIndex = coreModel.getParamIndex("PARAM_ANGLE_Z");
+        this.bodyAngleXParamIndex = coreModel.getParamIndex("PARAM_BODY_ANGLE_X");
+        this.breathParamIndex = coreModel.getParamIndex("PARAM_BREATH");
         this.mouthFormIndex = coreModel.getParamIndex("PARAM_MOUTH_FORM");
 
         this.init();
@@ -245,19 +245,22 @@ export class Cubism2InternalModel extends InternalModel {
 
         this.updateFocus();
         this.updateNaturalMovements(dt, now);
-        
+
         if (this.lipSync && this.motionManager.currentAudio) {
             let value = this.motionManager.mouthSync();
             let min_ = 0;
-            let max_ = 1;
-            let weight = 1.2;
+            const max_ = 1;
+            const weight = 1.2;
             if (value > 0) {
                 min_ = 0.4;
             }
             value = clamp(value * weight, min_, max_);
 
             for (let i = 0; i < this.motionManager.lipSyncIds.length; ++i) {
-            this.coreModel.setParamFloat(this.coreModel.getParamIndex(this.motionManager.lipSyncIds[i]!), value);
+                this.coreModel.setParamFloat(
+                    this.coreModel.getParamIndex(this.motionManager.lipSyncIds[i]!),
+                    value,
+                );
             }
         }
 

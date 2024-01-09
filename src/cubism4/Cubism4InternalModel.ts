@@ -23,7 +23,7 @@ import type { CubismPhysics } from "@cubism/physics/cubismphysics";
 import { CubismRenderer_WebGL, CubismShader_WebGL } from "@cubism/rendering/cubismrenderer_webgl";
 import { Matrix } from "@pixi/core";
 import type { Mutable } from "../types/helpers";
-import { clamp } from '@/utils';
+import { clamp } from "@/utils";
 
 const tempMatrix = new CubismMatrix44();
 
@@ -224,8 +224,8 @@ export class Cubism4InternalModel extends InternalModel {
         if (this.lipSync && this.motionManager.currentAudio) {
             let value = this.motionManager.mouthSync();
             let min_ = 0;
-            let max_ = 1;
-            let weight = 1.2;
+            const max_ = 1;
+            const weight = 1.2;
             if (value > 0) {
                 min_ = 0.4;
             }
@@ -256,7 +256,6 @@ export class Cubism4InternalModel extends InternalModel {
         );
         this.coreModel.addParameterValueById(this.idParamBodyAngleX, this.focusController.x * 10); // -10 ~ 10
     }
-
 
     updateFacialEmotion(mouthForm: number) {
         this.coreModel.addParameterValueById(this.idParamMouthForm, mouthForm); // -1 ~ 1
