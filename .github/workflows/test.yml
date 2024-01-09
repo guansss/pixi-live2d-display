@@ -16,9 +16,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
+          ref: ${{github.ref_name}}
           submodules: true
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
 
       - uses: actions/setup-node@v3
         with:
@@ -57,3 +59,9 @@ jobs:
           name: diff-images
           path: test/**/__image_snapshots__/__diff_output__/*
           if-no-files-found: ignore
+          
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: ${{ github.workspace }}/dist

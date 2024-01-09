@@ -1,7 +1,7 @@
 import { logger, remove } from "@/utils";
 
 const TAG = "SoundManager";
-const VOLUME = 0.5;
+export const VOLUME = 0.5;
 
 /**
  * Manages all the sounds.
@@ -11,6 +11,8 @@ export class SoundManager {
      * Audio elements playing or pending to play. Finished audios will be removed automatically.
      */
     static audios: HTMLAudioElement[] = [];
+    static analysers: AnalyserNode[] = [];
+    static contexts: AudioContext[] = [];
 
     protected static _volume = VOLUME;
 
@@ -32,17 +34,21 @@ export class SoundManager {
      * @param file - URL of the sound file.
      * @param onFinish - Callback invoked when the playback has finished.
      * @param onError - Callback invoked when error occurs.
+     * @param crossOrigin - Cross origin setting.
      * @return Created audio element.
      */
     static add(
         file: string,
         onFinish?: () => void,
         onError?: (e: Error) => void,
+        crossOrigin?: string,
     ): HTMLAudioElement {
         const audio = new Audio(file);
 
         audio.volume = this._volume;
         audio.preload = "auto";
+        // audio.autoplay = true;
+        audio.crossOrigin = crossOrigin!;
 
         audio.addEventListener("ended", () => {
             this.dispose(audio);
@@ -81,6 +87,51 @@ export class SoundManager {
         });
     }
 
+    static addContext(audio: HTMLAudioElement): AudioContext {
+        /* Create an AudioContext */
+        const context = new AudioContext();
+
+        this.contexts.push(context);
+        return context;
+    }
+
+    static addAnalyzer(audio: HTMLAudioElement, context: AudioContext): AnalyserNode {
+        /* Create an AnalyserNode */
+        const source = context.createMediaElementSource(audio);
+        const analyser = context.createAnalyser();
+
+        analyser.fftSize = 256;
+        analyser.minDecibels = -90;
+        analyser.maxDecibels = -10;
+        analyser.smoothingTimeConstant = 0.85;
+
+        source.connect(analyser);
+        analyser.connect(context.destination);
+
+        this.analysers.push(analyser);
+        return analyser;
+    }
+
+    /**
+     * Get volume for lip sync
+     * @param analyser - An analyzer element.
+     * @return Returns value to feed into lip sync
+     */
+    static analyze(analyser: AnalyserNode): number {
+        if (analyser != undefined) {
+            const pcmData = new Float32Array(analyser.fftSize);
+            let sumSquares = 0.0;
+            analyser.getFloatTimeDomainData(pcmData);
+
+            for (const amplitude of pcmData) {
+                sumSquares += amplitude * amplitude;
+            }
+            return parseFloat(Math.sqrt((sumSquares / pcmData.length) * 20).toFixed(1));
+        } else {
+            return parseFloat(Math.random().toFixed(1));
+        }
+    }
+
     /**
      * Disposes an audio element and removes it from {@link audios}.
      * @param audio - An audio element.
@@ -97,6 +148,10 @@ export class SoundManager {
      */
     static destroy(): void {
         // dispose() removes given audio from the array, so the loop must be backward
+        for (let i = this.contexts.length - 1; i >= 0; i--) {
+            this.contexts[i]!.close();
+        }
+
         for (let i = this.audios.length - 1; i >= 0; i--) {
             this.dispose(this.audios[i]!);
         }
