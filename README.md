@@ -12,6 +12,9 @@ This project aims to be a universal Live2D framework on the web platform. While 
 complex and problematic, this project has rewritten it to unify and simplify the APIs, which allows you to control the
 Live2D models on a high level without the need to learn how the internal system works.
 
+#### Feel free to support the Maintainer:
+<a href="https://www.buymeacoffee.com/RaSan147" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 #### Features
 
 - Supports all versions of Live2D models
@@ -109,13 +112,13 @@ import { Live2DModel } from 'pixi-live2d-display/cubism4';
 
 
 <!-- if support for both Cubism 2.1 and 4 -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v0.4.0-ls-2/dist/index.min.js"></script>
 
 <!-- if only Cubism 2.1 -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v0.4.0-ls-2/dist/cubism2.min.js"></script>
 
 <!-- if only Cubism 4 -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v0.4.0-ls-2/dist/cubism4.min.js"></script>
 ```
 
 In this way, all the exported members are available under `PIXI.live2d` namespace, such as `PIXI.live2d.Live2DModel`.
@@ -171,7 +174,7 @@ window.PIXI = PIXI;
 var category_name = "Idle" // name of the morion category
 var animation_index = 0 // index of animation under that motion category
 var priority_number = 3 // if you want to keep the current animation going or move to new animation by force [0: no priority, 1: idle, 2: normal, 3: forced]
-var audio_link = "https://audio-samples.github.io/samples/mp3/blizzard_primed/sample-4.mp3" //[Optional arg, can be null or empty] [relative or full url path] [mp3 or wav file]
+var audio_link = "https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.3/playground/test.mp3" //[Optional arg, can be null or empty] [relative or full url path] [mp3 or wav file]
 var volume = 1; //[Optional arg, can be null or empty] [0.0 - 1.0]
 var expression = 4; //[Optional arg, can be null or empty] [index|name of expression]
 var resetExpression = true; //[Optional arg, can be null or empty] [true|false] [default: true] [if true, expression will be reset to default after animation is over]
@@ -191,7 +194,7 @@ model.motion(category_name, animation_index, priority_number, {expression:expres
 * This supports expressions arg too (if you have/need any)
 * Demo code
 ```js
-var audio_link = "https://audio-samples.github.io/samples/mp3/blizzard_primed/sample-4.mp3" // [relative or full url path] [mp3 or wav file]
+var audio_link = "https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.3/playground/test.mp3" // [relative or full url path] [mp3 or wav file]
 var volume = 1; // [Optional arg, can be null or empty] [0.0 - 1.0]
 var expression = 4; // [Optional arg, can be null or empty] [index|name of expression]
 var resetExpression = true; // [Optional arg, can be null or empty] [true|false] [default: true] [if true, expression will be reset to default after animation is over]
