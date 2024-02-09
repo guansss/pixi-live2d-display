@@ -361,16 +361,14 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
             crossOrigin?: string;
         } = {},
     ): Promise<boolean> {
-        // Does not start a new motion if audio is still playing
-        if (this.currentAudio) {
-            // if (!this.currentAudio.ended && priority != MotionPriority.FORCE) {
-            if (!this.currentAudio.ended) {
-                return false;
-            }
-        }
-
         if (!this.state.reserve(group, index, priority)) {
             return false;
+        }
+        // Does not start a new motion if audio is still playing
+        if (this.currentAudio) {
+            if (!this.currentAudio.ended && priority != MotionPriority.FORCE) {
+                return false;
+            }
         }
 
         const definition = this.definitions[group]?.[index];
@@ -388,11 +386,6 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
         let analyzer: AnalyserNode | undefined;
         let context: AudioContext | undefined;
 
-        if (this.currentAudio) {
-            if (!this.currentAudio.ended) {
-                return false;
-            }
-        }
         let soundURL: string | undefined;
         const isBase64Content = sound && sound.startsWith("data:");
 
