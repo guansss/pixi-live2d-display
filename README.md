@@ -25,7 +25,7 @@ Live2D models on a high level without the need to learn how the internal system 
 
 #### Requirements
 
-- PixiJS: 6.x
+- PixiJS: 7.x
 - Cubism core: 2.1 or 4
 - Browser: WebGL, ES6
 
@@ -105,7 +105,7 @@ import { Live2DModel } from 'pixi-live2d-display/cubism4';
 <!-- Load Cubism and PixiJS -->
 <script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/pixi.js@6.5.2/dist/browser/pixi.min.js"></script>
+<script src="https://pixijs.download/v7.4.0/pixi.min.js"></script>
 
 
 <!-- if support for both Cubism 2.1 and 4 -->
@@ -169,7 +169,7 @@ window.PIXI = PIXI;
 * Time to code
 ```js
 var category_name = "Idle" // name of the morion category
-var animation_index = 0 // index of animation under that motion category
+var animation_index = 0 // index of animation under that motion category [null => random]
 var priority_number = 3 // if you want to keep the current animation going or move to new animation by force [0: no priority, 1: idle, 2: normal, 3: forced]
 var audio_link = "https://audio-samples.github.io/samples/mp3/blizzard_primed/sample-4.mp3" //[Optional arg, can be null or empty] [relative or full url path] [mp3 or wav file]
 var volume = 1; //[Optional arg, can be null or empty] [0.0 - 1.0]

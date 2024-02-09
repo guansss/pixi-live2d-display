@@ -54,7 +54,7 @@
   ],
   "types": "types/index.d.ts",
   "peerDependencies": {
-    "pixi.js": "^7.0.0"
+    "pixi.js": "^7.3.2"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.6",
