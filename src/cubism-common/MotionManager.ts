@@ -302,7 +302,7 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
         }
 
         if (audio) {
-            let playSuccess = false;
+            let playSuccess = true;
             const readyToPlay = SoundManager.play(audio).catch((e) => {
                 logger.warn(this.tag, "Failed to play audio", audio!.src, e);
                 playSuccess = false;
