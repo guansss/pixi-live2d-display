@@ -18,9 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{github.ref_name}}
           submodules: true
-          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
 
       - uses: actions/setup-node@v3
         with:

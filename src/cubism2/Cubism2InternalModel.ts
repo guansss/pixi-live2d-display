@@ -257,7 +257,6 @@ export class Cubism2InternalModel extends InternalModel {
             }
             value = Math.pow(value, bias_power);
             value = clamp(value * bias_weight, min_, max_);
-            console.log(value);
 
             for (let i = 0; i < this.motionManager.lipSyncIds.length; ++i) {
                 this.coreModel.setParamFloat(
