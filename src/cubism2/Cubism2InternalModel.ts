@@ -7,7 +7,6 @@ import { Cubism2MotionManager } from "./Cubism2MotionManager";
 import { Live2DEyeBlink } from "./Live2DEyeBlink";
 import type { Live2DPhysics } from "./Live2DPhysics";
 import type { Live2DPose } from "./Live2DPose";
-import { clamp } from "@/utils";
 
 // prettier-ignore
 const tempMatrixArray = new Float32Array([
@@ -39,8 +38,6 @@ export class Cubism2InternalModel extends InternalModel {
     // mouthFormIndex: number;
 
     textureFlipY = true;
-
-    lipSync = true;
 
     /**
      * Number of the drawables in this model.
@@ -246,23 +243,11 @@ export class Cubism2InternalModel extends InternalModel {
         this.updateFocus();
         this.updateNaturalMovements(dt, now);
 
-        if (this.lipSync && this.motionManager.currentAudio) {
-            let value = this.motionManager.mouthSync();
-            let min_ = 0;
-            const max_ = 1;
-            const bias_weight = 1.2;
-            const bias_power = 0.7;
-            if (value > 0.0) {
-                min_ = 0.4;
-            }
-            value = Math.pow(value, bias_power);
-            value = clamp(value * bias_weight, min_, max_);
+        if (this.lipSync.playing) {
+            const lipSyncValue = this.lipSync.getValue();
 
-            for (let i = 0; i < this.motionManager.lipSyncIds.length; ++i) {
-                this.coreModel.setParamFloat(
-                    this.coreModel.getParamIndex(this.motionManager.lipSyncIds[i]!),
-                    value,
-                );
+            for (const lypSyncId of this.motionManager.lipSyncIds) {
+                this.coreModel.setParamFloat(this.coreModel.getParamIndex(lypSyncId), lipSyncValue);
             }
         }
 

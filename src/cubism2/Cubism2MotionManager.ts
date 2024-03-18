@@ -16,7 +16,7 @@ export class Cubism2MotionManager extends MotionManager<Live2DMotion, Cubism2Spe
 
     readonly queueManager = new MotionQueueManager();
 
-    readonly lipSyncIds: string[];
+    readonly lipSyncIds = ["PARAM_MOUTH_OPEN_Y"];
 
     declare readonly settings: Cubism2ModelSettings;
 
@@ -28,8 +28,6 @@ export class Cubism2MotionManager extends MotionManager<Live2DMotion, Cubism2Spe
         this.definitions = this.settings.motions;
 
         this.init(options);
-
-        this.lipSyncIds = ["PARAM_MOUTH_OPEN_Y"];
     }
 
     protected init(options?: MotionManagerOptions) {

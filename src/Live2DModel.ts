@@ -1,6 +1,6 @@
 import type { InternalModel, ModelSettings, MotionPriority } from "@/cubism-common";
+import type { LipSyncPlayOptions } from "@/cubism-common/LipSync";
 import type { MotionManagerOptions } from "@/cubism-common/MotionManager";
-import { VOLUME } from "@/cubism-common/SoundManager";
 import type { Live2DFactoryOptions } from "@/factory/Live2DFactory";
 import { Live2DFactory } from "@/factory/Live2DFactory";
 import type { Rectangle, Renderer, Texture, Ticker } from "@pixi/core";
@@ -158,46 +158,12 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * @param group - The motion group.
      * @param index - Index in the motion group.
      * @param priority - The priority to be applied. (0: No priority, 1: IDLE, 2:NORMAL, 3:FORCE) (default: 2)
-     * ### OPTIONAL: `{name: value, ...}`
-     * @param sound - The audio url to file or base64 content
-     * @param volume - Volume of the sound (0-1) (default: 0.5)
-     * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
-     * @param resetExpression - Reset the expression to default after the motion is finished (default: true)
-     * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
+     * @return Promise that resolves with true if the motion is successfully started, and false otherwise.
      */
-    motion(
-        group: string,
-        index: number,
-        priority: MotionPriority,
-        {
-            sound = undefined,
-            volume = VOLUME,
-            expression = undefined,
-            resetExpression = true,
-            crossOrigin,
-        }: {
-            sound?: string;
-            volume?: number;
-            expression?: number | string;
-            resetExpression?: boolean;
-            crossOrigin?: string;
-        } = {},
-    ): Promise<boolean> {
+    motion(group: string, index: number, priority: MotionPriority): Promise<boolean> {
         return index === undefined
-            ? this.internalModel.motionManager.startRandomMotion(group, priority, {
-                  sound: sound,
-                  volume: volume,
-                  expression: expression,
-                  resetExpression: resetExpression,
-                  crossOrigin: crossOrigin,
-              })
-            : this.internalModel.motionManager.startMotion(group, index, priority, {
-                  sound: sound,
-                  volume: volume,
-                  expression: expression,
-                  resetExpression: resetExpression,
-                  crossOrigin: crossOrigin,
-              });
+            ? this.internalModel.motionManager.startRandomMotion(group, priority)
+            : this.internalModel.motionManager.startMotion(group, index, priority);
     }
 
     /**
@@ -208,47 +174,30 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     }
 
     /**
-     * Shorthand to start speaking a sound with an expression.
+     * Shorthand to start speaking a sound with lip sync.
      * @param sound - The audio url to file or base64 content
-     * ### OPTIONAL: {name: value, ...}
-     * @param volume - Volume of the sound (0-1)
-     * @param expression - In case you want to mix up a expression while playing sound (bind with Model.expression())
-     * @param resetExpression - Reset the expression to default after the motion is finished (default: true)
-     * @returns Promise that resolves with true if the sound is playing, false if it's not
+     * @returns Promise that resolves with true if the sound is successfully playing, and false otherwise.
      */
-    speak(
-        sound: string,
-        {
-            volume = VOLUME,
-            expression,
-            resetExpression = true,
-            crossOrigin,
-        }: {
-            volume?: number;
-            expression?: number | string;
-            resetExpression?: boolean;
-            crossOrigin?: string;
-        } = {},
-    ): Promise<boolean> {
-        return this.internalModel.motionManager.speak(sound, {
-            volume: volume,
-            expression: expression,
-            resetExpression: resetExpression,
-            crossOrigin: crossOrigin,
-        });
+    async speak(sound: string, options?: LipSyncPlayOptions): Promise<boolean> {
+        try {
+            await this.internalModel.lipSync.play(sound, options);
+            return true;
+        } catch (ignored) {
+            return false;
+        }
     }
 
     /**
-     * Stop current audio playback and lipsync
+     * Stop current lip sync and the sound.
      */
     stopSpeaking(): void {
-        return this.internalModel.motionManager.stopSpeaking();
+        return this.internalModel.lipSync.stop();
     }
 
     /**
      * Shorthand to set an expression.
      * @param id - Either the index, or the name of the expression. If not presented, a random expression will be set.
-     * @return Promise that resolves with true if succeeded, with false otherwise.
+     * @return Promise that resolves with true if succeeded, and false otherwise.
      */
     expression(id?: number | string): Promise<boolean> {
         if (this.internalModel.motionManager.expressionManager) {

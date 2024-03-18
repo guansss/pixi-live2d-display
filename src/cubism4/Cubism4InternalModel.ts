@@ -23,7 +23,6 @@ import type { CubismPhysics } from "@cubism/physics/cubismphysics";
 import { CubismRenderer_WebGL, CubismShader_WebGL } from "@cubism/rendering/cubismrenderer_webgl";
 import { Matrix } from "@pixi/core";
 import type { Mutable } from "../types/helpers";
-import { clamp } from "@/utils";
 
 const tempMatrix = new CubismMatrix44();
 
@@ -31,8 +30,6 @@ export class Cubism4InternalModel extends InternalModel {
     settings: Cubism4ModelSettings;
     coreModel: CubismModel;
     motionManager: Cubism4MotionManager;
-
-    lipSync = true;
 
     breath = CubismBreath.create();
     eyeBlink?: CubismEyeBlink;
@@ -221,18 +218,11 @@ export class Cubism4InternalModel extends InternalModel {
         // revert the timestamps to be milliseconds
         this.updateNaturalMovements(dt * 1000, now * 1000);
 
-        if (this.lipSync && this.motionManager.currentAudio) {
-            let value = this.motionManager.mouthSync();
-            let min_ = 0;
-            const max_ = 1;
-            const weight = 1.2;
-            if (value > 0) {
-                min_ = 0.4;
-            }
-            value = clamp(value * weight, min_, max_);
+        if (this.lipSync.playing) {
+            const lipSyncValue = this.lipSync.getValue();
 
-            for (let i = 0; i < this.motionManager.lipSyncIds.length; ++i) {
-                model.addParameterValueById(this.motionManager.lipSyncIds[i], value, 0.8);
+            for (const lipSyncId of this.motionManager.lipSyncIds) {
+                model.addParameterValueById(lipSyncId, lipSyncValue);
             }
         }
 
