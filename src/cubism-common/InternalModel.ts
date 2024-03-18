@@ -1,4 +1,5 @@
 import { FocusController } from "@/cubism-common/FocusController";
+import { LipSync } from "@/cubism-common/LipSync";
 import type { ModelSettings } from "@/cubism-common/ModelSettings";
 import type { MotionManager, MotionManagerOptions } from "@/cubism-common/MotionManager";
 import { LOGICAL_HEIGHT, LOGICAL_WIDTH } from "@/cubism-common/constants";
@@ -54,6 +55,7 @@ export abstract class InternalModel extends utils.EventEmitter {
     abstract readonly settings: ModelSettings;
 
     focusController = new FocusController();
+    lipSync!: LipSync;
 
     abstract motionManager: MotionManager;
 
@@ -117,6 +119,8 @@ export abstract class InternalModel extends utils.EventEmitter {
      * Should be called in the constructor of derived class.
      */
     protected init() {
+        this.lipSync = new LipSync(this.settings);
+
         this.setupLayout();
         this.setupHitAreas();
     }

@@ -1,7 +1,7 @@
 import { logger, remove } from "@/utils";
 
 const TAG = "SoundManager";
-const VOLUME = 0.5;
+export const VOLUME = 0.5;
 
 /**
  * Manages all the sounds.
@@ -32,6 +32,7 @@ export class SoundManager {
      * @param file - URL of the sound file.
      * @param onFinish - Callback invoked when the playback has finished.
      * @param onError - Callback invoked when error occurs.
+     * @param crossOrigin - Cross origin setting.
      * @return Created audio element.
      */
     static add(
@@ -40,7 +41,6 @@ export class SoundManager {
         onError?: (e: Error) => void,
     ): HTMLAudioElement {
         const audio = new Audio(file);
-
         audio.volume = this._volume;
         audio.preload = "auto";
 
@@ -96,7 +96,7 @@ export class SoundManager {
      * Destroys all managed audios.
      */
     static destroy(): void {
-        // dispose() removes given audio from the array, so the loop must be backward
+        // dispose() removes given audio from the array, so the loop must be reversed
         for (let i = this.audios.length - 1; i >= 0; i--) {
             this.dispose(this.audios[i]!);
         }

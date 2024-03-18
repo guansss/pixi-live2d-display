@@ -72,7 +72,12 @@ Or run the tests and update snapshots:
 npm run test:u
 ```
 
-If you get an error like `This version of ChromeDriver only supports Chrome version XX`, you need to either upgrade or downgrade your Chrome browser to match that version, or run `npm install chromedriver@<version>` to install the correct version of ChromeDriver (don't commit this change if you are contributing to this project!).
+If you get an error like `This version of ChromeDriver only supports Chrome version XX`, you need to do either of the following:
+
+- Check if your Chrome browser has a "Relaunch to update" button in the top right corner. If it does, click the button to update Chrome to the latest version.
+- Delete the installed `chromedriver` folder (for example `C:\Users\XXX\AppData\Local\Temp\chromedriver\win64-120.0.6099.109\chromedriver-win64` on Windows).
+
+If you get an error like `Error: spawn C:\Users\XXX\AppData\Local\Temp\chromedriver\win64-120.0.6099.109\chromedriver-win64\chromedriver.exe ENOENT`, you need to delete the `chromedriver` folder just like the step 2 above.
 
 ## Playground
 

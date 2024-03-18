@@ -196,7 +196,7 @@ export const test = baseTest.extend<CustomContext>({
                     onload,
                     onerror,
                 );
-            };
+            } as typeof originalCreateXHR;
         });
 
         const loaderMock: CustomContext["loaderMock"] = {

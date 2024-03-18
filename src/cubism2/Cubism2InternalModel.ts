@@ -35,6 +35,7 @@ export class Cubism2InternalModel extends InternalModel {
     angleZParamIndex: number;
     bodyAngleXParamIndex: number;
     breathParamIndex: number;
+    // mouthFormIndex: number;
 
     textureFlipY = true;
 
@@ -70,6 +71,7 @@ export class Cubism2InternalModel extends InternalModel {
         this.angleZParamIndex = coreModel.getParamIndex("PARAM_ANGLE_Z");
         this.bodyAngleXParamIndex = coreModel.getParamIndex("PARAM_BODY_ANGLE_X");
         this.breathParamIndex = coreModel.getParamIndex("PARAM_BREATH");
+        // this.mouthFormIndex = coreModel.getParamIndex("PARAM_MOUTH_FORM");
 
         this.init();
     }
@@ -240,6 +242,14 @@ export class Cubism2InternalModel extends InternalModel {
 
         this.updateFocus();
         this.updateNaturalMovements(dt, now);
+
+        if (this.lipSync.playing) {
+            const lipSyncValue = this.lipSync.getValue();
+
+            for (const lypSyncId of this.motionManager.lipSyncIds) {
+                this.coreModel.setParamFloat(this.coreModel.getParamIndex(lypSyncId), lipSyncValue);
+            }
+        }
 
         this.physics?.update(now);
         this.pose?.update(dt);

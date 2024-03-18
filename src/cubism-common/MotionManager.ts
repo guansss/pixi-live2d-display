@@ -206,8 +206,8 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
      * Starts a motion as given priority.
      * @param group - The motion group.
      * @param index - Index in the motion group.
-     * @param priority - The priority to be applied.
-     * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
+     * @param priority - The priority to be applied. Default: `NORMAL`.
+     * @return A Promise that resolves with true if the motion is successfully started, and false otherwise.
      */
     async startMotion(
         group: string,
@@ -290,8 +290,8 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends util
     /**
      * Starts a random Motion as given priority.
      * @param group - The motion group.
-     * @param priority - The priority to be applied.
-     * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
+     * @param priority - The priority to be applied. Default: `NORMAL`.
+     * @return A Promise that resolves with true if the motion is successfully started, and false otherwise.
      */
     async startRandomMotion(group: string, priority?: MotionPriority): Promise<boolean> {
         const groupDefs = this.definitions[group];

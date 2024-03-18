@@ -1,4 +1,5 @@
 import type { InternalModel, ModelSettings, MotionPriority } from "@/cubism-common";
+import type { LipSyncPlayOptions } from "@/cubism-common/LipSync";
 import type { MotionManagerOptions } from "@/cubism-common/MotionManager";
 import type { Live2DFactoryOptions } from "@/factory/Live2DFactory";
 import { Live2DFactory } from "@/factory/Live2DFactory";
@@ -155,20 +156,48 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
     /**
      * Shorthand to start a motion.
      * @param group - The motion group.
-     * @param index - The index in this group. If not presented, a random motion will be started.
-     * @param priority - The motion priority. Defaults to `MotionPriority.NORMAL`.
-     * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
+     * @param index - Index in the motion group.
+     * @param priority - The priority to be applied. (0: No priority, 1: IDLE, 2:NORMAL, 3:FORCE) (default: 2)
+     * @return Promise that resolves with true if the motion is successfully started, and false otherwise.
      */
-    motion(group: string, index?: number, priority?: MotionPriority): Promise<boolean> {
+    motion(group: string, index: number, priority: MotionPriority): Promise<boolean> {
         return index === undefined
             ? this.internalModel.motionManager.startRandomMotion(group, priority)
             : this.internalModel.motionManager.startMotion(group, index, priority);
     }
 
     /**
+     * Stops all playing motions as well as the sound.
+     */
+    stopMotions(): void {
+        return this.internalModel.motionManager.stopAllMotions();
+    }
+
+    /**
+     * Shorthand to start speaking a sound with lip sync.
+     * @param sound - The audio url to file or base64 content
+     * @returns Promise that resolves with true if the sound is successfully playing, and false otherwise.
+     */
+    async speak(sound: string, options?: LipSyncPlayOptions): Promise<boolean> {
+        try {
+            await this.internalModel.lipSync.play(sound, options);
+            return true;
+        } catch (ignored) {
+            return false;
+        }
+    }
+
+    /**
+     * Stop current lip sync and the sound.
+     */
+    stopSpeaking(): void {
+        return this.internalModel.lipSync.stop();
+    }
+
+    /**
      * Shorthand to set an expression.
      * @param id - Either the index, or the name of the expression. If not presented, a random expression will be set.
-     * @return Promise that resolves with true if succeeded, with false otherwise.
+     * @return Promise that resolves with true if succeeded, and false otherwise.
      */
     expression(id?: number | string): Promise<boolean> {
         if (this.internalModel.motionManager.expressionManager) {
