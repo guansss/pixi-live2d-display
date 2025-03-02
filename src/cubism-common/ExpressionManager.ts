@@ -146,6 +146,7 @@ export abstract class ExpressionManager<
      */
     resetExpression(): void {
         this._setExpression(this.defaultExpression);
+        this.currentExpression = this.defaultExpression;
     }
 
     /**
