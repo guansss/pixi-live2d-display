@@ -49,7 +49,7 @@ export class Live2DEyeBlink {
                 break;
 
             case EyeState.Closing:
-                this.setEyeParams(this.eyeParamValue + dt / this.closingDuration);
+                this.setEyeParams(this.eyeParamValue - dt / this.closingDuration);
 
                 if (this.eyeParamValue <= 0) {
                     this.eyeState = EyeState.Closed;
@@ -59,6 +59,7 @@ export class Live2DEyeBlink {
 
             case EyeState.Closed:
                 this.closedTimer += dt;
+                this.setEyeParams(0);
 
                 if (this.closedTimer >= this.closedDuration) {
                     this.eyeState = EyeState.Opening;
