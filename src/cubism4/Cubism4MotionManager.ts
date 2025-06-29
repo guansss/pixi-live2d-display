@@ -25,15 +25,19 @@ export class Cubism4MotionManager extends MotionManager<CubismMotion, CubismSpec
     expressionManager?: Cubism4ExpressionManager;
 
     eyeBlinkIds: string[];
-    lipSyncIds: string[];
+    lipSyncIds = ["ParamMouthOpenY"];
 
     constructor(settings: Cubism4ModelSettings, options?: MotionManagerOptions) {
         super(settings, options);
 
         this.definitions = settings.motions ?? {};
         this.eyeBlinkIds = settings.getEyeBlinkParameters() || [];
-        this.lipSyncIds = settings.getLipSyncParameters() || [];
 
+        const lipSyncIds = settings.getLipSyncParameters();
+
+        if (lipSyncIds?.length) {
+            this.lipSyncIds = lipSyncIds;
+        }
         this.init(options);
     }
 

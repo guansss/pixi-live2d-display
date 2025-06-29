@@ -1,3 +1,6 @@
 [submodule "cubism"]
 	path = cubism
-	url = git@github.com:guansss/CubismWebFramework.git
+	# url = git@github.com:guansss/CubismWebFramework.git
+	url = https://github.com/Rasan147/CubismWebFramework.git
+	# url = https://github.com/Wujiao233/CubismWebFramework.git
+	# url = https://github.com/K-bai/CubismWebFramework.git

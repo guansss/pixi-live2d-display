@@ -6,11 +6,14 @@
 
 English | [中文](README.zh.md)
 
-Live2D integration for [PixiJS](https://github.com/pixijs/pixi.js) v6.
+Live2D integration for [PixiJS](https://github.com/pixijs/pixi.js) v7.
 
 This project aims to be a universal Live2D framework on the web platform. While the official Live2D framework is just
 complex and problematic, this project has rewritten it to unify and simplify the APIs, which allows you to control the
 Live2D models on a high level without the need to learn how the internal system works.
+
+#### Feel free to support the Maintainer:
+<a href="https://www.buymeacoffee.com/RaSan147" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 #### Features
 
@@ -21,10 +24,11 @@ Live2D models on a high level without the need to learn how the internal system 
 - Enhanced motion reserving logic compared to the official framework
 - Loading from uploaded files / zip files (experimental)
 - Fully typed - we all love types!
+- Live Lipsync
 
 #### Requirements
 
-- PixiJS: 6.x
+- PixiJS: 7.x
 - Cubism core: 2.1 or 4
 - Browser: WebGL, ES6
 
@@ -84,49 +88,61 @@ To make it clear, here's how you would use these files:
 #### Via npm
 
 ```sh
-npm install pixi-live2d-display
+npm install pixi-live2d-display-lipsyncpatch
 ```
 
 ```js
-import { Live2DModel } from 'pixi-live2d-display';
+import { Live2DModel } from 'pixi-live2d-display-lipsyncpatch';
+// or import { Live2DModel } from 'pixi-live2d-display-lipsyncpatch'; // i didn't test this
 
 // if only Cubism 2.1
-import { Live2DModel } from 'pixi-live2d-display/cubism2';
+import { Live2DModel } from 'pixi-live2d-display-lipsyncpatch/cubism2';
+// or import { Live2DModel } from 'pixi-live2d-display-lipsyncpatch/cubism2';
 
 // if only Cubism 4
-import { Live2DModel } from 'pixi-live2d-display/cubism4';
+import { Live2DModel } from 'pixi-live2d-display-lipsyncpatch/cubism4';
+// or import { Live2DModel } from 'pixi-live2d-display-lipsyncpatch/cubism4';
 ```
 
-#### Via CDN
+#### Via CDN (lipsync patched)
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/index.min.js"></script>
 
-<!-- if only Cubism 2.1 -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism2.min.js"></script>
+<!-- Load Cubism and PixiJS -->
+<script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi.js@7.x/dist/pixi.min.js"></script>
 
-<!-- if only Cubism 4 -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js"></script>
+
+<!-- if support for both Cubism 2.1 and 4 -->
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v0.5.0-ls-8/dist/index.min.js"></script>
+
+<!-- if only Cubism 2.1 support-->
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v0.5.0-ls-8/dist/cubism2.min.js"></script>
+
+<!-- if only Cubism 4 support-->
+<script src="https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v0.5.0-ls-8/dist/cubism4.min.js"></script>
 ```
 
 In this way, all the exported members are available under `PIXI.live2d` namespace, such as `PIXI.live2d.Live2DModel`.
 
 ## Basic usage
 
-```javascript
-import * as PIXI from 'pixi.js';
-import { Live2DModel } from 'pixi-live2d-display';
+### On demand import (Recommend)
 
-// expose PIXI to window so that this plugin is able to
-// reference window.PIXI.Ticker to automatically update Live2D models
-window.PIXI = PIXI;
+```typescript
+import { Live2DModel } from 'pixi-live2d-display-lipsyncpatch';
+import { Application, Ticker } from 'pixi.js';
 
 (async function () {
-  const app = new PIXI.Application({
+  const app = Application({
     view: document.getElementById('canvas'),
   });
 
-  const model = await Live2DModel.from('shizuku.model.json');
+  const model = await Live2DModel.from('shizuku.model.json', {
+    // register Ticker for model
+    ticker: Ticker.shared,
+  });
 
   app.stage.addChild(model);
 
@@ -146,6 +162,158 @@ window.PIXI = PIXI;
   });
 })();
 ```
+
+### Full import PIXI
+
+```javascript
+import * as PIXI from 'pixi.js';
+import { Live2DModel } from 'pixi-live2d-display-lipsyncpatch';
+
+// expose PIXI to window so that this plugin is able to
+// reference window.PIXI.Ticker to automatically update Live2D models
+window.PIXI = PIXI;
+
+(async function () {
+    const app = new PIXI.Application({
+        view: document.getElementById('canvas'),
+    });
+
+    const model = await Live2DModel.from('shizuku.model.json');
+
+    app.stage.addChild(model);
+
+    // transforms
+    model.x = 100;
+    model.y = 100;
+    model.rotation = Math.PI;
+    model.skew.x = Math.PI;
+    model.scale.set(2, 2);
+    model.anchor.set(0.5, 0.5);
+
+    // interaction
+    model.on('hit', (hitAreas) => {
+        if (hitAreas.includes('body')) {
+            model.motion('tap_body');
+        }
+    });
+})();
+```
+
+## Do some motion manually
+* First either you need to load your model on Live2d viewer app, or the Website by guansss [here](https://guansss.github.io/live2d-viewer-web/)
+* Check for motion category names (like "idle", "" (blank) etc)
+  * Screenshot will be added soon
+* Under those motion categories, each motions are used by their index
+* Motion Priority table:
+  * 0: no priority
+  * 1: maybe [for idle animation]
+  * 2: normal [default when normal action]
+  * 3: Just do it! Do id now! [Forced] [default when using audio]
+* Time to code
+```js
+const category_name = "Idle" // name of the motion category
+const animation_index = 0 // index of animation under that motion category [null => random]
+const priority_number = 3 // if you want to keep the current animation going or move to new animation by force [0: no priority, 1: idle, 2: normal, 3: forced]
+const audio_link = "https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.3/playground/test.mp3" //[Optional arg, can be null or empty] [relative or full url path] [mp3 or wav file]
+const volume = 1; //[Optional arg, can be null or empty] [0.0 - 1.0]
+const expression = 4; //[Optional arg, can be null or empty] [index|name of expression]
+const resetExpression = true; //[Optional arg, can be null or empty] [true|false] [default: true] [if true, expression will be reset to default after animation is over]
+
+model.motion(category_name, animation_index, priority_number, {
+  sound: audio_link,
+  volume: volume,
+  expression: expression,
+  resetExpression: resetExpression
+});
+
+// if you dont want voice, just ignore the option
+model.motion(category_name, animation_index, priority_number);
+model.motion(category_name, animation_index, priority_number, { expression: expression, resetExpression: resetExpression });
+model.motion(category_name, animation_index, priority_number, { expression: expression, resetExpression: false });
+
+```
+
+## Lipsync Only
+* You can do sound lipsync even without triggering any motion
+* This supports expressions arg too (if you have/need any)
+* Demo code
+```js
+const audio_link = "https://cdn.jsdelivr.net/gh/RaSan147/pixi-live2d-display@v1.0.3/playground/test.mp3" // [relative or full url path] [mp3 or wav file]
+const volume = 1; // [Optional arg, can be null or empty] [0.0 - 1.0]
+const expression = 4; // [Optional arg, can be null or empty] [index|name of expression]
+const resetExpression = true; // [Optional arg, can be null or empty] [true|false] [default: true] [if true, expression will be reset to default after animation is over]
+const crossOrigin = "anonymous"; // [Optional arg, to use not same-origin audios] [DEFAULT: null]
+
+model.speak(audio_link, {
+  volume: volume,
+  expression: expression,
+  resetExpression: resetExpression,
+  crossOrigin: crossOrigin
+});
+
+// Or if you want to keep some things default
+model.speak(audio_link);
+model.speak(audio_link, { volume: volume });
+model.speak(audio_link, { expression: expression, resetExpression: resetExpression });
+
+```
+
+## Fix "MediaElementAudioSource outputs zeroes due to CORS access restrictions for"
+- Both functions have crossOrigin param. Setting that to `crossOrigin : "anonymous"` will fix it.
+```js
+model.speak(audio_link, { expression: expression, crossOrigin: "anonymous" });
+
+model.motion(category_name, animation_index, priority_number, { sound: audio_link, volume: volume, crossOrigin: "anonymous" });
+
+```
+
+
+## Suddenly stop audio and lipsync
+* Demo code
+```js
+model.stopSpeaking();
+
+```
+
+## Reset motions as well as audio and lipsync
+* Demo code
+```js
+model.stopMotions();
+
+```
+
+## Use callback function after a voiceline is over
+* Demo code
+```js
+model.speak(audio_link, {
+  volume: volume, 
+  onFinish: () => { console.log("Voiceline is over") },
+  onError: (err) => { console.log("Error: ", err) } // [if any error occurs]
+});
+
+model.motion(category_name, animation_index, priority_number, {
+  sound: audio_link,
+  volume: volume,
+  expression: expression,
+  onFinish: () => { console.log("Voiceline and Animation is over") },
+  onError: (err) => { console.log("Error: ", err) } // [if any error occurs]
+});
+```
+
+## Totally destroy the model
+* This will also stop the motion and audio from running and hide the model
+* Demo code
+```js
+model.destroy();
+
+```
+
+## Result
+https://user-images.githubusercontent.com/34002411/230723497-612146b1-5593-4dfa-911d-accb331c5b9b.mp4
+
+# See here for more Documentation: [Documentation](https://guansss.github.io/pixi-live2d-display/)
+
+
 
 ## Package importing
 
@@ -181,3 +349,7 @@ Renderer.registerPlugin('interaction', InteractionManager);
 
 The example Live2D models, Shizuku (Cubism 2.1) and Haru (Cubism 4), are redistributed under
 Live2D's [Free Material License](https://www.live2d.com/eula/live2d-free-material-license-agreement_en.html).
+
+# Extra credit:
+* [fatalgoth](https://github.com/fatalgoth/pixi-live2d-display) for making lipsync possible.
+* [windjackz](https://github.com/windjackz/pixi-live2d-display) for creating all the cool features

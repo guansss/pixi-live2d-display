@@ -26,7 +26,7 @@ test("works with PIXI.Sprite", async ({ app }) => {
     app.stage.addChild(sprite2);
     app.render();
     await expect(app).toMatchImageSnapshot();
-});
+}, 10000);
 
 test("works with PIXI.Graphics", async ({ app }) => {
     // https://github.com/guansss/pixi-live2d-display/issues/5

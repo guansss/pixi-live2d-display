@@ -5,7 +5,7 @@
 Run the following command to clone the repo with submodule:
 
 ```sh
-git clone git@github.com:guansss/pixi-live2d-display.git --recursive
+git clone git@github.com:RaSan147/pixi-live2d-display.git --recursive
 ```
 
 #### Cloning via HTTPS
@@ -16,9 +16,11 @@ Run the following command to clone the repo _without_ submodule:
 git clone https://github.com/guansss/pixi-live2d-display.git
 ```
 
-Then follow one of the following methods to manually install the submodule:
+## ~~Cloning the submodule~~ (No longer needed)
 
-**Method 1**
+~~Then follow one of the following methods to manually install the submodule:~~
+
+**~~Method 1~~**
 
 ```sh
 git config --global url."https://github.com/guansss/CubismWebFramework.git".insteadOf "git@github.com:guansss/CubismWebFramework.git"
@@ -27,11 +29,11 @@ git submodule sync
 git submodule update --init
 ```
 
-**Method 2**
+**~~Method 2~~**
 
-Edit `.gitmodules` and replace `git@github.com:guansss/CubismWebFramework.git` with `https://github.com/guansss/CubismWebFramework.git` (don't commit this change if you are contributing to this project!).
+~~Edit `.gitmodules` and replace `git@github.com:guansss/CubismWebFramework.git` with `https://github.com/guansss/CubismWebFramework.git` (don't commit this change if you are contributing to this project!).~~
 
-Then run:
+~~Then run:~~
 
 ```sh
 git submodule sync

@@ -99,9 +99,10 @@ type TestModel = (typeof ALL_TEST_MODELS)[number];
 export function testEachModel(
     name: string,
     fn: (ctx: TestContext & CustomContext & { model: TestModel }) => Awaitable<void>,
+    options?: number,
 ) {
     for (const model of ALL_TEST_MODELS) {
-        test.extend({ model })(`${name} (${model.name})`, fn as any);
+        test.extend({ model })(`${name} (${model.name})`, fn as any, options);
     }
 }
 

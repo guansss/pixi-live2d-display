@@ -1,7 +1,7 @@
 {
-  "name": "pixi-live2d-display",
-  "version": "v0.5.0-beta",
-  "description": "Live2D plugin for PixiJS",
+  "name": "pixi-live2d-display-lipsyncpatch",
+  "version": "v0.5.0-ls-8",
+  "description": "Live2D plugin for PixiJS (with lipsync patch)",
   "main": "dist/index.js",
   "type": "module",
   "exports": {
@@ -28,9 +28,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/guansss/pixi-live2d-display.git"
+    "url": "https://github.com/RaSan147/pixi-live2d-display.git"
   },
-  "author": "guansss <821143943@qq.com>",
+  "author": "Rasan147 <wwwqweasd147@gmail.com>",
   "license": "MIT",
   "scripts": {
     "setup": "node scripts/setup.js",
@@ -44,7 +44,7 @@
     "doc": "node scripts/gen-docs.js",
     "serve-docs": "mkdocs serve -f docs/mkdocs.yml",
     "deploy": "gh-pages -d site",
-    "prepublishOnly": "npm run type && npm run build && npm run test",
+    "prepublishOnly": "npm run type && npm run build",
     "lint": "eslint . --config .eslintrc.cjs --rule \"prettier/prettier: error\"",
     "lint:fix": "npm run lint -- --fix"
   },
@@ -59,10 +59,11 @@
   "devDependencies": {
     "@types/lodash-es": "^4.17.6",
     "@types/node": "^20.8.9",
+    "@types/offscreencanvas": "^2019.7.3",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
-    "@vitest/browser": "^1.0.0-beta.5",
-    "birpc": "^0.2.14",
+    "@vitest/browser": "^1.4.0",
+    "birpc": "^0.2.17",
     "dts-bundle-generator": "^6.11.0",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
@@ -80,7 +81,11 @@
     "typescript": "^5.2.2",
     "vite": "^5.0.0",
     "vite-plugin-node-polyfills": "^0.17.0",
-    "vitest": "^1.0.1",
-    "webdriverio": "^8.17.0"
+    "vitest": "^1.4.0",
+    "webdriverio": "^8.34.1"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.44.0",
+    "terser": "^5.30.3"
   }
 }

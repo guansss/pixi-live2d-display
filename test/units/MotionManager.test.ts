@@ -91,8 +91,8 @@ const test = baseTest.extend<MotionManagerTestContext>({
                     fn!(),
                 ]);
 
-                const actualGroup = Object.entries(manager.motionGroups).find(
-                    ([group, motions]) => motions?.includes(startedMotion as any),
+                const actualGroup = Object.entries(manager.motionGroups).find(([group, motions]) =>
+                    motions?.includes(startedMotion as any),
                 )?.[0];
 
                 expect(group).toBe(actualGroup);
@@ -386,6 +386,9 @@ describe("uses fading durations", () => {
 
         manager.update(coreModel, 1000 * 50 + 100);
         expect(manager.playing).to.be.false;
+
+        // waiting for previous motion to finish
+        await new Promise((resolve) => setTimeout(resolve, 4000));
 
         await expect(manager.startMotion("Idle", 0)).resolves.toBe(true);
 

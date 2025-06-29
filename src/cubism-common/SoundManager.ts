@@ -1,8 +1,13 @@
 import { logger, remove } from "@/utils";
 
 const TAG = "SoundManager";
-const VOLUME = 0.5;
+export const VOLUME = 0.5;
 
+const audioListenersWeakMap = new WeakMap();
+const audioCanplaythroughWeakMap = new WeakMap();
+const audioContextWeakMap = new WeakMap<HTMLAudioElement, AudioContext>();
+const audioAnalyserWeakMap = new WeakMap<HTMLAudioElement, AnalyserNode>();
+const audioSourceWeakMap = new WeakMap<HTMLAudioElement, MediaElementAudioSourceNode>();
 /**
  * Manages all the sounds.
  */
@@ -11,6 +16,8 @@ export class SoundManager {
      * Audio elements playing or pending to play. Finished audios will be removed automatically.
      */
     static audios: HTMLAudioElement[] = [];
+    static analysers: AnalyserNode[] = [];
+    static contexts: AudioContext[] = [];
 
     protected static _volume = VOLUME;
 
@@ -32,28 +39,34 @@ export class SoundManager {
      * @param file - URL of the sound file.
      * @param onFinish - Callback invoked when the playback has finished.
      * @param onError - Callback invoked when error occurs.
+     * @param crossOrigin - Cross origin setting.
      * @return Created audio element.
      */
     static add(
         file: string,
         onFinish?: () => void,
         onError?: (e: Error) => void,
+        crossOrigin?: string,
     ): HTMLAudioElement {
         const audio = new Audio(file);
 
         audio.volume = this._volume;
         audio.preload = "auto";
-
-        audio.addEventListener("ended", () => {
-            this.dispose(audio);
-            onFinish?.();
+        // audio.autoplay = true;
+        audio.crossOrigin = crossOrigin!;
+        audioListenersWeakMap.set(audio, {
+            ended: () => {
+                this.dispose(audio);
+                onFinish?.();
+            },
+            error: (e: ErrorEvent) => {
+                this.dispose(audio);
+                logger.warn(TAG, `Error occurred on "${file}"`, e.error);
+                onError?.(e.error);
+            },
         });
-
-        audio.addEventListener("error", (e: ErrorEvent) => {
-            this.dispose(audio);
-            logger.warn(TAG, `Error occurred on "${file}"`, e.error);
-            onError?.(e.error);
-        });
+        audio.addEventListener("ended", audioListenersWeakMap.get(audio).ended);
+        audio.addEventListener("error", audioListenersWeakMap.get(audio).error);
 
         this.audios.push(audio);
 
@@ -76,9 +89,58 @@ export class SoundManager {
             if (audio.readyState === audio.HAVE_ENOUGH_DATA) {
                 resolve();
             } else {
+                audioCanplaythroughWeakMap.set(audio, resolve);
                 audio.addEventListener("canplaythrough", resolve as () => void);
             }
         });
+    }
+
+    static addContext(audio: HTMLAudioElement): AudioContext {
+        /* Create an AudioContext */
+        const context = new AudioContext();
+        audioContextWeakMap.set(audio, context);
+
+        this.contexts.push(context);
+        return context;
+    }
+
+    static addAnalyzer(audio: HTMLAudioElement, context: AudioContext): AnalyserNode {
+        /* Create an AnalyserNode */
+        const source = context.createMediaElementSource(audio);
+        const analyser = context.createAnalyser();
+
+        analyser.fftSize = 256;
+        analyser.minDecibels = -90;
+        analyser.maxDecibels = -10;
+        analyser.smoothingTimeConstant = 0.85;
+
+        source.connect(analyser);
+        analyser.connect(context.destination);
+
+        audioSourceWeakMap.set(audio, source);
+        audioAnalyserWeakMap.set(audio, analyser);
+        this.analysers.push(analyser);
+        return analyser;
+    }
+
+    /**
+     * Get volume for lip sync
+     * @param analyser - An analyzer element.
+     * @return Returns value to feed into lip sync
+     */
+    static analyze(analyser: AnalyserNode): number {
+        if (analyser != undefined) {
+            const pcmData = new Float32Array(analyser.fftSize);
+            let sumSquares = 0.0;
+            analyser.getFloatTimeDomainData(pcmData);
+
+            for (const amplitude of pcmData) {
+                sumSquares += amplitude * amplitude;
+            }
+            return parseFloat(Math.sqrt((sumSquares / pcmData.length) * 20).toFixed(1));
+        } else {
+            return parseFloat(Math.random().toFixed(1));
+        }
     }
 
     /**
@@ -87,8 +149,23 @@ export class SoundManager {
      */
     static dispose(audio: HTMLAudioElement): void {
         audio.pause();
+        audio.removeEventListener("ended", audioListenersWeakMap.get(audio)?.ended);
+        audio.removeEventListener("error", audioListenersWeakMap.get(audio)?.error);
+        audio.removeEventListener("canplaythrough", audioCanplaythroughWeakMap.get(audio));
+        audioListenersWeakMap.delete(audio);
+        audioCanplaythroughWeakMap.delete(audio);
+        const context = audioContextWeakMap.get(audio);
+        audioContextWeakMap.delete(audio);
+        context?.close();
+        const analyser = audioAnalyserWeakMap.get(audio);
+        audioAnalyserWeakMap.delete(audio);
+        analyser?.disconnect();
+        const source = audioSourceWeakMap.get(audio);
+        audioSourceWeakMap.delete(audio);
+        source?.disconnect();
         audio.removeAttribute("src");
-
+        remove(this.analysers, analyser);
+        remove(this.contexts, context);
         remove(this.audios, audio);
     }
 
@@ -97,6 +174,10 @@ export class SoundManager {
      */
     static destroy(): void {
         // dispose() removes given audio from the array, so the loop must be backward
+        for (let i = this.contexts.length - 1; i >= 0; i--) {
+            this.contexts[i]!.close();
+        }
+
         for (let i = this.audios.length - 1; i >= 0; i--) {
             this.dispose(this.audios[i]!);
         }

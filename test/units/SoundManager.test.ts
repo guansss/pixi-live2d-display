@@ -2,17 +2,6 @@ import { beforeAll, expect, vi } from "vitest";
 import { config } from "../../src/config";
 import { SoundManager } from "../../src/cubism-common/SoundManager";
 import { TEST_SOUND, test } from "../env";
-import { overrideValue } from "../utils";
-
-beforeAll(() => {
-    // FIXME: audio.play() does not work, try adding "--autoplay-policy=no-user-gesture-required"
-    // to the browser options when Vitest support it
-    overrideValue(HTMLAudioElement.prototype, "play", (original) => {
-        return function () {
-            return Promise.resolve();
-        };
-    });
-});
 
 test("plays sound", async () => {
     let onFinish!: () => void;

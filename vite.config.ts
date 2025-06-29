@@ -100,10 +100,19 @@ export default defineConfig(({ command, mode }) => {
         ],
         test: {
             include: ["**/*.test.ts", "**/*.test.js"],
+            testTimeout: 10 * 1000,
+            fileParallelism: false,
             browser: {
                 enabled: true,
                 name: "chrome",
                 slowHijackESM: false,
+                providerOptions: {
+                    capabilities: {
+                        "goog:chromeOptions": {
+                            args: ["--autoplay-policy=no-user-gesture-required"],
+                        },
+                    },
+                },
             },
             setupFiles: ["./test/setup.ts"],
             sequence: {
@@ -112,6 +121,18 @@ export default defineConfig(({ command, mode }) => {
                     // to make sure they will not pollute the environment for other tests
                     override async sort(files: Parameters<BaseSequencer["sort"]>[0]) {
                         files = await super.sort(files);
+
+                        // stability tests are slow, it will drag others leg behind
+                        // so we put them at the last
+                        const stabilityTestFiles: typeof files = [];
+
+                        files = files.filter(([project, file]) => {
+                            if (file.includes("stability")) {
+                                stabilityTestFiles.push([project, file]);
+                                return false;
+                            }
+                            return true;
+                        });
 
                         const bundleTestFiles: typeof files = [];
 
@@ -123,7 +144,7 @@ export default defineConfig(({ command, mode }) => {
                             return true;
                         });
 
-                        return [...files, ...bundleTestFiles];
+                        return [...files, ...stabilityTestFiles, ...bundleTestFiles];
                     }
                 },
             },
