@@ -96,5 +96,6 @@ test("string", () => {
     expect(folderName("bar/baz.js")).to.equal("bar");
     expect(folderName("bar/")).to.equal("bar");
     expect(folderName("/bar/")).to.equal("bar");
+    expect(folderName("foo/bar//")).to.equal("bar");
     expect(folderName("baz.js")).to.equal("baz.js");
 });
