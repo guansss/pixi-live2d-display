@@ -35,7 +35,7 @@ Live2D models on a high level without the need to learn how the internal system 
 - [Render texture & filter demo](https://codepen.io/guansss/pen/qBaMNQV/left?editors=1010)
 - [Live2D Viewer Online](https://guansss.github.io/live2d-viewer-web/)
 
-#### Documentations
+#### Documentation
 
 - [Documentation](https://guansss.github.io/pixi-live2d-display)
 - [API Documentation](https://guansss.github.io/pixi-live2d-display/api/index.html)
@@ -67,7 +67,7 @@ a [CDN link](https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d
 The plugin provides individual bundles for each Cubism version to reduce your app's size when you just want to use one
 of the versions.
 
-Specifically, there are `cubism2.js` and `cubism4.js` for respective runtime, along with an `index.js` that includes
+Specifically, there are `cubism2.js` and `cubism4.js` for the respective runtime, along with an `index.js` that includes
 both of them.
 
 Note that if you want both the Cubism 2.1 and Cubism 4 support, use `index.js`, but _not_ the combination
