@@ -2,3 +2,4 @@
 /// <reference path="types/env.d.ts"/>
 
 export * from "./tools/HitAreaFrames";
+export * from "./tools/ModelInspector";
