@@ -1,10 +1,39 @@
 import { Live2DModel } from "@/Live2DModel";
 import JSZip from "jszip";
+import { cloneDeep } from "lodash-es";
 import { beforeAll, describe, expect } from "vitest";
 import { Live2DFactory } from "../../src/factory/Live2DFactory";
 import { ZipLoader } from "../../src/factory/ZipLoader";
 import { describeEachModel, test, testEachModel } from "../env";
 import { createFile, defaultOptions } from "../utils";
+
+testEachModel(
+    "loads model with blob resource URLs and relative paths",
+    async ({ model: { modelJsonWithUrl, mocData } }) => {
+        const settings = Live2DFactory.findRuntime(modelJsonWithUrl)!.createModelSettings(
+            cloneDeep(modelJsonWithUrl),
+        );
+        const texture = await fetch(settings.resolveURL(settings.textures[0]!)).then((res) =>
+            res.blob(),
+        );
+        const mocURL = URL.createObjectURL(new Blob([await mocData()]));
+        const textureURL = URL.createObjectURL(texture);
+        let model: Live2DModel | undefined;
+
+        try {
+            settings.moc = mocURL;
+            settings.textures[0] = textureURL;
+            model = await Live2DModel.from(settings, defaultOptions());
+
+            expect(model).to.be.instanceOf(Live2DModel);
+            expect(model.textures.every((texture) => texture.valid)).to.be.true;
+        } finally {
+            model?.destroy();
+            URL.revokeObjectURL(mocURL);
+            URL.revokeObjectURL(textureURL);
+        }
+    },
+);
 
 describe("FileLoader", function () {
     testEachModel("loads model from files", async ({ model: { files }, objectURLs }) => {
