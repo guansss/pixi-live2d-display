@@ -73,6 +73,93 @@ test("handles URL", () => {
     expect(settings.name).to.equal("bar");
 });
 
+describe.each([
+    {
+        name: "cubism2",
+        createSettings: (url: string) => new Cubism2ModelSettings({ ...minimalCubism2Json, url }),
+    },
+    {
+        name: "cubism4",
+        createSettings: (url: string) => new Cubism4ModelSettings({ ...minimalCubism4Json, url }),
+    },
+])("resolves resource URLs ($name)", ({ createSettings }) => {
+    test.each([
+        "blob:http://localhost:61139/b096d3b0-90dd-4f56-a79f-2228ebe02cf0",
+        "blob:https://example.com/texture-id",
+        "blob:null/moc-id",
+        'data:application/json,{"name":"model:resource"}',
+        "data:application/octet-stream;base64,AAECAw==",
+        "http://example.com:8080/model.moc?version=1#resource",
+        "https://example.com/texture.png?source=http://other.example/#resource",
+        "HTTPS://EXAMPLE.COM/Texture.png",
+        "file:///models/model.moc",
+        "asset+v1.0-test:models/model.moc",
+    ])("preserves absolute URL %s", (path) => {
+        for (const url of ["https://example.com/models/model.json", "models/model.json", ""]) {
+            expect(createSettings(url).resolveURL(path)).to.equal(path);
+        }
+    });
+
+    test.each([
+        [
+            "https://example.com/models/model.json",
+            "textures/texture.png",
+            "https://example.com/models/textures/texture.png",
+        ],
+        [
+            "https://example.com/models/model.json",
+            "../shared/model.moc",
+            "https://example.com/shared/model.moc",
+        ],
+        [
+            "https://example.com/models/model.json",
+            "/textures/texture.png",
+            "https://example.com/textures/texture.png",
+        ],
+        [
+            "https://example.com/models/model.json",
+            "//cdn.example.com/texture.png",
+            "https://cdn.example.com/texture.png",
+        ],
+        [
+            "http://example.com/models/model.json",
+            "//cdn.example.com/texture.png",
+            "http://cdn.example.com/texture.png",
+        ],
+        [
+            "https://example.com/models/model.json?old=1#old",
+            "texture.png?v=2#part",
+            "https://example.com/models/texture.png?v=2#part",
+        ],
+        [
+            "https://example.com/models/model.json?old=1#old",
+            "?v=2",
+            "https://example.com/models/model.json?v=2",
+        ],
+        [
+            "https://example.com/models/model.json?v=1#old",
+            "#part",
+            "https://example.com/models/model.json?v=1#part",
+        ],
+        [
+            "https://example.com/models/model.json?v=1#old",
+            "",
+            "https://example.com/models/model.json?v=1",
+        ],
+        ["models/model.json", "./textures/texture.png", "models/textures/texture.png"],
+        ["models/model.json", "../shared/model.moc", "shared/model.moc"],
+        ["/models/model.json", "texture.png", "/models/texture.png"],
+        ["models/model.json", "/texture.png", "/texture.png"],
+        ["model.json", "texture.png", "texture.png"],
+        ["", "texture.png", "texture.png"],
+        ["models/model.json", "./texture:variant.png", "models/texture:variant.png"],
+        ["models/model.json", "texture with spaces.png", "models/texture%20with%20spaces.png"],
+        ["models/model.json", "texture%20name.png", "models/texture%20name.png"],
+    ])("resolves %s and %s to %s", (url, path, expected) => {
+        expect(createSettings(url).resolveURL(path)).to.equal(expected);
+    });
+});
+
 function colletFiles<T>(fn: (makeFile: (file: string) => string) => T) {
     const definedFiles: string[] = [];
 

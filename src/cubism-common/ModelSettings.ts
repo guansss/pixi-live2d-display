@@ -64,12 +64,17 @@ export abstract class ModelSettings {
     }
 
     /**
-     * Resolves a relative path using the {@link url}. This is used to resolve the resource files
-     * defined in the settings.
-     * @param path - Relative path.
+     * Resolves a relative path using the {@link url}, leaving absolute URLs unchanged. This is used
+     * to resolve the resource files defined in the settings.
+     * @param path - Relative path or absolute URL.
      * @return Resolved path.
      */
     resolveURL(path: string): string {
+        // Preserve schemes that the legacy resolver can corrupt, such as blob: and data:.
+        if (/^[a-z][a-z\d+.-]*:/i.test(path)) {
+            return path;
+        }
+
         // FIXME: deprecated API
         return utils.url.resolve(this.url, path);
     }
